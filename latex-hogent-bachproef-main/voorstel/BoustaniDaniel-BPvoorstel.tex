@@ -1,0 +1,69 @@
+%==============================================================================
+% Sjabloon onderzoeksvoorstel bachproef
+%==============================================================================
+% Gebaseerd op document class `hogent-article'
+% zie <https://github.com/HoGentTIN/latex-hogent-article>
+
+% Voor een voorstel in het Engels: voeg de documentclass-optie [english] toe.
+% Let op: kan enkel na toestemming van de bachelorproefcoördinator!
+\documentclass{hogent-article}
+
+% Invoegen bibliografiebestand
+\addbibresource{voorstel.bib}
+
+% Informatie over de opleiding, het vak en soort opdracht
+\studyprogramme{Professionele bachelor toegepaste informatica}
+\course{Bachelorproef}
+\assignmenttype{Onderzoeksvoorstel}
+% Voor een voorstel in het Engels, haal de volgende 3 regels uit commentaar
+% \studyprogramme{Bachelor of applied information technology}
+% \course{Bachelor thesis}
+% \assignmenttype{Research proposal}
+
+\academicyear{2024-2025} % TODO: pas het academiejaar aan
+
+% TODO: Werktitel
+\title{Eureka: een virtuele assistent dat studenten en docenten bijstaat bij het beantwoorden van vak-gerelateerde vragen}
+
+% TODO: Studentnaam en emailadres invullen
+\author{Daniel Boustani}
+\email{daniel.boustani@student.hogent.be}
+
+% TODO: Medestudent
+% Gaat het om een bachelorproef in samenwerking met een student in een andere
+% opleiding? Geef dan de naam en emailadres hier
+% \author{Yasmine Alaoui (naam opleiding)}
+% \email{yasmine.alaoui@student.hogent.be}
+
+% TODO: Geef de co-promotor op
+\supervisor[Co-promotor]{B. Van Vreckem (HoGent, \href{mailto:bert.vanvreckem@hogent.be}{bert.vanvreckem@hogent.be})}
+
+% Binnen welke specialisatierichting uit 3TI situeert dit onderzoek zich?
+% Kies uit deze lijst:
+%
+% - Mobile \& Enterprise development
+% - AI \& Data Engineering
+% - Functional \& Business Analysis
+% - System \& Network Administrator
+% - Mainframe Expert
+% - Als het onderzoek niet past binnen een van deze domeinen specifieer je deze
+%   zelf
+%
+\specialisation{AI \& Data Engineering}
+\keywords{LLM, RAG, Chatbot}
+
+\begin{document}
+
+\begin{abstract}
+  Het voorstel introduceert Eureka, een virtuele assistent ontworpen om studenten en docenten aan de HoGent te ondersteunen bij het beantwoorden van vakgerelateerde vragen, met als doel de werkdruk voor docenten te verminderen en studenten snel toegang te bieden tot betrouwbare informatie. De studie verkent de relevantie en haalbaarheid van deze oplossing, waarbij een Proof-of-Concept (PoC) wordt ontwikkeld op basis van bestaande Large Language Models (LLM's) en Retrieval-Augmented Generation (RAG) technologie. Naast het technisch ontwerp onderzoekt het onderzoek methoden om uitdagingen zoals hallucinaties en onverwachte interacties te minimaliseren. De verwachte meerwaarde ligt in het bieden van een gecentraliseerde, efficiënte en toegankelijke manier voor studenten en docenten om informatie te delen en vragen te beantwoorden, wat leidt tot verbeterde communicatie en een intuïtiever zoekproces.
+\end{abstract}
+
+\tableofcontents
+
+% De hoofdtekst van het voorstel zit in een apart bestand, zodat het makkelijk
+% kan opgenomen worden in de bijlagen van de bachelorproef zelf.
+\input{voorstel-inhoud}
+
+\printbibliography[heading=bibintoc]
+
+\end{document}
