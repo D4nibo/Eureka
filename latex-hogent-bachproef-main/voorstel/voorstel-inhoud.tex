@@ -15,15 +15,21 @@
 \section{Inleiding}%
 \label{sec:inleiding}
 
-Bij het opnemen van een vak worden studenten aan de HOGENT tijdens het semester vaak geconfronteerd met een grote hoeveelheid informatie: lesmodaliteiten, taken en deadlines, en kennismaking met de benodigde software, om enkele voorbeelden te noemen. Gedurende het semester ontstaan er regelmatig vragen bij studenten, die zij proberen te beantwoorden door de beschikbare materialen te raadplegen of door hun vragen aan medestudenten voor te leggen. Toch blijken deze twee informatiebronnen niet altijd voldoende - vanwege onduidelijkheden of tegenstrijdigheden - zoals blijkt uit het aantal studenten dat alsnog bij de docent aanklopt. Dit is echter niet praktisch; als een docent tien keer dezelfde vraag ontvangt, moet hij of zij die vraag ook tien keer beantwoorden. Bovendien is er geen garantie dat een student zijn of haar antwoord dezelfde dag nog ontvangt. Deze uitwisseling is dan ook een frustrerend en tijdrovend proces voor beide partijen. Er bestaat dus behoefte aan een middel dat enerzijds de werkdruk van docenten verlicht door antwoorden te geven op veelgestelde vragen van studenten en anderzijds deze antwoorden on demand levert.
+Bij het opnemen van een vak worden studenten aan de HOGENT tijdens het semester vaak geconfronteerd met een grote hoeveelheid informatie: lesmodaliteiten, taken, deadlines, en kennismaking met de benodigde software, om enkele voorbeelden te noemen. Gedurende het semester ontstaan er regelmatig vragen bij studenten, die zij proberen te beantwoorden door de beschikbare materialen te raadplegen of door hun vragen aan medestudenten voor te leggen. Toch blijken deze twee informatiebronnen niet altijd voldoende - vanwege onduidelijkheden of tegenstrijdigheden - zoals blijkt uit het aantal studenten dat alsnog bij de docent aanklopt. Dit is echter niet praktisch; als een docent tien keer dezelfde vraag ontvangt, moet hij of zij die vraag ook tien keer beantwoorden. Bovendien is er geen garantie dat een student zijn of haar antwoord dezelfde dag nog ontvangt. Deze uitwisseling is dan ook een frustrerend en tijdrovend proces voor beide partijen. Er bestaat dus behoefte aan een middel dat enerzijds de werkdruk van docenten verlicht door antwoorden te geven op veelgestelde vragen van studenten en anderzijds deze antwoorden on demand levert.
 
 Deze paper heeft als doel om een toegepast onderzoek te motiveren naar Eureka, een virtuele assistent die studenten en docenten van de HOGENT ondersteunt bij het beantwoorden van vakgerelateerde vragen. In dit onderzoek wordt de haalbaarheid van een dergelijk hulpmiddel onderzocht en wordt een proof-of-concept (POC) ontwikkeld. Het POC wordt als succesvol beschouwd als minstens de volgende vragen kunnen worden beantwoord:
 
 \begin{itemize}
   \item Levert Eukera relevante antwoorden ? 
-  \item Kan Eureka abnormale interacties (zoals beledigingen) aan ?
-  \item Hoe wordt de kennis van Eureka uitgebreid/geupdated ?
+  \item Kan Eureka onverwachte interacties, zoals beledigingen, aan ?
   \item Hoe kan hallucinatie vermeden worden ? 
+\end{itemize}
+
+Bovendien moet de achterliggende oplossing minstens de volgende vragen kunnen beantwoorden:
+
+\begin{itemize} \item Kan de kennis van Eureka op een eenvoudige manier worden uitgebreid of gewijzigd, zodat ook docenten met beperkte technische kennis ermee kunnen werken?
+    \item Kan Eureka worden geïmplementeerd met beperkte financiële en computationele middelen?
+    \item Is Eureka uitrolbaar op een server?
 \end{itemize}
 
 %---------- Stand van zaken ---------------------------------------------------
@@ -35,40 +41,74 @@ Deze paper heeft als doel om een toegepast onderzoek te motiveren naar Eureka, e
 
 Om informatie te verkrijgen, onderscheiden veel studenten twee belangrijke informatiebronnen: bronnen afkomstig van de hogeschool en informatie uitgewisseld door studenten zelf.
 
-Vanuit de hogeschool worden verschillende bronnen van informatie aangeboden waarop studenten en docenten antwoorden kunnen vinden op hun vragen. Ten eerste zijn er de inleidende slides van het vak. Hierin is informatie te vinden over eventueel aan te schaffen materialen, mogelijke softwarevereisten, deadlines en de organisatie van het vak. Verder zijn er de studiefiches beschikbaar, die algemene informatie bevatten zoals de studielast, de leerresultaten en de evaluatievorm. Bij sommige vakken worden ook aanvullende bestanden verstrekt die studenten begeleiden bij bepaalde onderwerpen en vaak voorkomende problemen of vragen behandelen. Tot slot is bij sommige vakken ook een forum beschikbaar. Dit forum dient als centrale plaats om vragen te stellen, waarbij de antwoorden zichtbaar zijn voor alle studenten.
+Vanuit de hogeschool worden verschillende bro\-nnen van informatie aangeboden waarop studenten en docenten antwoorden kunnen vinden op hun vragen. Ten eerste zijn er de inleidende slides van het vak. Hierin is informatie te vinden over eventueel aan te schaffen materialen, mogelijke softwarevereisten, deadlines en de organisatie van het vak. Verder zijn er de studiefiches beschikbaar, die algemene informatie bevatten zoals de studielast, de leerresultaten en de evaluatievorm. Bij sommige vakken worden ook aanvullende bestanden verstrekt die studenten begeleiden bij bepaalde onderwerpen en vaak voorkomende problemen of vragen behandelen. Tot slot is bij sommige vakken ook een forum beschikbaar. Dit forum dient als centrale plaats om vragen te stellen, waarbij de antwoorden zichtbaar zijn voor alle studenten.
 
-Daarnaast maken veel mensen gebruik van sociale media om informatie over specifieke onderwerpen uit te wisselen, en studenten vormen hierop geen uitzondering. Sociale media wordt ingezet om met andere studenten over de vakinhoud te communiceren en zo nieuwe kennis op te doen. Deze veronderstelling is ook bevestigd in andere onderzoeken. \textcite{M.Talaue2018} en \textcite{Bal2017} interviewden verschillende studenten over hun gebruik van sociale media, waaruit blijkt dat een groot deel van hen sociale media gebruikt om vakken en hun inhoud te bespreken. Aan de HOGENT is dit eveneens het geval. Naast hun persoonlijke profielen op andere media, komen studenten samen op een \textit{Discord}-server. Deze server is 
-
-
-onderverdeeld in verschillende kanalen, waarbij elk kanaal een specifiek vak vertegenwoordigt. Studenten bespreken in deze kanalen alles wat met het desbetreffende vak te maken heeft en stellen er hun vragen.
+Daarnaast maken veel mensen gebruik van sociale media om informatie over specifieke onderwerpen uit te wisselen, en studenten vormen hierop geen uitzondering. Sociale media wordt ingezet om met andere studenten over de vakinhoud te communiceren en zo nieuwe kennis op te doen. Deze veronderstelling is ook bevestigd in andere onderzoeken. \textcite{M.Talaue2018} en \textcite{Bal2017} interviewden verschillende studenten over hun gebruik van sociale media, waaruit blijkt dat een groot deel van hen sociale media gebruikt om vakken en hun inhoud te bespreken. Aan de HOGENT is dit eveneens het geval. Naast hun persoonlijke profielen op andere media, komen studenten samen op een \textit{Discord}-server. Deze server is onderverdeeld in verschillende kanalen, waarbij elk kanaal een specifiek vak vertegenwoordigt. Studenten bespreken in deze kanalen alles wat met het desbetreffende vak te maken heeft en stellen er hun vragen. Aangezien deze server door studenten wordt beheerd en docenten er geen toegang toe hebben, omdat het geen officieel kanaal van HOGENT is, bestaat het risico dat er foutieve informatie wordt uitgewisseld.
 
 Zoals blijkt, is informatie verspreid over een verscheidenheid aan media. Informatie vinden kan daarom enige moeite kosten, en de kans op onduidelijkheden of tegenstrijdige informatie is aanzienlijk. In het geval van problemen is het laatste redmiddel voor studenten om contact op te nemen met de docent. De positie van docenten stelt hen in staat om elke onduidelijkheid op te helderen, maar zij beschikken niet altijd over de tijd hiervoor. Bovendien kan het herhaaldelijk beantwoorden van dezelfde vragen frustrerend zijn.
 
 We concluderen daarom dat er behoefte is aan een middel dat het zoekproces intuïtiever maakt en de belasting voor alle betrokken partijen verlicht. Wij stellen hiervoor een chatbot in de vorm van een virtuele assistent voor en zullen deze oplossing verder onderzoeken.
 
-\subsection{Chatbots}
+\subsection{Evolutie van chatbots}
 \label{sec:chatbots}
 
-\subsubsection{Overzicht}
+In de jaren zestig begon men met de eerste onderzoeken naar communicatie tussen computers en mensen. De onderzoekers hadden niet de intentie om grote doorbraken in het veld te realiseren, maar wilden enkel experimenteren met de grens tussen mens en machine \autocite{Dibitonto2018, AbuShawar2007}. Een van deze experimenten was \textit{ELIZA} \autocite{Weizenbaum1966}. ELIZA was ''een computerprogramma [...] dat bepaalde natuurlijke taalgesprekken tussen mens en computer mogelijk maakte''. Het werd ontwikkeld voor de IBM 7094 en geschreven in MAD-SLIP \autocite{Weizenbaum1966}. De werking van ELIZA kan grofweg als volgt worden samengevat: gegeven een invoerzin, werden vooraf gedefinieerde sleutelwoorden gezocht. Eens deze sleutelwoorden gevonden werden, werd het uiteindelijke antwoord gegenereerd door gebruik te maken van reconstructieregels.
 
-In de jaren zestig begon men met de eerste onderzoeken naar communicatie tussen computers en mensen. De onderzoekers hadden niet de intentie om grote doorbraken in het veld te realiseren, maar wilden enkel experimenteren met de grens tussen mens en machine \autocite{Dibitonto2018, AbuShawar2007}. Een van deze experimenten was \textit{ELIZA} \autocite{Weizenbaum1966}.
+Naargelang de onderzoek naar chatbots vorderde, werden betere architecturen bedacht maar de kern bleef onveranderd: pattern-matching-algortimen die regels toepasten met als doel de interactie zo natuurlijk mogelijk te laten aanvoelen \autocite{AbuShawar2007}. Hoewel de toepassing van chatbots als virtuele assistenten of informatieopzoeksystemen destijds als succesvol werd beschouwd \autocite{AbuShawar2007}, is het niet moeilijk voor te stellen hoe vatbaar deze technologie is voor fouten en rigiditeit. Wanneer een bepaalde casus niet wordt gedekt door een regel of de regels onvoldoende doordacht zijn, presteert de chatbot slecht, waardoor de interactie wordt belemmerd.
 
-ELIZA was "een computerprogramma [...] dat bepaalde natuurlijke taalgesprekken tussen mens en computer mogelijk maakte". Het werd ontwikkeld voor de IBM 7094 en geschreven in MAD-SLIP \autocite{Weizenbaum1966}. Grofweg uitgelegd, bestond ELIZA uit drie stappen: identificatie, transformatie en reconstructie.
-Tijdens de identificatiestap werd de ingevoerde zin onderzocht op het voorkomen van specifieke sleutelwoorden. Op basis van een rangsysteem werd de zin geanalyseerd en ingekort, waarbij alleen het belangrijkste sleutelwoord en een deel van de zin werden behouden. In de transformatiefase werd deze ingekorte zin met behulp van transformatieregels omgezet in een token. Deze token was cruciaal, omdat ELIZA op basis hiervan haar antwoord kon genereren. De laatste stap was de reconstructiefase. Hierin werd het uiteindelijke antwoord gegenereerd door elementen uit de token te combineren met reconstructieregels. Concreet hield dit in dat delen van de token werden gesubstitueerd in een reconstructieregel.
+Dankzij de toenemende rekenkracht van de afgelopen jaren en de groeiende interesse in het domein van artificiële intelligentie, zien we een nieuwe generatie chatbots ontstaan. De werking van deze chatbots maakt het mogelijk om af te stappen van het pattern-matching-paradigma. Deze chatbots maken namelijk gebruik van doorbraken in \textit{Natural Language Processing} (NLP) en zijn gebaseerd op \textit{Large Language Models} (LLM's) (zie \ref{sec:llms}). Dergelijke chatbots worden al in verschillende domeinen gebruikt met overtuigende resultaten \autocite{Dell’Acqua2023, Wang2024, Azam2024}.
 
-Zoals blijkt, waren de eerste chatbots in feite pattern-matching-algoritmen die regels toepasten met als doel de interactie zo natuurlijk mogelijk te laten aanvoelen. Latere chatbots waren variaties op hun voorgangers, met beter geformuleerde regels \autocite{AbuShawar2007}. Hoewel de toepassing van chatbots als virtuele assistenten of informatieopzoeksystemen destijds als succesvol werd beschouwd \autocite{AbuShawar2007}, is het niet moeilijk voor te stellen hoe vatbaar deze technologie is voor fouten en rigiditeit. Wanneer een bepaalde casus niet wordt gedekt door een regel of de regels onvoldoende doordacht zijn, presteert de chatbot slecht, waardoor de interactie wordt belemmerd.
+\subsection{Large Language Models}
+\label{sec:llms}
 
-Om deze beperkingen te overwinnen, moet worden afgestapt van het pattern-matching-paradigma en overgeschakeld naar technologieën die gebruikmaken van de krachtige mogelijkheden die recente technologische vooruitgang biedt. Dit verwijst naar de hedendaagse rekenkracht die beschikbaar is en de doorbraken binnen \textit{Natural Language Processing} (NLP).
+Sinds eind 2022 heeft vrijwel iedereen minstens één keer gehoord van \textit{ChatGPT}. Een analyse van de populariteit van deze term via \textit{Google Trends} laat zien dat de interesse in \textit{ChatGPT} voortdurend toeneemt. Deze doorbraak in artificiële intelligentie heeft Large Language Models en, in bredere zin, Natural Language Processing in de schijnwerpers gezet. NLP kan worden gedefinieerd als ``de tak van Artificiële Intelligentie die computers helpt menselijke taal te begrijpen, interpreteren en manipuleren`` \autocite{Zohuri2022}. Het omvat een reeks technieken die het mogelijk maken voor computers om op een natuurlijke manier te communiceren met mensen. LLM's daarentegen zijn intelligente systemen die, door gebruik te maken van NLP-technieken, in staat zijn om tekst te verwerken en te genereren met samenhangende communicatie.  Hoewel LLM's zeer populair zijn vandaag, is hun werking voor de meerderheid van mensen nog magie. Zodat de lezer een idee kan krijgen van wat er allemaal verborgen staat achter een LLM, geven we hier een bondig samenvatting dat gebaseerd is op \textcite{Naveed2023}.
 
-\subsubsection{Large Language Models (LLM)}
+Een LLM is een zeer diepe kunstmatige neurale netwerken dat rust op de \textit{transformer} architectuur (geintroduceerd door \textcite{Vaswani2017}). Elke moderne LLM heeft volgende basiscomponenten:
+\begin{itemize} 
+    \item \textbf{Tokenisatie}: Dit is een pre-processing dat training voorgaat. Hier, wordt de invoer onderverdeelt in tokens. Een token kan een character, stuk woord, symbool of woord zijn afhankelijk van de tokenisatie-techniek dat gebruikt wordt. 
+    \item \textbf{Aandacht}: Deze component wijst gewichten toe aan de input tokens zodat de model meer aandacht richt aan de belangrijkste tokens.
+    \item \textbf{Positionele encodering}: Jier wordt informatie toegevoegd met betrekking tot de posities van de tokens. Dit component werkt heel nauw samen met de aandacht zodat de model de invoer begrijpt. Anders uitgedrukt, wordt via aandacht de belangrijkste tokens geidentificieert en via positionele encodering wordt de volgerde en context van deze tokens verstaan.
+    \item \textbf{Activatiefunctie}: Deze functies laten toe de model om niet-lineaire relaties aan te leren, wat cruciaal is om met taal aan de slag te gaan.
+\end{itemize}
 
-Sinds eind 2022 heeft vrijwel iedereen minstens één keer gehoord van \textit{ChatGPT}. Een analyse van de populariteit van deze term via \textit{Google Trends} laat zien dat de interesse in \textit{ChatGPT} voortdurend toeneemt. Deze doorbraak in artificiële intelligentie heeft \textit{Large Language Models} (LLM's) en, in bredere zin, \textit{Natural Language Processing} (NLP) in de schijnwerpers gezet. NLP kan worden gedefinieerd als \textit{de tak van Artificiële Intelligentie die computers helpt menselijke taal te begrijpen, interpreteren en manipuleren} \autocite{Zohuri2022}. Het omvat een reeks technieken die het mogelijk maken voor computers om op een natuurlijke manier te communiceren met mensen.
+De training van de LLM gebeurt volgens \textcite{Bach2024} in drie fases:
+\begin{enumerate} 
+    \item \textbf{Self-supervised learning}: In deze stap moet de LLM, gegeven een zin met een ontbrekend woord (of woorden), een lijst genereren van mogelijke woorden die zouden kunnen passen. Deze lijst is gerangschikt op basis van waarschijnlijkheid. Het doel van deze fase is dat het model de eigenschappen van de taal leert begrijpen, evenals de specifieke kenmerken van het datadomein.
+    \item \textbf{Supervised learning}: Hier wordt het model getraind om taken uit te voeren. Voorbeelden van dergelijke taken zijn het genereren van code, het samenvatten van teksten en het beantwoorden van specifieke vragen, om er maar enkele te noemen. Het doel van deze fase is ervoor te zorgen dat het model daadwerkelijk nuttige taken kan uitvoeren in plaats van simpelweg woorden te raden.
+    \item \textbf{Reinforcement learning}: In deze stap worden de gewenste gedragingen aan het model aangeleerd. Dit gebeurt door gewenst gedrag te belonen en ongewenst gedrag te bestraffen.
+\end{enumerate}
 
-LLM's daarentegen zijn intelligente systemen die, door gebruik te maken van NLP-technieken, in staat zijn om tekst te verwerken en te genereren met samenhangende communicatie. Bovendien zijn ze toepasbaar op een breed reeks van taken \autocite{Naveed2023}.
+De indrukwekkende prestaties van LLM's in een reeks van taken (\autocite{Naveed2023}) zijn te danken aan de hedendaagse rekenkracht, de e\-nor\-me hoeveelheid beschikbare data (voortgebracht door sociale media en het \textit{Internet of Things}), en de groeiende interesse in dit domein \autocite{Zohuri2022, Naveed2023}. Hierdoor zijn LLM's uitermate geschikt als basis voor de ontwikkeling van Eureka. 
 
-De indrukwekkende prestaties van LLM's zijn te danken aan de hedendaagse rekenkracht, de enorme hoeveelheid beschikbare data (voortgebracht door sociale media en het \textit{Internet of Things}), en de groeiende interesse in dit domein \autocite{Zohuri2022, Naveed2023}. Hierdoor zijn LLM's uitermate geschikt als basis voor de ontwikkeling van Eureka. Het bouwen van een LLM van \textit{scratch} is echter niet haalbaar vanwege de aanzienlijke middelen die hiervoor nodig zijn. Zo beschrijven WeiLin2023 de ontwikkeling van een LLM gebaseerd op het open-source \textit{LLaMA}-model, waarbij ze het model hebben gefinetuned. Om aan hun criteria te voldoen, maakten ze gebruik van acht \textit{A100}-GPU's en bedroegen de trainingskosten meer dan 300 dollar. Daarnaast somt \textcite{Fourrier2024} verschillende open-source LLM's op, waarvan de meeste beschikken over meer dan 1 miljard parameters. Het opzetten van efficiënte LLM's vereist bovendien geavanceerde technieken en expertise \autocite{Naveed2023}.
+\subsection{Ontwerp}
 
-Gezien de aanzienlijke middelen, kennis en tijd die nodig zijn om zelf een LLM te ontwikkelen, kiezen we ervoor om bestaande LLM's te gebruiken voor de implementatie van Eureka.
+\subsubsection{Specialiseren van LLM's}
+
+Het doel van dit onderzoek is om een chatbot te implementeren, gebaseerd op een LLM, die vragen over vakken \textbf{gegeven aan de HOGENT} kan beantwoorden. Dit betekent dat onze LLM gespecialiseerde kennis moet hebben, in plaats van de algemene kennis die door bekende LLM's wordt gebruikt. Om een LLM te specialiseren, zijn er drie benaderingen mogelijk: zelf een LLM ontwerpen, een bestaande LLM \textit{fine-tunen}, of de kennis van een LLM uitbreiden met behulp van \textit{context-injectie}.
+
+De eerste benadering houdt in dat we zelf een LLM vanaf nul bouwen en trainen op door ons aangeleverde data. Dit is echter niet haalbaar vanwege de aanzienlijke middelen, expertise \autocite{Naveed2023} en tijd die hiervoor nodig zijn. \textcite{Fourrier2024} somt verschillende open-source LLM's op, waarvan de meeste meer dan 1 miljard parameters bevatten. Het is duidelijk dat het trainen van een model met 1 miljard parameters veel tijd kost en dat het ontwikkelen van een dergelijk model ook een hoog niveau van expertise vereist.
+
+Bij de tweede benadering wordt een bestaande LLM gebruikt, waarbij de gewichten worden aangepast om de LLM te specialiseren voor het specifieke doel waarvoor we deze nodig hebben. Zo hebben \textcite{Azam2024} PharmaLLM ontwikkeld, een chatbot die vragen over medicijnen kan beantwoorden. Dit model werd ontworpen door het Llama 2-model te fine-tunen met behulp van \textit{Low-Rank Adaptation} (LoRA). Met LoRA worden alleen de meest impactvolle gewichten aangepast om het model te specialiseren, waardoor het niet nodig is om alle gewichten van het model volledig te hertrainen. Enkel een subset van de gewichten wordt gewijzigd, wat aanzienlijk minder middelen vereist dan de eerste benadering. Hierdoor wordt de specialisatie haalbaar zonder de volledige parameterstructuur te hertrainen.
+
+Hoewel de tweede benadering haalbaarder lijkt, blijven de vereiste middelen aanzienlijk. Zo beschrijven \textcite{Chiang2023} de ontwikkeling van een LLM waarbij zij het model hebben gefinetuned. Om aan hun criteria te voldoen, maakten ze gebruik van acht \textit{A100}-GPU's, waarbij elke trainingssessie meer dan 300 dollar kostte. Bovendien is er, om de juiste fine-tuningtechniek te kiezen – LoRA is niet de enige techniek – en het model optimaal te fine-tunen, opnieuw expertise vereist
+
+De laatste benadering maakt gebruik van een techniek die we context-injectie gaan noemen. Elk LLM beschikt over een \textit{contextvenster}. In dit venster kan extra context worden toegevoegd die het LLM in rekening neemt bij het genereren van zijn antwoord. Het doel van context-injectie is om relevante informatie met betrekking tot de gestelde vraag in het venster te plaatsen. De informatie over de vakken wordt opgeslagen in een databank. Afhankelijk van de gestelde vraag halen we alleen de relevante informatie op. Met deze benadering kunnen we een bestaande LLM gebruiken zonder een trainingsfase, wat resulteert in lagere middelen en een expertise die gemakkelijker toegankelijk is. Context-injectie samen met de data vanuit een databank ophalen is wat men \textit{Retrieval-Augmented Generation} (RAG) noemt. Deze techniek wordt al succesvol toegepast in verschillende domeinen. We nodigen de lezers uit om \textcite{Wang2024} te raadplegen voor een voorbeeld van een chatbot die gebruikmaakt van RAG en een vergelijkbaar doel nastreeft als het onze.
+
+De laatste benadering is de meest veelbelovende met betrekking tot onze doelstellingen. Ze vraagt minder middelen en vereist geen vakexpertise om te benutten. We onderzoeken deze piste verder.
+
+\subsubsection{Retrieval-augmented-generation}
+
+In 2020 maakten \textcite{Lewis2020} de volgende vaststelling: LLM's zijn zeer geschikt om diepe inzichten te verkrijgen uit de data waarop ze getraind zijn. Hierdoor hebben ze geen externe \textit{knowledge bases} nodig om vragen te beantwoorden; hun vergaarde kennis fungeert als een impliciete knowledge base. Echter brengt dit enkele uitdagingen met zich mee. Ten eerste is het moeilijk om bestaande kennis te actualiseren zonder het leerproces volledig opnieuw te starten. Dit vormt een tijdrovend proces wanneer frequente updates noodzakelijk zijn. Daarnaast hebben LLM's moeite om vragen te beantwoorden over gebeurtenissen die zich hebben voorgedaan na hun laatste trainingssessie, aangezien ze deze kennis niet bezitten. Dit kan leiden tot hallucinaties \autocite{Gao2023}.
+
+Om deze beperkingen aan te pakken, introduceerden de auteurs een nieuwe techniek genaamd Retrieval-Augmented Generation (RAG). Bij deze techniek wordt een vraag beantwoord door aanvullende kennis op te halen uit externe bronnen en deze te gebruiken om een antwoord te genereren. Zoals \textcite{Lewis2020} het omschrijven: ''De invoersequentie $x$ wordt gebruikt om tekstdocumenten $z$ op te halen, die vervolgens dienen als aanvullende context bij het genereren van de doelsequentie $y$''.
+
+Alle RAG-systemen bestaan uit drie belangrijke stappen \autocite{Gao2023}:  
+
+\begin{enumerate} 
+    \item \textbf{Indexing}: Hier wordt ruwe data uit verschillende formaten (bijvoorbeeld PDF, HTML, DOCX) opgehaald. Vervolgens wordt deze data geconverteerd naar tekst en opgeschoond. Belangrijk hierbij is dat de tekst wordt opgedeeld in brokken. De reden hiervoor is dat het contextvenster van LLM's een beperkte grootte heeft, waardoor het beter is om alleen de relevante brok door te geven in plaats van het gehele document, waarbij het risico bestaat dat niet alles past. Bovendien is uit onderzoek gebleken dat LLM's meer aandacht besteden aan het begin en einde van het contextvenster en minder aan het midden. Dit fenomeen staat bekend als het \textit{lost in the middle}-fenomeen \autocite{Databricks}. Daarom is het beter om kleinere contexten door te geven dan grote, zodat de aandacht van de LLM behouden blijft. Uiteindelijk, worden de brokken opgeslaan in een vector-databank door gebruik te gaan maken van \textit{embedding} encodering.
+    \item \textbf{Retrieval}: In deze fase wordt de gebruikersinvoer omgezet in een vectorvoorstelling met behulp van dezelfde encodering als in de vorige stap. Op basis van deze vectorvoorstelling worden de relevante brokken opgehaald. Relevantie in deze context verwijst naar de brokken die een verband hebben met de gestelde vraag. Dit verband wordt bepaald door middel van vectorvergelijkingen. De opgehaalde brokken worden vervolgens gebruikt om het contextvenster te verrijken.
+    \item \textbf{Generation}: Tot slot wordt het finale antwoord gegenereerd. Merk op dat de LLM voornamelijk wordt gebruikt voor haar taalcapaciteiten bij het formuleren van het antwoord. Het grootste deel van het werk wordt echter uitgevoerd in de twee voorgaande fases.
+\end{enumerate}
 
 \subsubsection{Valkuilen}
 
@@ -83,29 +123,10 @@ Daarnaast is vastgesteld dat LLM's onderhevig kunnen zijn aan een fenomeen dat b
 \begin{itemize} 
   \item \textbf{Input-conflicterende hallucinatie}: de gegenereerde output heeft weinig tot geen verband met de ingevoerde gegevens. 
   \item \textbf{Context-conflicterende hallucinatie}: de gegenereerde output is in tegenspraak met eerder gegenereerde output. 
-  \item \textbf{Feit-conflicterende hallucinatie}: de output bevat onjuiste informatie over algemeen bekende feiten (bijvoorbeeld: "Parijs is de hoofdstad van Pakistan"). 
+  \item \textbf{Feit-conflicterende hallucinatie}: de output bevat onjuiste informatie over algemeen bekende feiten (bijvoorbeeld: ''Parijs is de hoofdstad van Pakistan''). 
 \end{itemize}
 
 Hallucinaties dienen strikt vermeden te worden bij het ontwerpen van Eureka, aangezien ze het risico met zich meebrengen om meer verwarring te zaaien in plaats van duidelijkheid te bieden.
-
-\subsection{Retrieval-augmented-generation (RAG)}
-\label{sec:RAG}
-
-In 2020 maakten \textcite{Lewis2020} de volgende vaststelling: LLM's zijn zeer geschikt om diepe inzichten te verkrijgen uit de data waarop ze getraind zijn. Hierdoor hebben ze geen externe \textit{knowledge bases} nodig om vragen te beantwoorden; hun vergaarde kennis fungeert als een impliciete knowledge base. Echter brengt dit enkele uitdagingen met zich mee. Ten eerste is het moeilijk om bestaande kennis te actualiseren zonder het leerproces volledig opnieuw te starten. Dit vormt een tijdrovend proces wanneer frequente updates noodzakelijk zijn. Daarnaast hebben LLM's moeite om vragen te beantwoorden over gebeurtenissen die zich hebben voorgedaan na hun laatste trainingssessie, aangezien ze deze kennis niet bezitten. Dit kan leiden tot hallucinaties \autocite{Gao2023}.
-
-Om deze beperkingen aan te pakken, introduceerden de auteurs een nieuwe techniek genaamd \textit{Retrieval-Augmented Generation} (RAG).
-
-Bij deze techniek wordt een vraag beantwoord door aanvullende kennis op te halen uit externe bronnen en deze te gebruiken om een antwoord te genereren. Zoals \textcite{Lewis2020} het omschrijven: \textit{De invoersequentie $x$ wordt gebruikt om tekstdocumenten $z$ op te halen, die vervolgens dienen als aanvullende context bij het genereren van de doelsequentie $y$}.
-
-Alle RAG-systemen bestaan uit drie belangrijke stappen: \textit{indexing}, \textit{retrieval} en \textit{generation} \autocite{Gao2023}.
-
-Tijdens de \textit{indexing}-fase wordt ruwe data uit verschillende formaten (bijvoorbeeld PDF, HTML, DOCX) opgehaald en opgeschoond. Vervolgens wordt deze data geconverteerd naar platte tekst en opgedeeld in kleine brokken. Deze brokken worden uiteindelijk gecodeerd en opgeslagen in een vector-database.
-
-In de \textit{retrieval}-fase wordt de gebruikersinvoer omgezet in een vectorvoorstelling met behulp van dezelfde codering als in de vorige stap. Op basis hiervan worden relevante documenten opgehaald die een relatie hebben met de gebruikersinvoer. Deze relatie wordt bepaald aan de hand van vectorvergelijkingen. De opgehaalde documenten worden vervolgens gebruikt om de context van de prompt te verrijken.
-
-Tot slot wordt in de \textit{generation}-fase het uiteindelijke antwoord gegenereerd en aan de gebruiker gepresenteerd.
-
-RAG zal een centrale rol spelen in de ontwikkeling van Eureka en zal verder worden onderzocht.
 
 \subsection{Besluit}
 
@@ -113,7 +134,7 @@ Uit de literatuurstudie blijkt dat een chatbot een geschikte oplossing biedt om 
 
 Chatbots zijn een technologie die al geruime tijd bestaat en oorspronkelijk voornamelijk gebaseerd was op patroonherkenning. Met de vooruitgang in NLP en, meer specifiek, in LLM's, kunnen we nu flexibelere chatbots ontwikkelen die niet langer afhankelijk zijn van strikt gedefinieerde regels. Het zelf ontwikkelen van een LLM valt echter buiten de scope van dit onderzoek en overschrijdt de beschikbare middelen. Daarom is besloten om een bestaande LLM te gebruiken.
 
-Aangezien bestaande LLM's vaak worden geleverd met vooraf vergaarde kennis, en we niet beschikken over de expertise om deze kennis direct te bewerken, is het noodzakelijk om de context van de LLM uit te breiden met externe bronnen. Om dit te realiseren, zal gebruik worden gemaakt van \textit{Retrieval-Augmented Generation} (RAG), een techniek die specifiek is ontworpen voor dit doel.
+Aangezien bestaande LLM's vaak worden geleverd met vooraf vergaarde kennis, en we niet beschikken over de expertise om deze kennis direct te bewerken, is het noodzakelijk om de context van de LLM uit te breiden met externe bronnen. Om dit te realiseren, zal gebruik worden gemaakt van RAG, een techniek die specifiek is ontworpen voor dit doel.
 
 Bij het ontwerp van Eureka zal er bovendien aandacht besteed moeten worden aan de valkuilen die voortkomen uit de menselijke natuur. Eureka moet voorbereid zijn op onverwachte interacties en situaties.
 
@@ -121,24 +142,52 @@ Bij het ontwerp van Eureka zal er bovendien aandacht besteed moeten worden aan d
 \section{Methodologie}%
 \label{sec:methodologie}
 
-Om de onderzoeksvraag te beantwoorden, wordt een Proof-of-Concept ontwikkeld. Voor de implementatie van deze PoC wordt gebruikgemaakt van twee belangrijke tools: LangChain en GPT4All. LangChain fungeert als een framework dat het mogelijk maakt om LLM's te integreren binnen een applicatie. GPT4All biedt een lokaal beschikbare LLM die geschikt is voor gebruik in dit onderzoek.
+Om de onderzoeksvraag te beantwoorden, wordt een Proof-of-Concept ontwikkeld. Om tot aan deze PoC te komen, werken we in verschillende fases:
 
-Daarnaast wordt ElasticSearch ingezet als opslag- en indexeringssysteem voor de gebruikte databronnen. ElasticSearch maakt het mogelijk om efficiënt data te doorzoeken en relevante informatie op te halen, zodat gebruikersvragen met nauwkeurige en relevante antwoorden kunnen worden beantwoord. Deze combinatie van technologieën vormt de kern van Eureka’s architectuur.
+\begin{enumerate}
+    \item \textbf{Ontdekken van de geschikte LLM}: In de eerste fase gaan we op zoek naar de juiste LLM. De meeste LLM's bieden ondersteuning voor het Engels, maar wij willen vooral ondersteuning aanbieden voor het Nederlands. Daarom zoeken we een model dat vloeiend is in het Nederlands. Om dit te onderzoeken, maken we gebruik van \textit{GPT4All}.
+    
+    GPT4All is een tool die het mogelijk maakt om LLM's lokaal te gebruiken op een dagelijkse computer. Hierdoor is het niet langer nodig om gebruik te maken van cloudinfrastructuren of gespecialiseerde hardware om met LLM's te werken \autocite{NST2024}. De beschikbare LLM's zijn te vinden op het platform \textit{Hugging Face}. Bovendien beschikt GPT4All over een functie genaamd \textit{LocalDocs}. Met LocalDocs kunnen persoonlijke bestanden worden gebruikt als extra context voor de LLM, indien relevant. Dit is zeer vergelijkbaar met RAG.
+    
+    \textbf{Ingeschatte duurtijd}: één week en half
+    
+    \item \textbf{Opzetten van het PoC lokaal}: In de tweede fase wordt een zogenoemde RAG-pijplijn aangemaakt. De pijplijn bestaat uit de volgende componenten: 
+    \begin{itemize} 
+        \item \textbf{Source Extractor}: Deze component voert twee taken uit. De eerste taak is het opschonen van de invoerbestanden. De tweede taak is het creëren van de brokken. Deze brokken worden vervolgens doorgegeven aan de Embedder. 
+        \item \textbf{Embedder}: De Embedder is verantwoordelijk voor het omzetten van de brokken naar embeddings. Een embedding kan worden gezien als een vectorvoorstelling van de brokken. Deze vectorvoorstelling wordt daarna doorgegeven aan de datastore. Daarnaast zet de Embedder de invoer van de gebruiker om in een embedding om de relevante brokken te kunnen ophalen. 
+        \item \textbf{Datastore}: Binnen de datastore worden de embeddings opgeslagen. De datastore is een vector-databank die het mogelijk maakt om relevante brokken op te zoeken, gegeven de ge-embedded invoer. De relevante brokken worden vervolgens doorgegeven aan de Conversation Manager. 
+        \item \textbf{Conversation Manager}: De Conversation Manager bestaat uit de eigenlijke LLM en een aantal voorgemaakte prompts. Deze voorgemaakte prompts dienen om de context te verrijken met de brokken en om de LLM te laten reageren zoals gewenst. De prompts bevatten aanwijzingen over hoe onverwachte interacties opgelost moeten worden.
+     \end{itemize}
+     
+     Om dit allemaal op te zetten, wordt LangChain gebruikt. LangChain fungeert als een framework dat het mogelijk maakt om LLM’s te integreren binnen een applicatie. Binnen LangChain bestaat ook de mogelijkheid om gebruik te maken van GPT4All. Hierdoor blijft het gebruik van cloudinfrastructuren en gespecialiseerde hardware overbodig.
+     
+     Voor de Datastore maken we gebruik van \textit{Chroma}, een vector-databank waarmee embeddings kunnen worden opgeslagen en vergelijkbare embeddings kunnen worden opgehaald. We kiezen voor een expliciete vector-databank in plaats van LocalDocs, omdat LocalDocs alleen kunnen worden ingeschakeld via de GUI van GPT4All. Aangezien we Eureka op een server willen uitrollen, kunnen we niet vertrouwen op een GUI.
+     
+     \textbf{Ingeschatte duurtijd}: drie tot vier weken
+     
+     \item \textbf{Testen van het PoC}: Het PoC zal worden getest op vakken die worden gegeven door de heer Van Vreckem. De gebruikte bestanden zijn PDF-bestanden van slides, opdrachten en studiefiches. Een reeks vragen zal aan de LLM worden gesteld, waarna de specialist (dhr. Van Vreckem) de antwoorden van het model beoordeelt. De focus ligt op de volgende punten:
+     
+     \begin{itemize} 
+         \item \textbf{Relevantie}: De gegenereerde antwoorden moeten inhoudelijk aansluiten bij de gestelde vragen. 
+         \item \textbf{Afwezigheid van hallucinaties}: De antwoorden mogen geen incorrecte of verzonnen informatie bevatten. 
+         \item \textbf{Geschiktheid}: De gegenereerde antwoorden moeten passend en professioneel zijn, zonder ongepaste inhoud. 
+     \end{itemize}
+     
+     Aangezien de RAG-pijplijn uit verschillende componenten bestaat, zullen dezelfde vragen worden gesteld bij verschillende instellingen van de pijplijn. De elementen die telkens worden gewijzigd, zijn de broklengte, het type Embedder en de gebruikte LLM. Dit heeft als doel de optimale instellingen te achterhalen.
+     
+     
+     Door deze evaluatiestrategie wordt verzekerd dat Eureka voldoet aan de gestelde eisen en als een betrouwbare en bruikbare tool kan fungeren voor studenten en docenten.
+     
+     \textbf{Ingeschatte duurtijd}: drie tot vier weken, loopt parallel met het opzetten van het PoC.
+     
+     \item \textbf{Uitplooien van het PoC op een server}: Zodra een overtuigende configuratie is gevonden, wordt het PoC op een server uitgerold, zodat het toegankelijk is via een REST API.
+\end{enumerate}
 
-Nadat de Proof-of-Concept is opgezet, wordt een reeks testprompts gegenereerd om de prestaties van Eureka te evalueren. Deze tests zijn gericht op drie belangrijke criteria:
-
-
-\begin{itemize} 
-    \item \textbf{Relevantie}: de gegenereerde antwoorden moeten inhoudelijk aansluiten bij de gestelde vragen.
-    \item \textbf{Afwezigheid van hallucinaties}: de antwoorden mogen geen incorrecte of verzonnen informatie bevatten.
-    \item \textbf{Geschiktheid}: de gegenereerde antwoorden moeten gepast en professioneel zijn, zonder ongepaste inhoud.
-\end{itemize}
-
-Door deze evaluatiestrategie wordt verzekerd dat Eureka voldoet aan de gestelde eisen en als een betrouwbare en bruikbare tool kan fungeren voor studenten en docenten.
 
 %---------- Verwachte resultaten ----------------------------------------------
 \section{Verwacht resultaat, conclusie}%
 \label{sec:verwachte_resultaten}
 
-De PoC zal worden ontwikkeld als een consoleapplicatie die in staat is om effectief en accuraat vragen van studenten en docenten te beantwoorden. De grootste uitdaging hierbij is het vermijden van hallucinaties door conflicten in de databronnen te minimaliseren en consistentie in de verstrekte informatie te waarborgen.
+Het resultaat van dit alles is Eureka, een virtuele assistent die docenten en studenten succesvol bijstaat met hun vragen. Eureka wordt beschikbaar gesteld via een REST API. Het systeem kan onverwachte interacties afhandelen en geeft toe wanneer het iets niet weet.
 
+Dankzij de Datastore wordt de mogelijkheid geopend om eenvoudig kennis toe te voegen of aan te passen zonder het gehele model te hoeven hertrainen. Dit maakt Eureka zeer flexibel in de dynamische omgeving van het onderwijs en toegankelijk voor gebruikers zonder dat zij experts hoeven te zijn om Eureka te onderhouden.
