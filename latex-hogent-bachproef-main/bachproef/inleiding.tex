@@ -29,9 +29,9 @@ Bij het opnemen van een vak worden studenten aan de HOGENT tijdens het semester 
 
 %Wees zo concreet mogelijk bij het formuleren van je onderzoeksvraag. Een onderzoeksvraag is trouwens iets waar nog niemand op dit moment een antwoord heeft (voor zover je kan nagaan). Het opzoeken van bestaande informatie (bv. ``welke tools bestaan er voor deze toepassing?'') is dus geen onderzoeksvraag. Je kan de onderzoeksvraag verder specifiëren in deelvragen. Bv.~als je onderzoek gaat over performantiemetingen, dan 
 
-Dankzij de technologische vooruitgang van de afgelopen jaren staat het vakgebied van artificiële intelligentie opnieuw in de schijnwerpers. \acrfull{AI} blijkt een krachtige tool te zijn voor het oplossen van complexe problemen die voor mensen moeilijk of zelfs onmogelijk op te lossen zijn. Zo wordt \acrshort{AI} ingezet om de \gls{recommender} van Netflix te verbeteren \autocite{Steck2021}, voor de vroege detectie van aandoeningen zoals Alzheimer \autocite{Lewis2024}, en om het werk van fastfoodmedewerkers te verlichten door bestellingen bij drive-thrus automatisch op te nemen \autocite{Kinnear2024}, om er maar enkele te noemen.
+Dankzij de technologische vooruitgang van de afgelopen jaren staat het vakgebied van \acrfull{AI} opnieuw in de schijnwerpers. \acrlong{AI} blijkt een krachtige tool te zijn voor het oplossen van complexe problemen die voor mensen moeilijk of zelfs onmogelijk op te lossen zijn. Zo wordt \acrshort{AI} ingezet om de \gls{recommender} van Netflix te verbeteren \autocite{Steck2021}, voor de vroege detectie van aandoeningen zoals Alzheimer \autocite{Lewis2024}, en om het werk van fastfoodmedewerkers te verlichten door bestellingen bij drive-thrus automatisch op te nemen \autocite{Kinnear2024}, om er maar enkele te noemen.
 
-Tussen al deze toepassingen is er één die onze aandacht meer dan de andere heeft getrokken, namelijk \acrfull{LLM} (zie \ref{llms}). \acrshort{LLM}'s zijn modellen die in staat zijn menselijke taal te begrijpen en te genereren. De beroemdste van hen is zonder twijfel \textit{ChatGPT}. Dit model heeft de wereld stormenderhand veroverd dankzij zijn vermogen om mensachtige gesprekken te voeren en de verscheidenheid aan taken die het kan uitvoeren. Deze revolutie heeft geleid tot de geboorte van een nieuwe generatie chatbot die gebruikmaken van \acrshort{LLM}'s als onderliggende technologie (zie \ref{chatbots}). In onze zoektocht naar een oplossing voor het bovengenoemde probleem lijken dergelijke chatbots een mogelijke uitkomst te bieden.
+Tussen al deze toepassingen is er één die onze aandacht meer dan de andere heeft getrokken, namelijk \acrfull{LLM} (zie \ref{sec:llms}). \acrshort{LLM}'s zijn modellen die in staat zijn menselijke taal te begrijpen en te genereren. De beroemdste van hen is zonder twijfel \textit{ChatGPT}. Dit model heeft de wereld stormenderhand veroverd dankzij zijn vermogen om mensachtige gesprekken te voeren en de verscheidenheid aan taken die het kan uitvoeren. Deze revolutie heeft geleid tot de geboorte van een nieuwe generatie chatbot die gebruikmaken van \acrshort{LLM}'s als onderliggende technologie (zie \ref{sec:chatbots}). In onze zoektocht naar een oplossing voor het bovengenoemde probleem lijken dergelijke chatbots een mogelijke uitkomst te bieden.
 
 In deze bachelorproef wordt de haalbaarheid van Eureka, een virtuele assistent die studenten en docenten ondersteunt bij het beantwoorden van vakgerelateerde vragen, en de toepasbaarheid ervan binnen de context van HOGENT onderzocht. Met andere woorden, we willen achterhalen of een dergelijke chatbot een geschikte oplossing biedt voor het voorliggende probleem en in welke mate deze effectief is.
  
@@ -42,11 +42,11 @@ In deze bachelorproef wordt de haalbaarheid van Eureka, een virtuele assistent d
 
 De haalbaarheid en toepasbaarheid van Eureka worden getoetst aan de hand van een \textit{Proof-of-Concept} (PoC). Deze PoC moet aan bepaalde criteria voldoen, zowel vanuit het probleemdomein als het oplossingsdomein, om als succesvol te worden beschouwd. Deze criteria vloeien voort uit de verwachtingen die studenten en docenten hebben van een dergelijke tool.
 
-Betreffende het probleemdomein wordt verwacht dat Eureka relevante antwoorden genereert; dit is immers de bestaansreden van deze tool. De bron van het antwoord moet ook worden meegedeeld, zodat de student of docent de betrouwbaarheid van de informatie kan verifiëren en deze verder kan doorzoeken indien gewenst. Daarnaast wordt verwacht dat hallucinaties (zie \ref{valkuilen}) strikt worden vermeden. Als valse informatie wordt verspreid, leidt dit tot meer verwarring en werkt het tegen het nut van deze tool in.
+Betreffende het probleemdomein wordt verwacht dat Eureka relevante antwoorden genereert; dit is immers de bestaansreden van deze tool. De bron van het antwoord moet ook worden meegedeeld, zodat de student of docent de betrouwbaarheid van de informatie kan verifiëren en deze verder kan doorzoeken indien gewenst. Daarnaast wordt verwacht dat hallucinaties (zie \ref{subsec:valkuilen}) strikt worden vermeden. Als valse informatie wordt verspreid, leidt dit tot meer verwarring en werkt het tegen het nut van deze tool in.
 
 Ten slotte wordt ook verwacht dat Eureka onverwachte interacties, zoals beledigingen, aankan. De menselijke natuur is onvoorspelbaar en dergelijke interacties zullen zich voordoen. Eureka moet hier robuust tegen zijn.
 
-Voor het oplossingsdomein wordt verwacht dat Eureka op een eenvoudige manier kan worden uitgebreid of gewijzigd. De schoolomgeving is zeer dynamisch en wijzigingen komen regelmatig voor. Deze wijzigingen moeten snel kunnen worden doorgevoerd in Eureka en op een gebruiksvriendelijke manier, zodat ook docenten met beperkte technische kennis dit kunnen doen.
+Voor het oplossingsdomein wordt verwacht dat Eureka op een eenvoudige manier kan worden uitgebreid of gewijzigd. De schoolomgeving is zeer dynamisch en wijzigingen komen regelmatig voor. Deze wijzigingen moeten snel kunnen worden doorgevoerd in Eureka en op een gebruiksvriendelijke manier, zodat ook docenten zonder gespecialiseerde technische kennis of expertise in het vakgebied dit kunnen doen.
 
 Bovendien moet de toepassing van Eureka rekening houden met de beperkte financiële en computationele middelen waarover we beschikken.
 
@@ -59,9 +59,19 @@ Bovendien moet de toepassing van Eureka rekening houden met de beperkte financi�
 
 De rest van deze bachelorproef is als volgt opgebouwd:
 
-In Hoofdstuk~\ref{ch:stand-van-zaken} wordt een overzicht gegeven van de stand van zaken binnen het onderzoeksdomein, op basis van een literatuurstudie.
+In Hoofdstuk~\ref{ch:literatuurstudie} bekijken we eerst de huidige situatie binnen HOGENT. We analyseren de verschillende informatiebronnen die studenten ter beschikking hebben en hoe deze de docenten beïnvloeden. Vervolgens onderzoeken we de stand van zaken binnen het onderzoeksdomein op basis van een literatuurstudie. Hierin geven we een kort overzicht van de geschiedenis van chatbots en zien we dat de huidige generatie chatbots gebaseerd is op \acrshort{LLM}'s. Daarna bespreken we wat \acrshort{LLM}'s zijn.
 
-In Hoofdstuk~\ref{ch:methodologie} wordt de methodologie toegelicht en worden de gebruikte onderzoekstechnieken besproken om een antwoord te kunnen formuleren op de onderzoeksvragen.
+Aangezien we een chatbot willen ontwerpen voor een specifieke use-case binnen HOGENT, bekijken we in de twee volgende onderdelen hoe een \acrshort{LLM} gespecialiseerd kan worden en wat er allemaal komt kijken bij de gekozen techniek. Uiteindelijk sluiten we de literatuurstudie af door de mogelijke valkuilen te benoemen die kunnen optreden bij het implementeren van dergelijke technologie.
+
+In Hoofdstuk~\ref{ch:methodologie} wordt de methodologie toegelicht. Hier bespreken we hoe het onderzoek is opgedeeld. Het onderzoek bestaat uit een ontdekkingsfase, een implementatiefase en een testfase.
+
+De ontdekkingsfase heeft als doel een \acrshort{LLM} te vinden die aan bepaalde verwachtingen voldoet. Deze fase wordt uitgevoerd in een beperkte en gecontroleerde omgeving.
+
+De implementatiefase omvat de daadwerkelijke implementatie van Eureka. Hierbij wordt een pijplijn opgebouwd, samengesteld uit verschillende componenten. Elk van deze componenten en hun functie worden verder toegelicht.
+
+Tijdens de testfase wordt Eureka geëvalueerd aan de hand van de gestelde verwachtingen. Hiervoor worden persona's gebruikt.
+
+Bij elke fase wordt ook een ingeschatte duurtijd vermeld.
 
 % TODO: Vul hier aan voor je eigen hoofstukken, één of twee zinnen per hoofdstuk
 
