@@ -26,5 +26,66 @@
 %% Maak voor elke fase (behalve het literatuuronderzoek) een NIEUW HOOFDSTUK aan
 %% en geef het een gepaste titel.
 
-\lipsum[21-25]
+Om de onderzoeksvraag te beantwoorden, wordt een Proof-of-Concept (PoC) ontwikkeld. Dit proces verloopt in verschillende fases, die fungeren als mijlpalen om de voortgang te bewaken en te bepalen of we op schema liggen.
+
+
+\begin{enumerate}
+    \item \textbf{Ontdekken van de geschikte LLM}: In de eerste fase gaan we op zoek naar de juiste LLM. De meeste LLM's bieden ondersteuning voor het Engels, maar wij willen vooral ondersteuning aanbieden voor het Nederlands. Daarom zoeken we een model dat vloeiend is in het Nederlands. Om dit te onderzoeken, maken we gebruik van \textit{GPT4All}.
+    
+    GPT4All is een tool die het mogelijk maakt om LLM's lokaal te gebruiken op een dagelijkse computer. Hierdoor is het niet langer nodig om gebruik te maken van cloudinfrastructuren of gespecialiseerde hardware om met LLM's te werken \autocite{NST2024}. De beschikbare LLM's zijn te vinden op het platform \textit{Hugging Face}. Bovendien beschikt GPT4All over een functie genaamd \textit{LocalDocs}. Met LocalDocs kunnen persoonlijke bestanden worden gebruikt als extra context voor de LLM, indien relevant. Dit is zeer vergelijkbaar met RAG.
+    
+    Om het juiste model te kiezen, wordt elk kandidaat-model getest met een reeks vragen, waarvan de antwoorden worden vergeleken met de verwachte antwoorden. De vragen omvatten zowel algemene onderwerpen als onderwerpen gerelateerd aan de inhoud van de LocalDocs. Deze tests bieden ook de mogelijkheid om prompt-engineering toe te passen en te evalueren welk model de beste antwoorden genereert binnen de beperkingen van de prompt.
+    
+    Deze fase wordt als succesvol beschouwd wanneer het model met de beste prestaties is geïdentificeerd. 
+    
+    \textbf{Ingeschatte duurtijd}: één week en half
+    
+    \item \textbf{Opzetten van het PoC lokaal}: In de tweede fase wordt een zogenoemde RAG-pijplijn aangemaakt. De pijplijn bestaat uit de volgende componenten: 
+    \begin{itemize} 
+        \item \textbf{Source Extractor}: Deze component voert twee taken uit. De eerste taak is het opschonen van de invoerbestanden. De tweede taak is het creëren van de brokken. Deze brokken worden vervolgens doorgegeven aan de Embedder. 
+        
+        Om de correcte werking van dit onderdeel te testen, wordt de uitvoer van het opschoonproces van de invoerbestanden geanalyseerd, evenals de gegenereerde brokken. 
+        \item \textbf{Embedder}: De Embedder is verantwoordelijk voor het omzetten van de brokken naar embeddings. Een embedding kan worden gezien als een vectorvoorstelling van de brokken. Deze vectorvoorstelling wordt daarna doorgegeven aan de datastore. Daarnaast zet de Embedder de invoer van de gebruiker om in een embedding om de relevante brokken te kunnen ophalen. 
+        
+        Dit onderdeel wordt als voltooid beschouwd wanneer de embeddings correct worden gegenereerd en succesvol in de datastore worden opgeslagen
+        \item \textbf{Datastore}: Binnen de datastore worden de embeddings opgeslagen. De datastore is een vector-databank die het mogelijk maakt om relevante brokken op te zoeken, gegeven de ge-embedded invoer. De relevante brokken worden vervolgens doorgegeven aan de Conversation Manager. 
+        \item \textbf{Conversation Manager}: De Conversation Manager bestaat uit de eigenlijke LLM en een aantal voorgemaakte prompts. Deze voorgemaakte prompts dienen om de context te verrijken met de brokken en om de LLM te laten reageren zoals gewenst. De prompts bevatten aanwijzingen over hoe onverwachte interacties opgelost moeten worden. Deze prompts werden gedeeltelijk in de vorige fase aangemaakt en hier verder uitgewerkt. 
+        
+        Deze component wordt als voltooid beschouwd wanneer de gegenereerde antwoorden daadwerkelijk gebaseerd zijn op de informatie die is opgeslagen in de datastore. Dit bevestigt dat de relevante databrokken correct worden opgehaald en gebruikt.
+    \end{itemize}
+    
+    Om dit allemaal op te zetten, wordt LangChain gebruikt. LangChain fungeert als een framework dat het mogelijk maakt om LLM’s te integreren binnen een applicatie. Binnen LangChain bestaat ook de mogelijkheid om gebruik te maken van GPT4All. Hierdoor blijft het gebruik van cloudinfrastructuren en gespecialiseerde hardware overbodig.
+    
+    Voor de Datastore maken we gebruik van \textit{Chroma}, een vector-databank waarmee embeddings kunnen worden opgeslagen en vergelijkbare embeddings kunnen worden opgehaald. We kiezen voor een expliciete vector-databank in plaats van LocalDocs, omdat LocalDocs alleen kunnen worden ingeschakeld via de GUI van GPT4All. Aangezien we Eureka op een server willen uitrollen, kunnen we niet vertrouwen op een GUI.
+    
+    Er wordt pas overgeschakeld naar het volgende onderdeel van de pijplijn wanneer de huidige component als voltooid wordt beschouwd. Zo niet, dan wordt de huidige component verder geoptimaliseerd en aangepast totdat deze correct functioneert.
+    
+    \textbf{Ingeschatte duurtijd}: vier weken (één week per component van de pijplijn)
+    
+    \item \textbf{Testen van het PoC}: Het PoC zal worden getest op vakken die worden gegeven door de heer Van Vreckem. De gebruikte bestanden zijn PDF-bestanden van slides, opdrachten en studiefiches. Een reeks vragen zal aan de LLM worden gesteld, waarna de specialist (dhr. Van Vreckem) de antwoorden van het model beoordeelt. De antwoorden moeten voldoen aan de verwachtingen van de verschillende stakeholders
+    
+    \begin{itemize} 
+        \item \textbf{Student}:
+        \begin{enumerate} 
+            \item Als student wil ik dat de gegenereerde antwoorden inhoudelijk aansluiten bij de gestelde vragen.
+            \item Als student wil ik dat de antwoorden correcte informatie bevatten. 
+            \item Als student wil ik dat, indien de antwoord niet gekend is, er verwijst wordt naar mogelijke pistes om een antwoord te bekomen. Echter, wil ik geen valse informatie ondervinden.
+        \end{enumerate}
+        \item \textbf{Docent}:
+        \begin{enumerate} 
+            \item Als docent wil ik dat de gegenereerde antwoorden correcte informatie bevatten voor de studenten.
+            \item Als docent wil ik dat Eureka naar hulpzame bronnen verwijst zodat de student mogelijke verdere vragen zelf kan beantwoorden. 
+            \item Als docent wil ik gemakkelijk mijn bronnen kunnen wijzigingen indien er aanpassingen zijn.
+            \item Als docent wil ik dat de gegenereerde antwoorden passend en professioneel zijn, zonder ongepaste inhoud.
+        \end{enumerate}    
+    \end{itemize}
+    
+    Aangezien de RAG-pijplijn uit verschillende componenten bestaat, zal de test verschillende keren herhaald worden met verschillende instellingen van de pijplijn. De elementen die telkens worden gewijzigd, zijn de broklengte, het type Embedder en de gebruikte LLM. Dit heeft als doel de optimale instellingen te achterhalen. Het testen
+    
+    Door deze evaluatiestrategie wordt verzekerd dat Eureka voldoet aan de gestelde eisen en als een betrouwbare en bruikbare tool kan fungeren voor studenten en docenten.
+    
+    \textbf{Ingeschatte duurtijd}: drie tot vier weken, loopt parallel met het opzetten van het PoC.
+    
+    \item \textbf{Uitplooien van het PoC op een server}: Zodra een overtuigende configuratie is gevonden, wordt het PoC op een server uitgerold, zodat het toegankelijk is via een REST API.
+\end{enumerate}
 

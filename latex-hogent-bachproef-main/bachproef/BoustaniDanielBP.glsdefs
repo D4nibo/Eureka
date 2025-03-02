@@ -1,0 +1,168 @@
+\glsdefs@newdocentry{AI}%
+{%
+name={\acronymfont {\glsentryshort {AI}}},%
+sort={AI},%
+type={acronym},%
+first={AI},%
+firstplural={AIs},%
+text={AI},%
+plural={AIs},%
+description={Artificiële intelligentie},%
+descriptionplural={Artificiële intelligentie},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Artificiële intelligentie},%
+longplural={Artificiële intelligenties},%
+short={AI},%
+shortplural={AIs},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{NLP}%
+{%
+name={\acronymfont {\glsentryshort {NLP}}},%
+sort={NLP},%
+type={acronym},%
+first={NLP},%
+firstplural={NLPs},%
+text={NLP},%
+plural={NLPs},%
+description={Natural Language Processing},%
+descriptionplural={Natural Language Processing},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Natural Language Processing},%
+longplural={Natural Language Processings},%
+short={NLP},%
+shortplural={NLPs},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{LLM}%
+{%
+name={\acronymfont {\glsentryshort {LLM}}},%
+sort={LLM},%
+type={acronym},%
+first={LLM},%
+firstplural={LLMs},%
+text={LLM},%
+plural={LLMs},%
+description={Large Language Models},%
+descriptionplural={Large Language Models},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Large Language Models},%
+longplural={Large Language Modelss},%
+short={LLM},%
+shortplural={LLMs},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{RAG}%
+{%
+name={\acronymfont {\glsentryshort {RAG}}},%
+sort={RAG},%
+type={acronym},%
+first={RAG},%
+firstplural={RAGs},%
+text={RAG},%
+plural={RAGs},%
+description={Retrieval-augmented-generation},%
+descriptionplural={Retrieval-augmented-generation},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Retrieval-augmented-generation},%
+longplural={Retrieval-augmented-generations},%
+short={RAG},%
+shortplural={RAGs},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{LoRA}%
+{%
+name={\acronymfont {\glsentryshort {LoRA}}},%
+sort={LoRA},%
+type={acronym},%
+first={LoRA},%
+firstplural={LoRAs},%
+text={LoRA},%
+plural={LoRAs},%
+description={Low-Rank Adaptation},%
+descriptionplural={Low-Rank Adaptation},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Low-Rank Adaptation},%
+longplural={Low-Rank Adaptations},%
+short={LoRA},%
+shortplural={LoRAs},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{recommender}%
+{%
+name={Aanbevelingssysteem},%
+sort={Aanbevelingssysteem},%
+type={main},%
+first={Aanbevelingssysteem},%
+firstplural={Aanbevelingssysteems},%
+text={Aanbevelingssysteem},%
+plural={Aanbevelingssysteems},%
+description={Een algoritme/software die bepaalde items aan gebruikers zal aanbevelen op basis van hun voorkeuren en gedrag. Dergelijke systemen zorgen voor een gepersonaliseerde ervaringen.},%
+descriptionplural={Een algoritme/software die bepaalde items aan gebruikers zal aanbevelen op basis van hun voorkeuren en gedrag. Dergelijke systemen zorgen voor een gepersonaliseerde ervaringen.},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
