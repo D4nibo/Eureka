@@ -166,3 +166,59 @@ parent={},%
 %
 }%
 
+\glsdefs@newdocentry{ChatGPT}%
+{%
+name={ChatGPT},%
+sort={ChatGPT},%
+type={main},%
+first={ChatGPT},%
+firstplural={ChatGPTs},%
+text={ChatGPT},%
+plural={ChatGPTs},%
+description={Een model ontwikkeld door het bedrijf OpenAI dat in staat is om mensachtige interacties te voeren. Met andere woorden, het kan tekst begrijpen en genereren. Dit model kreeg wereldwijd aandacht eind 2022.},%
+descriptionplural={Een model ontwikkeld door het bedrijf OpenAI dat in staat is om mensachtige interacties te voeren. Met andere woorden, het kan tekst begrijpen en genereren. Dit model kreeg wereldwijd aandacht eind 2022.},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{label}%
+{%
+name={Gelabelde data},%
+sort={Gelabelde data},%
+type={main},%
+first={Gelabelde data},%
+firstplural={Gelabelde datas},%
+text={Gelabelde data},%
+plural={Gelabelde datas},%
+description={Trainingsdata waarbij elk gegeven voorzien is van een bijbehorende annotatie. Dit annotatie helpt een model patronen te herkennen en correcte voorspellingen te maken. Voorbeeld: indien we een model willen trainen om katten op foto's te herkennen, worden afbeeldingen van katten gelabeld als "kat". Hierdoor leert het model onderscheid te maken tussen katten en andere objecten.},%
+descriptionplural={Trainingsdata waarbij elk gegeven voorzien is van een bijbehorende annotatie. Dit annotatie helpt een model patronen te herkennen en correcte voorspellingen te maken. Voorbeeld: indien we een model willen trainen om katten op foto's te herkennen, worden afbeeldingen van katten gelabeld als "kat". Hierdoor leert het model onderscheid te maken tussen katten en andere objecten.},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
