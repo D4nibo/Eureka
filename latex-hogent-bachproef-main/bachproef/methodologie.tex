@@ -30,9 +30,9 @@ Om de onderzoeksvraag te beantwoorden, wordt een Proof-of-Concept (PoC) ontwikke
 
 
 \begin{enumerate}
-    \item \textbf{Ontdekken van de geschikte \acrshort{LLM}}: In de eerste fase gaan we op zoek naar de juiste \acrshort{LLM}. De meeste \acrshort{LLM}'s bieden ondersteuning voor het Engels, maar wij willen vooral ondersteuning aanbieden voor het Nederlands. Daarom zoeken we een model dat vloeiend is in het Nederlands. Om dit te onderzoeken, maken we gebruik van \textit{GPT4All}.
+    \item \textbf{Ontdekken van de geschikte \acrshort{LLM}}: In de eerste fase gaan we op zoek naar de juiste \acrshort{LLM}. De meeste \acrshort{LLM}'s bieden ondersteuning voor het Engels, maar wij willen vooral ondersteuning aanbieden voor het Nederlands. Daarom zoeken we een model dat vloeiend is in het Nederlands. Om dit te onderzoeken, maken we gebruik van \emph{GPT4All}.
     
-    GPT4All is een tool die het mogelijk maakt om \acrshort{LLM}'s lokaal te gebruiken op een dagelijkse computer. Hierdoor is het niet langer nodig om gebruik te maken van cloudinfrastructuren of gespecialiseerde hardware om met \acrshort{LLM}'s te werken \autocite{NST2024}. De beschikbare \acrshort{LLM}'s zijn te vinden op het platform \textit{Hugging Face}. Bovendien beschikt GPT4All over een functie genaamd \textit{LocalDocs}. Met LocalDocs kunnen persoonlijke bestanden worden gebruikt als extra context voor de \acrshort{LLM}, indien relevant. Dit is zeer vergelijkbaar met RAG.
+    GPT4All is een tool die het mogelijk maakt om \acrshort{LLM}'s lokaal te gebruiken op een dagelijkse computer. Hierdoor is het niet langer nodig om gebruik te maken van cloudinfrastructuren of gespecialiseerde hardware om met \acrshort{LLM}'s te werken \autocite{NST2024}. De beschikbare \acrshort{LLM}'s zijn te vinden op het platform \emph{Hugging Face}. Bovendien beschikt GPT4All over een functie genaamd \emph{LocalDocs}. Met LocalDocs kunnen persoonlijke bestanden worden gebruikt als extra context voor de \acrshort{LLM}, indien relevant. Dit is zeer vergelijkbaar met RAG.
     
     Om het juiste model te kiezen, wordt elk kandidaat-model getest met een reeks vragen, waarvan de antwoorden worden vergeleken met de verwachte antwoorden. De vragen omvatten zowel algemene onderwerpen als onderwerpen gerelateerd aan de inhoud van de LocalDocs. Deze tests bieden ook de mogelijkheid om prompt-engineering toe te passen en te evalueren welk model de beste antwoorden genereert binnen de beperkingen van de prompt.
     
@@ -56,15 +56,15 @@ Om de onderzoeksvraag te beantwoorden, wordt een Proof-of-Concept (PoC) ontwikke
         Deze component wordt als voltooid beschouwd wanneer de gegenereerde antwoorden daadwerkelijk gebaseerd zijn op de informatie die is opgeslagen in de datastore. Dit bevestigt dat de relevante databrokken correct worden opgehaald en gebruikt.
     \end{itemize}
     
-    Om dit allemaal op te zetten, wordt LangChain gebruikt. LangChain fungeert als een framework dat het mogelijk maakt om \acrshort{LLM}’s te integreren binnen een applicatie. Binnen LangChain bestaat ook de mogelijkheid om gebruik te maken van GPT4All. Hierdoor blijft het gebruik van cloudinfrastructuren en gespecialiseerde hardware overbodig.
+    Om dit allemaal op te zetten, wordt LangChain gebruikt. LangChain fungeert als een framework dat het mogelijk maakt om \acrshort{LLM}'s te integreren binnen een applicatie. Binnen LangChain bestaat ook de mogelijkheid om gebruik te maken van GPT4All. Hierdoor blijft het gebruik van cloudinfrastructuren en gespecialiseerde hardware overbodig.
     
-    Voor de Datastore maken we gebruik van \textit{Chroma}, een vector-databank waarmee embeddings kunnen worden opgeslagen en vergelijkbare embeddings kunnen worden opgehaald. We kiezen voor een expliciete vector-databank in plaats van LocalDocs, omdat LocalDocs alleen kunnen worden ingeschakeld via de GUI van GPT4All. Aangezien we Eureka op een server willen uitrollen, kunnen we niet vertrouwen op een GUI.
+    Voor de Datastore maken we gebruik van \emph{Chroma}, een vector-databank waarmee embeddings kunnen worden opgeslagen en vergelijkbare embeddings kunnen worden opgehaald. We kiezen voor een expliciete vector-databank in plaats van LocalDocs, omdat LocalDocs alleen kunnen worden ingeschakeld via de GUI van GPT4All. Aangezien we Eureka op een server willen uitrollen, kunnen we niet vertrouwen op een GUI.
     
     Er wordt pas overgeschakeld naar het volgende onderdeel van de pijplijn wanneer de huidige component als voltooid wordt beschouwd. Zo niet, dan wordt de huidige component verder geoptimaliseerd en aangepast totdat deze correct functioneert.
     
     \textbf{Ingeschatte duurtijd}: vier weken (één week per component van de pijplijn)
     
-    \item \textbf{Testen van het PoC}: Het PoC zal worden getest op vakken die worden gegeven door de heer Van Vreckem. Deze vakken zijn \textit{Data Science \& AI}, \textit{Infrastructure Automation} en \textit{Linux for Data Scientists}.
+    \item \textbf{Testen van het PoC}: Het PoC zal worden getest op vakken die worden gegeven door de heer Van Vreckem. Deze vakken zijn \emph{Data Science \& AI}, \emph{Infrastructure Automation} en \emph{Linux for Data Scientists}.
     
     De gebruikte bestanden zijn PDF-bestanden van slides, opdrachten en studiefiches. Een reeks vragen zal aan de \acrshort{LLM} worden gesteld, waarna de specialist die de docenten vertegenwoordigt (dhr. Van Vreckem) en de persoon die de studenten vertegenwoordigt de antwoorden van het model zullen beoordelen.
     

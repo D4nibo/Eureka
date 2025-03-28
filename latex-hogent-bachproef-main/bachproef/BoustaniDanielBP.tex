@@ -47,8 +47,7 @@
 
 % Other packages not already included can be imported here
 \usepackage[toc,acronym]{glossaries}
-\makeglossaries
-
+\makeglossaries{}
 
 %%---------- Document metadata -------------------------------------------------
 % TODO: Replace this with your own information
@@ -132,23 +131,22 @@
 \newglossaryentry{recommender}
 {
     name=Aanbevelingssysteem,
-    description={Een algoritme/software die bepaalde items aan gebruikers zal aanbevelen op basis van hun voorkeuren en gedrag. Dergelijke systemen zorgen voor een gepersonaliseerde ervaringen.}
+    description={Een algoritme/software die bepaalde items aan gebruikers zal aanbevelen op basis van hun voorkeuren en gedrag. Dergelijke systemen zorgen voor een gepersonaliseerde ervaringen}
 }
 
 \newglossaryentry{ChatGPT}
 {
     name=ChatGPT,
-    description={Een model ontwikkeld door het bedrijf OpenAI dat in staat is om mensachtige interacties te voeren. Met andere woorden, het kan tekst begrijpen en genereren. Dit model kreeg wereldwijd aandacht eind 2022.}
+    description={Een model ontwikkeld door het bedrijf OpenAI dat in staat is om mensachtige interacties te voeren. Met andere woorden, het kan tekst begrijpen en genereren. Dit model kreeg wereldwijd aandacht eind 2022}
 }
 
 \newglossaryentry{label}
 {
     name=Gelabelde data,
-    description={Trainingsdata waarbij elk gegeven voorzien is van een bijbehorende annotatie. Dit annotatie helpt een model patronen te herkennen en correcte voorspellingen te maken. Voorbeeld: indien we een model willen trainen om katten op foto's te herkennen, worden afbeeldingen van katten gelabeld als "kat". Hierdoor leert het model onderscheid te maken tussen katten en andere objecten.}
+    description={Trainingsdata waarbij elk gegeven voorzien is van een bijbehorende annotatie. Dit annotatie helpt een model patronen te herkennen en correcte voorspellingen te maken. Voorbeeld: indien we een model willen trainen om katten op foto's te herkennen, worden afbeeldingen van katten gelabeld als ``kat''. Hierdoor leert het model onderscheid te maken tussen katten en andere objecten}
 }
 
-
-\printglossary
+\printglossary{}
 \printglossary[type=\acronymtype]
 
 %---------- Kern ---------------------------------------------------------------
