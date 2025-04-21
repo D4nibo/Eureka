@@ -1,0 +1,1716 @@
+{
+  "table_of_contents": [
+    {
+      "title": "1. Continuous Integration/\nDeployment with Jenkins",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          68.74039381742477,
+          69.13783925771713
+        ],
+        [
+          447.3935967683792,
+          67.49330800771713
+        ],
+        [
+          446.2314873933792,
+          138.1532596051693
+        ],
+        [
+          67.57828444242477,
+          139.7977908551693
+        ]
+      ]
+    },
+    {
+      "title": "Intro",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          68.17139271646738,
+          76.50799560546875
+        ],
+        [
+          146.46067810058594,
+          76.50799560546875
+        ],
+        [
+          146.46067810058594,
+          103.47076416015625
+        ],
+        [
+          68.17139271646738,
+          104.28275635838509
+        ]
+      ]
+    },
+    {
+      "title": "Traditional release",
+      "heading_level": null,
+      "page_id": 2,
+      "polygon": [
+        [
+          66.91680453717709,
+          71.51905456185341
+        ],
+        [
+          303.6454772949219,
+          69.87452331185341
+        ],
+        [
+          303.6454772949219,
+          99.11079892516136
+        ],
+        [
+          66.91680453717709,
+          100.75533017516136
+        ]
+      ]
+    },
+    {
+      "title": "How e.g. Facebook does it",
+      "heading_level": null,
+      "page_id": 3,
+      "polygon": [
+        [
+          68.75550180673599,
+          73.24500185251236
+        ],
+        [
+          397.6232604980469,
+          71.60047060251236
+        ],
+        [
+          397.6232604980469,
+          99.20636773109436
+        ],
+        [
+          67.59339243173599,
+          100.85089898109436
+        ]
+      ]
+    },
+    {
+      "title": "Continuous Integration/Delivery",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          68.64579156041145,
+          71.49975761771202
+        ],
+        [
+          473.145263671875,
+          71.49975761771202
+        ],
+        [
+          473.145263671875,
+          99.22789800167084
+        ],
+        [
+          68.64579156041145,
+          99.22789800167084
+        ]
+      ]
+    },
+    {
+      "title": "CI vs CD. (Redhat, 2020)",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          68.56631502509117,
+          242.18899500370026
+        ],
+        [
+          381.56329345703125,
+          242.18899500370026
+        ],
+        [
+          381.56329345703125,
+          274.02955508232117
+        ],
+        [
+          68.56631502509117,
+          274.02955508232117
+        ]
+      ]
+    },
+    {
+      "title": "Typical tasks (1)",
+      "heading_level": null,
+      "page_id": 5,
+      "polygon": [
+        [
+          66.50346271693707,
+          70.39257976412773
+        ],
+        [
+          266.2031555175781,
+          68.74804851412773
+        ],
+        [
+          266.2031555175781,
+          101.6411452293396
+        ],
+        [
+          66.50346271693707,
+          103.2856764793396
+        ]
+      ]
+    },
+    {
+      "title": "Typical tasks (2)",
+      "heading_level": null,
+      "page_id": 6,
+      "polygon": [
+        [
+          66.69220618903637,
+          70.17422819137573
+        ],
+        [
+          270.4559326171875,
+          68.52969694137573
+        ],
+        [
+          270.4559326171875,
+          101.594232827425
+        ],
+        [
+          66.69220618903637,
+          103.238764077425
+        ]
+      ]
+    },
+    {
+      "title": "CI/CD tooling",
+      "heading_level": null,
+      "page_id": 7,
+      "polygon": [
+        [
+          67.95008815824986,
+          75.11306649446487
+        ],
+        [
+          268.8443298339844,
+          73.46853524446487
+        ],
+        [
+          268.8443298339844,
+          104.26984572410583
+        ],
+        [
+          67.95008815824986,
+          105.91437697410583
+        ]
+      ]
+    },
+    {
+      "title": "Overview",
+      "heading_level": null,
+      "page_id": 8,
+      "polygon": [
+        [
+          66.68317154049873,
+          74.39335195720196
+        ],
+        [
+          195.6093292236328,
+          72.74882070720196
+        ],
+        [
+          195.6093292236328,
+          99.06658935546875
+        ],
+        [
+          66.68317154049873,
+          99.42836414277554
+        ]
+      ]
+    },
+    {
+      "title": "Jenkins",
+      "heading_level": null,
+      "page_id": 10,
+      "polygon": [
+        [
+          67.20866180956364,
+          72.27093903720379
+        ],
+        [
+          170.15589904785156,
+          70.62640778720379
+        ],
+        [
+          170.15589904785156,
+          99.06658935546875
+        ],
+        [
+          67.20866180956364,
+          100.37701345980167
+        ]
+      ]
+    },
+    {
+      "title": "https://www.jenkins.io/",
+      "heading_level": null,
+      "page_id": 10,
+      "polygon": [
+        [
+          69.26474921405315,
+          112.87413731217384
+        ],
+        [
+          315.5827736854553,
+          111.22960606217384
+        ],
+        [
+          314.58111572265625,
+          139.63651457428932
+        ],
+        [
+          68.10263983905315,
+          141.28104582428932
+        ]
+      ]
+    },
+    {
+      "title": "Jenkins Example output\n(Wikipedia)",
+      "heading_level": null,
+      "page_id": 11,
+      "polygon": [
+        [
+          67.83912777900696,
+          371.227359354496
+        ],
+        [
+          381.6629333496094,
+          371.227359354496
+        ],
+        [
+          381.6629333496094,
+          436.4400646686554
+        ],
+        [
+          67.83912777900696,
+          436.4400646686554
+        ]
+      ]
+    },
+    {
+      "title": "A Github Actions case",
+      "heading_level": null,
+      "page_id": 12,
+      "polygon": [
+        [
+          67.62703962624073,
+          70.87500336766243
+        ],
+        [
+          347.2596130371094,
+          70.87500336766243
+        ],
+        [
+          347.2596130371094,
+          99.32179808616638
+        ],
+        [
+          67.62703962624073,
+          99.32179808616638
+        ]
+      ]
+    },
+    {
+      "title": "Working with Github Actions",
+      "heading_level": null,
+      "page_id": 13,
+      "polygon": [
+        [
+          67.28937074542046,
+          71.37438394129276
+        ],
+        [
+          435.1690673828125,
+          69.72985269129276
+        ],
+        [
+          435.1690673828125,
+          99.94167791306973
+        ],
+        [
+          66.12726137042046,
+          101.58620916306973
+        ]
+      ]
+    },
+    {
+      "title": "Example workow",
+      "heading_level": null,
+      "page_id": 14,
+      "polygon": [
+        [
+          69.59135308861732,
+          75.95361328125
+        ],
+        [
+          308.1925964355469,
+          75.21031656861305
+        ],
+        [
+          308.1925964355469,
+          99.06658935546875
+        ],
+        [
+          69.59135308861732,
+          99.67648294568062
+        ]
+      ]
+    },
+    {
+      "title": "https://github.com/HoGentTIN/infra-\nslides/blob/main/.github/workows/compile.yml",
+      "heading_level": null,
+      "page_id": 14,
+      "polygon": [
+        [
+          67.0455327630043,
+          115.48719197511673
+        ],
+        [
+          571.04736328125,
+          115.48719197511673
+        ],
+        [
+          571.04736328125,
+          162.98487597703934
+        ],
+        [
+          67.0455327630043,
+          162.98487597703934
+        ]
+      ]
+    },
+    {
+      "title": "Another case: testing Ansible roles",
+      "heading_level": null,
+      "page_id": 15,
+      "polygon": [
+        [
+          68.37370589375496,
+          73.15258228778839
+        ],
+        [
+          505.5942687988281,
+          71.50805103778839
+        ],
+        [
+          505.5942687988281,
+          99.13231664896011
+        ],
+        [
+          67.21159651875496,
+          100.77684789896011
+        ]
+      ]
+    },
+    {
+      "title": "https://github.com/bertvv/ansible-role-\nbind/blob/master/.github/workows/ci.yml",
+      "heading_level": null,
+      "page_id": 15,
+      "polygon": [
+        [
+          66.94286227226257,
+          112.76371312141418
+        ],
+        [
+          516.0430234670639,
+          111.11918187141418
+        ],
+        [
+          514.8809140920639,
+          162.55535888671875
+        ],
+        [
+          65.78075289726257,
+          163.86237251758575
+        ]
+      ]
+    },
+    {
+      "title": "Testing Ansible roles in Gitlab CI",
+      "heading_level": null,
+      "page_id": 16,
+      "polygon": [
+        [
+          67.23154544830322,
+          71.72373014688492
+        ],
+        [
+          471.74888134002686,
+          70.07919889688492
+        ],
+        [
+          471.17962646484375,
+          99.6881138086319
+        ],
+        [
+          66.06943607330322,
+          101.3326450586319
+        ]
+      ]
+    },
+    {
+      "title": "Get started with the lab\nassignment!",
+      "heading_level": null,
+      "page_id": 17,
+      "polygon": [
+        [
+          69.23695370554924,
+          74.2476775944233
+        ],
+        [
+          419.43524169921875,
+          72.6031463444233
+        ],
+        [
+          419.43524169921875,
+          135.97467041015625
+        ],
+        [
+          68.07484433054924,
+          137.2377588748932
+        ]
+      ]
+    },
+    {
+      "title": "Jenkins lab assignment",
+      "heading_level": null,
+      "page_id": 18,
+      "polygon": [
+        [
+          66.83983713388443,
+          73.08124130964279
+        ],
+        [
+          365.5193176269531,
+          71.43671005964279
+        ],
+        [
+          365.5193176269531,
+          99.63599449396133
+        ],
+        [
+          66.83983713388443,
+          101.28052574396133
+        ]
+      ]
+    },
+    {
+      "title": "Follow the steps in the assignment\nhttps://github.com/HoGentTIN/infra-\nlabs/blob/main/assignment/2-cicd.md",
+      "heading_level": null,
+      "page_id": 18,
+      "polygon": [
+        [
+          68.53751763701439,
+          208.9547639489174
+        ],
+        [
+          465.89105224609375,
+          207.3102326989174
+        ],
+        [
+          465.89105224609375,
+          281.2982798218727
+        ],
+        [
+          68.53751763701439,
+          282.9428110718727
+        ]
+      ]
+    },
+    {
+      "title": "Setup",
+      "heading_level": null,
+      "page_id": 19,
+      "polygon": [
+        [
+          66.39542374759912,
+          74.94091215729713
+        ],
+        [
+          148.24267578125,
+          73.29638090729713
+        ],
+        [
+          148.24267578125,
+          99.06573486328125
+        ],
+        [
+          66.39542374759912,
+          100.43591430783272
+        ]
+      ]
+    },
+    {
+      "title": "Reection",
+      "heading_level": null,
+      "page_id": 20,
+      "polygon": [
+        [
+          68.48298169672489,
+          75.10156109929085
+        ],
+        [
+          224.77481079101562,
+          73.45702984929085
+        ],
+        [
+          224.77481079101562,
+          103.58391338586807
+        ],
+        [
+          67.32087232172489,
+          105.22844463586807
+        ]
+      ]
+    },
+    {
+      "title": "Lab setup vs reality",
+      "heading_level": null,
+      "page_id": 21,
+      "polygon": [
+        [
+          67.5508613139391,
+          71.16892418265343
+        ],
+        [
+          314.9833068847656,
+          71.16892418265343
+        ],
+        [
+          314.9833068847656,
+          100.99015566706657
+        ],
+        [
+          67.5508613139391,
+          100.99015566706657
+        ]
+      ]
+    },
+    {
+      "title": "Change in discipline needed!",
+      "heading_level": null,
+      "page_id": 22,
+      "polygon": [
+        [
+          66.72844231128693,
+          72.69472527503967
+        ],
+        [
+          430.0843095779419,
+          71.05019402503967
+        ],
+        [
+          429.6546325683594,
+          100.02338880300522
+        ],
+        [
+          65.56633293628693,
+          101.66792005300522
+        ]
+      ]
+    },
+    {
+      "title": "Canary deployments",
+      "heading_level": null,
+      "page_id": 23,
+      "polygon": [
+        [
+          67.42115780711174,
+          72.75811159610748
+        ],
+        [
+          329.8433532714844,
+          71.11358034610748
+        ],
+        [
+          329.8433532714844,
+          99.13704678416252
+        ],
+        [
+          67.42115780711174,
+          100.78157803416252
+        ]
+      ]
+    },
+    {
+      "title": "Canary deployments (Sato, 2014)",
+      "heading_level": null,
+      "page_id": 23,
+      "polygon": [
+        [
+          69.43092823028564,
+          161.68520545959473
+        ],
+        [
+          493.2120361328125,
+          160.04067420959473
+        ],
+        [
+          493.2120361328125,
+          191.78851360082626
+        ],
+        [
+          68.26881885528564,
+          193.43304485082626
+        ]
+      ]
+    },
+    {
+      "title": "Blue-Green Deployment",
+      "heading_level": null,
+      "page_id": 24,
+      "polygon": [
+        [
+          68.89611959457397,
+          74.50940965116024
+        ],
+        [
+          371.48248291015625,
+          72.86487840116024
+        ],
+        [
+          371.48248291015625,
+          99.56955303251743
+        ],
+        [
+          68.89611959457397,
+          101.21408428251743
+        ]
+      ]
+    },
+    {
+      "title": "(Fowler, 2010)",
+      "heading_level": null,
+      "page_id": 24,
+      "polygon": [
+        [
+          69.8843994140625,
+          230.54362797737122
+        ],
+        [
+          255.70594787597656,
+          228.89909672737122
+        ],
+        [
+          255.70594787597656,
+          257.3873083591461
+        ],
+        [
+          69.8843994140625,
+          259.0318396091461
+        ]
+      ]
+    },
+    {
+      "title": "Trunk-based development",
+      "heading_level": null,
+      "page_id": 25,
+      "polygon": [
+        [
+          67.37262427806854,
+          72.86069405078888
+        ],
+        [
+          399.03314208984375,
+          72.86069405078888
+        ],
+        [
+          399.03314208984375,
+          100.25728583335876
+        ],
+        [
+          67.37262427806854,
+          100.25728583335876
+        ]
+      ]
+    },
+    {
+      "title": "(Fowler, 2020)",
+      "heading_level": null,
+      "page_id": 25,
+      "polygon": [
+        [
+          69.8843994140625,
+          229.15924161672592
+        ],
+        [
+          260.6152038574219,
+          229.15924161672592
+        ],
+        [
+          260.6152038574219,
+          257.86064809560776
+        ],
+        [
+          69.8843994140625,
+          257.86064809560776
+        ]
+      ]
+    }
+  ],
+  "page_stats": [
+    {
+      "page_id": 0,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          55
+        ],
+        [
+          "Line",
+          8
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Text",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 1,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          21
+        ],
+        [
+          "Line",
+          3
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 2,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          53
+        ],
+        [
+          "Line",
+          8
+        ],
+        [
+          "ListItem",
+          5
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 3,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          73
+        ],
+        [
+          "Line",
+          8
+        ],
+        [
+          "ListItem",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 4,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          35
+        ],
+        [
+          "Line",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "Figure",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 5,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          53
+        ],
+        [
+          "Line",
+          9
+        ],
+        [
+          "ListItem",
+          6
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 6,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          45
+        ],
+        [
+          "Line",
+          7
+        ],
+        [
+          "ListItem",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 7,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          21
+        ],
+        [
+          "Line",
+          3
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 8,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          41
+        ],
+        [
+          "Line",
+          10
+        ],
+        [
+          "ListItem",
+          7
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 9,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          47
+        ],
+        [
+          "Line",
+          10
+        ],
+        [
+          "ListItem",
+          8
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 10,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          41
+        ],
+        [
+          "Line",
+          9
+        ],
+        [
+          "ListItem",
+          5
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 11,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "TableCell",
+          51
+        ],
+        [
+          "Span",
+          29
+        ],
+        [
+          "Line",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "Table",
+          1
+        ],
+        [
+          "SectionHeader",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 12,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          53
+        ],
+        [
+          "Line",
+          6
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Text",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 13,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          42
+        ],
+        [
+          "Line",
+          7
+        ],
+        [
+          "ListItem",
+          3
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 14,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          122
+        ],
+        [
+          "Line",
+          31
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "Code",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 15,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          80
+        ],
+        [
+          "Line",
+          10
+        ],
+        [
+          "ListItem",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 16,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          75
+        ],
+        [
+          "Line",
+          8
+        ],
+        [
+          "ListItem",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 17,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          31
+        ],
+        [
+          "Line",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 18,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          56
+        ],
+        [
+          "Line",
+          11
+        ],
+        [
+          "Text",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "ListItem",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 19,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          63
+        ],
+        [
+          "Line",
+          9
+        ],
+        [
+          "ListItem",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 20,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          21
+        ],
+        [
+          "Line",
+          3
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 21,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          53
+        ],
+        [
+          "Line",
+          7
+        ],
+        [
+          "ListItem",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 22,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          49
+        ],
+        [
+          "Line",
+          8
+        ],
+        [
+          "ListItem",
+          5
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 23,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          41
+        ],
+        [
+          "Line",
+          5
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "Picture",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 24,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          45
+        ],
+        [
+          "Line",
+          7
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "Text",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 25,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          45
+        ],
+        [
+          "Line",
+          7
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "Text",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    }
+  ],
+  "debug_data_path": "debug_data\\1. Continuous Integration_ Deployment with Jenkins"
+}

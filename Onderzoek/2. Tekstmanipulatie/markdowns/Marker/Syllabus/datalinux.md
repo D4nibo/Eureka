@@ -1,0 +1,12719 @@
+## **Linux for Data Scientists**
+
+Paul Cobbaut Thomas Parmentier Andy Van Maele Bert Van Vreckem
+
+November 23, 2024
+
+## **Contents**
+
+|          |                              | Contents                                                                                                                                                             |    |
+|----------|------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|----|
+| I.<br>1. | 1.1.<br>1.2.<br>1.3.<br>1.4. | First Linux VM<br>getting Linux at home<br>download a Linux CD image .<br>.<br>download Virtualbox<br>.<br>create a virtual machine<br>.<br>attach the CD image<br>. |    |
+|          | 1.5.                         | install Linux .<br>.                                                                                                                                                 |    |
+|          |                              |                                                                                                                                                                      |    |
+| II.      |                              | Software management; curl                                                                                                                                            |    |
+|          |                              |                                                                                                                                                                      |    |
+| 2.       |                              | package management                                                                                                                                                   |    |
+|          | 2.1.                         | package terminology .<br>.                                                                                                                                           |    |
+|          |                              | 2.1.1.<br>repository .<br>.                                                                                                                                          |    |
+|          |                              | 2.1.2.<br>.deb packages<br>.                                                                                                                                         |    |
+|          |                              | 2.1.3.<br>.rpm packages<br>.                                                                                                                                         |    |
+|          |                              | 2.1.4.<br>dependency<br>.                                                                                                                                            |    |
+|          |                              | 2.1.5.<br>open source<br>.                                                                                                                                           |    |
+|          |                              | 2.1.6.<br>GUI software management<br>.                                                                                                                               |    |
+|          | 2.2.                         | pip, the Python package manager<br>.                                                                                                                                 |    |
+|          |                              | 2.2.1.<br>installing pip<br>.                                                                                                                                        |    |
+|          |                              | 2.2.2.<br>listing packages<br>.                                                                                                                                      | 20 |
+|          |                              | 2.2.3.<br>searching for packages<br>.                                                                                                                                | 20 |
+|          |                              | 2.2.4.<br>installing packages<br>.                                                                                                                                   |    |
+|          |                              | 2.2.5.<br>removing packages<br>.                                                                                                                                     |    |
+|          |                              | 2.2.6.<br>using a virtual environment<br>.                                                                                                                           |    |
+|          | 2.3.                         | container-based package managers .<br>.                                                                                                                              |    |
+|          |                              | 2.3.1.<br>flatpak .<br>.                                                                                                                                             |    |
+|          |                              | 2.3.2.<br>snap<br>.                                                                                                                                                  |    |
+|          | 2.4.                         | downloading software outside the repository .<br>.                                                                                                                   |    |
+|          |                              | 2.4.1.<br>example: compiling zork<br>.                                                                                                                               |    |
+|          |                              | 2.4.2.<br>installing from a tarball .<br>.                                                                                                                           |    |
+|          | 2.5.                         | practice: package management<br>.                                                                                                                                    |    |
+|          | 2.6.                         | solution: package management<br>.                                                                                                                                    |    |
+|          |                              |                                                                                                                                                                      |    |
+| 3.       |                              | package management on debian                                                                                                                                         |    |
+|          | 3.1.                         | about deb .<br>.                                                                                                                                                     |    |
+|          | 3.2.                         | dpkg .<br>.                                                                                                                                                          |    |
+|          |                              | 3.2.1.<br>dpkg -l .<br>.                                                                                                                                             |    |
+|          |                              | 3.2.2.<br>dpkg -l \$package<br>.                                                                                                                                     |    |
+|          |                              | 3.2.3.<br>dpkg -S<br>.                                                                                                                                               | 30 |
+|          |                              | 3.2.4.<br>dpkg -L<br>.                                                                                                                                               | 30 |
+|          | 3.3.                         | apt-get<br>.                                                                                                                                                         | 30 |
+|          |                              | 3.3.1.<br>apt-get update .<br>.                                                                                                                                      |    |
+|          |                              | 3.3.2.<br>apt-get upgrade .<br>.                                                                                                                                     |    |
+|          |                              | 3.3.3.<br>apt-get clean .<br>.                                                                                                                                       |    |
+|          |                              | 3.3.4.<br>apt-cache search .<br>.                                                                                                                                    |    |
+|          |                              | 3.3.5.<br>apt-get install<br>.                                                                                                                                       |    |
+|          |                              |                                                                                                                                                                      |    |
+
+| 3.3.7.<br>apt-get purge<br>. |  |
+|------------------------------|--|
+
+|    | III. Scripting 101                            | 39 |
+|----|-----------------------------------------------|----|
+|    |                                               |    |
+|    | 4. I/O redirection                            |    |
+|    | 4.1.<br>stdin, stdout, and stderr<br>.        |    |
+|    | 4.2.<br>output redirection .<br>.             |    |
+|    | 4.2.1.<br>> stdout<br>.                       |    |
+|    | 4.2.2.<br>output file is erased<br>.          | 42 |
+|    | 4.2.3.<br>noclobber .<br>.                    | 42 |
+|    | 4.2.4.<br>overruling noclobber<br>.           | 43 |
+|    | 4.2.5.<br>» append<br>.                       | 43 |
+|    | 4.3.<br>error redirection<br>.                | 43 |
+|    | 4.3.1.<br>2> stderr .<br>.                    | 43 |
+|    | 4.3.2.<br>2>&1<br>.                           | 43 |
+|    | 4.4. output redirection and pipes<br>.        | 44 |
+|    | 4.5.<br>joining stdout and stderr .<br>.      | 44 |
+|    | 4.6. input redirection .<br>.                 | 45 |
+|    | 4.6.1.<br>< stdin<br>.                        | 45 |
+|    | 4.6.2.<br>« here document .<br>.              | 45 |
+|    | 4.6.3.<br>«< here string .<br>.               | 45 |
+|    | 4.7.<br>confusing redirection .<br>.          | 46 |
+|    | 4.8. quick file clear<br>.                    | 46 |
+|    | 4.9. practice: input/output redirection<br>.  | 46 |
+|    | 4.10. solution: input/output redirection<br>. | 47 |
+|    |                                               |    |
+| 5. | filters                                       | 49 |
+|    | 5.1.<br>filters and pipes<br>.                | 49 |
+|    | 5.2.<br>cat<br>.                              | 49 |
+|    | 5.3.<br>tac<br>.                              | 50 |
+|    | 5.4.<br>shuf<br>.                             | 50 |
+|    | 5.5.<br>tee<br>.                              | 50 |
+|    | 5.6.<br>head and tail<br>.                    |    |
+|    |                                               |    |
+|    | 5.7.<br>cut<br>.                              |    |
+|    | 5.8.<br>paste .<br>.                          |    |
+|    | 5.9.<br>join .<br>.                           |    |
+|    | 5.10. sort .<br>.                             |    |
+|    | 5.11.<br>uniq<br>.                            | 54 |
+|    | 5.12. fmt .<br>.                              | 54 |
+|    | 5.13. nl .<br>.                               |    |
+|    | 5.14. wc<br>.                                 |    |
+|    | 5.15. column<br>.                             |    |
+|    | 5.16. comm .<br>.                             | 56 |
+|    | 5.17. grep<br>.                               |    |
+|    | 5.18. tr<br>.                                 | 58 |
+|    | 5.19. sed .<br>.                              | 59 |
+|    | 5.20.awk<br>.                                 | 60 |
+|    | 5.21. pipe examples<br>.                      |    |
+|    | 5.21.1.<br>who   wc .<br>.                    |    |
+|    |                                               |    |
+|    | 5.21.2. who   cut   sort<br>.                 |    |
+|    | 5.21.3. grep   cut<br>.                       |    |
+|    | 5.21.4. ip   awk<br>.                         | 62 |
+|    |                                               |    |
+
+| 6. | shell variables<br>6.1.<br>\$ dollar sign<br>.<br>6.2.<br>case sensitive .<br>.<br>6.3.<br>creating variables<br>.<br>6.4. quotes .<br>.<br>6.5.<br>set<br>.<br>6.6.<br>unset<br>.<br>6.7.<br>.<br>\$PS1<br>6.8.<br>.<br>\$PATH<br>6.9.<br>variable scope<br>.                                                                                                                                                                                                                                                                                                                              | 68<br>68 |
+|----|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| 7. | 6.10. env .<br>.<br>6.11. practice: shell variables .<br>.<br>6.12. solution: shell variables .<br>.<br>introduction to scripting<br>7.1.<br>introduction<br>.<br>7.2.<br>hello world<br>.<br>7.3.<br>she-bang<br>.<br>7.4.<br>comments<br>.<br>7.5.<br>extension<br>.<br>7.6.<br>shell variables<br>.<br>7.7.<br>variable assignment .<br>.<br>7.8.<br>unbound variables<br>.<br>7.9.<br>sourcing a script .<br>.<br>7.10. quoting<br>.<br>7.11.<br>backticks and command substitution<br>.<br>7.12. troubleshooting a script<br>.<br>7.12.1.<br>bash -n<br>.<br>7.12.2. shellcheck .<br>. | 80<br>80 |
+|    | 7.12.3. show expanded commands<br>.<br>7.12.4. bash's "strict mode"<br>.<br>7.13. prevent setuid root spoofing<br>.<br>7.14. practice: introduction to scripting<br>.                                                                                                                                                                                                                                                                                                                                                                                                                       |          |
+
+#### **IV. [Organising users](#page-92-1) 85**
+
+|    |      | IV. Organising users                                              | 85 |
+|----|------|-------------------------------------------------------------------|----|
+|    |      |                                                                   |    |
+|    |      | 8. standard file permissions                                      |    |
+|    | 8.1. | file ownership<br>.                                               |    |
+|    |      | 8.1.1.<br>user owner and group owner<br>.<br>8.1.2.<br>chgrp<br>. |    |
+|    |      | 8.1.3.<br>chown .<br>.                                            |    |
+|    | 8.2. | list of special files<br>.                                        |    |
+|    | 8.3. | permissions .<br>.                                                |    |
+|    |      | 8.3.1.<br>rwx .<br>.                                              |    |
+|    |      | 8.3.2.<br>three sets of rwx<br>.                                  |    |
+|    |      | 8.3.3.<br>permission examples<br>.                                |    |
+|    |      | 8.3.4.<br>setting permissions with symbolic notation .<br>.       |    |
+|    |      | 8.3.5.<br>setting permissions with octal notation<br>.            |    |
+|    |      | 8.3.6.<br>umask .<br>.                                            |    |
+|    |      | 8.3.7.<br>mkdir -m<br>.                                           |    |
+|    |      | 8.3.8.<br>cp -p .<br>.                                            |    |
+|    |      | 8.4. practice: standard file permissions<br>.                     |    |
+|    | 8.5. | solution: standard file permissions<br>.                          |    |
+|    |      |                                                                   |    |
+| 9. |      | advanced file permissions                                         |    |
+|    | 9.1. | sticky bit on directory .<br>.                                    |    |
+
+| Contents<br>9.3.<br>9.4.<br>9.5.<br>9.6. | setgid and setuid on regular files .<br>setuid on sudo .<br>.<br>practice: sticky, setuid and setgid bits<br>solution: sticky, setuid and setgid bits<br>10. introduction to users<br>10.1. whoami<br>. 101<br>10.2. who<br>. 101<br>10.3. who am i .<br>. 101<br>10.4. w .<br>. 102<br>10.5. id .<br>. 102<br>10.6. su to another user .<br>. 102<br>10.7. su - \$username<br>. 102<br>10.8. su - .<br>. 103                                                                                                                                                                                                                                                         |                                           |  | .<br>.<br>.                       |  |  |  | 98<br>99<br>99<br>99<br>101            |
+|------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------|--|-----------------------------------|--|--|--|----------------------------------------|
+|                                          | 10.9. run a program as another user<br>10.10.visudo<br>. 103                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |                                           |  | . 103                             |  |  |  |                                        |
+|                                          | 10.11. sudo su -<br>. 104<br>10.12.sudo logging .<br>. 104                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |                                           |  |                                   |  |  |  |                                        |
+| 11.1.<br>11.7.                           | 10.13.practice: introduction to users .<br>10.14.solution: introduction to users .<br>11. user management<br>user management<br>. 107<br>11.2. /etc/passwd .<br>. 107<br>11.3. /etc/shadow .<br>. 108<br>11.4. root<br>. 108<br>11.5. useradd<br>. 109<br>11.5.1.<br>/etc/default/useradd .<br>11.6. usermod<br>. 110<br>11.6.1.<br>changing the comment field<br>11.6.2.<br>locking an account<br>11.6.3.<br>login shell .<br>. 110<br>chsh<br>.<br>11.8. userdel<br>.<br>11.9. managing home directories .<br>11.9.1.<br>/etc/skel/ .<br>.<br>11.9.2.<br>deleting home directories<br>11.10. adduser, deluser (debian/ubuntu)<br>11.11. practice: user management . | . 109<br>. 110<br>.<br>.                  |  | . 104<br>. 105<br>. 110<br>.<br>. |  |  |  | 107<br>112<br>112<br>112<br>112<br>113 |
+|                                          | 11.12. solution: user management .<br>12. user passwords<br>12.1. passwd<br>.<br>12.2. shadow file<br>.<br>12.3. encryption with passwd<br>12.4. encryption with openssl<br>12.5. encryption with crypt .<br>.<br>12.6. /etc/login.defs<br>. 120<br>12.7. chage<br>. 120<br>12.8. disabling a password<br>.<br>12.9. editing local files .<br>.<br>12.10.practice: user passwords .<br>12.11. solution: user passwords                                                                                                                                                                                                                                                | . 114<br>. 118<br>. 118<br>. 122<br>. 122 |  |                                   |  |  |  | 117<br>117<br>117<br>119<br>121<br>121 |
+| 13.1.                                    | 13. User profiles<br>system profile<br>. 125<br>13.2. ~/.bash_profile<br>. 125<br>13.3. ~/.bash_login<br>. 126<br>13.4. ~/.profile .<br>. 126                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |                                           |  |                                   |  |  |  | 125                                    |
+
+| 13.5. ~/.bashrc .<br>. 126                                                                         |            |
+|----------------------------------------------------------------------------------------------------|------------|
+| 13.6. ~/.bash_logout<br>. 127<br>13.7. Debian overview .<br>. 127<br>13.8. RHEL5 overview<br>. 128 |            |
+| 13.9. practice: user profiles .<br>. 128                                                           |            |
+| 13.10.solution: user profiles .<br>. 128                                                           |            |
+| 14. groups<br>14.1. groupadd .<br>.                                                                | 131<br>131 |
+| 14.2. group file<br>.                                                                              | 131        |
+| 14.3. groups .<br>. 132                                                                            |            |
+| 14.4. usermod<br>. 132<br>14.5. groupmod<br>. 132                                                  |            |
+| 14.6. groupdel<br>. 132                                                                            |            |
+| 14.7. gpasswd<br>. 133<br>14.8. newgrp<br>. 133                                                    |            |
+|                                                                                                    |            |
+
+#### **V. [Webserver; scrip](#page-145-1)ting 102 137**
+
+| V. |       |         | Webserver; scripting 102                                           |       | 137 |
+|----|-------|---------|--------------------------------------------------------------------|-------|-----|
+|    |       |         |                                                                    |       | 139 |
+|    | 15.1. |         | 15. apache web server<br>introduction to apache<br>. 139           |       |     |
+|    |       | 15.1.1. | installing on Debian .<br>. 139                                    |       |     |
+|    |       | 15.1.2. | installing on RHEL/CentOS .<br>. 140                               |       |     |
+|    |       | 15.1.3. | running apache on Debian .<br>. 140                                |       |     |
+|    |       | 15.1.4. | running apache on CentOS<br>. 141                                  |       |     |
+|    |       | 15.1.5. | index file on CentOS .<br>. 142                                    |       |     |
+|    |       | 15.1.6. | default website .<br>. 143                                         |       |     |
+|    |       | 15.1.7. | apache configuration .<br>. 143                                    |       |     |
+|    |       |         | 15.2. port virtual hosts on Debian .<br>. 144                      |       |     |
+|    |       | 15.2.1. | default virtual host<br>. 144                                      |       |     |
+|    |       |         | 15.2.2. three extra virtual hosts .<br>. 144                       |       |     |
+|    |       |         | 15.2.3. three extra ports .<br>. 145                               |       |     |
+|    |       |         | 15.2.4. three extra websites .<br>. 145                            |       |     |
+|    |       |         | 15.2.5. enabling extra websites .<br>. 145                         |       |     |
+|    |       |         | 15.2.6. testing the three websites<br>. 146                        |       |     |
+|    |       |         | 15.3. named virtual hosts on Debian<br>. 147                       |       |     |
+|    |       | 15.3.1. | named virtual hosts .<br>. 147<br>15.3.2. name resolution<br>. 148 |       |     |
+|    |       |         | 15.3.3. enabling virtual hosts .<br>. 148                          |       |     |
+|    |       |         | 15.3.4. reload and verify .<br>. 148                               |       |     |
+|    |       |         | 15.4. password protected website on Debian                         | . 149 |     |
+|    |       |         | 15.5. port virtual hosts on CentOS .<br>. 150                      |       |     |
+|    |       | 15.5.1. | default virtual host<br>. 150                                      |       |     |
+|    |       |         | 15.5.2. three extra virtual hosts .<br>. 150                       |       |     |
+|    |       |         | 15.5.3. three extra ports .<br>. 150                               |       |     |
+|    |       |         | 15.5.4. SELinux guards our ports .<br>.                            |       | 151 |
+|    |       |         | 15.5.5. three extra websites .<br>.                                |       | 151 |
+|    |       |         | 15.5.6. enabling extra websites .<br>.                             |       | 151 |
+|    |       |         | 15.5.7. testing the three websites<br>. 152                        |       |     |
+|    |       |         | 15.5.8. firewall rules<br>. 153                                    |       |     |
+|    |       |         | 15.6. named virtual hosts on CentOS .<br>. 153                     |       |     |
+|    |       | 15.6.1. | named virtual hosts .<br>. 153                                     |       |     |
+|    |       |         | 15.6.2. name resolution<br>. 154                                   |       |     |
+|    |       |         | 15.6.3. reload and verify .<br>. 154                               |       |     |
+
+| Contents<br>15.8. troubleshooting apache<br>. 156<br>15.9. virtual hosts example .<br>. 157<br>15.10.aliases and redirects<br>. 157<br>15.11. more on .htaccess .<br>. 157<br>15.12.traffic<br>. 157                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |                   |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------|
+| 15.13.self signed cert on Debian<br>. 158<br>15.14.self signed cert on RHEL/CentOS<br>. 160<br>15.15.practice: apache .<br>. 162<br>16. introduction to sql using mysql or mariadb<br>16.1. Installing MySQL .<br>. 163<br>16.2. Installing MariaDB .<br>. 165<br>16.3. Securing MySQL/MariaDB<br>. 167<br>16.4. Accessing MySQL<br>. 169<br>16.4.1. Linux users<br>. 169<br>16.4.2. MySQL Client Application<br>. 169<br>16.4.3. ~/.my.cnf .<br>. 170<br>16.5. Interacting with MySQL/MariaDB databases<br>.<br>16.5.1.<br>Listing all databases .<br>.                                                                                                                                                                    | 163<br>171<br>171 |
+| 16.5.2. Creating a database .<br>.<br>16.5.3. Using a database<br>.<br>16.5.4. Database access .<br>. 172<br>16.5.5. Deleting a database .<br>. 173<br>16.5.6. Backup and restore a database<br>. 174<br>16.5.7. Using MySQL non-interactively<br>. 174<br>16.5.8. Accessing a MySQL database over the network .<br>. 175<br>16.6. MySQL tables .<br>. 176<br>16.6.1.<br>Listing tables .<br>. 176<br>16.6.2. Creating a table<br>. 176<br>16.6.3. Describing a table<br>. 177<br>16.6.4. Removing a table<br>. 177<br>16.7. MySQL records .<br>. 177<br>16.7.1.<br>Creating records .<br>. 177<br>16.7.2. Viewing all records<br>. 178<br>16.7.3. Updating records<br>. 178<br>16.7.4. Viewing selected records .<br>. 179 | 171<br>171        |
+| 16.7.5. Ordering records .<br>. 179<br>16.7.6. Grouping records<br>. 180<br>16.7.7. Deleting records .<br>. 180<br>16.8. Joining two tables .<br>. 181<br>16.8.1. Inner join<br>. 181<br>16.8.2. Left join<br>. 181<br>16.9. MySQL triggers<br>. 181<br>16.9.1.<br>Using a before trigger .<br>. 181<br>16.9.2. Removing a trigger<br>. 182<br>16.10.practice: mysql .<br>. 182<br>16.11. solution: mysql .<br>. 183                                                                                                                                                                                                                                                                                                        |                   |
+| 17. scripting loops<br>17.1.<br>test .<br>. 187<br>17.2. square brackets [<br>] .<br>. 187<br>17.3. more tests<br>. 188<br>17.4. if then else<br>. 188<br>17.5. if then elif .<br>. 189<br>17.6. for loop<br>. 189<br>17.7. while loop .<br>. 190<br>17.8. until loop<br>. 190<br>17.9. practice: scripting tests and loops<br>.<br>17.10.solution: scripting tests and loops<br>.                                                                                                                                                                                                                                                                                                                                          | 187<br>191<br>191 |
+
+| 18. scripting parameters                                              | 193 |
+|-----------------------------------------------------------------------|-----|
+| 18.1. script parameters<br>. 193                                      |     |
+| 18.2. shift through parameters<br>. 194                               |     |
+| 18.3. for loop through parameters<br>. 195                            |     |
+| 18.4. runtime input<br>. 195<br>18.5. sourcing a config file<br>. 196 |     |
+|                                                                       |     |
+
+#### **VI[. Advanced text processing](#page-209-0) 203**
+
+| VI. Advanced text processing                                                           | 203 |
+|----------------------------------------------------------------------------------------|-----|
+|                                                                                        |     |
+| 19. file globbing                                                                      | 205 |
+| 19.1. * asterisk<br>. 205                                                              |     |
+| 19.2. ? question mark .<br>. 205                                                       |     |
+| 19.3. [] square brackets<br>. 206                                                      |     |
+| 19.4. a-z and 0-9 ranges<br>. 206                                                      |     |
+| 19.5. named character classes .<br>. 206                                               |     |
+| 19.6. \$LANG and square brackets .<br>. 207<br>19.7. preventing file globbing<br>. 208 |     |
+| 19.8. practice: shell globbing .<br>. 208<br>19.9. solution: shell globbing .<br>. 209 |     |
+|                                                                                        |     |
+| 20.regular expressions                                                                 | 211 |
+| 20.1. regex versions<br>.                                                              | 211 |
+| 20.2.grep<br>.                                                                         | 211 |
+| 20.2.1. print lines matching a pattern .<br>.                                          | 211 |
+| 20.2.2. concatenating characters<br>. 212                                              |     |
+| 20.2.3. one or the other<br>. 212                                                      |     |
+| 20.2.4.one or more<br>. 213                                                            |     |
+| 20.2.5. match the end of a string<br>. 213                                             |     |
+| 20.2.6.match the start of a string<br>. 213                                            |     |
+| 20.2.7. separating words<br>. 214                                                      |     |
+| 20.2.8.grep features .<br>. 214                                                        |     |
+| 20.2.9. preventing shell expansion of a regex<br>. 215                                 |     |
+| 20.3.rename<br>. 215                                                                   |     |
+| 20.3.1. the rename command<br>. 215                                                    |     |
+| 20.3.2. perl .<br>. 215                                                                |     |
+| 20.3.3. well known syntax .<br>. 216                                                   |     |
+| 20.3.4.a global replace<br>. 216                                                       |     |
+| 20.3.5. case insensitive replace .<br>. 217                                            |     |
+| 20.3.6. renaming extensions<br>. 217                                                   |     |
+| 20.4.sed .<br>. 217                                                                    |     |
+| 20.4.1. stream editor .<br>. 217                                                       |     |
+| 20.4.2.interactive editor .<br>. 218                                                   |     |
+| 20.4.3.simple back referencing<br>. 218                                                |     |
+| 20.4.4.back referencing .<br>. 218                                                     |     |
+| 20.4.5.a dot for any character<br>. 218                                                |     |
+| 20.4.6.multiple back referencing<br>. 218                                              |     |
+| 20.4.7. white space .<br>. 219                                                         |     |
+| 20.4.8.optional occurrence .<br>. 219                                                  |     |
+| 20.4.9.exactly n times .<br>. 219                                                      |     |
+| 20.4.10.between n and m times<br>. 220                                                 |     |
+
+#### **VII.Scripting 201; job scheduling 223**
+
+| 223   |
+|-------|
+|       |
+| 225   |
+| . 225 |
+| . 225 |
+| . 226 |
+| . 227 |
+| . 227 |
+| . 228 |
+| . 229 |
+|       |
+| 231   |
+| . 231 |
+| . 231 |
+| . 231 |
+| . 231 |
+| . 232 |
+| . 232 |
+| . 232 |
+| . 233 |
+| . 233 |
+|       |
+| 237   |
+| . 237 |
+| . 237 |
+| . 237 |
+| . 238 |
+| . 238 |
+| . 238 |
+| . 238 |
+| . 239 |
+| . 239 |
+| . 239 |
+| . 239 |
+|       |
+| . 239 |
+|       |
+
+#### **VI[II.SSH; Docker](#page-251-0) 243**
+
+#### **24.[ssh client and server](#page-251-1) 245** 24.1. about ssh . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 245 [24.1.1. secur](#page-254-0)e shell in general . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 245 24.1.2. public and private keys . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 246 [24.1.3. public-key](#page-256-0) cryptosystems . . . . . . . . . . . . . . . . . . . . . . . . . . . . 246 [24.1.4. ssh](#page-256-1) remote login: autentication fingerprint . . . . . . . . . . . . . . . . . . 246 [24.1.5. ssh beyond remote log](#page-256-2)in . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 247 24.2.[setting up passwordless ssh](#page-257-0) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 248 [24.2.1. generate with ssh-keygen](#page-257-1) . . . . . . . . . . . . . . . . . . . . . . . . . . . . 248 [24.2.2. id\\_rsa and id\\_rsa.pub](#page-257-2) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 249 24.2.3. ~/.ssh [. . . . . . . . . . . .](#page-258-0) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 249 [24.2.4..ssh/authorized\\_keys](#page-259-0) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 250 [24.2.5. copy the public key to the](#page-259-1) other computer . . . . . . . . . . . . . . . . . . 250 [24.2.6. passwordless ssh](#page-260-0) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 250 24.3.[ssh-agent](#page-260-1) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 250 24.4.[X forwarding via ssh](#page-261-0) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 251 24.5.[configuration in /etc/ssh/](#page-261-1) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 252 [24.5.1. sshd](#page-261-2) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 252
+
+| 24.5.2. sshd keys<br>. 253<br>24.6.troubleshooting ssh .<br>. 253<br>24.6.1. ssh protocol versions<br>. 253                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |     |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----|
+| 24.6.2. dealing with older devices<br>. 254<br>24.7.practice: ssh<br>. 255<br>24.8.solution: ssh<br>. 256<br>25.Docker<br>25.1. why Docker .<br>. 261<br>25.2. containerization<br>. 261<br>25.3. concepts<br>. 261<br>25.3.1. containers .<br>. 262<br>25.3.2. images & layers .<br>. 262<br>25.3.3. Dockerfiles<br>. 262<br>25.3.4. volumes .<br>. 263                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | 261 |
+| 25.3.5. Docker Compose<br>. 263<br>25.4.practice: Docker<br>. 263<br>A. git<br>A.1.<br>git<br>. 265<br>A.2. installing git<br>. 266<br>A.3. starting a project<br>. 266<br>A.3.1.<br>git init<br>. 267<br>A.3.2.<br>git config<br>. 267<br>A.3.3.<br>git add .<br>. 267<br>A.3.4. git commit<br>. 268<br>A.3.5.<br>changing a committed file .<br>. 268<br>A.3.6.<br>git log<br>. 269<br>A.3.7.<br>git mv<br>. 269<br>A.4. git branches<br>. 269<br>A.5. to be continued<br>. 271<br>A.6. github.com .<br>. 271<br>A.7.<br>add your public key to github<br>. 271<br>A.8. practice: git .<br>. 271                                                                                                                                                                                                                                                                                                             | 265 |
+| A.9. solution: git .<br>. 272<br>B. Introduction to vi<br>B.1.<br>command mode and insert mode<br>. 273<br>B.2. start typing (a A i I o O)<br>. 273<br>B.3. replace and delete a character (r x X) .<br>. 274<br>B.4. undo, redo and repeat (u .) .<br>. 274<br>B.5. cut, copy and paste a line (dd yy p P) .<br>. 274<br>B.6. cut, copy and paste lines (3dd 2yy)<br>. 274<br>B.7. start and end of a line (0 or ^ and \$)<br>. 275<br>B.8. join two lines (J) and more<br>. 275<br>B.9. words (w b) .<br>. 275<br>B.10.save (or not) and exit (:w :q :q! )<br>. 276<br>B.11. Searching (/ ?)<br>. 276<br>B.12. replace all ( :1,\$ s/foo/bar/g )<br>. 276<br>B.13. reading files (:r :r !cmd)<br>. 277<br>B.14.text buffers<br>. 277<br>B.15. multiple files<br>. 277<br>B.16. abbreviations .<br>. 277<br>B.17. key mappings<br>. 278<br>B.18. setting options .<br>. 278<br>B.19. practice: vi(m)<br>. 278 | 273 |
+
+| Contents                                                                                      |     |
+|-----------------------------------------------------------------------------------------------|-----|
+|                                                                                               |     |
+| C. GNU Free Documentation License                                                             | 281 |
+| C.1.<br>PREAMBLE .<br>. 281                                                                   |     |
+| C.2. APPLICABILITY AND DEFINITIONS<br>. 281                                                   |     |
+| C.3. VERBATIM COPYING<br>. 282                                                                |     |
+| C.4. COPYING IN QUANTITY .<br>. 283                                                           |     |
+| C.5. MODIFICATIONS .<br>. 283                                                                 |     |
+| C.6. COMBINING DOCUMENTS .<br>. 284                                                           |     |
+| C.7.<br>COLLECTIONS OF DOCUMENTS<br>. 285<br>C.8. AGGREGATION WITH INDEPENDENT WORKS<br>. 285 |     |
+|                                                                                               |     |
+
+Feel free to contact the author(s):
+
+.
+
+- Paul Cobbaut (Netsec BVBA): paul.cobbaut@gmail.com, https://cobbaut.be/
+- Bert Van Vreckem (HOGENT): http://github.com/bertvv
+
+Copyright 2007-2024 Netsec BVBA, Paul Cobbaut
+
+This copy was generated on Nove[mber 23, 2024.](mailto:paul.cobbaut@gmail.com)
+
+Permission is granted to copy, dist[ribute and/or modify this](http://github.com/bertvv) document under the terms of the **GNU Free Documentation License**, Version 1.3 or any later version published by the Free Software Foundation; with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts. A copy of the license is included in the section entitled 'GNU Free Documentation License'. # Abstract {.unnumbered}
+
+This book is used as the syllabus for the course "Linux for Data Scientists" for the Bachelor of Applied Computer Science at the HOGENT, Belgium. The contents are based on the Linux Training book series by Paul Cobbaut, with updates and additions written by the HOGENT Linux team.
+
+This book is aimed at students specialising in the Data Engineering track that already have some basic knowledge of Linux. Where the sibling "Linux" course for students in [Oper](https://linux-training.be)[ations/Sy](https://linux-training.be)stem Administration focuses on Linux as a server operating system, this course rather discusses how Linux can be used as a platform for task and workflow automation.
+
+More information and free .pdf available at https://hogenttin.github.io/linux- traininghogent/.
+
+<span id="page-14-0"></span>**Part I. First Linux VM**
+
+## <span id="page-16-0"></span>**1. getting Linux at home**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/)*
+
+This chapter shows a Ubuntu install in Virtualbox. Consider it legacy and use CentOS7 or Debian8 instead (each have their own chapter now).
+
+This book assumes you have ac[cess to a working Linux computer.](https://github.com/paulcobbaut/) Most companies have one or more Linux servers, if you have already logged on to it, then you 're all set (skip this chapter and go to the next).
+
+Another option is to insert a Ubuntu Linux CD in a computer with (or without) Microsoft Windows and follow the installation. Ubuntu will resize (or create) partitions and setup a menu at boot time to choose Windows or Linux.
+
+If you do not have access to a Linux computer at the moment, and if you are unable or unsure about installing Linux on your computer, then this chapter proposes a third option: installing Linux in a virtual machine.
+
+Installation in a virtual machine (provided by Virtualbox) is easy and safe. Even when you make mistakes and crash everything on the virtual Linux machine, then nothing on the real computer is touched.
+
+This chapter gives easy steps and screenshots to get a working Ubuntu server in a Virtualbox virtual machine. The steps are very similar to installing Fedora or CentOS or even Debian, and if you like you can also use VMWare instead of Virtualbox.
+
+## **1.1. download a Linux CD image**
+
+<span id="page-16-1"></span>Start by downloading a Linux CD image (an .ISO file) from the distribution of your choice from the Internet. Take care selecting the correct cpu architecture of your computer; choose i386 if unsure. Choosing the wrong cpu type (like x86\_64 when you have an old Pentium) will almost immediately fail to boot the CD.
+
+## **1.2. download Virtualbox**
+
+Step two (when the .ISO file has finished downloading) is to download Virtualbox. If you are currently running Microsoft Windows, then download and install Virtualbox for Windows!
+
+|                                               | VirtualBox                                                                                                                                                                                  |  |
+|-----------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--|
+|                                               | Download VirtualBox                                                                                                                                                                         |  |
+| About                                         | Here, you will find links to VirtualBox binaries and its source code.                                                                                                                       |  |
+| Screenshots                                   | VirtualBox binaries                                                                                                                                                                         |  |
+| Downloads<br>Documentation                    | By downloading, you agree to the terms and conditions of the respective<br>· VirtualBox platform packages. The binaries are released under                                                  |  |
+| End-user docs<br>Technical docs<br>Contribute | َ VirtualBox 4.1.8 for Windows hosts □>x86/amd64<br>· VirtualBox 4.1.8 for OS X hosts =>x86/amd64<br>· VirtualBox 4.1.8 for Linux hosts<br>· VirtualBox 4.1.8 for Solaris hosts =>x86/amd64 |  |
+
+## <span id="page-17-0"></span>**1.3. create a virtual machine**
+
+Now start Virtualbox. Contrary to the screenshot below, your left pane should be empty.
+
+Click New to create a new virtual machine. We will walk together through the wizard. The screenshots below are taken on Mac OSX; they will be slightly different if you are running Microsoft Windows.
+
+| 000 | Create New Virtual Machine                                                                                                                                                                                                                                                                                                 |
+|-----|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|     | Welcome to the New Virtual Machine Wizard!                                                                                                                                                                                                                                                                                 |
+|     | This wizard will guide you through the steps that are necessary to create a new<br>virtual machine for VirtualBox.<br>Use the Continue button to go to the next page of the wizard and the Go Back<br>button to return to the previous page. You can also press Esc if you want to<br>cancel the execution of this wizard. |
+|     | Go Back ( Continue                                                                                                                                                                                                                                                                                                         |
+
+Name your virtual machine (and maybe select 32-bit or 64-bit).
+
+| 00 | Create New Virtual Machine<br>VM Name and OS Type                                                                                                                                                                                                                                                                                                                                                                                   |
+|----|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|    | Enter a name for the new virtual machine and select the type of the guest<br>operating system you plan to install onto the virtual machine.<br>The name of the virtual machine usually indicates its software and hardware<br>configuration. It will be used by all VirtualBox components to identify your<br>virtual machine.<br>Name<br>mijnvirtuelemachine<br>OS Type<br>Operating System:   Linux<br>Version:   Ubuntu (64 bit) |
+|    | Go Back ) ( Continue                                                                                                                                                                                                                                                                                                                                                                                                                |
+
+Give the virtual machine some memory (512MB if you have 2GB or more, otherwise select 256MB).
+
+#### *1. getting Linux at home*
+
+| 000 | Create New Virtual Machine                                                                                                                                                |                      |
+|-----|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------|
+|     | Memory                                                                                                                                                                    |                      |
+|     | Select the amount of base memory (RAM) in megabytes to be allocated to the<br>virtual machine.<br>The recommended base memory size is 512 MB.<br>Base Memory Size<br>4 MB | 512   MB<br>8192 MB  |
+|     |                                                                                                                                                                           | Go Back ) ( Continue |
+
+Select to create a new disk (remember, this will be a virtual disk).
+
+| 00 | Create New Virtual Machine                                                                                                                                                                 |
+|----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|    | Virtual Hard Disk                                                                                                                                                                          |
+|    | If you wish you can now add a start-up disk to the new machine. You can either<br>create a new virtual disk or select one from the list or from another location<br>using the folder icon. |
+|    | If you need a more complex virtual disk setup you can skip this step and make<br>the changes to the machine settings once the machine is created.                                          |
+|    | The recommended size of the start-up disk is 8,00 GB.                                                                                                                                      |
+|    | V Start-up Disk                                                                                                                                                                            |
+|    | . Create new hard disk                                                                                                                                                                     |
+|    | J Use existing hard disk                                                                                                                                                                   |
+|    | B<br>CentOS6.vdi (Normal, 16,00 GB)                                                                                                                                                        |
+|    |                                                                                                                                                                                            |
+|    |                                                                                                                                                                                            |
+|    |                                                                                                                                                                                            |
+|    | Go Back ) ( Continue                                                                                                                                                                       |
+|    |                                                                                                                                                                                            |
+
+If you get the question below, choose vdi.
+
+| 00 | Create New Virtual Disk                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|    | Welcome to the virtual disk creation wizard<br>This wizard will help you to create a new virtual disk for your<br>virtual machine.<br>Use the Continue button to go to the next page of the wizard and<br>the Go Back button to return to the previous page. You can also<br>press Esc if you want to cancel the execution of this wizard.<br>Please choose the type of file that you would like to use for the<br>new virtual disk. If you do not need to use it with other |
+|    | virtualization software you can leave this setting unchanged.<br>File type<br>(.) VDI (VirtualBox Disk Image)<br>VMDK (Virtual Machine Disk)<br>O<br>VHD (Virtual Hard Disk)<br>0<br>HDD (Parallels Hard Disk)                                                                                                                                                                                                                                                               |
+|    | Go Back ( Continue                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+
+Choose dynamically allocated (fixed size is only useful in production or on really old, slow hardware).
+
+| 000                          | Create New Virtual Disk                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |  |  |  |  |  |  |
+|------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--|--|--|--|--|--|
+| Virtual disk storage details |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |  |  |  |  |  |  |
+|                              | Please choose whether the new virtual disk file should be allocated<br>as it is used or if it should be created fully allocated.<br>A dynamically allocated virtual disk file will only use space on<br>your physical hard disk as it fills up, although it will not shrink<br>again automatically when space on it is freed.<br>A fixed size virtual disk file may take longer to create on some<br>systems but is often faster to use.<br>Storage details<br>· Dynamically allocated<br>Fixed size |  |  |  |  |  |  |
+|                              | Go Back ( Continue<br>11                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |  |  |  |  |  |  |
+
+Choose between 10GB and 16GB as the disk size.
+
+#### *1. getting Linux at home*
+
+| 000 | Create New Virtual Disk                                                                                                                                                |
+|-----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|     | Virtual disk file location and size                                                                                                                                    |
+|     | Please type the name of the new virtual disk file into the box<br>below or click on the folder icon to select a different folder to<br>create the file in.<br>Location |
+|     | B<br>mijnvirtuelemachine                                                                                                                                               |
+|     | Select the size of the virtual disk in megabytes. This size will be<br>reported to the Guest OS as the maximum size of this virtual disk.<br>Size                      |
+|     | 10,00 GB<br>1 1 1 1 1                                                                                                                                                  |
+|     | 4,00 MB<br>2,00 TB                                                                                                                                                     |
+|     |                                                                                                                                                                        |
+|     | Go Back ( Continue                                                                                                                                                     |
+
+Click create to create the virtual disk.
+
+| 000 | Create New Virtual Disk                                                                                                                                                                                                                                         |
+|-----|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|     | Summary                                                                                                                                                                                                                                                         |
+|     | You are going to create a new virtual disk with the following<br>parameters:<br>File type: VDI (VirtualBox Disk Image)<br>> (<br>Details: Dynamically allocated storage<br>Location: /Users/paul/VirtualBox VMs/mijnvirtuelemachine/mi<br>jnvirtuelemachine.vdi |
+|     | If the above settings are correct, press the Create button. Once<br>you press it the new virtual disk file will be created.                                                                                                                                     |
+|     | Go Back ) ( Create                                                                                                                                                                                                                                              |
+|     |                                                                                                                                                                                                                                                                 |
+
+Click create to create the virtual machine.
+
+## <span id="page-22-0"></span>**1.4. attach the CD image**
+
+Before we start the virtual computer, let us take a look at some settings (click Settings).
+
+Do not worry if your screen looks different, just find the button named storage.
+
+*1. getting Linux at home*
+
+| mijnvirtuelemachine - General |                            |             |  |                              |  |  |  |  |
+|-------------------------------|----------------------------|-------------|--|------------------------------|--|--|--|--|
+| 0                             |                            |             |  |                              |  |  |  |  |
+| Display<br>General   System   | Storage<br>Audio           |             |  | Network Ports Shared Folders |  |  |  |  |
+|                               | Basic Advanced             | Description |  |                              |  |  |  |  |
+| Name:   mijnvirtuelemachine   |                            |             |  |                              |  |  |  |  |
+| Operating System:             | Linux                      |             |  |                              |  |  |  |  |
+|                               | Version:   Ubuntu (64 bit) |             |  |                              |  |  |  |  |
+|                               |                            |             |  |                              |  |  |  |  |
+|                               |                            |             |  |                              |  |  |  |  |
+|                               |                            |             |  |                              |  |  |  |  |
+|                               |                            |             |  |                              |  |  |  |  |
+| ?                             |                            |             |  | Cancel ) ( OK                |  |  |  |  |
+
+Remember the .ISO file you downloaded? Connect this .ISO file to this virtual machine by clicking on the CD icon next to Empty.
+
+| mijnvirtuelemachine - Storage                 |                                 |  |  |
+|-----------------------------------------------|---------------------------------|--|--|
+| D                                             |                                 |  |  |
+| General<br>Display<br>Storage Audio<br>System | Network Ports Shared Folders    |  |  |
+| Storage Tree                                  | Attributes                      |  |  |
+| IDE Controller<br>19                          | CD/DVD Drive: IDE Secondary + ( |  |  |
+| Empty                                         | Live CD/DVD                     |  |  |
+| SATA Controller<br>(                          | Information                     |  |  |
+| 3 mijnvirtuelemachine.vdi                     | Type:                           |  |  |
+|                                               | Size:                           |  |  |
+|                                               | Location:                       |  |  |
+|                                               | Attached To:                    |  |  |
+|                                               |                                 |  |  |
+|                                               |                                 |  |  |
+|                                               |                                 |  |  |
+| ද්ද<br>g<br>5<br>(a)                          |                                 |  |  |
+| (2)                                           | Cancel ) ( OK                   |  |  |
+
+Now click on the other CD icon and attach your ISO file to this virtual CD drive.
+
+|                                         | mijnvirtuelemachine - Storage         |                                                                                                    |
+|-----------------------------------------|---------------------------------------|----------------------------------------------------------------------------------------------------|
+|                                         |                                       |                                                                                                    |
+| General<br>System<br>Display<br>Storage | Audio<br>Network Ports Shared Folders | Preview<br>heral                                                                                   |
+| Storage Tree -                          | Attributes                            | mijnvirtuelemachine<br>e: Ubuntu (64 bit)                                                          |
+| 9<br>IDE Controller                     | CD/DVD Drive:     IDE Secondary       | 0                                                                                                  |
+| Empty                                   | Live CD/DVD                           | Choose a virtual CD/DVD disk file                                                                  |
+| SATA Controller                         | Information                           | A MATINETA (NO.6 )<br>(1.08 carver and 4 to                                                        |
+| 9 mijnvirtuelemachine.vdi               | Type:                                 | 10. 10-08 110 1 11                                                                                 |
+|                                         | Size:                                 |                                                                                                    |
+|                                         | Location:                             | (11) (80 (80<br>10 gg 100                                                                          |
+|                                         | Attached To:                          | a districts program and                                                                            |
+|                                         |                                       | : Desktop Server: Disabled                                                                         |
+|                                         |                                       | rage                                                                                               |
+| ල<br>6<br>e<br>?)                       | Cancel )<br>OK                        | ntroller<br>condary Master (CD/DVD): Empty<br>lontroller<br>Port 0:<br>mijnvirtuele<br>(Normal, 10 |
+
+Verify that your download is accepted. If Virtualbox complains at this point, then you probably did not finish the download of the CD (try downloading it again).
+
+|                                         | mijnvirtuelemachine - Storage      |
+|-----------------------------------------|------------------------------------|
+| u                                       |                                    |
+| General<br>Display<br>System<br>Storage | Audio Network Ports Shared Folders |
+| Storage Tree -------------------        | Attributes                         |
+| டு<br>IDE Controller                    | CD/DVD Drive: IDE Secondary : @    |
+| (.) ubuntu-11.04-server-am              | Live CD/DVD                        |
+| SATA Controller                         | Information                        |
+| 3 mijnvirtuelemachine.vdi               | Type:<br>Image                     |
+|                                         | Size:<br>673,61 MB                 |
+|                                         | Location: /Users/paul/ISO/ubu      |
+|                                         | Attached To:                       |
+|                                         |                                    |
+|                                         |                                    |
+|                                         |                                    |
+| a a                                     |                                    |
+| (2)                                     | Cancel ) ( OK                      |
+
+It could be useful to set the network adapter to bridge instead of NAT. Bridged usually will connect your virtual computer to the Internet.
+
+#### *1. getting Linux at home*
+
+| mijnvirtuelemachine - Network                    |                                |  |  |  |
+|--------------------------------------------------|--------------------------------|--|--|--|
+|                                                  |                                |  |  |  |
+| General<br>System<br>Display<br>Storage<br>Audio | Network   Ports Shared Folders |  |  |  |
+| Adapter 1   Adapter 2   Adapter 3   Adapter 4    |                                |  |  |  |
+| V Enable Network Adapter                         |                                |  |  |  |
+| Attached to:<br>NAT                              |                                |  |  |  |
+| Name:                                            | A<br>V                         |  |  |  |
+| Advanced<br>D                                    |                                |  |  |  |
+|                                                  |                                |  |  |  |
+|                                                  |                                |  |  |  |
+|                                                  |                                |  |  |  |
+|                                                  |                                |  |  |  |
+|                                                  |                                |  |  |  |
+|                                                  |                                |  |  |  |
+| ?                                                | Cancel ) ( OK                  |  |  |  |
+
+## <span id="page-25-0"></span>**1.5. install Linux**
+
+The virtual machine is now ready to start. When given a choice at boot, select install and follow the instructions on the screen. When the installation is finished, you can log on to the machine and start practising Linux!
+
+## **Part II.**
+
+## <span id="page-26-0"></span>**Software management; curl**
+
+## <span id="page-28-0"></span>**2. package management**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Alex M. Schapelle, https://github.com/zero-pytagoras/, Bert Van Vreckem https://github.com/bertvv/)*
+
+Most Linux distributions have a **[package management](https://github.com/paulcobbaut/)** system with online **repositories** containing thousands of packa[ges. This makes it very easy to install, u](https://github.com/zero-pytagoras/)pdate and remove applicatio[ns, operating system comp](https://github.com/bertvv/)onents, documentation and much more.
+
+In this module, we introduce some basic terminology and concepts. Details about managing packages on the major distributions, specifically the Debian and Enterprise Linux families, are covered in separate modules. In this module, we also discuss a two additional types of package management tools that are not distribution-specific.
+
+- Some programming languages have their own package managers (e.g. pip for Python).
+- In the 2010s, containerization became popular and started to be used as a solution for package management independent of the Linux distribution, e.g. snap and flatpak.
+
+Finally, we show how you can install software outside of the package management system, starting from the source code.
+
+## **2.1. package terminology**
+
+#### <span id="page-28-1"></span>**2.1.1. repository**
+
+<span id="page-28-2"></span>A lot of software and documentation for your Linux distribution is available as **packages** in one or more centrally distributed **repositories**. The packages in such a repository are tested and very easy to install (or remove) with a graphical or command line installer.
+
+#### **2.1.2. .deb packages**
+
+<span id="page-28-3"></span>Debian, Ubuntu, Mint and all derivatives of Debian and Ubuntu use .deb packages. To manage software on these systems, you can use apt or apt-get, both these tools are a front end for dpkg.
+
+#### **2.1.3. .rpm packages**
+
+<span id="page-28-4"></span>Red Hat, Fedora, CentOS, OpenSUSE, Mandriva, Red Flag and others use .rpm packages. The tools to manage software packages on these systems are dnf and rpm.
+
+#### **2.1.4. dependency**
+
+<span id="page-28-5"></span>Some packages need other packages to function. Tools like apt-get, apt and dnf will install all **dependencies** you need. When using dpkg or rpm, or when building from **source**, you will need to install dependencies yourself.
+
+#### **2.1.5. open source**
+
+These repositories contain a lot of independent **open source software**. Often the source code is customized to integrate better with your distribution. Most distributions also offer this modified source code as a **package** in one or more **source repositories**.
+
+<span id="page-29-0"></span>You are free to go to the project website itself (samba.org, apache.org, github.com …) and download the *vanilla* (= without the custom distribution changes) source code.
+
+#### **2.1.6. GUI software management**
+
+<span id="page-29-1"></span>End users have several graphical applications available via the desktop (look for *add/remove software* or something similar).
+
+Below a screenshot of Ubuntu Software Center running on Ubuntu 12.04. Graphical tools are not discussed in this book.
+
+## **2.2. pip, the Python package manager**
+
+<span id="page-29-2"></span>Some programming languages, a.o. Python, have their own package management system that allows you to install applications and/or libraries. In the case of Python, the package manager is called pip. It is used to install Python packages from the Python Package Index (PyPI). In fact, there are multiple package managers for Python (a.o. easy\_install, conda, etc.), but pip is the most widely used.
+
+As a system administrator, or as an end user, this sometimes puts you in a difficult position. Some widely known and used Python libraries can be installed bot[h through your distribu](https://pypi.org)tion's package manager, and through pip. Which one to choose is not always clear. In general, it is best to use the distribution's package manager, as it will integrate the package into the system and will be updated when the system is updated. However, some packages are
+
+not available in the distribution's repositories, or the version you get with pip is more recent. In that case, you can use pip to install the package.
+
+Another thing to note is that pip can be used as a normal user, or as root, and in each case it will install the package in a different location. When you install a package as a normal user, it will be installed in your home directory, and will only be available to you. When you install a package as root, it will be installed system-wide, and will be available to all users. However, if you install a package as root, you will get a warning message:
+
+- <sup>1</sup> WARNING: Running pip as the 'root' user can result in broken permissions and
+	- conflicting behaviour with the system package manager. It is recommended ↪
+	- to use a virtual environment instead: https:^/pip.pypa.io/warnings/venv ↪
+
+A virtual environment is a way to create an isolated environment for a Python project, where you can install packages without affecting the system's Python installation. This is especially useful when you are developing Python applications, and you want to make sure that the libraries you use are the same as the ones used in production. Using and managing virtual environments is beyond the scope of this course, but you can find more information in the Python documentation.
+
+As general guidelines, we suggest the following:
+
+- If the library or application is available in the distribution's repositories, use the distribu[tion's package man](https://docs.python.org/3/library/venv.html)ager to install it.
+- Do not install Python libraries or applications system-wide as root using pip.
+- Normal users may use pip to install Python libraries or applications in their home directory.
+- Use virtual environments per project to manage Python libraries and applications.
+
+## **2.2.1. installing pip**
+
+<span id="page-30-0"></span>By default, pip is probably not installed on your system. You can install it using your distribution's package manager.
+
+For example, on Red Hat-based systems, you can install it using dnf:
+
+```
+1 student@el ~$ sudo dnf install python3-pip
+```
+On Debian-based systems, you can install it using apt:
+
+<sup>1</sup> student@debian:~\$ sudo apt install python3-pip
+
+However, some Linux distributions like Linux Mint 22 enforce the guidelines mentioned above. When you try to install a Python package using pip, you will get an error message:
+
+```
+1 student@linuxmint:~$ sudo apt install python3-pip
+2 student@linuxmint:~$ pip install pandas
+3 error: externally-managed-environment
+4
+5 × This environment is externally managed
+6 ─> To install Python packages system-wide, try apt install
+7 python3-xyz, where xyz is the package you are trying to
+8 install.
+9
+10 If you wish to install a non-Debian-packaged Python package,
+11 create a virtual environment using python3 -m venv path/to/venv.
+12 Then use path/to/venv/bin/python and path/to/venv/bin/pip. Make
+13 sure you have python3-full installed.
+14
+15 If you wish to install a non-Debian packaged Python application,
+16 it may be easiest to use pipx install xyz, which will manage a
+```
+*2. package management*
+
+```
+17 virtual environment for you. Make sure you have pipx installed.
+18
+19 See /usr/share/doc/python3.12/README.venv for more information.
+20
+21 note: If you believe this is a mistake, please contact your Python
+       installation or OS distribution provider. You can override this, at the
+       risk of breaking your Python installation or OS, by passing
+       --break-system-packages.
+    ↪
+    ↪
+    ↪
+```
+<sup>22</sup> hint: See PEP 668 for the detailed specification.
+
+In this case, you can't use pip at all to install Python packages, not even as a user. So, you should use the distribution's package manager to install Python packages system-wide and virtual environments to install Python packages on a project-by-project basis.
+
+#### **2.2.2. listing packages**
+
+<span id="page-31-0"></span>You can list the packages installed with pip using the list command:
+
+```
+1 student@linux:~$ pip list
+2 Package Version
+3 --------------- --------
+4 dbus-python 1.2.18
+5 distro 1.5.0
+6 gpg 1.15.1
+7 libcomps 0.1.18
+8 nftables 0.1
+9 pip 21.2.3
+10 PyGObject 3.40.1
+11 python-dateutil 2.8.1
+12 PyYAML 5.4.1
+13 rpm 4.16.1.3
+14 selinux 3.5
+15 sepolicy 3.5
+16 setools 4.4.3
+17 setuptools 53.0.0
+18 six 1.15.0
+19 systemd-python 234
+```
+#### **2.2.3. searching for packages**
+
+<span id="page-31-1"></span>Searching for packages can **NOT** be done on the command line. To search for packages, you can use the Python Package Index website instead. If you try pip search, you will get an error message:
+
+```
+1 student@linux:~$ pip search ansible
+```
+- <sup>2</sup> ERROR: XML[RPC request failed \[](https://pypi.org)code: -32500]
+- <sup>3</sup> RuntimeError: PyPI no longer supports 'pip search' (or XML-RPC search).
+	- Please use https:^/pypi.org/search (via a browser) instead. See ↪
+	- https:^/warehouse.pypa.io/api-reference/xml-rpc.html#deprecated-methods ↪
+	- for more information. ↪
+
+## **2.2.4. installing packages**
+
+You can install a package using the install command:
+
+```
+1 student@linux:~$ pip install ansible
+```
+Just like apt and dnf, pip will install the package and its dependencies.
+
+#### <span id="page-32-0"></span>**2.2.5. removing packages**
+
+Uninstalling a package is done with the uninstall command:
+
+```
+1 student@linux:~$ pip uninstall ansible
+```
+Unfortunately, dependencies are not removed when you uninstall a package with pip.
+
+#### <span id="page-32-1"></span>**2.2.6. using a virtual environment**
+
+A virtual environment allows you to install Python packages in an isolated environment, so they don't interfere with the system's Python installation. You can create a virtual environment using the venv module:
+
+<sup>1</sup> student@linuxmint:~\$ sudo apt install python3-venv
+
+```
+2 [^^.output omitted^^.]
+```
+- <sup>3</sup> student@linuxmint:~\$ mkdir pyproject
+- <sup>4</sup> student@linuxmint:~\$ cd pyproject
+- <sup>5</sup> student@linuxmint:~/pyproject\$ python3 -m venv .venv
+
+This will create a new directory called .venv in the current directory, which contains scripts and tools to set up the virtual environment. You can choose the name of the directory, but .venv is a common convention. By adding the dot at the beginning of the directory name, it is hidden from the output of the ls command.
+
+- <sup>1</sup> student@linuxmint:~/pyproject\$ ls .venv/
+- <sup>2</sup> bin include lib lib64 pyvenv.cfg
+- <sup>3</sup> student@linuxmint:~/pyproject\$ ls .venv/bin/
+
+```
+4 activate activate.csh activate.fish Activate.ps1 f2py numpy-config pip
+```
+↪ pip3 pip3.12 python python3 python3.12
+
+You can activate the virtual environment using the source command:
+
+- <sup>1</sup> student@linuxmint:~/pyproject\$ source .venv/bin/activate
+- <sup>2</sup> (.venv) student@linuxmint:~/pyproject\$
+
+The source command will execute the script *in the current environment* (i.e. without creating a subshell). When the virtual environment is activated, the prompt will change to indicate that you are now working in the virtual environment. You can now use pip to install Python packages, and they will be installed in the virtual environment, not in the system.
+
+```
+1 (.venv) student@linuxmint:~/pyproject$ pip install pandas
+```
+
+```
+2 Collecting pandas
+```
+- <sup>3</sup> Downloading pandas-2.2.3-cp312-cp312-manylinux\_2\_17\_x86\_64.manylinux2014\_ ⌋
+	- x86\_64.whl.metadata (89 kB) ↪ ↪
+- 
+
+<sup>4</sup> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 89.9/89.9 kB 2.1 MB/s eta
+
+```
+↪ 0:00:00
+```
+
+```
+5 [^^.some output omitted^^.]
+```
+- <sup>6</sup> Installing collected packages: pytz, tzdata, six, numpy, python-dateutil, ↪ pandas
+- <sup>7</sup> Successfully installed numpy-2.1.2 pandas-2.2.3 python-dateutil-2.9.0.post0 ↪ pytz-2024.2 six-1.16.0 tzdata-2024.2
+
+*2. package management*
+
+Packages will be installed in the directory .venv/lib/python<version>/site-packages.
+
+It is good practice to explicitly list the packages you have installed in the virtual environment in a requirements.txt file. This file can be used to recreate the virtual environment on another system. You can create the file using the freeze command, or edit it manually.
+
+```
+1 (.venv) student@linuxmint:~/pyproject$ pip freeze > requirements.txt
+```
+
+```
+2 (.venv) student@linuxmint:~/pyproject$ cat requirements.txt
+```
+
+```
+3 numpy^=2.1.2
+```
+
+```
+4 pandas^=2.2.3
+```
+
+```
+5 python-dateutil^=2.9.0.post0
+```
+- <sup>6</sup> pytz^=2024.2
+- <sup>7</sup> six^=1.16.0
+- <sup>8</sup> tzdata^=2024.2
+
+When you are done working in the virtual environment, you can deactivate it using the deactivate command:
+
+- <sup>1</sup> (.venv) student@linuxmint:~/pyproject\$ deactivate
+- <sup>2</sup> student@linuxmint:~/pyproject\$
+
+If you keep the code in this directory in a Git repository, it's best to add the .venv directory to the .gitignore file, so it is not included in the repository.
+
+## **2.3. container-based package managers**
+
+<span id="page-33-0"></span>With the release of Docker, container-based virtualization has become very popular as a method of distributing and deploying applications on servers. One of the advantages of containers is that they offer a sandbox environment for applications, meaning the application and its dependencies are isolated from the rest of the system. This makes it possible to run applications with different dependencies on the same server, without the risk of conflicts. Containers are also very lightweight, they don't impose much overhead on the host system.
+
+Now, there is no reason why containers can't be used to deploy applications on desktop systems as well. In fact, there are several container-based package managers that allow you to install and run applications in containers on your desktop. The advantage is that third party software vendors can distribute their applications independent of the Linux distribution, so they don't need to maintain different packages for (each family of) distribution(s). The disadvantage is that each application comes with their own dependencies, so you lose the advantage of sharing libraries between applications. Also, since the application is running in a container, it may not integrate well with the rest of the system, or may have only limited permissions to access files or other resources on your computer.
+
+As with many Linux-based technologies, there are multiple tools to choose from. The most popular ones are Flatpak and Snap.
+
+## **2.3.1. flatpak**
+
+<span id="page-33-1"></span>Flatpak is a container-based package manager developed by an independent community of contributors, volunteers and supporting organizations. It is available for most Linux distributions and is supported by a large number of third party software vendors. Red Hat was one of the first to endorse Flatpak, and many others followed. Fedora Silverblue is a variant of [Fedora](https://flatpak.org) that uses Flatpak as its primary package manager. Linux Mint also has Flatpak support enabled by default: in the Software Manager, some applications like Bitwarden, Slack, VS Code, etc. are available as Flatpaks.
+
+If you want to use a container based package manager, Flatpak is probably the best choice for any Linux distribution other than Ubuntu.
+
+In the following example, we'll install the open source password manager Bitwarden with Flatpak on a Linux Mint system. Remark that you don't need to be root to install Flatpak applications!
+
+```
+1 student@mint:~$ flatpak search Bitwarden
+2 Name Description Application ID
+   ↪ Version Branch Remotes
+3 Bitwarden A secure and free password manager for com.bitwarden.desktop
+   ↪ 2024.2.0 stable flathub
+4 Goldwarden A Bitwarden compatible desktop client com.quexten.Goldwarden
+   ↪ 0.2.13 stable flathub
+5 student@mint:~$ flatpak install Bitwarden
+6 Looking for matches…
+7 Found ref 'app/com.bitwarden.desktop/x86_64/stable' in remote 'flathub'
+   ↪ (system).
+8 Use this ref? [Y/n]: y
+9 Required runtime for com.bitwarden.desktop/x86_64/stable
+   ↪ (runtime/org.freedesktop.Platform/x86_64/23.08) found in remote flathub
+10 Do you want to install it? [Y/n]: y
+11
+12 com.bitwarden.desktop permissions:
+13 ipc network wayland x11
+   ↪ dri file access [1]
+14 dbus access [2] system dbus access [3]
+15
+16 [1] xdg-download
+17 [2] com.canonical.AppMenu.Registrar, org.freedesktop.Notifications,
+   ↪ org.freedesktop.secrets, org.kde.StatusNotifierWatcher
+18 [3] org.freedesktop.login1
+19
+20
+21 ID Branch Op Remote Download
+22 1. [✓] com.bitwarden.desktop.Locale stable i flathub 300.7 kB
+   ↪ / 9.8 MB
+23 2. [✓] org.freedesktop.Platform.GL.default 23.08 i flathub 162.0 MB
+   ↪ / 162.3 MB
+24 3. [✓] org.freedesktop.Platform.GL.default 23.08-extra i flathub 17.9 MB
+   ↪ / 162.3 MB
+25 4. [✓] org.freedesktop.Platform.Locale 23.08 i flathub 17.9 kB
+   ↪ / 359.9 MB
+26 5. [✓] org.freedesktop.Platform 23.08 i flathub 171.6 MB
+   ↪ / 225.6 MB
+27 6. [✓] com.bitwarden.desktop stable i flathub 132.5 MB
+   ↪ / 133.4 MB
+28
+29 Installation complete.
+  To remove a Flatpak application, you can use the uninstall command:
+1 student@mint:~$ flatpak uninstall Bitwarden
+2 Found installed ref 'app/com.bitwarden.desktop/x86_64/stable' (system). Is
+   ↪ this correct? [Y/n]: y
+3
+4
+5 ID Branch Op
+6 1. [-] com.bitwarden.desktop stable r
+7 2. [-] com.bitwarden.desktop.Locale stable r
+```
+
+```
+8
+9 Uninstall complete.
+```
+#### **2.3.2. snap**
+
+<span id="page-35-0"></span>Snap was developed by Canonical and is installed by default on Ubuntu. It is also available for other distributions (like the official Ubuntu derivatives, Solus and Zorin OS), but it is not as widely supported as Flatpak. Snap was also designed to work for cloud applications and Internet of Things devices.
+
+[In the](https://snapcraft.io) following example, we'll install Grafana on an Ubuntu Server system.
+
+```
+1 student@ubuntu:~$ snap search grafana
+2 Name Version Publisher Notes Summary
+3 grafana 6.7.4 canonical✓ - feature rich metrics dashboard and
+   ↪ graph editor
+4 grafana-agent 0.35.4 0x12b - Telemetry Agent
+5 [^^.]
+6 student@ubuntu:~$ sudo snap install grafana
+7 grafana 6.7.4 from Canonical✓ installed
+  To uninstall a Snap application, you can use the remove command:
+1 student@ubuntu:~$ sudo snap remove grafana
+```
+
+```
+2 grafana removed
+```
+#### **2.4. downloading software outside the repository**
+
+<span id="page-35-1"></span>These days, the case where you need software that is not available as a binary package has become exceedingly rare. However, *if* you want to install some experimental tool that hasn't been packaged yet, or you want to test the very latest experimental version of an application, you may have to download the source code and compile it yourself. Usually, the source code is available on the project's website or on a code hosting platform like GitHub, GitLab or Bitbucket. You then either download the source code as a tgz, .tar.gz, .tar.bz2, tar.xz file (also called a *tarball*) or you can clone the repository using git.
+
+In the example below, we assume that you have downloaded the source code of an application written in C or C++, as is common for many Linux applications. Re[mark th](https://github.com)[at in ord](https://gitlab.com)er [to be able](https://bitbucket.org) to compile the source code, you need to have the C compiler gcc and the build tool make installed on your system. You can install these using your distribution's package manager. Also, many applications depend on other libraries, which also have to be installed as source.
+
+#### **2.4.1. example: compiling zork**
+
+<span id="page-35-2"></span>As an example, we will download the source code for Zork, an ancient text based adventure game, and compile it on a Fedora system. The source code is available on GitHub. Remark that you should check wheter git, gcc and make are installed beforehand. See the modules on RPM and DEB package management for more information.
+
+```
+1 [student@fedora ~]$ git clone https:^/github.com/devshane/zork.git
+```
+
+```
+2 Cloning into 'zork'^^.
+```
+
+```
+3 remote: Enumerating objects: 79, done.
+```
+
+```
+4 remote: Total 79 (delta 0), reused 0 (delta 0), pack-reused 79
+```
+<sup>5</sup> Receiving objects: 100% (79/79), 241.70 KiB | 2.14 MiB/s, done.
+
+```
+6 Resolving deltas: 100% (20/20), done.
+```
+
+```
+7 [student@fedora ~]$ cd zork/
+8 [student@fedora zork]$ ls
+9 actors.c demons.c dmain.c dso3.c dso6.c dtextc.dat dverb2.c history
+   ↪ Makefile np2.c nrooms.c README.md sobjs.c vars.h
+10 ballop.c dgame.c dso1.c dso4.c dso7.c dungeon.6 funcs.h lightp.c
+   ↪ nobjs.c np3.c objcts.c readme.txt supp.c verbs.c
+11 clockr.c dinit.c dso2.c dso5.c dsub.c dverb1.c gdt.c local.c
+   ↪ np1.c np.c parse.h rooms.c sverbs.c villns.c
+12 [student@fedora ~]$ make
+13 cc -g -c -o actors.o actors.c
+14 cc -g -c -o ballop.o ballop.c
+15 cc -g -c -o clockr.o clockr.c
+16 [^^.etc^^.]
+17 cc -g -o zork actors.o ballop.o clockr.o demons.o dgame.o dinit.o dmain.o
+      dso1.o dso2.o dso3.o dso4.o dso5.o dso6.o dso7.o dsub.o dverb1.o
+      dverb2.o gdt.o lightp.o local.o nobjs.o np.o np1.o np2.o np3.o nrooms.o
+      objcts.o rooms.o sobjs.o supp.o sverbs.o verbs.o villns.o -ltermcap
+   ↪
+   ↪
+   ↪
+18 /usr/bin/ld: cannot find -ltermcap: No such file or directory
+19 collect2: error: ld returned 1 exit status
+```
+<sup>20</sup> make: ^^\* [Makefile:69: dungeon] Error 1
+
+As you can see, the make command fails because it cannot find the termcap library. This is a library that is used to control the terminal, and it is not installed on our system. This is a common problem when you try to install packages from source. You need to install these dependencies yourself and these are not always easy to find. In this case, we can install the ncurses-devel library, which is a modern replacement for termcap. How did we now that? We used dnf provides to find library files that contain the string termcap (remark that the command took a long time to finish):
+
+- <sup>1</sup> [student@fedora zork]\$ dnf provides '\*libtermcap.so\*'
+- <sup>2</sup> Last metadata expiration check: 1:56:05 ago on Mon 26 Feb 2024 05:46:43 PM ↪ UTC.
+- <sup>3</sup> ncurses-devel-6.4-7.20230520.fc39.i686 : Development files for the ncurses ↪ library
+- <sup>4</sup> Repo : fedora
+- <sup>5</sup> Matched from:
+- <sup>6</sup> Other : \*libtermcap.so\*
+- <sup>7</sup> [student@fedora ~]\$ sudo dnf install ncurses-devel
+- <sup>8</sup> [^^.etc^^.]
+
+Let's try to compile again:
+
+```
+1 [student@fedora zork]$ make
+2 cc -g -c -o actors.o actors.c
+```
+
+```
+3 cc -g -c -o ballop.o ballop.c
+```
+
+```
+4 [^^.etc^^.]
+```
+
+```
+5 cc -g -c -o villns.o villns.c
+```
+- <sup>6</sup> cc -g -o zork actors.o ballop.o clockr.o demons.o dgame.o dinit.o dmain.o
+	- dso1.o dso2.o dso3.o dso4.o dso5.o dso6.o dso7.o dsub.o dverb1.o ↪
+
+dverb2.o gdt.o lightp.o local.o nobjs.o np.o np1.o np2.o np3.o nrooms.o ↪
+
+objcts.o rooms.o sobjs.o supp.o sverbs.o verbs.o villns.o -ltermcap ↪
+
+```
+7 [student@fedora zork]$
+```
+The command seems to have succeeded. The current directory now contains a new file called zork. This is the compiled application and it has execute permissions. You can run it by typing ./zork:
+
+```
+1 [student@fedora zork]$ ls -l zork
+```
+- <sup>2</sup> -rwxr-xr-x. 1 student student 400968 Feb 26 19:45 zork
+- <sup>3</sup> [student@fedora zork]\$ file zork
+
+#### *2. package management*
+
+```
+4 zork: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically
+      linked, interpreter /lib64/ld-linux-x86-64.so.2,
+      BuildID[sha1]=3089e3cb1c1a7fc1cc1db41c3aa578c0b52f83f3, for GNU/Linux
+      3.2.0, with debug_info, not stripped
+   ↪
+   ↪
+   ↪
+5 [student@fedora zork]$ ./zork
+6 Welcome to Dungeon. This version created 11-MAR-91.
+7 You are in an open field west of a big white house with a boarded
+8 front door.
+9 There is a small mailbox here.
+10 >
+```
+In this case, installing the game is as simple as copying the zork file to a directory in your PATH, like /usr/local/bin or (for a computer game) /usr/local/games. However, most Makefiles provide a way to install the application in the system, usually by running make install. This will copy the executable, manual pages and other documentation to the correct location.
+
+- <sup>1</sup> [student@fedora zork]\$ sudo make install
+- <sup>2</sup> mkdir -p /usr/games /usr/share/man/man6
+- <sup>3</sup> cp zork /usr/games
+- <sup>4</sup> cp dtextc.dat /usr/games/lib
+- <sup>5</sup> cp dungeon.6 /usr/share/man/man6/
+
+Remark that the "official" location where manually installed applications belong in a Linux directory structure is /usr/local (for applications that follow the Filesystem Hierarchy Standard) or /opt (for applications that want to keep all files in a single directory).
+
+#### <span id="page-37-0"></span>**2.4.2. installing from a tarball**
+
+Before unpacking a tarball, it's useful to check its contents:
+
+<sup>1</sup> student@linux:~\$ tar tf \$downloadedFile.tgz
+
+The t option lists the content of the archive, f should be followed by the filename of the tarball. For .tgz, you may add option z and for .tar.bz2 option j. However, the tar command should recognize the compression method automatically.
+
+Check whether the package archive unpacks in a subdirectory (which is the preferred case) or in the current directory and create a subdirectory yourself if necessary. After that, you can unpack the tarball:
+
+#### <sup>1</sup> student@linux:~\$ tar xf \$downloadedFile.tgz
+
+Now, be sure to read the README file carefully! Normally the readme will explain what to do after download.
+
+Usually the steps are always the same three:
+
+- 1. running a script ./configure. It will gather information about your system that is needed to compile the software so that it can actually run on your system
+- 2. executing the command make (which is the actual compiling)
+- 3. finally, executing make install to copy the files to their proper location.
+
+## **2.5. practice: package management**
+
+- 1. Look up where your Linux distribution has published their package repositories. What is the URL? Can you find and download individual packages from there?
+- <span id="page-38-0"></span>2. Open the graphical package manager tool on your system. What kind of software is available? Can you find the software you need? Or games that you would like to play?
+- 3. Why would it be a bad idea to install Python packages with pip as root? When would you install a package (e.g. pandas) with pip instead of the package manager (e.g. python3-pandas)?
+- 4. Check whether Snap or Flatpak is installed or available on your system. How can you search online for applications in these repositories?
+
+## **2.6. solution: package management**
+
+<span id="page-38-1"></span>1. Look up where your Linux distribution has published their package repositories. What is the URL? Can you find and download individual packages from there?
+
+For Ubuntu, you can start by going to http://archive.ubuntu.com/ubuntu/. Information about which packages are available can be found in the dists directory. For example, the release Noble Nombat (24.04 LTS) has several subdirectories called noble, noble-backports, noble-proposed, and noble-security. The pool directory contains the actual [.deb](http://archive.ubuntu.com/ubuntu/) files.
+
+For Fedora, you can go to https://mirrormanager.fedoraproject.org and look for a mirror for the Fedora release you are using and the architecture of your machine (typically x86\_64). An example of such a repository mirror is https: //fedora.cu.be/linux/releases/ (in Belgium). You can then navigate to the subdirectory of your relea[se \(e.g. 40\), and then to the](https://mirrormanager.fedoraproject.org) Everything directory, x86\_64, os, and Packages to find the RPM packages (sorted in subdirectories a to z according to the first letter of the package name).
+
+2. Ope[n the graphical package manag](https://fedora.cu.be/linux/releases/)er tool on your system. What kind of software is available? Can you find the software you need? Or games that you would like to play?
+
+On Ubuntu, you can use the *Software Center*. On Fedora, you can use the *Software* application. Both tools provide a graphical interface to search for and install software, just like you would on the Appstore, Google Play store, Windows store, etc. In fact, graphical package managers on Linux predate these stores by many years.
+
+You may not necessarily find commercial applications, but usually open source alternatives exist.
+
+Installing games is also possible, but the selection is not as large as on Steam. However, you can install Steam on Linux and play many games that are available on that platform.
+
+3. Why would it be a bad idea to install Python packages with pip as root? When would you install a package (e.g. pandas) with pip instead of the package mnanager (e.g. python3-pandas)?
+
+Installing Python packages with pip as root could interfere with the Python packages installed with the system package manager. Generally, if you need Python packages to be available system-wide, use the system package manager.
+
+#### *2. package management*
+
+If you only need the package for a specific user or a specific Python virtual environment, you can use pip. This is especially useful if the package is not available in the system package manager, or if you need a specific version of the package that is not available in the system package manager.
+
+4. Check whether Snap or Flatpak is installed or available on your system. How can you search online for applications in these repositories?
+
+On Ubuntu, Snap is installed by default. You can search for applications in the Snap store by going to https://snapcraft.io/store. You can also use the snap find command to search for applications from the command line.
+
+On most other distributions, Flatpak is the default (if it is installed). You can search for applications [in the Flathub repository b](https://snapcraft.io/store)y going to https://flathub.or g/. You can also use the flatpak search command to search for applications from the command line.
+
+Remark that installing Snap is usually also possible on dist[ributions that de](https://flathub.org/)[fau](https://flathub.org/)lt to Flatpak.
+
+## <span id="page-40-0"></span>**3. package management on debian**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Alex M. Schapelle, https://github.com/zero-pytagoras/, Bert Van Vreckem https://github.com/bertvv/)*
+
+In this module, we discuss the [Debian package format](https://github.com/paulcobbaut/) .deb and its tools dpkg, apt-get and apt. This is the package m[anager all Linux distributions derived fr](https://github.com/zero-pytagoras/)om Debian, a.o. Ubuntu and [Mint.](https://github.com/bertvv/)
+
+## **3.1. about deb**
+
+<span id="page-40-1"></span>Most people use apt or apt-get (APT = Advanced Package Tool) to manage their Debian/Ubuntu family of Linux distributions. Both are a front end for dpkg and are themselves a back end for *synaptic* and other graphical tools.
+
+## **3.2. dpkg**
+
+<span id="page-40-2"></span>You could use dpkg -i to install a package and dpkg -r to remove a package, but you'd have to manually download the packge and keep track of dependencies. Using apt-get or apt is much easier (see below).
+
+## **3.2.1. dpkg -l**
+
+<span id="page-40-3"></span>The low level tool to work with .deb packages is dpkg. Among other things, you can use dpkg to list all installed packages on a Debian server.
+
+```
+1 student@debian:~$ dpkg -l | wc -l
+```
+<sup>2</sup> 365
+
+Compare this to the same list on a Linux Mint system with a graphical desktop installed.
+
+```
+1 student@mint:~$ dpkg -l | wc -l
+2 2118
+```
+### **3.2.2. dpkg -l \$package**
+
+<span id="page-40-4"></span>Here is an example on how to get information on an individual package. The ii at the beginning means the package is installed.
+
+```
+1 student@debian:~$ dpkg -l rsync
+```
+
+```
+2 Desired=Unknown/Install/Remove/Purge/Hold
+```
+
+```
+3 | Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-p ⌋
+   ↪ end
+```
+
+```
+4 |/ Err^=(none)/Reinst-required (Status,Err: uppercase=bad)
+```
+
+```
+5 ^|/ Name Version Architecture Description
+```
+#### *3. package management on debian*
+
+```
+6 ^^+-==============-==============-============-============================ ⌋
+   ↪ =========================
+7 ii rsync 3.2.7-1ubuntu1 amd64 fast, versatile, remote (and
+   ↪ local) file-copying tool
+```
+#### <span id="page-41-0"></span>**3.2.3. dpkg -S**
+
+You can find the package responsible for installing a certain file on your computer using dpkg -S. This example shows how to find the package for three files on a typical Debian server.
+
+```
+1 student@debian:~$ dpkg -S /usr/share/doc/tmux/ /etc/ssh/ssh_config
+   ↪ /sbin/ifconfig
+```
+
+```
+2 dpkg-query: no path found matching pattern /usr/share/doc/tmux/
+```
+
+```
+3 openssh-client: /etc/ssh/ssh_config
+```
+
+```
+4 net-tools: /sbin/ifconfig
+```
+#### <span id="page-41-1"></span>**3.2.4. dpkg -L**
+
+In reverse, you can also get a list of all files and directories that have been installed by a certain program. Below is the list for the curl package.
+
+- <sup>1</sup> student@debian:~\$ dpkg -L curl
+- <sup>2</sup> /.
+- <sup>3</sup> /usr
+- <sup>4</sup> /usr/bin
+- <sup>5</sup> /usr/bin/curl
+- <sup>6</sup> /usr/share
+- <sup>7</sup> /usr/share/doc
+- <sup>8</sup> /usr/share/doc/curl
+- <sup>9</sup> /usr/share/doc/curl/changelog.Debian.gz
+- <sup>10</sup> /usr/share/doc/curl/changelog.gz
+- <sup>11</sup> /usr/share/doc/curl/copyright
+- <sup>12</sup> /usr/share/man
+- <sup>13</sup> /usr/share/man/man1
+- <sup>14</sup> /usr/share/man/man1/curl.1.gz
+- <sup>15</sup> /usr/share/zsh
+- <sup>16</sup> /usr/share/zsh/vendor-completions
+- <sup>17</sup> /usr/share/zsh/vendor-completions/\_curl
+
+## <span id="page-41-2"></span>**3.3. apt-get**
+
+Debian has been using apt-get to manage packages since 1998. Today Debian and many Debian-based distributions still actively support apt-get, though some experts claim apt, released in 2014, is better at handling dependencies than apt-get.
+
+Both commands use the same configuration files and can be used interchangeably, at least on an interactive terminal. However, using apt in a script is not recommended, since the options and behaviour of apt are not considered to be stable.
+
+We will start with apt-get and discuss apt in the next section. Whenever you see apt-get in documentation, feel free to type apt instead.
+
+#### <span id="page-42-0"></span>**3.3.1. apt-get update**
+
+When typing apt-get update you are downloading the names, versions and short description of all packages available on all configured repositories for your system. Remark that you need to be root to run this command.
+
+- <sup>1</sup> student@debian:~\$ apt-get update
+- <sup>2</sup> Reading package lists^^. Done
+- <sup>3</sup> E: Could not open lock file /var/lib/apt/lists/lock open (13: Permission ↪ denied)
+- <sup>4</sup> E: Unable to lock directory /var/lib/apt/lists/
+- <sup>5</sup> student@debian:~\$ sudo apt-get update
+- <sup>6</sup> Hit:1 http:^/security.debian.org/debian-security bookworm-security InRelease
+- <sup>7</sup> Hit:2 http:^/httpredir.debian.org/debian bookworm InRelease
+- <sup>8</sup> Hit:3 http:^/httpredir.debian.org/debian bookworm-updates InRelease
+- <sup>9</sup> Reading package lists^^. Done
+
+In the example below you can see an interaction with an Ubuntu system. Some repositories are at the url be.archive.ubuntu.com because this computer was installed in Belgium. This mirror URL can be different for you.
+
+```
+1 student@ubuntu:~$ sudo apt-get update
+```
+<sup>2</sup> Ign http:^/be.archive.ubuntu.com precise InRelease
+
+```
+3 Ign http:^/extras.ubuntu.com precise InRelease
+```
+- <sup>4</sup> Ign http:^/security.ubuntu.com precise-security InRelease
+- <sup>5</sup> Ign http:^/archive.canonical.com precise InRelease
+- ↪ <sup>6</sup> Ign http:^/be.archive.ubuntu.com precise-updates InRelease
+
+```
+↪
+7 ^^.
+```
+- <sup>8</sup> Hit http:^/be.archive.ubuntu.com precise-backports/main Translation-en
+- ↪ <sup>9</sup> Hit http:^/be.archive.ubuntu.com precise-backports/multiverse Translation-en
+- ↪ <sup>10</sup> Hit http:^/be.archive.ubuntu.com precise-backports/restricted Translation-en
+
+```
+↪
+11 Hit http:^/be.archive.ubuntu.com precise-backports/universe Translation-en
+```
+
+```
+↪
+12 Fetched 13.7 MB in 8s (1682 kB/s)
+```
+
+```
+↪
+13 Reading package lists^^. Done
+```
+<sup>14</sup> student@ubuntu:~\$
+
+#### **Tips:**
+
+- Run apt-get update every time before performing other package operations to ensure your metadata is up-to-date.
+- Since the package repositories are hosted on web servers, you can open any repository URL in your browser to see how the repository is structured.
+
+#### <span id="page-42-1"></span>**3.3.2. apt-get upgrade**
+
+One of the nicest features of apt-get is that it allows for a secure update of *all software currently installed* on your computer with just *one* command.
+
+- <sup>1</sup> student@debian:~\$ sudo apt-get upgrade
+- <sup>2</sup> Reading package lists^^. Done
+- <sup>3</sup> Building dependency tree
+
+#### *3. package management on debian*
+
+```
+4 Reading state information^^. Done
+5 0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+   The above transcript shows that all software is updated to the latest version available for my
+   distribution. Below is an example of a system with software that can be updated. Some lines
+   were ommitted for brevity.
+1 student@debian:~$ sudo apt-get upgrade
+2 Reading package lists^^. Done
+3 Building dependency tree^^. Done
+4 Reading state information^^. Done
+5 Calculating upgrade^^. Done
+6 The following packages have been kept back:
+7 linux-image-amd64
+8 The following packages will be upgraded:
+9 base-files bind9-dnsutils bind9-host bind9-libs cryptsetup cryptsetup-bin
+       libcryptsetup12 libgnutls30 libnss-systemd libpam-systemd
+       libsystemd-shared libsystemd0 libudev1 systemd systemd-sysv
+    ↪
+    ↪
+10 systemd-timesyncd tar tzdata udev usr-is-merged
+11 20 upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+12 Need to get 13.0 MB of archives.
+13 After this operation, 75.8 kB of additional disk space will be used.
+14 Do you want to continue? [Y/n] y
+15 Get:1 http:^/security.debian.org/debian-security bookworm-security/main
+    ↪ amd64 bind9-host amd64 1:9.18.24-1 [305 kB]
+16 [^^.]
+17 Get:20 http:^/httpredir.debian.org/debian bookworm/main amd64 cryptsetup
+    ↪ amd64 2:2.6.1-4~deb12u2 [213 kB]
+18 Fetched 13.0 MB in 1s (20.3 MB/s)
+19 Reading changelogs^^. Done
+20 Preconfiguring packages ^^.
+21 (Reading database ^^. 29205 files and directories currently installed.)
+22 Preparing to unpack ^^./base-files_12.4+deb12u5_amd64.deb ^^.
+23 Unpacking base-files (12.4+deb12u5) over (12.4+deb12u4) ^^.
+24 Setting up base-files (12.4+deb12u5) ^^.
+25 Installing new version of config file /etc/debian_version ^^.
+```
+ [^^.] Preparing to unpack ^^./5-cryptsetup\_2%3a2.6.1-4~deb12u2\_amd64.deb ^^. Unpacking cryptsetup (2:2.6.1-4~deb12u2) over (2:2.6.1-4~deb12u1) ^^. Setting up systemd-sysv (252.22-1~deb12u1) ^^. [^^.] Setting up bind9-dnsutils (1:9.18.24-1) ^^. Processing triggers for initramfs-tools (0.142) ^^. update-initramfs: Generating /boot/initrd.img-6.1.0-17-amd64 [^^.]
+
+```
+35 Processing triggers for mailcap (3.70+nmu1) ^^.
+```
+**Tip:** Have you noticed that almost every time that you update software on Windows, you are asked to reboot your computer? This is **not** the case with Linux! The only time you need to reboot is when you update the kernel.
+
+#### **3.3.3. apt-get clean**
+
+apt-get keeps a copy of downloaded packages in /var/cache/apt/archives, as can be seen in this screenshot.
+
+```
+1 student@debian:~$ ls /var/cache/apt/archives/ | head
+```
+
+```
+2 base-files_12.4+deb12u5_amd64.deb
+```
+- bind9-dnsutils\_1%3a9.18.24-1\_amd64.deb
+- bind9-host\_1%3a9.18.24-1\_amd64.deb
+- bind9-libs\_1%3a9.18.24-1\_amd64.deb
+- cryptsetup\_2%3a2.6.1-4~deb12u2\_amd64.deb
+- cryptsetup-bin\_2%3a2.6.1-4~deb12u2\_amd64.deb
+- libcryptsetup12\_2%3a2.6.1-4~deb12u2\_amd64.deb
+- libgnutls30\_3.7.9-2+deb12u2\_amd64.deb
+- libnss-systemd\_252.22-1~deb12u1\_amd64.deb
+- libpam-systemd\_252.22-1~deb12u1\_amd64.deb
+
+Running apt-get clean removes all .deb files from that directory.
+
+```
+1 student@debian:~$ sudo apt-get clean
+```
+- student@debian:~\$ ls /var/cache/apt/archives^\*.deb
+- ls: cannot access /var/cache/apt/archives^\*.deb: No such file or directory
+
+#### **3.3.4. apt-cache search**
+
+Use apt-cache search to search for availability of a package. Here we look for rsync.
+
+```
+1 student@debian:~$ apt-cache search rsync | grep '^rsync'
+```
+- rsync fast, versatile, remote (and local) file-copying tool
+- rsyncrypto rsync friendly encryption
+
+#### **3.3.5. apt-get install**
+
+You can install one or more applications by appending their name behind apt-get install. The following example shows how to install the tftp-hpa package (a TFTP server).
+
+```
+1 student@debian:~$ sudo apt-get install tftpd-hpa
+2 Reading package lists^^. Done
+3 Building dependency tree^^. Done
+4 Reading state information^^. Done
+5 Suggested packages:
+6 pxelinux
+7 The following NEW packages will be installed:
+8 tftpd-hpa
+9 0 upgraded, 1 newly installed, 0 to remove and 1 not upgraded.
+10 Need to get 41.9 kB of archives.
+11 After this operation, 117 kB of additional disk space will be used.
+12 Get:1 http:^/httpredir.debian.org/debian bookworm/main amd64 tftpd-hpa amd64
+    ↪ 5.2+20150808-1.4 [41.9 kB]
+13 Fetched 41.9 kB in 0s (241 kB/s)
+14 Preconfiguring packages ^^.
+15 Selecting previously unselected package tftpd-hpa.
+16 (Reading database ^^. 29179 files and directories currently installed.)
+17 Preparing to unpack ^^./tftpd-hpa_5.2+20150808-1.4_amd64.deb ^^.
+18 Unpacking tftpd-hpa (5.2+20150808-1.4) ^^.
+19 Setting up tftpd-hpa (5.2+20150808-1.4) ^^.
+20 Processing triggers for man-db (2.11.2-2) ^^.
+```
+The apt-get command will ask the user to confirm the installation of the package by pressing "y" and ENTER. You can use the -y option to automatically answer yes to all questions.
+
+The following example installs the vim package (VI iMproved, a powerful text editor for the terminal). **Remark** that some additional packages are installed as dependencies!
+
+#### *3. package management on debian*
+
+```
+1 student@debian:~$ sudo apt-get install -y vim
+2 Reading package lists^^. Done
+3 Building dependency tree^^. Done
+4 Reading state information^^. Done
+5 The following additional packages will be installed:
+6 libgpm2 libsodium23 vim-runtime
+7 Suggested packages:
+8 gpm ctags vim-doc vim-scripts
+9 The following NEW packages will be installed:
+10 libgpm2 libsodium23 vim vim-runtime
+11 0 upgraded, 4 newly installed, 0 to remove and 1 not upgraded.
+12 Need to get 8,768 kB of archives.
+13 After this operation, 41.5 MB of additional disk space will be used.
+14 [^^.]
+15 Setting up libsodium23:amd64 (1.0.18-1) ^^.
+16 Setting up libgpm2:amd64 (1.20.7-10+b1) ^^.
+17 Setting up vim-runtime (2:9.0.1378-2) ^^.
+18 Setting up vim (2:9.0.1378-2) ^^.
+19 [^^.]
+20 Processing triggers for man-db (2.11.2-2) ^^.
+21 Processing triggers for libc-bin (2.36-9+deb12u4) ^^.
+```
+#### **3.3.6. apt-get remove**
+
+You can remove one or more applications by appending their name behind apt-get remove.
+
+- student@debian:~\$ sudo apt-get remove tftpd-hpa
+- Reading package lists^^. Done
+- Building dependency tree^^. Done
+- Reading state information^^. Done
+- The following packages will be REMOVED:
+- tftpd-hpa
+- 0 upgraded, 0 newly installed, 1 to remove and 1 not upgraded.
+- After this operation, 117 kB disk space will be freed.
+- Do you want to continue? [Y/n] y
+- (Reading database ^^. 29194 files and directories currently installed.)
+- Removing tftpd-hpa (5.2+20150808-1.4) ^^.
+- Processing triggers for man-db (2.11.2-2) ^^.
+
+If we use dpkg -l to check the status of the tftpd-hpa package, we see that it is removed, some configuration (rc) files are left on the system. Indeed, the configuration file /etc/init/tftpd-hpa.conf is not removed! We'll solve this in the next section.
+
+```
+1 student@debian:~$ dpkg -l tftpd-hpa | tail -1
+```
+- rc tftpd-hpa 5.2+20150808-1.4 amd64 HPA's tftp server
+- student@debian:~\$ ls -l /etc/init/tftpd-hpa.conf
+- -rw-r--r-- 1 root root 980 Oct 25 2022 /etc/init/tftpd-hpa.conf
+
+The example below shows how to remove the vim package. Note that dependencies are **not** removed! You can execute sudo apt autoremove afterwards (as is suggested by the output of the command!) to remove those as well.
+
+- student@debian:~\$ sudo apt-get remove vim
+- Reading package lists^^. Done
+- Building dependency tree^^. Done
+- Reading state information^^. Done
+- The following packages were automatically installed and are no longer ↪ required:
+
+```
+6 libsodium23 vim-runtime
+7 Use 'sudo apt autoremove' to remove them.
+8 The following packages will be REMOVED:
+9 vim
+10 0 upgraded, 0 newly installed, 1 to remove and 1 not upgraded.
+11 After this operation, 3,738 kB disk space will be freed.
+12 Do you want to continue? [Y/n] y
+13 (Reading database ^^. 31257 files and directories currently installed.)
+14 Removing vim (2:9.0.1378-2) ^^.
+15 [^^.]
+16 student@debian:~$ sudo apt-get autoremove
+17 Reading package lists^^. Done
+18 Building dependency tree^^. Done
+19 Reading state information^^. Done
+20 The following packages will be REMOVED:
+21 libsodium23 vim-runtime
+22 0 upgraded, 0 newly installed, 2 to remove and 1 not upgraded.
+23 After this operation, 37.7 MB disk space will be freed.
+24 Do you want to continue? [Y/n] y
+25 (Reading database ^^. 31247 files and directories currently installed.)
+26 Removing libsodium23:amd64 (1.0.18-1) ^^.
+27 Removing vim-runtime (2:9.0.1378-2) ^^.
+28 Removing 'diversion of /usr/share/vim/vim90/doc/help.txt to
+    ↪ /usr/share/vim/vim90/doc/help.txt.vim-tiny by vim-runtime'
+29 Removing 'diversion of /usr/share/vim/vim90/doc/tags to
+    ↪ /usr/share/vim/vim90/doc/tags.vim-tiny by vim-runtime'
+30 Processing triggers for man-db (2.11.2-2) ^^.
+31 Processing triggers for libc-bin (2.36-9+deb12u4) ^^.
+```
+#### <span id="page-46-0"></span>**3.3.7. apt-get purge**
+
+You can purge one or more applications by appending their name behind apt-get purge. Purging will also remove all existing configuration files related to that application. The screenshot shows how to purge the tftpd-hpa package.
+
+```
+1 student@debian:~$ ls -l /etc/init/tftpd-hpa.conf
+2 -rw-r--r-- 1 root root 980 Oct 25 2022 /etc/init/tftpd-hpa.conf
+3 student@debian:~$ sudo apt-get purge tftpd-hpa
+4 Reading package lists^^. Done
+5 Building dependency tree^^. Done
+6 Reading state information^^. Done
+7 The following packages will be REMOVED:
+8 tftpd-hpa*
+9 0 upgraded, 0 newly installed, 1 to remove and 1 not upgraded.
+10 After this operation, 0 B of additional disk space will be used.
+```
+
+```
+11 Do you want to continue? [Y/n] y
+```
+
+```
+12 (Reading database ^^. 29182 files and directories currently installed.)
+```
+Purging configuration files for tftpd-hpa (5.2+20150808-1.4) ^^.
+
+```
+14 student@debian:~$ ls -l /etc/init/tftpd-hpa.conf
+```
+
+```
+15 ls: cannot access '/etc/init/tftpd-hpa.conf': No such file or directory
+```
+Note that dpkg has no information about a purged package!
+
+```
+1 student@debian:~$ dpkg -l tftpd-hpa | tail -1 | tr -s ' '
+```
+
+```
+2 dpkg-query: no packages found matching tftpd-hpa
+```
+## **3.4. apt**
+
+Nowadays, most people use apt for package management on Debian, Mint and Ubuntu systems. That does not mean that apt-get is no longer useful. In scripts, it is actually recommended to use apt-get because its options and behaviour are more stable and predictable than apt. For interactive use, apt is more user-friendly.
+
+To synchronize with the repositories.
+
+<sup>1</sup> sudo apt update
+
+To patch and upgrade all software to the latest version on Debian.
+
+<sup>1</sup> sudo apt upgrade
+
+To patch and upgrade all software to the latest version on Ubuntu and Mint.
+
+<sup>1</sup> sudo apt safe-upgrade
+
+To install an application with all dependencies.
+
+<sup>1</sup> sudo apt install \$package
+
+To search the repositories for applications that contain a certain string in their name or description.
+
+<sup>1</sup> apt search \$string
+
+To remove an application.
+
+<sup>1</sup> sudo apt remove \$package
+
+To remove an application and all configuration files.
+
+<sup>1</sup> sudo apt purge \$package
+
+## <span id="page-47-0"></span>**3.5. /etc/apt/sources.list**
+
+Both apt-get and apt use the same configuration information in /etc/apt/. The main configuration file is /etc/apt/sources.list and the directory /etc/apt/sources.list.d/ contains additional files. These contain a list of http or ftp sources where packages for the distribution can be downloaded. Third party software vendors may provide their own package repositories for Debian or Ubuntu. These repositories are typically added through a new file in /etc/apt/sources.list.d/.
+
+This is what that list looks like on a Debian server system shortly after installation.
+
+```
+1 student@debian:~$ cat /etc/apt/sources.list
+2 deb http:^/httpredir.debian.org/debian/ bookworm main non-free-firmware
+3 deb-src http:^/httpredir.debian.org/debian/ bookworm main non-free-firmware
+4
+5 deb http:^/security.debian.org/debian-security bookworm-security main
+   ↪ non-free-firmware
+6 deb-src http:^/security.debian.org/debian-security bookworm-security main
+   ↪ non-free-firmware
+7
+8 # bookworm-updates, to get updates before a point release is made;
+9 deb http:^/httpredir.debian.org/debian/ bookworm-updates main
+   ↪ non-free-firmware
+10 deb-src http:^/httpredir.debian.org/debian/ bookworm-updates main
+   ↪ non-free-firmware
+```
+If you use Linux as a daily driver, you may end up with a repository list with many more entries, like on this Ubuntu system:
+
+<sup>1</sup> student@ubuntu:~\$ wc -l /etc/apt/sources.list
+
+```
+2 63 /etc/apt/sources.list
+```
+There is much more to learn about apt, explore commands like add-apt-repository, aptkey and apropos apt.
+
+#### <span id="page-48-0"></span>**3.6. practice: package management on debian**
+
+- 1. On your Debian system, install updates for all available packages. Is there any difference with the Enterprise Linux way of doing this?
+- 2. Do you always have to reboot your system after installing updates (like you usually have to do on Windows)? When do you have to reboot after updating?
+- 3. Check whether the applications/commands git, scp, gcc and zork are installed.
+- 4. Use the package manager to install them. Did you find them all? Did the installation include any dependencies?
+- 5. Search the internet for webmin and figure out how to install it.
+
+#### <span id="page-48-1"></span>**3.7. solutions: package management on debian**
+
+- 1. On your Debian system, install updates for all available packages. Is there any difference with the Enterprise Linux way of doing this?
+- <sup>1</sup> \$ sudo apt update
+- <sup>2</sup> \$ sudo apt upgrade
+
+You need two commands on Debian, only one on EL. apt update refreshes the list of available packages, apt upgrade installs the updates. On EL, dnf update and dnf upgrade are synonyms and do both.
+
+2. Do you always have to reboot your system after installing updates (like you usually have to do on Windows)? When do you have to reboot after updating?
+
+On Linux, a reboot is usually only necessary when a new kernel update has been installed. This is because the kernel is loaded into memory at boot time and cannot be replaced while the system is running. Other updates can usually be applied without rebooting.
+
+3. Check whether the applications/commands git, scp, gcc and zork are installed.
+
+You can check whether a package is installed with dpkg -l
+
+- <sup>1</sup> student@debian:~\$ dpkg -l | grep git
+- <sup>2</sup> student@debian:~\$ dpkg -l | grep scp
+- <sup>3</sup> student@debian:~\$ dpkg -l | grep gcc
+- <sup>4</sup> student@debian:~\$ dpkg -l | grep zork
+
+Remark that a package name is not necessarily the same as the name of the command. For example, the scp command may exist while no package called scp was found.
+
+- <sup>1</sup> student@ubuntu:~\$ dpkg -l |grep scp
+- <sup>2</sup> student@ubuntu:~\$ which scp
+
+```
+3 /usr/bin/scp
+```
+So, let's find the package that provides the scp command:
+
+- *3. package management on debian*
+	- <sup>1</sup> student@ubuntu:~\$ dpkg -S /usr/bin/scp
+	- <sup>2</sup> openssh-client: /usr/bin/scp
+	- 4. Use the package manager to install them. Did you find them all? Did the installation include any dependencies?
+	- <sup>1</sup> \$ sudo apt install git
+	- <sup>2</sup> \$ sudo apt install openssh-client
+	- <sup>3</sup> \$ sudo apt install gcc
+
+gcc is part of the Gnu Compiler Collection and may include many other packages installed as dependencies.
+
+scp should be installed as part of the openssh-client package.
+
+The zork package is not available in the default repositories. You can search for it on the internet and download it from a website, or you can install it from a package file if you have one.
+
+5. Search the internet for webmin and figure out how to install it.
+
+A web search should point you to webmin.com. The download page helps you to download a repository file so you can install webmin with your package manager. The latest Webmin distribution is available in various package formats for download, a.o. .rpm, .deb, etc.
+
+<span id="page-50-0"></span>**Part III. Scripting 101**
+
+## <span id="page-52-0"></span>**4. I/O redirection**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Alex M. Schapelle, https://github.com/zero-pytagoras/)*
+
+One of the powers of the Unix command line is the use of input/output redirection and pipes.
+
+This chapter explains redirection [of input, output and error st](https://github.com/zero-pytagoras/)reams.
+
+#### **4.1. stdin, stdout, and stderr**
+
+<span id="page-52-1"></span>The bash shell has three basic streams; it takes input from stdin (stream 0), it sends output to stdout (stream 1) and it sends error messages to stderr (stream 2) .
+
+The drawing below has a graphical interpretation of these three streams.
+
+The keyboard often serves as stdin, whereas stdout and stderr both go to the display. This can be confusing to new Linux users because there is no obvious way to recognize stdout from stderr. Experienced users know that separating output from errors can be very useful.
+
+The next sections will explain how to redirect these streams.
+
+## **4.2. output redirection**
+
+#### <span id="page-52-2"></span>**4.2.1. > stdout**
+
+<span id="page-52-3"></span>stdout can be redirected to a file with a greater than sign. While scanning the line, the shell will see the > sign and will clear the file.
+
+The > notation is in fact the abbreviation of 1> (stdout being referred to as stream 1).
+
+```
+[student@linux ~]$ echo It is cold today!
+It is cold today!
+[student@linux ~]$ echo It is cold today! > winter.txt
+[student@linux ~]$ cat winter.txt
+It is cold today!
+[student@linux ~]$
+```
+Note that the bash shell effectively removes the redirection from the command line before argument 0 is executed. This means that in the case of this command:
+
+echo hello > greetings.txt
+
+the shell only counts two arguments (echo = argument 0, hello = argument 1). The redirection is removed before the argument counting takes place.
+
+#### <span id="page-53-0"></span>**4.2.2. output file is erased**
+
+While scanning the line, the shell will see the > sign and will clear the file! Since this happens before resolving argument 0, this means that even when the command fails, the file will have been cleared!
+
+```
+[student@linux ~]$ cat winter.txt
+It is cold today!
+[student@linux ~]$ zcho It is cold today! > winter.txt
+-bash: zcho: command not found
+[student@linux ~]$ cat winter.txt
+[student@linux ~]$
+```
+#### <span id="page-53-1"></span>**4.2.3. noclobber**
+
+Erasing a file while using > can be prevented by setting the noclobber option.
+
+```
+[student@linux ~]$ cat winter.txt
+It is cold today!
+[student@linux ~]$ set -o noclobber
+[student@linux ~]$ echo It is cold today! > winter.txt
+-bash: winter.txt: cannot overwrite existing file
+[student@linux ~]$ set +o noclobber
+[student@linux ~]$
+```
+#### <span id="page-54-0"></span>**4.2.4. overruling noclobber**
+
+The noclobber can be overruled with >|.
+
+```
+[student@linux ~]$ set -o noclobber
+[student@linux ~]$ echo It is cold today! > winter.txt
+-bash: winter.txt: cannot overwrite existing file
+[student@linux ~]$ echo It is very cold today! >| winter.txt
+[student@linux ~]$ cat winter.txt
+It is very cold today!
+[student@linux ~]$
+```
+### <span id="page-54-1"></span>**4.2.5. » append**
+
+Use ^> to append output to a file.
+
+```
+[student@linux ~]$ echo It is cold today! > winter.txt
+[student@linux ~]$ cat winter.txt
+It is cold today!
+[student@linux ~]$ echo Where is the summer ? >> winter.txt
+[student@linux ~]$ cat winter.txt
+It is cold today!
+Where is the summer ?
+[student@linux ~]$
+```
+## <span id="page-54-2"></span>**4.3. error redirection**
+
+### <span id="page-54-3"></span>**4.3.1. 2> stderr**
+
+Redirecting stderr is done with 2>. This can be very useful to prevent error messages from cluttering your screen.
+
+The screenshot below shows redirection of stdout to a file, and stderr to /dev/null. Writing 1> is the same as >.
+
+```
+[student@linux ~]$ find / > allfiles.txt 2> /dev/null
+[student@linux ~]$
+```
+### <span id="page-54-4"></span>**4.3.2. 2>&1**
+
+To redirect both stdout and stderr to the same file, use 2>&1.
+
+```
+[student@linux ~]$ find / > allfiles_and_errors.txt 2>&1
+[student@linux ~]$
+```
+Note that the order of redirections is significant. For example, the command
+
+ls > dirlist 2>&1
+
+directs both standard output (file descriptor 1) and standard error (file descriptor 2) to the file dirlist, while the command
+
+ls 2>&1 > dirlist
+
+directs only the standard output to file dirlist, because the standard error made a copy of the standard output before the standard output was redirected to dirlist.
+
+#### <span id="page-55-0"></span>**4.4. output redirection and pipes**
+
+By default you cannot grep inside stderr when using pipes on the command line, because only stdout is passed.
+
+student@linux:~\$ rm file42 file33 file1201 | grep file42 rm: cannot remove 'file42': No such file or directory rm: cannot remove 'file33': No such file or directory rm: cannot remove 'file1201': No such file or directory
+
+With 2>&1 you can force stderr to go to stdout. This enables the next command in the pipe to act on both streams.
+
+student@linux:~\$ rm file42 file33 file1201 2>&1 | grep file42 rm: cannot remove 'file42': No such file or directory
+
+You cannot use both 1>&2 and 2>&1 to switch stdout and stderr.
+
+```
+student@linux:~$ rm file42 file33 file1201 2>&1 1>&2 | grep file42
+rm: cannot remove 'file42': No such file or directory
+student@linux:~$ echo file42 2>&1 1>&2 | sed 's/file42/FILE42/'
+FILE42
+```
+You need a third stream to switch stdout and stderr after a pipe symbol.
+
+```
+student@linux:~$ echo file42 3>&1 1>&2 2>&3 | sed 's/file42/FILE42/'
+file42
+student@linux:~$ rm file42 3>&1 1>&2 2>&3 | sed 's/file42/FILE42/'
+rm: cannot remove 'FILE42': No such file or directory
+```
+## <span id="page-55-1"></span>**4.5. joining stdout and stderr**
+
+The &> construction will put both stdout and stderr in one stream (to a file).
+
+```
+student@linux:~$ rm file42 &> out_and_err
+student@linux:~$ cat out_and_err
+rm: cannot remove 'file42': No such file or directory
+student@linux:~$ echo file42 &> out_and_err
+student@linux:~$ cat out_and_err
+file42
+student@linux:~$
+```
+## <span id="page-56-0"></span>**4.6. input redirection**
+
+### <span id="page-56-1"></span>**4.6.1. < stdin**
+
+Redirecting stdin is done with < (short for 0<).
+
+```
+[student@linux ~]$ cat < text.txt
+one
+two
+[student@linux ~]$ tr 'onetw' 'ONEZZ' < text.txt
+ONE
+ZZO
+[student@linux ~]$
+```
+#### <span id="page-56-2"></span>**4.6.2. « here document**
+
+The here document (sometimes called here-is-document) is a way to append input until a certain sequence (usually EOF) is encountered. The EOF marker can be typed literally or can be called with Ctrl-D.
+
+```
+[student@linux ~]$ cat <<EOF > text.txt
+> one
+> two
+> EOF
+[student@linux ~]$ cat text.txt
+one
+two
+[student@linux ~]$ cat <<brol > text.txt
+> brel
+> brol
+[student@linux ~]$ cat text.txt
+brel
+[student@linux ~]$
+```
+#### <span id="page-56-3"></span>**4.6.3. «< here string**
+
+The here string can be used to directly pass strings to a command. The result is the same as using echo string | command (but you have one less process running).
+
+```
+student@linux~$ base64 <<< linux-training.be
+bGludXgtdHJhaW5pbmcuYmUK
+student@linux~$ base64 -d <<< bGludXgtdHJhaW5pbmcuYmUK
+linux-training.be
+```
+See rfc 3548 for more information about base64.
+
+## <span id="page-57-0"></span>**4.7. confusing redirection**
+
+The shell will scan the whole line before applying redirection. The following command line is very readable and is correct.
+
+cat winter.txt > snow.txt 2> errors.txt
+
+But this one is also correct, but less readable.
+
+2> errors.txt cat winter.txt > snow.txt
+
+Even this will be understood perfectly by the shell.
+
+< winter.txt > snow.txt 2> errors.txt cat
+
+## <span id="page-57-1"></span>**4.8. quick file clear**
+
+So what is the quickest way to clear a file ?
+
+>foo
+
+And what is the quickest way to clear a file when the noclobber option is set ?
+
+>|bar
+
+## <span id="page-57-2"></span>**4.9. practice: input/output redirection**
+
+1. Activate the noclobber shell option.
+
+2. Verify that noclobber is active by repeating an ls on /etc/ with redirected output to a file.
+
+3. When listing all shell options, which character represents the noclobber option ?
+
+4. Deactivate the noclobber option.
+
+5. Make sure you have two shells open on the same computer. Create an empty tailing.txt file. Then type tail -f tailing.txt. Use the second shell to append a line of text to that file. Verify that the first shell displays this line.
+
+6. Create a file that contains the names of five people. Use cat and output redirection to create the file and use a here document to end the input.
+
+## <span id="page-58-0"></span>**4.10. solution: input/output redirection**
+
+1. Activate the noclobber shell option.
+
+set -o noclobber set -C
+
+2. Verify that noclobber is active by repeating an ls on /etc/ with redirected output to a file.
+
+```
+ls /etc > etc.txt
+ls /etc > etc.txt (should not work)
+```
+3. When listing all shell options, which character represents the noclobber option ?
+
+echo \$- (noclobber is visible as C)
+
+4. Deactivate the noclobber option.
+
+set +o noclobber
+
+5. Make sure you have two shells open on the same computer. Create an empty tailing.txt file. Then type tail -f tailing.txt. Use the second shell to append a line of text to that file. Verify that the first shell displays this line.
+
+```
+student@linux:~$ > tailing.txt
+student@linux:~$ tail -f tailing.txt
+hello
+world
+in the other shell:
+student@linux:~$ echo hello >> tailing.txt
+student@linux:~$ echo world >> tailing.txt
+```
+6. Create a file that contains the names of five people. Use cat and output redirection to create the file and use a here document to end the input.
+
+```
+student@linux:~$ cat > tennis.txt << ace
+> Justine Henin
+> Venus Williams
+> Serena Williams
+> Martina Hingis
+> Kim Clijsters
+> ace
+student@linux:~$ cat tennis.txt
+Justine Henin
+Venus Williams
+Serena Williams
+Martina Hingis
+Kim Clijsters
+student@linux:~$
+```
+## <span id="page-60-0"></span>**5. filters**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Alex M. Schapelle, https://github.com/zero-pytagoras/; Bert Vam Vreckem, https://github.com/bertvv/)*
+
+Filters are commands that take [some text input, perform a very spe](https://github.com/paulcobbaut/)cific operation on it, and then output the result. Usu[ally, you can specify a file as argument](https://github.com/zero-pytagoras/) to take input from. However, [they are also designed to be](https://github.com/bertvv/) used with a *pipe* (|, see I/O redirection) to perform that task on the standard input. The combination of several filters in a *pipeline* allows you to automate quite complex text processing tasks.
+
+This is the essence of the *Unix philosophy*: small, simple tools that do one thing well, and can be combined to perform more complex tasks. Most of the tools discussed in this chapter are in fact older than Linux and are standardised by the POSIX standard. This means that they are available on all Unix-like systems, like Free/Open/NetBSD and macOS.
+
+This chapter will introduce you to the most common filter commands. Be sure to also read each command's man page to learn more about their options and features!
+
+## **5.1. filters and pipes**
+
+<span id="page-60-1"></span>Typical patterns for using filters are:
+
+- command file reads input from a file, specified as an argument.
+- command < file same, but if the command does not accept a file as argument, you can use input redirection.
+- command1 | command2 uses a *pipe* to send the output of command1 to command2.
+
+Sometimes, in a pipeline, unnecessary commands are used. For example:
+
+- cat file | command can always be replaced by command < file or command file if the command accepts a file as argument.
+- echo "string" | command can always be replaced by command ^^< "string" (a here string).
+
+This may seem trivial, but it can make a difference in performance and memory usage. The cat and echo commands must be loaded into memory and use system resources, while the input redirection and here string are handled by the shell itself.
+
+## **5.2. cat**
+
+<span id="page-60-2"></span>Cat is short for *concatenate*. When between two *pipes*, the cat command does nothing except repeating stdin on stdout. The command can also take input from a file.
+
+- <sup>1</sup> student@linux:~\$ cat count.txt
+- <sup>2</sup> one
+- <sup>3</sup> two
+- <sup>4</sup> three
+- <sup>5</sup> four
+- <sup>6</sup> five
+
+#### *5. filters*
+
+```
+7 student@linux:~$ cat count.txt | cat | cat | cat | cat | cat
+```
+- one
+- two
+- three
+- four
+- five
+
+In scripts, cat is used to print out multiple lines (instead of using echo multiple times) using a here document.
+
+- ^!/bin/bash
+- cat ^< \_EOF\_
+- one
+- two
+- three
+- four
+- five
+- \_EOF\_
+
+## <span id="page-61-0"></span>**5.3. tac**
+
+The tac command is the reverse of cat. It prints the lines of a file in reverse order.
+
+- student@linux:~\$ tac count.txt
+- five
+- four
+- three
+- two
+- one
+
+## <span id="page-61-1"></span>**5.4. shuf**
+
+The shuf command is used to randomly shuffle the lines of a file.
+
+- student@linux:~\$ shuf count.txt
+- four
+- one
+- three
+- five
+- two
+
+## <span id="page-61-2"></span>**5.5. tee**
+
+Writing long *pipes* in Unix is fun, but sometimes you may want intermediate results. Or, you may want to see the standard output of a command and also save it to a file. This is were tee comes in handy.
+
+The tee filter puts stdin on stdout and also into a file (specified as an argument). So tee is almost the same as cat, except that it has two identical outputs.
+
+```
+1 [student@linux pipes]$ ls
+2 [student@linux pipes]$ cal | tee month.txt
+3 October 2024
+4 Su Mo Tu We Th Fr Sa
+5 1 2 3 4 5
+6 6 7 8 9 10 11 12
+7 13 14 15 16 17 18 19
+8 20 21 22 23 24 25 26
+9 27 28 29 30 31
+10
+11 [student@linux pipes]$ ls
+12 month.txt
+13 [student@linux pipes]$ cat month.txt
+14 October 2024
+15 Su Mo Tu We Th Fr Sa
+16 1 2 3 4 5
+17 6 7 8 9 10 11 12
+18 13 14 15 16 17 18 19
+19 20 21 22 23 24 25 26
+20 27 28 29 30 31
+```
+## <span id="page-62-0"></span>**5.6. head and tail**
+
+The head and tail commands are used to display the first and last lines of a file, respectively. By default, they displays 10 lines, unless you specify another amount.
+
+```
+1 [student@linux pipes]$ head -3 count.txt
+```
+
+```
+2 one
+```
+
+```
+3 two
+```
+
+```
+4 three
+```
+
+```
+5 [student@linux pipes]$ tail -3 count.txt
+```
+- three
+- four
+- five
+
+```
+With tail -n+NUM you can start at line NUM.
+```
+
+```
+1 [student@linux pipes]$ tail -n+3 count.txt
+```
+- three
+- four
+- five
+
+With head -n-NUM you can stop at line NUM.
+
+```
+1 [student@linux pipes]$ head -n-3 count.txt
+```
+one
+
+```
+3 two
+```
+The tail command has an option -f to follow a file. That is, the command will display the last lines of the specified file, and then wait for new lines to be added to the file. This is useful for monitoring log files.
+
+[student@linux ~]\$ sudo tail -f /var/log/httpd/access\_log
+
+#### *5. filters*
+
+### <span id="page-63-0"></span>**5.7. cut**
+
+The cut filter can select columns from files, depending on a delimiter or a count of bytes. The screenshot below uses cut to filter for the username and userid in the /etc/passwd file. It uses the colon as a delimiter, and selects fields 1 and 3.
+
+```
+1 [student@linux pipes]$ cut -d: -f1,3 /etc/passwd | tail -4
+```
+- Figo:510
+- Pfaff:511
+- Harry:516
+- Hermione:517
+
+When using a space as the delimiter for cut, you have to quote the space.
+
+```
+1 [student@linux pipes]$ cut -d' ' -f1 tennis.txt
+```
+- Amelie
+- Kim
+- Justine
+- Serena
+- Venus
+
+This example uses cut to display the second to the seventh character of /etc/passwd.
+
+[student@linux pipes]\$ cut -c2-7 /etc/passwd | tail -4
+
+- igo:x:
+- faff:x
+- arry:x
+- ermion
+
+## <span id="page-63-1"></span>**5.8. paste**
+
+The paste command will two files line by line. By default, it merges the first line of the first file with the first line of the second file, and so on. The screenshot below shows the result of merging two files.
+
+```
+1 student@linux:~/pipes$ cat count.txt
+2 one
+3 two
+4 three
+5 four
+6 five
+7 student@linux:~/pipes$ cat country.txt
+8 France,Paris,60
+9 Italy,Rome,50
+```
+
+```
+10 Belgium,Brussels,10
+```
+Iran,Teheran,70
+
+```
+12 Germany,Berlin,100
+```
+
+```
+13 student@linux:~/pipes$ paste -d',' count.txt country.txt
+```
+
+```
+14 one,France,Paris,60
+```
+- two,Italy,Rome,50
+- three,Belgium,Brussels,10
+- four,Iran,Teheran,70
+- five,Germany,Berlin,100
+
+Option -d specifies a character to separate the columns. The default value is a tab character.
+
+## <span id="page-64-0"></span>**5.9. join**
+
+The join command is used to join two files on a common field. The common field in both files should be in the same order.
+
+```
+1 student@linux:~/pipes$ cat country-code.txt
+```
+- Belgium,be
+- France,fr
+- Germany,de
+- Iran,ir
+- Italy,it
+
+```
+7 student@linux:~/pipes$ cat country-sorted.txt
+```
+- Belgium,Brussels,10
+- France,Paris,60
+- Germany,Berlin,100
+- Iran,Teheran,70
+- Italy,Rome,50
+- student@linux:~/pipes\$ join -t, country-code.txt country-sorted.txt
+- Belgium,be,Brussels,10
+- France,fr,Paris,60
+- Germany,de,Berlin,100
+- Iran,ir,Teheran,70
+- Italy,it,Rome,50
+
+Option -t specifies the delimiter character.
+
+## <span id="page-64-1"></span>**5.10. sort**
+
+The sort filter will default to an alphabetical sort.
+
+```
+1 student@linux:~/pipes$ cat music.txt
+```
+- Queen
+- Brel
+- Led Zeppelin
+- Abba
+- student@linux:~/pipes\$ sort music.txt
+- Abba
+- Brel
+- Led Zeppelin
+- Queen
+
+But the sort filter has many options to tweak its usage. This example shows sorting different columns (column 1 or column 2).
+
+- [student@linux pipes]\$ sort -k1 country.txt
+- Belgium,Brussels,10
+- France,Paris,60
+- Germany,Berlin,100
+- Iran,Teheran,70
+- Italy,Rome,50
+- [student@linux pipes]\$ sort -k2 country.txt
+- Germany,Berlin,100
+- Belgium,Brussels,10
+- France,Paris,60
+- Italy,Rome,50
+- Iran,Teheran,70
+
+```
+5. filters
+```
+The screenshot below shows the difference between an alphabetical sort and a numerical sort (both on the third column).
+
+```
+1 [student@linux pipes]$ sort -k3 country.txt
+2 Belgium,Brussels,10
+3 Germany,Berlin,100
+4 Italy,Rome,50
+5 France,Paris,60
+6 Iran,Teheran,70
+7 [student@linux pipes]$ sort -n -k3 country.txt
+8 Belgium,Brussels,10
+9 Italy,Rome,50
+10 France,Paris,60
+11 Iran,Teheran,70
+12 Germany,Berlin,100
+```
+## <span id="page-65-0"></span>**5.11. uniq**
+
+With uniq you can remove duplicates from a *sorted list*.
+
+```
+1 student@linux:~/pipes$ cat music.txt
+```
+- Queen
+- Brel
+- Queen
+- Abba
+
+```
+6 student@linux:~/pipes$ sort music.txt
+```
+- Abba
+- Brel
+- Queen
+- Queen
+- student@linux:~/pipes\$ sort music.txt | uniq
+- Abba
+- Brel
+- Queen
+
+uniq can also count occurrences with the -c option.
+
+```
+1 student@linux:~/pipes$ sort music.txt |uniq -c
+2 1 Abba
+```
+
+```
+3 1 Brel
+```
+2 Queen
+
+## <span id="page-65-1"></span>**5.12. fmt**
+
+Reformats text files to a specified width, preserving paragraphs and ensuring words are not split.
+
+```
+1 student@linux:~/pipes$ cat lorem.txt
+```
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+	- tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim ↪
+	- veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea ↪
+	- commodo consequat. Duis aute irure dolor in reprehenderit in voluptate ↪
+	- velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint ↪
+	- occaecat cupidatat non proident, sunt in culpa qui officia deserunt ↪
+	- mollit anim id est laborum. ↪
+
+```
+3 student@linux:~/pipes$ fmt -w 35 lorem.txt
+```
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+#### <span id="page-66-0"></span>**5.13. nl**
+
+Add line numbers to input text.
+
+ student@linux:~/pipes\$ nl count.txt 1 one 2 two
+
+- 3 three
+- 4 four
+- 5 five
+
+#### <span id="page-66-1"></span>**5.14. wc**
+
+Counting words, lines and characters is easy with wc.
+
+```
+1 [student@linux pipes]$ wc tennis.txt
+2 5 15 100 tennis.txt
+3 [student@linux pipes]$ wc -l tennis.txt
+4 5 tennis.txt
+5 [student@linux pipes]$ wc -w tennis.txt
+6 15 tennis.txt
+7 [student@linux pipes]$ wc -c tennis.txt
+8 100 tennis.txt
+9 [student@linux pipes]$
+```
+## <span id="page-66-2"></span>**5.15. column**
+
+Arrange the input in columns. Option -t will create a nicely formatted table. Option -s specifies the delimiter of the input text (default is whitespace).
+
+| 1 | [student@linux |   |   | pipes]\$ | column<br>-t<br>-s: | <<br>/etc/passwd | <br>head<br>-4    |
+|---|----------------|---|---|----------|---------------------|------------------|-------------------|
+| 2 | root           | x | 0 | 0        | Super<br>User       | /root            | /bin/bash         |
+| 3 | bin            | x | 1 | 1        | bin                 | /bin             | /usr/sbin/nologin |
+| 4 | daemon         | x | 2 | 2        | daemon              | /sbin            | /usr/sbin/nologin |
+| 5 | adm            | x | 3 | 4        | adm                 | /var/adm         | /usr/sbin/nologin |
+
+It also allows you to emit JSON with option -J. Option -N specifies the column/key names.
+
+```
+1 [vagrant@linux pipes]$ head -4 /etc/passwd | column -J -N
+  ↪ user,passwd,uid,gid,name,home,shell -s:
+2 {
+3 "table": [
+4 {
+5 "user": "root",
+6 "passwd": "x",
+7 "uid": "0",
+8 "gid": "0",
+9 "name": "Super User",
+10 "home": "/root",
+11 "shell": "/bin/bash"
+12 },{
+13 "user": "bin",
+14 "passwd": "x",
+15 "uid": "1",
+16 "gid": "1",
+17 "name": "bin",
+18 "home": "/bin",
+19 "shell": "/usr/sbin/nologin"
+20 },{
+21 "user": "daemon",
+22 "passwd": "x",
+23 "uid": "2",
+24 "gid": "2",
+25 "name": "daemon",
+26 "home": "/sbin",
+27 "shell": "/usr/sbin/nologin"
+28 },{
+29 "user": "adm",
+30 "passwd": "x",
+31 "uid": "3",
+32 "gid": "4",
+33 "name": "adm",
+34 "home": "/var/adm",
+35 "shell": "/usr/sbin/nologin"
+36 }
+37 ]
+38 }
+```
+## <span id="page-67-0"></span>**5.16. comm**
+
+Comparing streams (or files) can be done with the comm. By default comm will output three columns. In this example, Abba, Cure and Queen are in both lists, Bowie and Sweet are only in the first file, Turner is only in the second.
+
+- student@linux:~/pipes\$ cat > list1.txt
+- Abba
+- Bowie
+- Cure
+- Queen
+- Sweet
+- student@linux:~/pipes\$ cat > list2.txt
+- Abba
+- Cure
+- Queen
+- Turner
+
+```
+12 student@linux:~/pipes$ comm list1.txt list2.txt
+13 Abba
+14 Bowie
+15 Cure
+16 Queen
+17 Sweet
+18 Turner
+```
+The output of comm can be easier to read when outputting only a single column. The digits point out which output columns should not be displayed.
+
+```
+1 student@linux:~/pipes$ comm -12 list1.txt list2.txt
+2 Abba
+3 Cure
+4 Queen
+5 student@linux:~/pipes$ comm -13 list1.txt list2.txt
+6 Turner
+7 student@linux:~/pipes$ comm -23 list1.txt list2.txt
+8 Bowie
+```
+
+```
+9 Sweet
+```
+## <span id="page-68-0"></span>**5.17. grep**
+
+The grep filter is famous among Unix users. The most common use of grep is to filter lines of text containing (or not containing) a certain text pattern. That pattern can be a simple string or a regular expression.
+
+- [student@linux pipes]\$ cat tennis.txt
+- Amelie Mauresmo,Fra
+- Kim Clijsters,BEL
+- Justine Henin,Bel
+- Serena Williams,usa
+- Venus Williams,USA
+- [student@linux pipes]\$ grep Williams tennis.txt
+- Serena Williams,usa
+- Venus Williams,USA
+
+One of the most useful options of grep is grep -i which filters in a case insensitive way.
+
+- [student@linux pipes]\$ grep Bel tennis.txt
+- Justine Henin,Bel
+- [student@linux pipes]\$ grep -i Bel tennis.txt
+- Kim Clijsters,BEL
+- Justine Henin,Bel
+
+Another very useful option is grep -v which outputs lines *not* matching the string.
+
+- [student@linux pipes]\$ grep -v Fra tennis.txt
+- Kim Clijsters,BEL
+- Justine Henin,Bel
+- Serena Williams,usa
+- Venus Williams,USA
+
+And of course, both options can be combined to filter all lines not containing a case insensitive string.
+
+- [student@linux pipes]\$ grep -vi usa tennis.txt
+- Amelie Mauresmo,Fra
+- Kim Clijsters,BEL
+- Justine Henin,Bel
+
+```
+5. filters
+```
+With grep -A1 one line after the result is also displayed.
+
+```
+1 student@linux:~/pipes$ grep -A1 Henin tennis.txt
+```
+
+```
+2 Justine Henin,Bel
+```
+
+```
+3 Serena Williams,usa
+```
+With grep -B1 one line before the result is also displayed.
+
+```
+1 student@linux:~/pipes$ grep -B1 Henin tennis.txt
+```
+
+```
+2 Kim Clijsters,BEL
+```
+Justine Henin,Bel
+
+With grep -C1 (context) one line before and one after are also displayed. All three options (A,B, and C) can display any number of lines (using e.g. A2, B4 or C20).
+
+```
+1 student@linux:~/pipes$ grep -C1 Henin tennis.txt
+```
+
+```
+2 Kim Clijsters,BEL
+```
+
+```
+3 Justine Henin,Bel
+```
+Serena Williams,usa
+
+## <span id="page-69-0"></span>**5.18. tr**
+
+The filter tr (short for *translate*) is used to translate *characters*. It's a bit different from the other filters, as it works on single characters, instead of lines of text. Also, it's not possible to specify a file as input, only stdin.
+
+You can translate characters with tr. The screenshot shows the translation of all occurrences of e to E.
+
+- [student@linux pipes]\$ cat tennis.txt | tr 'e' 'E'
+- AmEliE MaurEsmo,Fra
+- Kim ClijstErs,BEL
+- JustinE HEnin,BEl
+- SErEna Williams,usa
+- VEnus Williams,USA
+
+Here we set all letters to uppercase by defining two ranges.
+
+```
+1 [student@linux pipes]$ cat tennis.txt | tr 'a-z' 'A-Z'
+```
+- AMELIE MAURESMO,FRA
+- KIM CLIJSTERS,BEL
+- JUSTINE HENIN,BEL
+- SERENA WILLIAMS,USA
+- VENUS WILLIAMS,USA
+
+Here we translate all newlines to spaces.
+
+```
+1 [student@linux pipes]$ cat count.txt
+```
+
+```
+2 one
+```
+- two
+- three
+- four
+- five
+- [student@linux pipes]\$ cat count.txt | tr '\n' ' '
+- one two three four five [student@linux pipes]\$
+
+The tr -s filter can also be used to squeeze multiple occurrences of a character to one.
+
+```
+1 [student@linux pipes]$ cat spaces.txt
+2 one two three
+3 four five six
+4 [student@linux pipes]$ cat spaces.txt | tr -s ' '
+5 one two three
+6 four five six
+  You can also use tr to 'encrypt' texts with rot13.
+1 [student@linux pipes]$ cat count.txt | tr 'a-z' 'nopqrstuvwxyzabcdefghijklm'
+2 bar
+3 gjb
+4 guerr
+5 sbhe
+6 svir
+7 [student@linux pipes]$ cat count.txt | tr 'a-z' 'n-za-m'
+8 bar
+9 gjb
+10 guerr
+11 sbhe
+12 svir
+  This last example uses tr -d to delete characters.
+1 student@linux:~/pipes$ cat tennis.txt | tr -d e
+2 Amli Maursmo,Fra
+3 Kim Clijstrs,BEL
+4 Justin Hnin,Bl
+```
+Srna Williams,usa
+
+```
+6 Vnus Williams,USA
+```
+## <span id="page-70-0"></span>**5.19. sed**
+
+The stream editor sed can perform editing functions in the stream, using *regular expressions*. It is very often used for search and replace operations.
+
+The command s (short for substitute) takes a regular expression and a replacement string as arguments in the form s/regexp/replacement/ and replaces the first occurrence of the regular expression on each line of input with the replacement string.
+
+```
+1 student@linux:~/pipes$ sed 's/5/42/' ^^< 'level5 level7'
+```
+
+```
+2 level42 level7
+```
+student@linux:~/pipes\$ sed 's/level/jump/' ^^< 'level5 level7'
+
+```
+4 jump5 level7
+```
+Add g for global replacements (all occurrences of the string per line).
+
+```
+1 student@linux:~/pipes$ sed 's/level/jump/g' ^^< 'level5 level7'
+```
+jump5 jump7
+
+With /regex/d you can remove lines from a stream matching the specified regular expression.
+
+- student@linux:~/filters\$ cat tennis.txt
+- Venus Williams,USA
+- Martina Hingis,SUI
+- Justine Henin,BE
+- Serena williams,USA
+- Kim Clijsters,BE
+- Yanina Wickmayer,BE
+
+*5. filters*
+
+- <sup>8</sup> student@linux:~/filters\$ cat tennis.txt | sed '/BE/d'
+- <sup>9</sup> Venus Williams,USA
+- <sup>10</sup> Martina Hingis,SUI
+- <sup>11</sup> Serena williams,USA
+
+There are many more options for sed, but they are beyond the scope of this chapter. Check e.g. this list of sed one-liners and do an Internet search for more examples.
+
+## **5.20. aw[k](https://www.pement.org/sed/sed1line.txt)**
+
+<span id="page-71-0"></span>Maybe awk does not really belong in a list of filters "that do one specific thing", as it is a complete programming language. But it is often used in the same way as the other filters, so we give at least a few examples. Just like sed, awk is a very powerful tool, and we can only scratch the surface here. See the GNU Awk User's Guide for in-depth information, or find examples like this list of awk one-liners.
+
+AWK was developed in the late 1970's. The name stands for the last names of its authors: Alfred Aho, Peter Weinberger, an[d Brian Kernighan. If th](https://www.gnu.org/software/gawk/manual/gawk.html)e last name sounds familiar, it's because Brian Kernigh[an he is also co](https://www.pement.org/awk/awk1line.txt)-authors of the C programming language and contributed to the development of Unix. Awk is a part of the POSIX standard and therefore is always available on Unix-like systems.
+
+You can consider AWK as a programming language with a built-in for loop. For each line of input, it will perform the specified action (written out in a C-like syntax). The action is enclosed in curly braces {}. Awk also automatically splits each line into whitespace delimited fields, which can be accessed with \$1, \$2, etc. The whole line is \$0.
+
+The following example prints the first and third field of each line of the passwd file. Since the fields are separated by colons, we use -F: to specify the field separator. Compare to the cut example above!
+
+- <sup>1</sup> student@linux:~/pipes\$ awk -F: '{print \$1, \$3}' /etc/passwd | tail -4
+- <sup>2</sup> Figo 510
+- <sup>3</sup> Pfaff 511
+- <sup>4</sup> Harry 516
+- <sup>5</sup> Hermione 517
+
+You can apply an action only to lines matching a regular expression. This example prints the first and third field of each line of the passwd file, but only for lines ending on the string bash.
+
+<sup>1</sup> student@linux:~/pipes\$ awk -F: '/bash\$/ {print \$1, \$3}' /etc/passwd
+
+- <sup>2</sup> root 0
+- <sup>3</sup> student 1000
+- <sup>4</sup> paul 1001
+- <sup>5</sup> serena 1002
+
+Awk automatically interprets numbers as numbers, so you can do calculations with them. This example prints the first and third field of each line of the passwd file, but only for lines where the third field (UID) is greater than or equals to 1000 (i.e. "normal" users).
+
+```
+1 student@linux:~/pipes$ awk -F: '$3 ^= 1000 {print $1, $3}' /etc/passwd
+```
+- <sup>2</sup> student 1000
+- <sup>3</sup> paul 1001
+- <sup>4</sup> serena 1002
+
+Awk can also be used to perform calculations.
+
+```
+1 student@linux:~/pipes$ cat country.txt
+2 France,Paris,60
+3 Italy,Rome,50
+4 Belgium,Brussels,10
+5 Iran,Teheran,70
+6 Germany,Berlin,100
+7 student@linux:~/pipes$ awk -F, '{ sum += $3 } END { print sum/NR }'
+   ↪ country.txt
+8 58
+```
+A lot is going on here. For each line of input, the numerical value of column 3 is added to the variable sum. This variable is implicitly initialized to 0. The END block is executed after all lines have been processed. It prints the value of sum divided by the number of records (lines) processed, which is stored in the built-in variable NR. So, this one-liner calculates the average of the third column of the file country.txt.
+
+## <span id="page-72-0"></span>**5.21. pipe examples**
+
+#### <span id="page-72-1"></span>**5.21.1. who | wc**
+
+How many users are logged on to this system ?
+
+```
+1 [student@linux pipes]$ who
+2 root tty1 Jul 25 10:50
+3 paul pts/0 Jul 25 09:29 (laika)
+4 Harry pts/1 Jul 25 12:26 (barry)
+5 paul pts/2 Jul 25 12:26 (pasha)
+6 [student@linux pipes]$ who | wc -l
+7 4
+```
+### <span id="page-72-2"></span>**5.21.2. who | cut | sort**
+
+Display a sorted list of logged on users.
+
+```
+1 [student@linux pipes]$ who | cut -d' ' -f1 | sort
+```
+- Harry
+- paul
+- paul
+- root
+
+Display a sorted list of logged on users, but every user only once .
+
+[student@linux pipes]\$ who | cut -d' ' -f1 | sort | uniq
+
+- Harry
+- paul
+- root
+
+## **5.21.3. grep | cut**
+
+Display a list of all *user accounts* on this computer. Users accounts are explained in in the chapters about user management.
+
+```
+5. filters
+```
+
+```
+1 student@linux:~$ grep bash /etc/passwd
+2 root:x:0:0:root:/root:/bin/bash
+3 paul:x:1000:1000:paul,,,:/home/paul:/bin/bash
+4 serena:x:1001:1001^:/home/serena:/bin/bash
+5 student@linux:~$ grep bash /etc/passwd | cut -d: -f1
+6 root
+7 paul
+8 serena
+```
+### **5.21.4. ip | awk**
+
+Display only IPv4 addresses of this computer.
+
+```
+1 student@linux:~/pipes$ ip -br a
+2 lo UNKNOWN 127.0.0.1/8 ^:1/128
+3 eth0 UP 10.0.2.15/24 fe80^:a00:27ff:fee6:f5c9/64
+4 eth1 UP 192.168.56.21/24 fe80^:a00:27ff:fe0f:afa/64
+5 student@linux:~/pipes$ ip -br a | awk '{print $3}'
+6 127.0.0.1/8
+7 10.0.2.15/24
+8 192.168.56.21/24
+```
+## **5.22. practice: filters**
+
+- 1. Put a sorted list of all bash users in bashusers.txt.
+- 2. Put a sorted list of all logged on users in onlineusers.txt.
+- 3. Make a list of all filenames in /etc that contain the string conf in their filename.
+- 4. Make a sorted list of all files in /etc that contain the case insensitive string conf in their filename.
+- 5. Look at the output of ip neigh (ARP cache, listing other hosts on the same local network) and filter out the MAC addresses.
+- 6. Write a line that removes all non-letters from a stream.
+- 7. Write a line that receives a text file, and outputs all words on a separate line.
+- 8. Write a spell checker on the command line, i.e. list all words in a file that do not occur in a dictionary. There will probably be a dictionary in /usr/share/dict/.
+
+## **5.23. solution: filters**
+
+- 1. Put a sorted list of all bash users in bashusers.txt.
+- <sup>1</sup> grep bash /etc/passwd **|** cut -d: -f1 **|** sort > bashusers.txt
+- 2. Put a sorted list of all logged on users in onlineusers.txt.
+- <sup>1</sup> who **|** cut -d' ' -f1 **|** sort > onlineusers.txt
+- 3. Make a list of all filenames in /etc that contain the string conf in their filename.
+- <sup>1</sup> ls /etc **|** grep conf
+- 4. Make a sorted list of all files in /etc that contain the case insensitive string conf in their filename.
+
+```
+1 ls /etc | grep -i conf | sort
+```
+5. Look at the output of ip neigh (ARP cache, listing other hosts on the same local network) and filter out the MAC addresses.
+
+```
+1 ip n | cut -d' ' -f5
+```
+6. Write a line that removes all non-letters from a stream.
+
+```
+1 student@linux:~$ cat text
+2 This is, yes really! , a text with ?&* too many str$ange# characters ;-)
+3 student@linux:~$ tr -d ',!$^.*&^%#@;()-' < text
+4 This is yes really a text with too many strange characters
+```
+7. Write a line that receives a text file, and outputs all words on a separate line.
+
+```
+1 student@linux:~$ cat text2
+2 it is very cold today without the sun
+3
+4 student@linux:~$ tr ' ' '\n' < text2
+5 it
+6 is
+7 very
+8 cold
+9 today
+10 without
+11 the
+12 sun
+```
+8. Write a spell checker on the command line, i.e. list all words in a file that do not occur in a dictionary. There will probably be a dictionary in /usr/share/dict/.
+
+We will use the Python 3 copyright notice as example input. The dictionary is /usr/share/dict/words. We will use comm to compare the two lists. To make the search case insensitive, we will convert both lists to lowercase.
+
+ student@linux:~/pipes\$ tr 'A-Z' 'a-z' < /usr/share/dict/words | sort | ↪ uniq > lcase-dict.txt
+
+Next, we make a list of all words in the input file, removing all punctuation and digits.
+
+```
+1 student@linux:~/pipes$ tr -d '[:punct:][:digit:]' <
+```
+
+```
+/usr/share/doc/python3/copyright | tr '[A-Z] ' '[a-z]\n' | sort |
+↪
+```
+
+```
+uniq > words.txt
+↪
+```
+Finally, we compare the two lists.
+
+```
+1 student@debian:~/pipes$ comm -23 words.txt lcase-dict.txt
+2 andor
+3 beopen
+4 beopencom
+5 bernd
+6 brentrup
+7 bsbunimuensterde
+8 centrum
+9 cnri
+10 [^^.some lines omitted^^.]
+11 tortious
+12 virginias
+13 zope
+```
+## <span id="page-76-0"></span>**6. shell variables**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Alex M. Schapelle, https://github.com/zero-pytagoras/, Bert Van Vreckem (https://github.com/bertvv))*
+
+In this chapter we learn to manage shell **variables**, i.e. how to declare and initialize them, variable types, scope, and h[ow to use them in scripts or in the term](https://github.com/zero-pytagoras/)inal.
+
+## **6.1. \$ dollar sign**
+
+<span id="page-76-1"></span>To retrieve the value of a **shell variable**, prefix the variable name with a dollar sign \$. When you use the dollar sign syntax in a command, the shell will look for an existing variable named like the word following the \$ and replace it with the value of that variable. This is called **parameter substitution**. When the variable does not exist, the shell will replace it with an empty string.
+
+When you open a terminal, several variables are already set. These are some examples using \$HOSTNAME, \$USER, \$UID, \$SHELL, and \$HOME.
+
+- <sup>1</sup> [student@linux ~]\$ echo "This is the \$SHELL shell"
+- <sup>2</sup> This is the /bin/bash shell
+- <sup>3</sup> [student@linux ~]\$ echo "This is \$SHELL on computer \$HOSTNAME"
+- <sup>4</sup> This is /bin/bash on computer linux.localdomain
+- <sup>5</sup> [student@linux ~]\$ echo "The userid of \$USER is \$UID"
+- <sup>6</sup> The userid of studemt is 1000
+- <sup>7</sup> [student@linux ~]\$ echo "My homedir is \$HOME"
+- <sup>8</sup> My homedir is /home/student
+
+The variable name can also be **enclosed in curly braces** {}, e.g. \${HOME}, \${USER}, etc. This is less ambiguous and in some situations even required to separate the variable name from text immediately following it. For example:
+
+- <sup>1</sup> [student@linux ~]\$ prefix=Super
+- <sup>2</sup> [student@linux ~]\$ echo "Hello \$prefixman and \$prefixgirl"
+
+```
+3 Hello and
+```
+
+```
+4 [student@linux ~]$ echo "Hello ${prefix}man and ${prefix}girl"
+```
+
+```
+5 Hello Superman and Supergirl
+```
+In a script, it's actually a best practice to *always* use the notation with the curly braces \${var}.
+
+## **6.2. case sensitive**
+
+<span id="page-76-2"></span>This example shows that shell variables are case sensitive!
+
+```
+1 [student@linux ~]$ echo "Hello $USER"
+```
+
+```
+2 Hello student
+```
+
+```
+3 [student@linux ~]$ echo "Hello $user"
+```
+
+```
+4 Hello
+```
+## <span id="page-77-0"></span>**6.3. creating variables**
+
+This example creates the variable \$my\_var and sets its value. It then uses echo to verify the value.
+
+```
+1 [student@linux gen]$ my_var=555
+```
+- <sup>2</sup> [student@linux gen]\$ echo "\$my\_var"
+- <sup>3</sup> 555
+
+#### **Remark!**
+
+- The variable name must start with a letter or an underscore and can contain letters, numbers, and underscores.
+- There must be *no spaces* around the equal sign.
+- Don't use the dollar sign when you assign a value to a variable. The dollar sign is exclusively used to retrieve the *value* of a variable.
+- This is not set in stone, but it's recommended to use lowercase letters for most variable names and underscores to separate words, e.g. \${my\_var}, \${file\_name}, etc.
+- Variables are usually *strings*, but can in some cases be interpreted as *integer numbers*.
+
+## <span id="page-77-1"></span>**6.4. quotes**
+
+Notice that double quotes still allow the parsing of variables, whereas single quotes prevent this.
+
+```
+1 [student@linux ~]$ my_var=555
+```
+- <sup>2</sup> [student@linux ~]\$ echo \${my\_var}
+- <sup>3</sup> 555
+
+```
+4 [student@linux ~]$ echo "${my_var}"
+```
+<sup>5</sup> 555
+
+```
+6 [student@linux ~]$ echo '${my_var}'
+```
+
+```
+7 ${my_var}
+```
+The bash shell will replace variables with their value in double quoted lines, but not in single quoted lines.
+
+```
+1 student@linux:~$ city=Burtonville
+```
+- <sup>2</sup> student@linux:~\$ echo "We are in \${city} today."
+- <sup>3</sup> We are in Burtonville today.
+
+```
+4 student@linux:~$ echo 'We are in ${city} today.'
+```
+
+```
+5 We are in ${city} today.
+```
+In most cases, it is best practice to **always enclose variables in double quotes**. For example, if a variable contains a file name that has spaces in it, the shell may interpret this incorrectly:
+
+```
+1 student@linux:~/temp$ file_name='My file.txt'
+2 student@linux:~/temp$ touch ${file_name}
+3 student@linux:~/temp$ ls
+4 file.txt My
+5 student@linux:~/temp$ ls -l
+6 total 0
+7 -rw-r--r-- 1 student student 0 Nov 21 19:28 file.txt
+8 -rw-r--r-- 1 student student 0 Nov 21 19:28 My
+  What happened? The shell replaced ${file_name} with the value of the variable resulting
+  in:
+```
+
+```
+1 touch My file.txt
+```
+Because there were no quotes in the command, word splitting occured and My and file.txt were interpreted as two separate arguments. This can be avoided by using double quotes:
+
+```
+1 student@linux:~/temp$ touch "${file_name}"
+2 student@linux:~/temp$ ls -l
+3 total 0
+4 -rw-r--r-- 1 student student 0 Nov 21 19:28 file.txt
+5 -rw-r--r-- 1 student student 0 Nov 21 19:28 My
+6 -rw-r--r-- 1 student student 0 Nov 21 19:28 'My file.txt'
+```
+Your scripts will become much more robust if you always use double quotes around variables and will be able to handle file names with spaces or other special characters.
+
+#### <span id="page-78-0"></span>**6.5. set**
+
+You can use the set command without options to display a list of shell variables. On Ubuntu and Debian systems, the set command will also list shell functions after the shell variables.
+
+The set command can also be used to change the default behaviour of the shell. For example, set -o nounset (or set -u) at the start of a script will cause an error when an unbound variable is used, instead of replacing it with an empty string. Also, the script will exit immediately with a nonzero exit status, instead of continuing. Likewise, set -o errexit (or set -e) will cause the script to exit immediately when a command fails and set -o pipefail (no short option available) will print more informative error messages when a command in a pipeline fails. It is best practice to start each script with these three options!
+
+```
+1 set -o nounset
+2 set -o errexit
+3 set -o pipefail
+```
+These can be written in short form as:
+
+```
+1 set -euo pipefail
+```
+With set -x (or set -o xtrace), the shell will print each command before executing it, but after all forms of substitution have been applied. This is useful for debugging scripts, as it shows exactly how the shell has interpreted the command you executed.
+
+```
+1 student@linux:~$ set -x
+```
+
+```
+2 student@linux:~$ echo "Hello ${USER}"
+```
+<sup>3</sup> + echo Hello student
+
+```
+4 Hello student
+```
+<sup>5</sup> student@linux:~\$ set +x
+
+Turn the option off with set +x.
+
+For other uses of the set command, see the builtins(7) man page.
+
+## <span id="page-78-1"></span>**6.6. unset**
+
+Use the unset command to remove a variable from your shell environment.
+
+```
+1 [student@linux ~]$ my_var=8472
+2 [student@linux ~]$ echo "${my_var}"
+3 8472
+4 [student@linux ~]$ unset my_var
+5 [student@linux ~]$ echo "${my_var}"
+6
+7 [student@linux ~]$
+```
+## <span id="page-79-0"></span>**6.7. \$PS1**
+
+The \$PS1 variable determines your shell prompt. You can use backslash escaped special characters like \u for the username or \w for the working directory. The bash(1) manual has a complete reference (in the section PROMPTING).
+
+In this example we change the value of \$PS1 a couple of times.
+
+<sup>1</sup> student@linux:~\$ PS1=prompt
+
+```
+2 prompt
+```
+
+```
+3 promptPS1='prompt '
+4 prompt
+5 prompt PS1='> '
+6 >
+7 > PS1='\u@\h$ '
+8 student@linux$
+9 student@linux$ PS1='\u@\h:\W$'
+10 student@linux:~$
+```
+To avoid unrecoverable mistakes, you can set normal user prompts to green and the root prompt to red. Add the following to your .bashrc for a green user prompt:
+
+```
+1 # color prompt by paul
+2 RED='\[\033[01;31m\]'
+3 WHITE='\[\033[01;00m\]'
+4 GREEN='\[\033[01;32m\]'
+5 BLUE='\[\033[01;34m\]'
+6 export PS1="${debian_chroot:+($debian_chroot)}${GREEN}\u${WHITE}@${BLUE}\h$ ⌋
+      {WHITE}\w\$
+      "
+   ↪
+   ↪
+```
+## <span id="page-79-1"></span>**6.8. \$PATH**
+
+The \$PATH variable is determines where the shell is looking for commands to execute (unless the command is builtin or aliased). This variable contains a list of directories, separated by colons.
+
+- <sup>1</sup> [student@linux ~]\$ echo \$PATH
+- <sup>2</sup> /usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+
+The shell will not look in the current directory for commands to execute! (Looking for executables in the current directory provided an easy way to hack PC-DOS computers). If you want the shell to look in the current directory, then add a . at the end of your \$PATH (which is a shortcut to *the current working directory*). This is not recommended, though!
+
+- <sup>1</sup> [student@linux ~]\$ PATH=\$PATH:.
+- <sup>2</sup> [student@linux ~]\$ echo \$PATH
+- <sup>3</sup> /usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:.
+
+Your path might be different when using su instead of su - because the latter will take on the environment of the target user. The root user typically has sbin/ directories added to the \$PATH variable (for commands relating to **s**ystem administration tasks).
+
+- <sup>1</sup> [student@linux ~]\$ su
+- <sup>2</sup> Password:
+- <sup>3</sup> [root@linux student^# echo \$PATH
+- <sup>4</sup> /usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+- <sup>5</sup> [root@linux student^# exit
+- <sup>6</sup> [student@linux ~]\$ su -
+- Password:
+- [root@linux ~^# echo \$PATH
+- /usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:
+
+#### <span id="page-80-0"></span>**6.9. variable scope**
+
+When you initialize a variable in some shell, it will not be available in child shells (also called *subshells*):
+
+```
+1 [student@linux ~]$ penguin=tux
+2 [student@linux ~]$ echo $penguin
+3 tux
+4 [student@linux ~]$ bash #<---- this is where we create a subshell
+5 [student@linux ~]$ echo $penguin
+6
+7 [student@linux ~]$ exit
+8 [student@linux ~]$ echo $penguin
+9 tux
+  We can use the export command to turn the variable into an environment variable. This
+  will make the variable available in child shells.
+```
+
+```
+1 [student@linux ~]$ export penguin=tux
+2 [student@linux ~]$ echo $penguin
+3 tux
+4 [student@linux ~]$ bash
+5 [student@linux ~]$ echo $penguin
+6 tux
+7 [student@linux ~]$ exit
+```
+**Remark** that is actually a convention to give **environment variables uppercase names** and "normal" (non-exported) variables lowercase names.
+
+When you execute a script, it will also run in a subshell, so only exported variables will be available in the script.
+
+If you try this example, first unset the variable \$penguin.
+
+```
+1 [student@linux ~]$ unset penguin
+2 [student@linux ~]$ penguin=pingu
+3 [student@linux ~]$ echo 'echo "${penguin}"' > script.sh
+4 [student@linux ~]$ bash script.sh
+5
+6 [student@linux ~]$ export penguin
+7 [student@linux ~]$ bash script.sh
+8 pingu
+   Beware that exported variables cannot be seen in the parent shell! Assume the variable
+   $penguin is unset:
+1 [student@linux ~]$ echo $penguin
+2
+3 [student@linux ~]$ bash
+4 [student@linux ~]$ export penguin=pingu
+5 [student@linux ~]$ echo $penguin
+6 pingu
+7 [student@linux ~]$ exit
+8 [student@linux ~]$ echo $penguin
+9
+10 [student@linux ~]$
+```
+## <span id="page-81-0"></span>**6.10. env**
+
+The env command without options will display a list of **environment variables**, i.e. all variables that have been made available to subshells with export.
+
+But env can also be used to start a clean shell (a shell without any inherited environment). The env -i command clears the environment for the subshell.
+
+Notice in this screenshot that bash will set the \$SHELL variable on startup.
+
+```
+1 [student@linux ~]$ bash -c 'echo $SHELL $HOME $USER'
+```
+- <sup>2</sup> /bin/bash /home/student student
+- <sup>3</sup> [student@linux ~]\$ env -i bash -c 'echo \$SHELL \$HOME \$USER'
+
+```
+4 /bin/bash
+```
+
+```
+5 [student@linux ~]$
+```
+You can use the env command to set the \$LANG, or any other, variable for just one instance of bash with one command. The example below uses this to show the influence of the \$LANG variable on file globbing (see the chapter on file globbing).
+
+```
+1 student@linux:~/test$ touch Filea Fileb FileA FileB
+```
+
+```
+2 student@linux:~/test$ env LANG=C bash -c 'ls File[[:alpha:]]'
+```
+
+```
+3 FileA FileB Filea Fileb
+```
+
+```
+4 student@linux:~/test$ env LANG=en_US.UTF-8 bash -c 'ls File[[:alpha:]]'
+```
+
+```
+5 Filea FileA Fileb FileB
+```
+## <span id="page-81-1"></span>**6.11. practice: shell variables**
+
+- 1. Use echo to display Hello followed by your username (use an existing shell variable!)
+- 2. Create a variable answer with a value of 42.
+- 3. Copy the value of \$LANG to \$my\_lang.
+- 4. List all current shell variables.
+- 5. List all exported shell variables (i.e. environment variables).
+- 6. Do the env and set commands display your variable ?
+- 7. Destroy your answer variable.
+- 8. Create two variables, and export one of them.
+- 9. Display these variables in an interactive child shell and check which one is still available.
+- 10. Create a variable, give it the value 'Dumb', create another variable with value 'do'. Use echo and the two variables to print 'Dumbledore'.
+- 11. Find the list of backslash escaped characters in the manual of bash. Add the time to your PS1 prompt.
+
+## <span id="page-82-0"></span>**6.12. solution: shell variables**
+
+- 1. Use echo to display Hello followed by your username (use an existing shell variable!)
+- echo "Hello \${USER}"
+- 2. Create a variable answer with a value of 42.
+- answer=42
+- 3. Copy the value of \$LANG to \$my\_lang.
+- my\_lang="\${LANG}"
+- 4. List all current shell variables.
+- set
+- 5. List all exported shell variables (i.e. environment variables).
+
+```
+1 env
+2 export
+3 declare -x
+```
+6. Do the env and set commands display your variable ?
+
+```
+1 student@linux:~$ set | grep my_lang
+2 my_lang=en_US.UTF-8
+3 student@linux:~$ set | grep answer
+4 answer=42
+5 student@linux:~$ env | grep my_lang
+6 student@linux:~$ env | grep answer
+```
+The env command does not display the my\_lang and answer variables, because they are not exported.
+
+- 7. Destroy your answer variable.
+- unset answer
+- 8. Create two variables, and export one of them.
+- var1=one export var2=two
+
+9. Display these variables in an interactive child shell and check which one is still available.
+
+```
+1 student@linux:~$ bash
+2 bash
+3 student@linux:~$ echo "${var1} ${var2}"
+4 two
+5 student@linux:~$ exit
+```
+10. Create a variable, give it the value 'Dumb', create another variable with value 'do'. Use echo and the two variables to print 'Dumbledore'.
+
+```
+1 var_x=Dumb
+2 var_y=do
+3
+4 echo "${var_x}le${var_y}re"
+```
+solution by Yves from Dexia: echo \$varx'le'\$vary're' solution by Erwin from Telenet: echo "\$varx"le"\$vary"re
+
+#### *6. shell variables*
+
+- 11. Find the list of backslash escaped characters in the manual of bash. Add the time to your PS1 prompt.
+- student@linux:~\$ PS1='\t \u@\h \W\$ '
+- 21:52:48 student@linux ~\$ pwd
+- /home/student
+- 21:52:52 student@linux ~\$
+
+## <span id="page-84-0"></span>**7. introduction to scripting**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Alex M. Schapelle, https://github.com/zero-pytagoras/, Bert Van Vreckem https://github.com/bertvv/)*
+
+The goal of this chapter is to gi[ve you all the information in order t](https://github.com/paulcobbaut/)o read, write and understand small, long and comp[lex shell scripts.](https://github.com/zero-pytagoras/)
+
+You [should have basic understa](https://github.com/bertvv/)nding on how the shell works, shell variables, globbing, I/O redirection and filters to understand all content in this chapter.
+
+## **7.1. introduction**
+
+<span id="page-84-1"></span>When you open a terminal and type a command, you are using a *shell*, an interactive environment that interprets your commands, executes them, and shows you the output the command generates. Most Linux distributions have Bash (the "Bourne Again Shell") as the default, but there are others as well: the original "Bourne shell" (sh), the "Debian Amquist Shell" (dash, a modern implementation of sh), the "Korn shell" (ksh), the "C shell" (csh), and the "Z shell" (zsh), to name a few.
+
+A sequence of commands can be saved in a file and executed as a single command. This is called a *script*. Shell scripts are used to automate tasks, and are an essential tool for system administrators and developers. Subsequently, this means that system administrators or SysOps also need solid knowledge of *scripting* to understand how their servers and their applications are started, updated, upgraded, patched, maintained, configured and removed, and also to understand how a user environment is built.
+
+Shells have also support for programming constructs (like loops, functions, variables, etc.) so that you can write more complex scripts. This makes a scripting language basically as powerful as a programming language. Scripting languages are often interpreted, rather than compiled.
+
+If you copy a script to one of the bin directories (e.g. /usr/local/bin), you can execute it from the command line just like any other command. In fact, many UNIX/Linux commands are essentially scripts. You can check this for yourself by executing the file command on the executables in the /bin directory. For example:
+
+```
+1 student@linux:~$ file /usr/bin^* | awk '{ print($2, $3, $4) }' \
+2 | sort | uniq -c | sort -nr
+3 466 ELF 64-bit LSB
+4 168 symbolic link to
+5 74 POSIX shell script,
+6 71 Perl script text
+7 14 Python script, ASCII
+8 10 setuid ELF 64-bit
+9 7 setgid ELF 64-bit
+10 6 Bourne-Again shell script,
+11 2 Python script, Unicode
+12 1 Python script, ISO-8859
+```
+We find POSIX (Bourne), Bash, Perl and Python scripts, as well as ELF binaries (compiled programs). This shows that a significant portion of the commands in a typical Linux system are actually scripts.
+
+Bash scripting is a valuable skill for any Linux user, but these days, its applications are no longer limited to Linux. Bash is also present on macOS (albeit an older version), and with the advent of Windows Subsystem for Linux (WSL), Bash is now available for Windows users as well. Moreover, Git Bash, a Bash shell for Windows, is also available.
+
+## <span id="page-85-0"></span>**7.2. hello world**
+
+Just like in every programming course, we start with a simple hello\_world script. The following script will output Hello World.
+
+```
+1 echo Hello World
+```
+After creating this simple script in nano, vi, or with echo, you'll have to chmod +x hello\_world to make it executable. And unless you add the scripts directory to your path, you'll have to type the path to the script for the shell to be able to find it.
+
+- <sup>1</sup> student@linux:~\$ echo echo Hello World > hello\_world
+- <sup>2</sup> student@linux:~\$ chmod +x hello\_world
+- <sup>3</sup> student@linux:~\$ ./hello\_world
+- <sup>4</sup> Hello World
+- <sup>5</sup> student@linux:~\$
+
+### <span id="page-85-1"></span>**7.3. she-bang**
+
+Let's expand our example a little further by putting ^!/bin/bash on the first line of the script. The ^! is called a she-bang (sometimes called sha-bang), where the she-bang is the first two characters of the script.
+
+Open the file with nano hello\_world or vi hello\_world and add the following line at the top of the file.
+
+- <sup>1</sup> ^!/bin/bash
+- <sup>2</sup> echo Hello World
+
+You can never be sure which (interactive) shell a user is running. A script that works flawlessly in bash might not work in ksh, csh, or dash. To instruct a shell to run your script with a specific interpreter, you should start your script with a she-bang followed by the absolute path to the executable of the interpreter.
+
+This script will run in a bash shell.
+
+- <sup>1</sup> ^!/bin/bash
+- <sup>2</sup> echo -n hello
+- <sup>3</sup> echo A bash subshell \$(echo -n hello)
+
+This script will be interpreted by Python:
+
+```
+1 ^!/usr/bin/env python3
+2 print("Hello World!")
+```
+The following script will run in a Korn shell (unless /bin/ksh is a hard link to /bin/bash). The /etc/shells file contains a list of shells available on your system. Check it to see which ones are available to you
+
+- <sup>1</sup> ^!/bin/ksh
+- <sup>2</sup> echo -n hello
+- <sup>3</sup> echo a Korn subshell \$(echo -n hello)
+
+If you're not sure in which bin directory the shell executable is located,you can use env. The command env is normally used to print environment variables, but in the context of a script, it is used to launch the correct interpreter.
+
+```
+1 ^!/usr/bin/env bash
+```
+<sup>2</sup> echo -n hello
+
+```
+3 echo A bash subshell $(echo -n hello)
+```
+This is particularly useful for macOS users: out-of-the-box, a macOS system has a very old version of bash in /bin/bash. If you want to use a more recent version, you can install it with Homebrew, that will put it in /usr/local/bin/bash. If you use ^!/usr/bin/env bash in your scripts, the newer version will be used.
+
+## **[7.4. com](https://brew.sh)ments**
+
+<span id="page-86-0"></span>When writing Bash scripts, it is always a good practice to make your code clean and easily understandable. Organizing your code in blocks, indenting, giving variables and functions descriptive names are several ways to do this. Another way to improve the readability of your code is by using comments. A comment is a human-readable explanation or annotation that is written in the shell script.
+
+Let's expand our example a little further by adding comment lines.
+
+```
+1 ^!/usr/bin/env bash
+2 #
+3 # hello_world.sh -- My first script
+4 #
+5 echo Hello World
+6
+7 # this is old way of calling for subshell with backtick ``
+8 echo A bash subshell `echo -n hello`
+9
+10 # this is more modern way of calling for subshell with dollar and brackets
+   ↪ $()
+11 echo A bash subshell $(echo -n hello)
+12
+13 #NOTICE: backtick might not work in future versions of bash shell
+```
+## **7.5. extension**
+
+<span id="page-86-1"></span>A general convention is to give files an extension that indicates the file type. On a Linux system, this is not strictly necessary. Remember that you can always use the file command to determine the type of a file by scanning its contents. The system will not care if you call your script hello\_world.sh or hello\_world. However, it is a good practice to use an extension, as it makes it easier to identify the type of file.
+
+We recommend to always give your scripts the .sh extension, but to remove the extension when you install it in a bin directory as a command.
+
+*7. introduction to scripting*
+
+## **7.6. shell variables**
+
+<span id="page-87-0"></span>Here is a simple example of a shell variable used inside a script.
+
+```
+1 ^!/bin/bash
+2 # hello-user.sh -- example of a shell variable in a script
+3 echo "Hello ${USER}"
+```
+In Bash, you can access the value of a variable by prefixing the variable name with the \$ sign. The braces are not mandatory in this case, but they are a good practice to avoid ambiguity. In some cases they are required, so it's best to be consistent in your coding style.
+
+The variable \${USER} is a shell variable that is defined by the system when you log in.
+
+```
+1 student@linux:~$ chmod +x hello-user.sh
+```
+
+```
+2 student@linux:~$ ./hello-user.sh
+```
+
+```
+3 Hello student
+```
+### **7.7. variable assignment**
+
+<span id="page-87-1"></span>Assigning a variable is done by using the = operator. The variable name must start with a letter or an underscore, and can contain only letters, digits, or underscores. Remark that spaces are not allowed around the = sign!
+
+```
+1 ^!/bin/bash
+2 # hello-var.sh -- example of variable assignment
+3 user="Tux"
+4
+5 echo "Hello ${user}"
+```
+Because variable names are case-sensitive, this variable \${user} is different from \${USER} in the previous example!
+
+**Tip: naming convention.** You can use any name for a variable, but it is a good practice to use all uppercase letters for environment variables (e.g. \${USER}) and constants and all lowercase letters for local variables (e.g. \${user}). This is also recommended by the Google Shell Style Guide. If a variable consists of multiple words, use underscores to separate them (e.g. \${current\_user}).
+
+Running the script:
+
+- <sup>1</sup> student@linux:~\$ chmod [+x hello-var.sh](https://google.github.io/styleguide/shellguide.html#s7.2-variable-names)
+- <sup>2</sup> student@linux:~\$ ./hello-var.sh
+- <sup>3</sup> Hello Tux
+
+Scripts can contain variables, but since scripts are run in their own subshell, the variables do not survive the end of the script.
+
+```
+1 student@linux:~$ echo $user
+2
+3 student@linux:~$ ./hello-var.sh
+4 Hello Tux
+5 student@linux:~$ echo $user
+6
+7 student@linux:~$
+```
+## <span id="page-88-0"></span>**7.8. unbound variables**
+
+Remove the line user="Tux" from the script, or comment out the line and run it again. What do you expect to happen if the variable user is not assigned, but we try to use it in the script?
+
+```
+1 student@linux:~$ ./hello-var.sh
+```
+<sup>2</sup> Hello
+
+Bash will not complain if you use a variable that is not assigned, but it will simply replace the variable with an empty string. This can lead to unexpected results and is a common cause of bugs that can be hard to find. However, you can change the behavior of the shell by starting your scripts with the command set -o nounset (or shorter: set -u). This will cause the script to exit with an error if you try to use an unassigned variable.
+
+Add the line to the script, right below the comment lines and try again!
+
+```
+1 ^!/bin/bash
+2 # hello-var.sh -- example of variable assignment
+3
+4 set -o nounset
+5
+6 echo "Hello ${user}"
+```
+Running the script:
+
+```
+1 student@linux:~$ ./hello-var.sh
+```
+<sup>2</sup> ./hello-var.sh: line 6: user: unbound variable
+
+This is what you want to see. The script exits with an error, and you can see the line number where the error occurred and which variable is unbound. Start all your scripts with set -o nounset to prevent this kind of error!
+
+## <span id="page-88-1"></span>**7.9. sourcing a script**
+
+Luckily, you can force a script to run in the same shell; this is called sourcing a script.
+
+```
+1 student@linux:~$ source hello-var.sh
+```
+
+```
+2 Hello Tux
+```
+- <sup>3</sup> student@linux:~\$ echo \$name
+- <sup>4</sup> Tux
+
+Instead of source, you can use the . (dot) command.
+
+```
+1 student@linux:~$ . hello-var.sh
+```
+
+```
+2 Hello Tux
+```
+
+```
+3 student@linux:~$ echo $name
+```
+
+```
+4 Tux
+```
+## <span id="page-88-2"></span>**7.10. quoting**
+
+Go back to hello-user.sh and replace the double quotes with single quotes:
+
+```
+1 ^!/bin/bash
+2 # hello-user.sh -- example of a shell variable in a script
+3 echo 'Hello ${USER}'
+```
+Run the script again:
+
+#### *7. introduction to scripting*
+
+- <sup>1</sup> student@linux:~\$ ./hello-user.sh
+- <sup>2</sup> Hello \${USER}
+
+What happened? By using single quotes, we turned off the shell's variable expansion. The shell will not replace \${USER} with the value of the USER variable. This is why you should use double quotes when you want to use a variable.
+
+Using quotes is important. Most of the times, when you reference the value of a variable, you should enclose it in double quotes. To illustrate this, write the following script:
+
+```
+1 ^!/bin/bash
+2 # create-file.sh -- example of using quotes
+3 file="my file.txt"
+4 touch $file
+```
+What we expect is that the script will create a file called my file.txt. However, when we run the script:
+
+```
+1 student@linux:~$ ./create-file.sh
+2 student@linux:~$ ls -l
+3 total 4
+4 -rwxr-xr-x 1 student student 88 Mar 6 16:20 create-file.sh
+5 -rw-r--r-- 1 student student 0 Mar 6 16:20 file.txt
+6 -rw-r--r-- 1 student student 0 Mar 6 16:20 my
+```
+So actually two files were created, one named my and the other file.txt. The reason has to do with the way Bash interprets a command and how it substitutes variables. The line
+
+<sup>1</sup> touch \$file
+
+is expanded to
+
+<sup>1</sup> touch my file.txt
+
+without the quotes. The touch command now sees two arguments, my and file.txt, and creates two files. To fix this, you should always use double quotes:
+
+```
+1 ^!/bin/bash
+2 # create-file.sh -- example of using quotes
+3 file="my file.txt"
+4 touch "${file}"
+```
+Now the expansion of the variable is done within the quotes, and the touch command sees only one argument.
+
+```
+1 student@linux:~$ ./create-file.sh
+2 student@linux:~$ ls -l
+3 total 4
+4 -rwxr-xr-x 1 student student 92 Mar 6 16:20 create-file.sh
+5 -rw-r--r-- 1 student student 0 Mar 6 16:20 'my file.txt'
+```
+## <span id="page-89-0"></span>**7.11. backticks and command substitution**
+
+In Bash, backquotes (`), also called *backticks*, also have a specific use. However, they are considered deprecated and should be avoided. The reason is that they are hard to read, especially when combined with single or double quotes. Instead, you should use the \$() syntax, which is easier to read and nest.
+
+This syntax is called *command substitution*. The shell will execute the command inside the parentheses and replace the command with the output of the command.
+
+```
+1 [vagrant@el scripts]$ current_date=$(date)
+```
+<sup>2</sup> [vagrant@el scripts]\$ echo \$current\_date
+
+```
+3 Sun Oct 27 02:40:44 PM UTC 2024
+```
+In this example, the date command is executed and the output is stored in the variable current\_date.
+
+## <span id="page-90-0"></span>**7.12. troubleshooting a script**
+
+In this section, we discuss a few techniques that can help you to troubleshoot a script. Some general guidelines are:
+
+- **Start with a simple script** and execute it as often as possible.
+- Make **small changes** and test them immediately.
+- Have your script **print out debugging information**. The output can help identify where the script is failing.
+- Open your text editor and a terminal **side by side**. It's easier to interpret how the script works if you see the output and the code at the same time.
+
+#### <span id="page-90-1"></span>**7.12.1. bash -n**
+
+You can **check the syntax** of a shell script by using the bash command with the -n option. This option causes the shell to parse the script and check for syntax errors, but it does not execute the script.
+
+Take a look at the following script (that doesn't do anything useful):
+
+```
+1 ^! /bin/bash
+2
+3 file_name='my file.txt'
+4
+5 if[ $# -ne 1 ]; then
+6 echo "One argument expected, got $#"
+7 fi
+8
+9 touch $file_name
+```
+It has several problematic mistakes. The if command and square bracket [ are not separated by a space, and the variable \$file\_name is not enclosed in double quotes (which will cause word splitting).
+
+When we check the syntax of the script, we get the following output:
+
+```
+1 [vagrant@el scripts]$ bash -n syntax.sh
+2 syntax.sh: line 5: syntax error near unexpected token `then'
+```
+<sup>3</sup> syntax.sh: line 5: `if[ \$# -ne 1 ]; then'
+
+Remark that the first problem is reported (albeit with an unhelpful error message), but the other is not. In the following sections, we will give additional tips to also catch these kinds of errors.
+
+#### **7.12.2. shellcheck**
+
+<span id="page-91-0"></span>ShellCheck is a static analyzer for shell scripts. It shows common errors and mistakes in your scripts that can't be caught by a syntax check with bash -n. You can use it online on the tool's website, install it as a command-line tool, and it is available as a plugin for many text editors (including Vim, VS Code, etc.). If we try it on the syntax.sh script, we get the following [output:](https://www.shellcheck.net)
+
+```
+1 [vagrant@el scripts]$ shellcheck syntax.sh
+2
+3 In syntax.sh line 5:
+4 if[ $# -ne 1 ]; then
+5 ^-- SC1069 (error): You need a space before the [.
+6
+7
+8 In syntax.sh line 9:
+9 touch $file_name
+10 ^--------^ SC2086 (info): Double quote to prevent globbing and word
+   ↪ splitting.
+11
+12 Did you mean:
+13 touch "$file_name"
+14
+15 For more information:
+16 https:^/^^w.shellcheck.net/wiki/SC1069 -- You need a space before the [.
+17 https:^/^^w.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing
+   ↪ ^^.
+```
+The error message for the first problem is much more helpful than the one given by bash -n. The second problem is also reported, and a suggestion is given to fix it. The links on the last lines of output point to a Wiki with more information about the errors and tips on how to write better code.
+
+Using shellcheck in your workflow immediately helps you to improve your scripting skills, so you should always use it!
+
+#### **7.12.3. show expanded commands**
+
+<span id="page-91-1"></span>Another way to run a script in a separate shell is by typing bash with the name of the script as a parameter. Expanding this to bash -x allows you to see the commands that the shell is executing (after shell expansion).
+
+Try this with the create-file.sh script introduced earlier. The incorrect version without the quotes:
+
+- <sup>1</sup> \$ bash -x create-file.sh
+- <sup>2</sup> + file='my file.txt'
+- <sup>3</sup> + touch my file.txt
+
+Notice the absence of the commented (#) line, and the replacement of the variable in the argument touch.
+
+After the fix, you get:
+
+```
+1 $ bash -x create-file.sh
+2 + file='my file.txt'
+```
+<sup>3</sup> + touch 'my file.txt'
+
+Do you notice the difference?
+
+In longer scripts, this setting produces a lot of output, which may be hard to read. You can limit the output to a specific problematic part of your script by using set -x and set +x to turn the debugging on and off, respectively.
+
+```
+1 ^!/bin/bash
+2 # create-file.sh -- example of using quotes
+3 file="my file.txt"
+4
+5 set -x
+6 touch "${file}"
+7 set +x
+```
+#### **7.12.4. bash's "strict mode"**
+
+Apart from the nounset shell option, there are two other options that are very useful for debugging scripts: set -o errexit (or set -e) and set -o pipefail. The first option causes the script to exit with an error if any command fails. The second option gives better error messages when a command in a pipeline fails.
+
+Start all your scripts with the following lines to prevent errors and to make debugging easier:
+
+- <sup>1</sup> ^!/bin/bash --
+- <sup>2</sup> set -o nounset
+- <sup>3</sup> set -o errexit
+- <sup>4</sup> set -o pipefail
+
+This is called "strict mode" by some. You can write this shorter in one line as set -euo pipefail, but this is less readable.
+
+## <span id="page-92-0"></span>**7.13. prevent setuid root spoofing**
+
+Some user may try to perform setuid based script root spoofing. This is a rare but possible attack. To improve script security and to avoid interpreter spoofing, you need to add ^- after the ^!/bin/bash, which disables further option processing so the shell will not accept any options.
+
+- <sup>1</sup> ^!/usr/bin/env bash <sup>2</sup> or
+- <sup>3</sup> ^!/usr/bin/env bash --
+
+Any arguments after the ^- are treated as filenames and arguments. An argument of - is equivalent to ^-.
+
+## <span id="page-92-1"></span>**7.14. practice: introduction to scripting**
+
+- 1. Write a Python "Hello World" script, give it a shebang and make it executable. Execute it like you would a shell script and verify that this works.
+- 2. What would happen if you remove the shebang and try to execute the script again?
+- 3. Create a Bash script greeting.sh that says hello to the user (make use of the shell variable with the current user's login name), prints the current date and time, and prints a quote, e.g.:
+
+```
+1 student@linux:~$ ./greeting.sh
+2 Hello student, today is:
+3 Wed Mar 6 09:04:19 PM UTC 2024
+4 Quote of the day:
+5 ______________________________________
+6 / Having nothing, nothing can he lose. \
+7 | |
+8 \ -- William Shakespeare, "Henry VI" /
+9 --------------------------------------
+10 \ ^^_^
+11 \ (oo)\_______
+12 (^_)\ )\/\
+13 ^|----w |
+14 ^| ^|
+```
+Ensure that you apply the shell settings to make your script easier to debug.
+
+- 4. Copy the script to /usr/local/bin without the extension and verify that you can run it from any directory as a command.
+- 5. Take another look at the script hello-var.sh where we printed a variable that was not assigned:
+
+```
+1 ^!/bin/bash
+2 # hello-var.sh -- example of variable assignment
+3 # user="Tux" # Remark: this line is commented out
+4
+```
+
+```
+5 echo "Hello ${user}"
+```
+What happens if you assign the value Tux to the variable user on the interactive shell and then run the script? What do we have to do to make sure the variable is available in the script?
+
+6. What if we change the value of the variable user in the script? Will this change affect the value of the variable in the interactive shell after the script is finished?
+
+## <span id="page-93-0"></span>**7.15. solution: introduction to scripting**
+
+1. Write a Python Hello World script, give it a shebang and make it executable.
+
+```
+1 ^!/usr/bin/python3
+2 print("Hello, World!")
+1 $ chmod +x hello.py
+2 $ ./hello.py
+3 Hello, World!
+```
+2. What would happen if you remove the shebang and try to execute the script again?
+
+The script will be executed by the default interpreter, in this case, the Bash shell, which will not understand the Python syntax.
+
+```
+1 $ ./hello.py
+2 ./hello.py: line 1: syntax error near unexpected token `"Hello world!"'
+3 ./hello.py: line 1: `print("Hello world!")'
+```
+3. Create a Bash script greeting.sh that says hello to the user (make use of the shell variable with the current user's login name), prints the current date and time, and prints a quote. Ensure that you apply the shell settings to make your script easier to debug.
+
+```
+1 ^! /bin/bash --
+2
+3 set -o nounset
+4 set -o errexit
+5 set -o pipefail
+6
+7 echo "Hello ${USER}, today is:"
+8 date
+9 echo "Quote of the day:"
+10 fortune | cowsay
+```
+4. Copy the script to /usr/local/bin without the extension and verify that you can run it from any directory as a command.
+
+```
+1 student@linux:~$ sudo cp greeting.sh /usr/local/bin/greeting
+2 student@linux:~$ greeting
+3 Hello student, today is:
+4 Wed Mar 6 09:17:00 PM UTC 2024
+5 Quote of the day:
+6 ______________________________________
+7 / You plan things that you do not even \
+8 | attempt because of your extreme |
+9 \ caution. /
+10 --------------------------------------
+11 \ ^^_^
+12 \ (oo)\_______
+13 (^_)\ )\/\
+14 ^|----w |
+15 ^| ^|
+16 student@linux:~$ cd /tmp
+17 student@linux:/tmp$ greeting
+18 Hello student, today is:
+19 Wed Mar 6 09:17:08 PM UTC 2024
+20 Quote of the day:
+21 _________________________________
+22 < You will be successful in love. >
+23 ---------------------------------
+24 \ ^^_^
+25 \ (oo)\_______
+26 (^_)\ )\/\
+27 ^|----w |
+28 ^| ^|
+```
+5. Take another look at the script hello-var.sh where we printed a variable that was not assigned. What happens if you assign the value Tux to the variable user on the interactive shell and then run the script? What do we have to do to make sure the variable is available in the script?
+
+```
+1 student@linux:~$ ./hello-var.sh
+2 Hello
+3 student@linux:~$ user=Tux
+4 student@linux:~$ ./hello-var.sh
+5 Hello
+6 student@linux:~$ export user
+7 student@linux:~$ ./hello-var.sh
+8 Hello Tux
+```
+6. What if we change the value of the variable user in the script? Will this change affect the value of the variable in the interactive shell after the script is finished?
+
+We change the script to:
+
+```
+1 ^!/bin/bash
+2 # hello-var.sh -- example of variable assignment
+3 user="Linus"
+4
+5 echo "Hello ${user}"
+      And execute it:
+1 student@linux:~$ export user=Tux
+2 student@linux:~$ echo $user
+3 Tux
+4 student@linux:~$ ./hello-var.sh
+5 Hello Linus
+6 student@linux:~$ echo $user
+```
+Tux
+
+The change in the script does not affect the value of the variable in the interactive shell after the script is finished!
+
+# <span id="page-96-0"></span>**Part IV. Organising users**
+
+## <span id="page-98-0"></span>**8. standard file permissions**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Alex M. Schapelle, https://github.com/zero-pytagoras/, Bert Van Vreckem, https://github.com/bertvv/)*
+
+This chapter contains detail[s ab](https://github.com/zero-pytagoras/)[out basic file security through](https://github.com/paulcobbaut/) *file ownership* and *file permissions*[.](https://github.com/bertvv/)
+
+### **8.1. file ownership**
+
+#### <span id="page-98-1"></span>**8.1.1. user owner and group owner**
+
+<span id="page-98-2"></span>The *users* and *groups* of a system can be locally managed in /etc/passwd and /etc/group, or they can be in a NIS, LDAP, or Samba domain. These users and groups can *own* files. Actually, every file has a *user owner* and a *group owner*, as can be seen in the following example.
+
+```
+1 student@linux:~/owners$ ls -lh
+2 total 636K
+3 -rw-r--r--. 1 student snooker 1.1K Apr 8 18:47 data.odt
+4 -rw-r--r--. 1 student student 626K Apr 8 18:46 file1
+5 -rw-r--r--. 1 student tennis 185 Apr 8 18:46 file2
+6 -rw-rw-r--. 1 root root 0 Apr 8 18:47 stuff.txt
+```
+User student owns three files: file1 has student as *user owner* and has the group student as *group owner*, data.odt is *group owned* by the group snooker, file2 by the group tennis.
+
+The last file is called stuff.txt and is owned by the root user and the root group.
+
+#### **8.1.2. chgrp**
+
+<span id="page-98-3"></span>You can change the group owner of a file using the chgrp command. You must have root privileges to do this.
+
+```
+1 root@linux:/home/student/owners# ls -l file2
+```
+
+```
+2 -rw-r--r--. 1 root tennis 185 Apr 8 18:46 file2
+```
+
+```
+3 root@linux:/home/student/owners# chgrp snooker file2
+```
+
+```
+4 root@linux:/home/student/owners# ls -l file2
+```
+
+```
+5 -rw-r--r--. 1 root snooker 185 Apr 8 18:46 file2
+```
+
+```
+6 root@linux:/home/student/owners#
+```
+#### <span id="page-99-0"></span>**8.1.3. chown**
+
+The user owner of a file can be changed with chown command. You must have root privileges to do this. In the following example, the user owner of file2 is changed from root to student.
+
+```
+1 root@linux:/home/student# ls -l FileForStudent
+2 -rw-r--r-- 1 root student 0 2008-08-06 14:11 FileForStudent
+3 root@linux:/home/student# chown student FileForStudent
+```
+
+```
+4 root@linux:/home/student# ls -l FileForStudent
+```
+
+```
+5 -rw-r--r-- 1 student student 0 2008-08-06 14:11 FileForStudent
+```
+You can also use chown user:group to change both the user owner and the group owner.
+
+```
+1 root@linux:/home/student# ls -l FileForStudent
+```
+
+```
+2 -rw-r--r-- 1 student student 0 2008-08-06 14:11 FileForStudent
+```
+<sup>3</sup> root@linux:/home/student# chown root:project42 FileForStudent
+
+```
+4 root@linux:/home/student# ls -l FileForStudent
+```
+
+```
+5 -rw-r--r-- 1 root project42 0 2008-08-06 14:11 FileForStudent
+```
+## <span id="page-99-1"></span>**8.2. list of special files**
+
+When you use ls -l, for each file you can see ten characters before the user and group owner. The first character tells us the type of file. Regular files get a -, directories get a d, symbolic links are shown with an l, pipes get a p, character devices a c, block devices a b, and sockets an s.
+
+| first character                 | file type                                                                                             |
+|---------------------------------|-------------------------------------------------------------------------------------------------------|
+| -<br>d<br>l<br>p<br>b<br>c<br>s | normal file<br>directory<br>symbolic link<br>named pipe<br>block device<br>character device<br>socket |
+|                                 |                                                                                                       |
+
+Below an example of a character device (the console) and a block device (the hard disk).
+
+```
+1 student@linux:~$ ls -l /dev/console /dev/sda
+2 crw--w---- 1 root tty 5, 1 Mar 8 08:32 /dev/console
+3 brw-rw---- 1 root disk 8, 0 Mar 8 08:32 /dev/sda
+```
+And here you can see a directory, a regular file and a symbolic link.
+
+```
+1 student@linux:~$ ls -ld /etc /etc/hosts /etc/os-release
+```
+
+```
+2 drwxr-xr-x 81 root root 4096 Mar 8 08:32 /etc
+```
+
+```
+3 -rw-r--r-- 1 root root 186 Feb 26 14:58 /etc/hosts
+```
+
+```
+4 lrwxrwxrwx 1 root root 21 Dec 9 21:08 /etc/os-release ->
+```
+
+```
+↪ ^./usr/lib/os-release
+```
+## <span id="page-100-0"></span>**8.3. permissions**
+
+#### <span id="page-100-1"></span>**8.3.1. rwx**
+
+The nine characters following the file type denote the permissions in three triplets. A permission can be r for **r**ead access, w for **w**rite access, and x for e**x**ecute. You need the r permission to list (ls) the contents of a directory. You need the x permission to enter (cd) a directory. You need the w permission to create files in or remove files from a directory.
+
+| permission | on a file                | on a directory                 |
+|------------|--------------------------|--------------------------------|
+| read       | read file contents (cat) | read directory contents (ls)   |
+| write      | change file contents     | create/delete files (touch,rm) |
+| execute    | execute the file         | enter the directory (cd)       |
+
+#### <span id="page-100-2"></span>**8.3.2. three sets of rwx**
+
+We already know that the output of ls -l starts with ten characters for each file. This example shows a regular file (because the first character is a - ).
+
+```
+1 student@linux:~/test$ ls -l proc42.sh
+```
+
+```
+2 -rwxr-xr-- 1 student proj 984 Feb 6 12:01 proc42.sh
+```
+Below is a table describing the function of all ten characters.
+
+| position                | characters             | function                                                                                                 |
+|-------------------------|------------------------|----------------------------------------------------------------------------------------------------------|
+| 1<br>2-4<br>5-7<br>8-10 | -<br>rwx<br>r-x<br>r-- | file type<br>permissions for the user owner<br>permissions for the group owner<br>permissions for others |
+|                         |                        |                                                                                                          |
+
+When you are the *user owner* of a file, then the *user owner permissions* apply to you. The rest of the permissions have no influence on your access to the file.
+
+When you belong to the *group* that is the *group owner* of a file, then the *group owner permissions* apply to you. The rest of the permissions have no influence on your access to the file.
+
+When you are not the *user owner* of a file and you do not belong to the *group owner*, then the *others permissions* apply to you. The rest of the permissions have no influence on your access to the file.
+
+## <span id="page-100-3"></span>**8.3.3. permission examples**
+
+Some example combinations on files and directories are seen in this example. The name of the file explains the permissions.
+
+```
+1 student@linux:~/perms$ ls -lh
+2 total 12K
+3 drwxr-xr-x 2 student student 4.0K 2007-02-07 22:26 AllEnter_UserCreateDelete
+4 -rwxrwxrwx 1 student student 0 2007-02-07 22:21 EveryoneFullControl.txt
+5 -r--r----- 1 student student 0 2007-02-07 22:21 OnlyOwnersRead.txt
+6 -rwxrwx--- 1 student student 0 2007-02-07 22:21 OwnersAll_RestNothing.txt
+7 dr-xr-x--- 2 student student 4.0K 2007-02-07 22:25 UserAndGroupEnter
+8 dr-x------ 2 student student 4.0K 2007-02-07 22:25 OnlyUserEnter
+```
+#### *8. standard file permissions*
+
+To summarise, the first rwx triplet represents the permissions for the *user owner*. The second triplet corresponds to the *group owner*; it specifies permissions for all members of that group. The third triplet defines permissions for all *other* users that are not the *user owner* and are not a member of the *group owner*. The root user ignores all restrictions and can do anything with any file.
+
+#### <span id="page-101-0"></span>**8.3.4. setting permissions with symbolic notation**
+
+Permissions can be changed with chmod MODE FILE^^.. You need to be the owner of the file to do this. The first example gives (+) the *user owner* (u) execute (x) permissions.
+
+```
+1 student@linux:~/perms$ ls -l permissions.txt
+2 -rw-r--r-- 1 student student 0 2007-02-07 22:34 permissions.txt
+3 student@linux:~/perms$ chmod u+x permissions.txt
+4 student@linux:~/perms$ ls -l permissions.txt
+5 -rwxr--r-- 1 student student 0 2007-02-07 22:34 permissions.txt
+  This example removes (-) the group owner's (g) read (r) permission.
+1 student@linux:~/perms$ chmod g-r permissions.txt
+2 student@linux:~/perms$ ls -l permissions.txt
+3 -rwx---r-- 1 student student 0 2007-02-07 22:34 permissions.txt
+  This example removes (-) the other's (o) read (r) permission.
+1 student@linux:~/perms$ chmod o-r permissions.txt
+2 student@linux:~/perms$ ls -l permissions.txt
+3 -rwx------ 1 student student 0 2007-02-07 22:34 permissions.txt
+  This example gives (+) all (a) of them the write (w) permission.
+1 student@linux:~/perms$ chmod a+w permissions.txt
+2 student@linux:~/perms$ ls -l permissions.txt
+3 -rwx-w--w- 1 student student 0 2007-02-07 22:34 permissions.txt
+  You don't even have to type the a.
+1 student@linux:~/perms$ chmod +x permissions.txt
+2 student@linux:~/perms$ ls -l permissions.txt
+3 -rwx-wx-wx 1 student student 0 2007-02-07 22:34 permissions.txt
+  You can also set explicit permissions with =.
+1 student@linux:~/perms$ chmod u=rw permissions.txt
+2 student@linux:~/perms$ ls -l permissions.txt
+3 -rw--wx-wx 1 student student 0 2007-02-07 22:34 permissions.txt
+  Feel free to make any kind of combination, separating them with a comma. Remark that
+  spaces are not allowed!
+1 student@linux:~/perms$ chmod u=rw,g=rw,o=r permissions.txt
+2 student@linux:~/perms$ ls -l permissions.txt
+3 -rw-rw-r-- 1 student student 0 2007-02-07 22:34 permissions.txt
+```
+Even fishy combinations are accepted by chmod.
+
+```
+1 student@linux:~/perms$ chmod u=rwx,ug+rw,o=r permissions.txt
+```
+
+```
+2 student@linux:~/perms$ ls -l permissions.txt
+```
+
+```
+3 -rwxrw-r-- 1 student student 0 2007-02-07 22:34 permissions.txt
+```
+**Summarized**, in order to change permissions with chmod using symbolic notation:
+
+- first specify who the permissions are for: u for the user owner, g for the group owner, o for others, and a for all. a is the default and can be omitted.
+- then specify the operation: + to add permissions, to remove permissions, and = to set permissions.
+- finally specify the permission(s): r for read, w for write, and x for execute.
+- multiple operations can be combined with a comma (no spaces!)
+
+#### <span id="page-102-0"></span>**8.3.5. setting permissions with octal notation**
+
+Most Unix administrators will use the "old school" octal system to talk about and set permissions. Consider the triplet to be a binary number with 0 indicating the permission is not set and 1 indicating the permission is set. You then have 2 <sup>3</sup> = 8 possible combinations, hence the name *octal*. You can then convert the binary number to an octal number, equating r to 4, w to 2, and x to 1.
+
+| permission | binary | octal |  |
+|------------|--------|-------|--|
+| ---        | 000    | 0     |  |
+| --x        | 001    | 1     |  |
+| -w-        | 010    | 2     |  |
+| -wx        | 011    | 3     |  |
+| r--        | 100    | 4     |  |
+| r-x        | 101    | 5     |  |
+| rw-        | 110    | 6     |  |
+| rwx        | 111    | 7     |  |
+
+Since we have three triplets, we can use three octal digits to represent the permissions. This makes 777 equal to rwxrwxrwx and by the same logic, 654 mean rw-r-xr^-. The chmod command will accept these numbers.
+
+```
+1 student@linux:~/perms$ chmod 777 permissions.txt
+```
+
+```
+2 student@linux:~/perms$ ls -l permissions.txt
+```
+
+```
+3 -rwxrwxrwx 1 student student 0 2007-02-07 22:34 permissions.txt
+```
+
+```
+4 student@linux:~/perms$ chmod 664 permissions.txt
+```
+
+```
+5 student@linux:~/perms$ ls -l permissions.txt
+```
+
+```
+6 -rw-rw-r-- 1 student student 0 2007-02-07 22:34 permissions.txt
+```
+
+```
+7 student@linux:~/perms$ chmod 750 permissions.txt
+```
+
+```
+8 student@linux:~/perms$ ls -l permissions.txt
+```
+
+```
+9 -rwxr-x--- 1 student student 0 2007-02-07 22:34 permissions.txt
+```
+Remark that in practice, some combinations will never occur:
+
+- The permissions of a user will never be smaller than the permissions of the group owner or others. Consequently, the digits will always be in descending order.
+- Setting the write or execute permission without read access is useless. Consequently, you will never use 1, 2, or 3 in an octal permission code
+- A directory will always have the read and execute permission set or unset together. It is useless to allow a user to read the directory contents, but not let them cd into that directory. Allowing cd without read access is also useless. The permission code for a directory will therefore always be odd.
+
+Here's a little tip: you can print the permissions of a file in either octal or symbolic notation with the stat command (check the man page of stat to see how this works).
+
+```
+1 [student@linux ~]$ stat -c '%A %a' /etc/passwd
+2 -rw-r--r-- 644
+3 [student@linux ~]$ stat -c '%A %a' /etc/shadow
+4 ---------- 0
+```
+#### *8. standard file permissions*
+
+```
+5 [student@linux ~]$ stat -c '%A %a' /bin/ls
+6 -rwxr-xr-x 755
+```
+#### <span id="page-103-0"></span>**8.3.6. umask**
+
+When creating a file or directory, a set of default permissions are applied. These default permissions are determined by the umask value. The umask specifies permissions that you do not want set on by default. You can display the umask with the umask command.
+
+```
+1 [student@linux ~]$ umask
+2 0002
+3 [student@linux ~]$ touch test
+4 [student@linux ~]$ ls -l test
+5 -rw-rw-r-- 1 student student 0 Jul 24 06:03 test
+6 [student@linux ~]$
+```
+As you can also see, the file is also not executable by default. This is a general security feature among Unixes; newly created files are never executable by default. You have to explicitly do a chmod +x to make a file executable. This also means that the 1 bit in the umask has no meaning. A umask value of 0022 has the same effect as 0033.
+
+In practice, you will only use umask values:
+
+- 0: don't take away any permissions
+- 2: take away write permissions
+- 7: take away all permissions
+
+You can set the umask value to a new value with the umask command. The umask value is a four-digit octal number. The first digit is for special permissions (and is always zero), the second for the user permissions (is in practice always 0, since there is no use in taking away the user's permissions), the third for the group owner (sometimes 0, but usually 2 or 7), and the last for others (usually 2 or 7, 0 is very uncommon and can be considered to be a security risk).
+
+The umask value is subtracted from 777 to get the default permissions and in the case of a file, the execute bit is removed.
+
+```
+1 [student@linux ~]$ umask 0002
+2 [student@linux ~]$ touch file0002
+3 [student@linux ~]$ mkdir dir0002
+4 [student@linux ~]$ ls -ld *0002
+5 drwxrwxr-x. 2 student student 6 Mar 8 10:48 dir0002
+6 -rw-rw-r--. 1 student student 0 Mar 8 10:47 file0002
+7 [student@linux ~]$ umask 0027
+8 [student@linux ~]$ touch file0027
+9 [student@linux ~]$ mkdir dir0027
+10 [student@linux ~]$ ls -ld *0027
+11 drwxr-x---. 2 student student 6 Mar 8 10:48 dir0027
+12 -rw-r-----. 1 student student 0 Mar 8 10:48 file0027
+13 [student@linux ~]$ umask 0077
+14 [student@linux ~]$ touch file0077
+15 [student@linux ~]$ mkdir dir0077
+16 [student@linux ~]$ ls -ld *0077
+17 drwx------. 2 student student 6 Mar 8 10:51 dir0077
+18 -rw-------. 1 student student 0 Mar 8 10:51 file0077
+```
+#### <span id="page-104-0"></span>**8.3.7. mkdir -m**
+
+When creating directories with mkdir you can use the -m option to set the mode. This example explains.
+
+```
+1 student@linux~$ mkdir -m 700 MyDir
+2 student@linux~$ mkdir -m 777 Public
+3 student@linux~$ ls -dl MyDir/ Public/
+4 drwx------ 2 student student 4096 2011-10-16 19:16 MyDir/
+5 drwxrwxrwx 2 student student 4096 2011-10-16 19:16 Public/
+```
+#### <span id="page-104-1"></span>**8.3.8. cp -p**
+
+To preserve permissions and time stamps from source files, use cp -p.
+
+```
+1 student@linux:~/perms$ cp file* cp
+2 student@linux:~/perms$ cp -p file* cpp
+3 student@linux:~/perms$ ll *
+4 -rwx------ 1 student student 0 2008-08-25 13:26 file33
+5 -rwxr-x--- 1 student student 0 2008-08-25 13:26 file42
+6
+7 cp:
+8 total 0
+9 -rwx------ 1 student student 0 2008-08-25 13:34 file33
+10 -rwxr-x--- 1 student student 0 2008-08-25 13:34 file42
+11
+12 cpp:
+13 total 0
+14 -rwx------ 1 student student 0 2008-08-25 13:26 file33
+15 -rwxr-x--- 1 student student 0 2008-08-25 13:26 file42
+```
+## <span id="page-104-2"></span>**8.4. practice: standard file permissions**
+
+- 1. As normal user, create a directory ~/permissions. Create a file owned by yourself in there.
+- 2. Copy a file owned by root from /etc/ to your permissions dir, who owns this file now ?
+- 3. As root, create a file in the users ~/permissions directory.
+- 4. As normal user, look at who owns this file created by root.
+- 5. Change the ownership of all files in ~/permissions to yourself.
+- 6. Delete the file created by root. Is this possible?
+- 7. With chmod, is 770 the same as rwxrwx^^-?
+- 8. With chmod, is 664 the same as r-xr-xr^-?
+- 9. With chmod, is 400 the same as r--------?
+- 10. With chmod, is 734 the same as rwxr-xr^-?
+- 11. Display the umask value in octal and in symbolic form.
+- 12. Set the umask to 0077, but use the symbolic format to set it. Verify that this works.
+- 13. Create a file as root, give only read to others. Can a normal user read this file? Test writing to this file with vi or nano.
+- 14. Create a file as a normal user, take away all permissions for the group owner and others. Can you still read the file? Can root read the file? Can root write to the file?
+- 15. Create a directory that belongs to group users, where every member of that group can read and write to files, and create files. Make sure that people can only delete their own files.
+
+## <span id="page-105-0"></span>**8.5. solution: standard file permissions**
+
+1. As normal user, create a directory ~/permissions. Create a file owned by yourself in there.
+
+```
+1 [student@linux ~]$ mkdir permissions
+2 [student@linux ~]$ touch permissions/myfile.txt
+3 [student@linux ~]$ ls -l permissions/
+4 total 0
+5 -rw-r--r--. 1 student student 0 Mar 8 10:59 myfile.txt
+```
+2. Copy a file owned by root from /etc/ to your permissions dir, who owns this file now ?
+
+```
+1 [student@linux ~]$ ls -l /etc/hosts
+```
+<sup>2</sup> -rw-r--r--. 1 root root 174 Feb 26 15:05 /etc/hosts
+
+- <sup>3</sup> [student@linux ~]\$ cp /etc/hosts ~/permissions/
+- <sup>4</sup> [student@linux ~]\$ ls -l permissions/hosts
+
+```
+5 -rw-r--r--. 1 student student 174 Mar 8 11:00 permissions/hosts
+```
+The copy is owned by you.
+
+- 3. As root, create a file in the users ~/permissions directory.
+- <sup>1</sup> [student@linux ~]\$ sudo touch permissions/rootfile.txt
+- <sup>2</sup> [sudo] password for student:
+
+4. As normal user, look at who owns this file created by root.
+
+```
+1 [student@linux ~]$ ls -l permissions^*.txt
+```
+
+```
+2 -rw-r--r--. 1 student student 0 Mar 8 10:59 permissions/myfile.txt
+```
+<sup>3</sup> -rw-r--r--. 1 root root 0 Mar 8 11:02 permissions/rootfile.txt
+
+The file created by root is owned by root.
+
+5. Change the ownership of all files in ~/permissions to yourself.
+
+<sup>1</sup> [student@linux ~]\$ chown student ~/permissions^\*
+
+```
+2 chown: changing ownership of '/home/student/permissions/rootfile.txt':
+   ↪ Operation not permitted
+```
+You cannot become owner of the file that belongs to root. Root must change the ownership.
+
+6. Delete the file created by root. Is this possible?
+
+```
+1 [student@linux ~]$ rm ~/permissions/rootfile.txt
+```
+<sup>2</sup> rm: remove write-protected regular empty file
+
+```
+↪ '/home/student/permissions/rootfile.txt'? y
+```
+
+```
+3 [student@linux ~]$ ls -l permissions^*.txt
+```
+
+```
+4 -rw-r--r--. 1 student student 0 Mar 8 10:59 permissions/myfile.txt
+```
+You can delete the file since you have write permission on the directory!
+
+7. With chmod, is 770 the same as rwxrwx^^-?
+
+yes
+
+8. With chmod, is 664 the same as r-xr-xr^-?
+
+no, rw-rw-r^- is 664 and rwxrwxr^- is 774
+
+9. With chmod, is 400 the same as r--------?
+
+yes
+
+10. With chmod, is 734 the same as rwxr-xr^-?
+
+no, rwxr-xr^- is 754 and rwx-wxr^- is 734
+
+11. Display the umask in octal and in symbolic form.
+
+umask and umask -S
+
+12. Set the umask to 0077, but use the symbolic format to set it. Verify that this works.
+
+```
+1 [student@linux ~]$ umask -S u=rwx,go=
+2 u=rwx,g=,o=
+3 [student@linux ~]$ umask
+4 0077
+```
+13. Create a file as root, give only read to others. Can a normal user read this file? Test writing to this file with vi or nano.
+
+```
+1 [student@linux ~]$ sudo vi permissions/rootfile.txt
+2 [student@linux ~]$ sudo chmod 644 permissions/rootfile.txt
+3 [student@linux ~]$ ls -l permissions^*.txt
+4 -rw-r--r--. 1 student student 0 Mar 8 10:59 permissions/myfile.txt
+5 -rw-r--r--. 1 root root 6 Mar 8 13:53 permissions/rootfile.txt
+6 [student@linux ~]$ cat permissions/rootfile.txt
+7 hello
+8 [student@linux ~]$ echo " world" ^> permissions/rootfile.txt
+9 -bash: permissions/rootfile.txt: Permission denied
+```
+Yes, a normal user can read the file, but not write to it.
+
+14. Create a file as a normal user, take away all permissions for the group and others. Can you still read the file? Can root read the file? Can root write to the file?
+
+```
+1 [student@linux ~]$ vi permissions/privatefile.txt
+```
+
+```
+2 ^^. (editing the file) ^^.
+```
+
+```
+3 [student@linux ~]$ cat permissions/privatefile.txt
+```
+
+```
+4 hello
+```
+
+```
+5 [student@linux ~]$ chmod 600 permissions/privatefile.txt
+```
+
+```
+6 [student@linux ~]$ ls -l permissions/privatefile.txt
+```
+
+```
+7 -rw-------. 1 student student 0 Mar 8 16:06 permissions/privatefile.txt
+```
+
+```
+8 [student@linux ~]$ cat permissions/privatefile.txt
+```
+
+```
+9 hello
+```
+Of course, the owner can still read (and write to) the file.
+
+```
+1 [student@linux ~]$ sudo vi permissions/privatefile.txt
+```
+<sup>2</sup> [sudo] password for student:
+
+```
+3 ^^. (editing the file) ^^.
+```
+
+```
+4 [student@linux ~]$ cat permissions/privatefile.txt
+```
+
+```
+5 hello world
+```
+Root can read and write to the file. In fact, root ignores all file permissions and can do anything with any file.
+
+15. Create a directory shared/ that belongs to group users, where every member of that group can read and write to files, and create files.
+
+#### *8. standard file permissions*
+
+- [student@linux ~]\$ mkdir shared
+- [student@linux ~]\$ sudo chgrp users shared
+- [student@linux ~]\$ chmod 775 shared/
+- [student@linux ~]\$ ls -ld shared/
+- drwxrwxr-x. 2 student users 6 Mar 8 18:26 shared/
+
+## **9. advanced file permissions**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Alex M. Schapelle, https://github.com/zero-pytagoras/)*
+
+#### **9.1. sticky bit on d[irectory](https://github.com/zero-pytagoras/)**
+
+You can set the sticky bit on a directory to prevent users from removing files that they do not own as a user owner. The sticky bit is displayed at the same location as the x permission for others. The sticky bit is represented by a t (meaning x is also there) or a T (when there is no x for others).
+
+```
+root@linux:~# mkdir /project55
+root@linux:~# ls -ld /project55
+drwxr-xr-x 2 root root 4096 Feb 7 17:38 /project55
+root@linux:~# chmod +t /project55/
+root@linux:~# ls -ld /project55
+drwxr-xr-t 2 root root 4096 Feb 7 17:38 /project55
+root@linux:~#
+```
+The sticky bit can also be set with octal permissions, it is binary 1 in the first of four triplets.
+
+```
+root@linux:~# chmod 1775 /project55/
+root@linux:~# ls -ld /project55
+drwxrwxr-t 2 root root 4096 Feb 7 17:38 /project55
+root@linux:~#
+```
+You will typically find the sticky bit on the /tmp directory.
+
+```
+root@linux:~# ls -ld /tmp
+drwxrwxrwt 6 root root 4096 2009-06-04 19:02 /tmp
+```
+## **9.2. setgid bit on directory**
+
+setgid can be used on directories to make sure that all files inside the directory are owned by the group owner of the directory. The setgid bit is displayed at the same location as the x permission for group owner. The setgid bit is represented by an s (meaning x is also there) or a S (when there is no x for the group owner). As this example shows, even though root does not belong to the group proj55, the files created by root in /project55 will belong to proj55 since the setgid is set.
+
+```
+root@linux:~# groupadd proj55
+root@linux:~# chown root:proj55 /project55/
+root@linux:~# chmod 2775 /project55/
+root@linux:~# touch /project55/fromroot.txt
+root@linux:~# ls -ld /project55/
+drwxrwsr-x 2 root proj55 4096 Feb 7 17:45 /project55/
+root@linux:~# ls -l /project55/
+total 4
+-rw-r--r-- 1 root proj55 0 Feb 7 17:45 fromroot.txt
+root@linux:~#
+```
+You can use the find command to find all setgid directories.
+
+```
+student@linux:~$ find / -type d -perm -2000 2> /dev/null
+/var/log/mysql
+/var/log/news
+/var/local
+^^.
+```
+## <span id="page-109-0"></span>**9.3. setgid and setuid on regular files**
+
+These two permissions cause an executable file to be executed with the permissions of the file owner instead of the executing owner. This means that if any user executes a program that belongs to the root user, and the setuid bit is set on that program, then the program runs as root. This can be dangerous, but sometimes this is good for security.
+
+Take the example of passwords; they are stored in /etc/shadow which is only readable by root. (The root user never needs permissions anyway.)
+
+```
+root@linux:~# ls -l /etc/shadow
+-r-------- 1 root root 1260 Jan 21 07:49 /etc/shadow
+```
+Changing your password requires an update of this file, so how can normal non-root users do this? Let's take a look at the permissions on the /usr/bin/passwd.
+
+```
+root@linux:~# ls -l /usr/bin/passwd
+-r-s--x--x 1 root root 21200 Jun 17 2005 /usr/bin/passwd
+```
+When running the passwd program, you are executing it with root credentials.
+
+You can use the find command to find all setuid programs.
+
+```
+student@linux:~$ find /usr/bin -type f -perm -04000
+/usr/bin/arping
+/usr/bin/kgrantpty
+/usr/bin/newgrp
+/usr/bin/chfn
+/usr/bin/sudo
+/usr/bin/fping6
+/usr/bin/passwd
+/usr/bin/gpasswd
+^^.
+```
+In most cases, setting the setuid bit on executables is sufficient. Setting the setgid bit will result in these programs to run with the credentials of their group owner.
+
+## <span id="page-110-0"></span>**9.4. setuid on sudo**
+
+The sudo binary has the setuid bit set, so any user can run it with the effective userid of root.
+
+```
+student@linux:~$ ls -l $(which sudo)
+---s--x--x. 1 root root 123832 Oct 7 2013 /usr/bin/sudo
+student@linux:~$
+```
+## <span id="page-110-1"></span>**9.5. practice: sticky, setuid and setgid bits**
+
+1a. Set up a directory, owned by the group sports.
+
+1b. Members of the sports group should be able to create files in this directory.
+
+1c. All files created in this directory should be group-owned by the sports group.
+
+1d. Users should be able to delete only their own user-owned files.
+
+1e. Test that this works!
+
+2. Verify the permissions on /usr/bin/passwd. Remove the setuid, then try changing your password as a normal user. Reset the permissions back and try again.
+
+3. If time permits (or if you are waiting for other students to finish this practice), read about file attributes in the man page of chattr and lsattr. Try setting the i attribute on a file and test that it works.
+
+## <span id="page-110-2"></span>**9.6. solution: sticky, setuid and setgid bits**
+
+1a. Set up a directory, owned by the group sports.
+
+groupadd sports
+
+mkdir /home/sports
+
+chown root:sports /home/sports
+
+1b. Members of the sports group should be able to create files in this directory.
+
+chmod 770 /home/sports
+
+1c. All files created in this directory should be group-owned by the sports group.
+
+chmod 2770 /home/sports
+
+1d. Users should be able to delete only their own user-owned files.
+
+chmod +t /home/sports
+
+#### *9. advanced file permissions*
+
+#### 1e. Test that this works!
+
+Log in with different users (group members and others and root), create files and watch the permissions. Try changing and deleting files...
+
+2. Verify the permissions on /usr/bin/passwd. Remove the setuid, then try changing your password as a normal user. Reset the permissions back and try again.
+
+```
+root@linux:~# ls -l /usr/bin/passwd
+-rwsr-xr-x 1 root root 31704 2009-11-14 15:41 /usr/bin/passwd
+root@linux:~# chmod 755 /usr/bin/passwd
+root@linux:~# ls -l /usr/bin/passwd
+-rwxr-xr-x 1 root root 31704 2009-11-14 15:41 /usr/bin/passwd
+```
+A normal user cannot change password now.
+
+```
+root@linux:~# chmod 4755 /usr/bin/passwd
+root@linux:~# ls -l /usr/bin/passwd
+-rwsr-xr-x 1 root root 31704 2009-11-14 15:41 /usr/bin/passwd
+```
+3. If time permits (or if you are waiting for other students to finish this practice), read about file attributes in the man page of chattr and lsattr. Try setting the i attribute on a file and test that it works.
+
+```
+student@linux:~$ sudo su -
+[sudo] password for paul:
+root@linux:~# mkdir attr
+root@linux:~# cd attr/
+root@linux:~/attr# touch file42
+root@linux:~/attr# lsattr
+------------------ ./file42
+root@linux:~/attr# chattr +i file42
+root@linux:~/attr# lsattr
+----i------------- ./file42
+root@linux:~/attr# rm -rf file42
+rm: cannot remove `file42': Operation not permitted
+root@linux:~/attr# chattr -i file42
+root@linux:~/attr# rm -rf file42
+root@linux:~/attr#
+```
+## <span id="page-112-0"></span>**10. introduction to users**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Alex M. Schapelle, https://github.com/zero-pytagoras/; Bert Van Vreckem, https://github.com/bertvv/)*
+
+This little chapter will teach you [how to identify your user account on](https://github.com/paulcobbaut/) a Linux computer using commands like who am i, id[, and more.](https://github.com/zero-pytagoras/)
+
+In a [second part you will learn h](https://github.com/bertvv/)ow to become another user with the su command.
+
+Finally, you will learn how to run a command as another user with sudo.
+
+### **10.1. whoami**
+
+<span id="page-112-1"></span>The whoami command tells you your username.
+
+```
+1 student@debian:~$ whoami
+```
+<sup>2</sup> student
+
+## **10.2. who**
+
+<span id="page-112-2"></span>The who command will give you information about who is logged on the system.
+
+```
+1 student@debian:~$ who
+```
+
+| 1 |         | student@debian:~\$<br>who |                  |                |
+|---|---------|---------------------------|------------------|----------------|
+| 2 | yanina  | tty1                      | 2024-10-15 18:59 |                |
+| 3 | student | pts/0                     | 2024-10-15 18:55 | (192.168.56.1) |
+| 4 | vagrant | pts/1                     | 2024-10-15 18:56 | (10.0.2.2)     |
+|   |         |                           |                  |                |
+
+In this example, the who command shows that the user yanina is logged in on the physical machine (no IP address is shown), the other students are logged in via SSH. The IP addresses are shown in the output.
+
+In the second column, tty is short for *teletype*. This term refers to a teleprinter, a device that was in the past used to interact with a computer. The pts stands for *pseudo terminal slave* and refers to a virtual terminal that is used to interact with the system over a network connection.
+
+## **10.3. who am i**
+
+<span id="page-112-3"></span>With who am i the who command will display only the line pointing to your current session.
+
+<sup>1</sup> student@debian:~\$ who am i
+
+```
+2 student pts/0 2024-10-15 18:55 (192.168.56.1)
+```
+In fact, any two words would work here with the same result. The following is also common:
+
+<sup>1</sup> student@debian:~\$ who mom loves
+
+```
+2 student pts/0 2024-10-15 18:55 (192.168.56.1)
+```
+## <span id="page-113-0"></span>**10.4. w**
+
+The w command shows you who is logged on and what they are doing.
+
+```
+1 student@debian:~$ w
+2 19:13:30 up 18 min, 5 users, load average: 0.00, 0.00, 0.00
+3 USER TTY FROM LOGIN@ IDLE JCPU PCPU WHAT
+4 yanina tty1 - 18:59 14:34 0.03s 0.01s -bash
+5 student pts/0 192.168.56.1 18:55 1.00s 0.06s 0.01s w
+6 vagrant pts/1 10.0.2.2 18:56 7.00s 0.02s ? pager
+7 serena pts/2 192.168.56.1 18:57 16:29 0.02s 0.02s -zsh
+8 venus pts/3 192.168.56.1 18:57 42.00s 0.02s ? nano README.md
+```
+## <span id="page-113-1"></span>**10.5. id**
+
+The id command will give you your user id, primary group id, and a list of the groups that you belong to.
+
+```
+1 student@debian:~$ id
+```
+
+```
+2 uid=1001(student) gid=1001(student) groups=1001(student),27(sudo),100(users)
+```
+On Enterprise Linux you will also get SELinux context information with this command.
+
+```
+1 [student@el ~]$ id
+```
+
+```
+2 uid=1001(student) gid=1001(student) groups=1001(student),10(wheel)
+```
+
+```
+↪ context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+```
+## <span id="page-113-2"></span>**10.6. su to another user**
+
+The su command (*substitute user*) allows a user to run a shell as another user. You need to know the password of the user you want to become.
+
+- <sup>1</sup> student@debian:~\$ su venus
+- <sup>2</sup> Password:
+- <sup>3</sup> venus@debian:/home/student\$ pwd
+- <sup>4</sup> /home/student
+
+In this example, the user student becomes the user venus. The prompt changes to reflect the new user. The pwd command shows that the current directory is still the home directory of the original user. In fact, the only thing that changed is the current user id, the rest of the environment is still the same.
+
+Used like this, the su command is actually not very useful. Use su - instead (see below).
+
+## <span id="page-113-3"></span>**10.7. su - \$username**
+
+To become another user and also get the target user's environment, as you would when you log in as that user, issue the su - command followed by the target username.
+
+```
+1 venus@debian:/home/student$ su - venus
+```
+
+```
+2 Password:
+```
+
+```
+3 venus@debian:~$ pwd
+```
+
+```
+4 /home/venus
+```
+### **10.8. su -**
+
+When no username is provided to su or su -, the command will assume root is the target.
+
+```
+1 student@debian:~$ su -
+```
+
+```
+2 Password:
+```
+<sup>3</sup> root@debian:~# pwd
+
+```
+4 /root
+```
+Remark that this assumes that the root user has a password set. On modern Linux distributions, more often than not, the root user does not have a password and you will not be able to use su to become root. Instead, use sudo (see below).
+
+## **10.9. run a program as another user**
+
+<span id="page-114-1"></span>The sudo program allows a user to start a program with the credentials of another user. Before this works, the system administrator has to set up the /etc/sudoers file. This can be useful to delegate administrative tasks to another user (without giving the root password). Nowadays, this is the preferred way to run commands with superuser privileges instead of logging in as the root user.
+
+The screenshot below shows the usage of sudo. User student received the right to run useradd with the credentials of root. This allows student to create new users on the system without becoming root and without knowing the *root password*.
+
+First the command fails:
+
+- <sup>1</sup> student@debian:~\$ /sbin/useradd -m -s /bin/bash valentina
+- <sup>2</sup> useradd: Permission denied.
+- <sup>3</sup> useradd: cannot lock /etc/passwd; try again later.
+
+But with sudo it works. The first time a user executes sudo, they have to enter their own password to confirm the action. The sudo command will remember the password for a short time (usually 15 minutes) so that they don't have to enter the password for every command.
+
+- <sup>1</sup> student@debian:~\$ sudo useradd -m -s /bin/bash valentina
+- <sup>2</sup> student@debian:~\$ getent passwd valentina
+- <sup>3</sup> valentina:x:1006:1006^:/home/valentina:/bin/bash
+
+For more information about the commands used in this example, see the chapter about user management.
+
+## **10.10. visudo**
+
+<span id="page-114-2"></span>The /etc/sudoers file can be edited with the visudo command. This command will check the syntax of the file before saving it.
+
+Check the man page of visudo(8) before playing with the /etc/sudoers file. Editing the sudoers is out of scope for this fundamentals book.
+
+The default configuration of the sudoers file on *Enterprise Linux* is to give all users in the wheel group the right to use sudo. On *Debian*-based systems, users in the group sudo get these rights. In both cases, users have to enter their own password on first use. VMs created with Vagrant are set up in such a way that the default user vagrant can use sudo without entering a password.
+
+## <span id="page-115-0"></span>**10.11. sudo su -**
+
+On most modern Linux systems, the root user does not have a password set. This means that it is not possible to login as root from the login screen, or via SSH. In order to get a root prompt, one of the users with sudo rights can type sudo su - and become root without having to enter the root password.
+
+```
+1 student@linux:~$ sudo su -
+```
+- <sup>2</sup> Password:
+- <sup>3</sup> root@linux:~#
+
+## <span id="page-115-1"></span>**10.12. sudo logging**
+
+Using sudo without authorization will result in a severe warning:
+
+```
+1 paul@linux:~$ sudo su -
+2
+3 We trust you have received the usual lecture from the local System
+4 Administrator. It usually boils down to these three things:
+5
+6 #1) Respect the privacy of others.
+7 #2) Think before you type.
+8 #3) With great power comes great responsibility.
+9
+10 [sudo] password for paul:
+11 paul is not in the sudoers file. This incident will be reported.
+12 paul@linux:~$
+  On systemd based distributions, use journalctl (with superuser privileges) to see the logs:
+1 student@debian:~$ sudo journalctl -et sudo
+2 [^^. some output omitted ^^.]
+3 Oct 15 19:21:30 debian sudo[1669]: paul : user NOT in sudoers ; TTY=pts/0
+   ↪ ; PWD=/home/paul ; USER=root ; COMMAND=/usr/bin/su -
+```
+On *Enterprise Linux*, there is a separate log file for sudo, /var/log/secure:
+
+```
+1 [vagrant@el ~]$ sudo grep 'NOT in sudoers' /var/log/secure
+```
+
+```
+2 Oct 16 07:00:19 el sudo[7458]: paul : user NOT in sudoers ; TTY=pts/1 ;
+```
+
+```
+↪ PWD=/home/paul ; USER=root ; COMMAND=/bin/su -
+```
+On older *Debian* systems, the log file is /var/log/auth.log, with similar content. If this file does not exist, this is an indication that you're on a newer system and that journalct should be used.
+
+## <span id="page-115-2"></span>**10.13. practice: introduction to users**
+
+- 1. Run a command that displays only your currently logged on user name.
+- 2. Display a list of all logged on users.
+- 3. Display a list of all logged on users including the command they are running at this very moment.
+- 4. Display your user name and your unique user identification (userid).
+- 5. Use su to switch to another user account (unless you are root, you will need the password of the other account). And get back to the previous account.
+- 6. Now use su to switch to another user and notice the difference.
+- 7. Try to create a new user account (when using your normal user account). This should fail. (Details on adding user accounts are explained in the chapter about user management.)
+- 8. Now try the same, but with sudo before your command.
+
+### <span id="page-116-0"></span>**10.14. solution: introduction to users**
+
+1. Run a command that displays only your currently logged on user name.
+
+```
+1 laura@linux:~$ whoami
+```
+laura
+
+```
+3 laura@linux:~$ echo $USER
+```
+- laura
+- 2. Display a list of all logged on users.
+
+```
+1 laura@linux:~$ who
+```
+
+```
+2 laura pts/0 2014-10-13 07:22 (10.104.33.101)
+```
+
+```
+3 laura@linux:~$
+```
+3. Display a list of all logged on users including the command they are running at this very moment.
+
+```
+1 laura@linux:~$ w
+```
+
+```
+2 07:47:02 up 16 min, 2 users, load average: 0.00, 0.00, 0.00
+3 USER TTY FROM LOGIN@ IDLE JCPU PCPU WHAT
+4 root pts/0 10.104.33.101 07:30 6.00s 0.04s 0.00s w
+5 root pts/1 10.104.33.101 07:46 6.00s 0.01s 0.00s sleep 42
+6 laura@linux:~$
+```
+4. Display your user name and your unique user identification (userid).
+
+```
+1 laura@linux:~$ id
+2 uid=1005(laura) gid=1007(laura) groups=1007(laura)
+```
+
+```
+3 laura@linux:~$
+```
+5. Use su to switch to another user account (unless you are root, you will need the password of the other account). And get back to the previous account.
+
+```
+1 laura@linux:~$ su tania
+2 Password:
+3 tania@linux:/home/laura$ id
+4 uid=1006(tania) gid=1008(tania) groups=1008(tania)
+5 tania@linux:/home/laura$ exit
+6 laura@linux:~$
+```
+6. Now use su - to switch to another user and notice the difference.
+
+```
+1 laura@linux:~$ su - tania
+```
+
+```
+2 Password:
+```
+- tania@linux:~\$ pwd
+- /home/tania
+
+```
+5 tania@linux:~$ logout
+```
+laura@linux:~\$
+
+Note that su - gets you into the home directory of tania.
+
+- 7. ry to create a new user account (when using your normal user account). This should fail. (Details on adding user accounts are explained in the chapter about user management.)
+- laura@linux:~\$ useradd valentina
+- -su: useradd: command not found
+- laura@linux:~\$ /usr/sbin/useradd valentina
+- useradd: Permission denied.
+- useradd: cannot lock /etc/passwd; try again later.
+- laura@linux:~\$
+
+It is possible that useradd is located in /sbin/useradd on your computer.
+
+8. Now try the same, but with sudo before your command.
+
+```
+1 laura@linux:~$ sudo /usr/sbin/useradd valentina
+```
+
+```
+2 [sudo] password for laura:
+```
+
+```
+3 laura is not in the sudoers file. This incident will be reported.
+```
+
+```
+4 laura@linux:~$
+```
+Notice that laura has no permission to use the sudo on this system.
+
+## <span id="page-118-0"></span>**11. user management**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Alex M. Schapelle, https://github.com/zero-pytagoras/, Bert Van Vreckem https://github.com/bertvv)*
+
+This chapter will teach you how [to create, modify and remove user](https://github.com/paulcobbaut/) accounts.
+
+You will need root [access o](https://github.com/bertvv)[n a Linux computer to complete this ch](https://github.com/zero-pytagoras/)apter.
+
+#### **11.1. user management**
+
+<span id="page-118-1"></span>User management on Linux can be done in three complementary ways. You can use the graphical tools provided by your distribution. These tools have a look and feel that depends on the distribution. If you are a novice Linux user on your home system, then use the graphical tool that is provided by your distribution. This will make sure that you do not run into problems.
+
+Another option is to use *command line tools* like useradd, usermod, passwd, gpasswd and others. Server administrators are likely to use these tools, since they are familiar and very similar across many different distributions. This chapter will focus on these command line tools.
+
+A third and rather extremist way is to *edit the local configuration files* directly using a text editor like vi or nano. This is strongly discouraged, though, since a small mistake in the configuration file format may make your system unusable.
+
+## **11.2. /etc/passwd**
+
+<span id="page-118-2"></span>The local user database on Linux (and on most Unixes) is /etc/passwd.
+
+- <sup>1</sup> student@linux:~\$ tail /etc/passwd
+- <sup>2</sup> systemd-timesync:x:997:997:systemd Time Synchronization:/:/usr/sbin/nologin
+- <sup>3</sup> messagebus:x:100:107^:/nonexistent:/usr/sbin/nologin
+- <sup>4</sup> sshd:x:101:65534^:/run/sshd:/usr/sbin/nologin
+- <sup>5</sup> \_rpc:x:102:65534^:/run/rpcbind:/usr/sbin/nologin
+- <sup>6</sup> statd:x:103:65534^:/var/lib/nfs:/usr/sbin/nologin
+- <sup>7</sup> vagrant:x:1000:1000:vagrant,,,:/home/vagrant:/bin/bash
+- <sup>8</sup> vboxadd:x:999:1^:/var/run/vboxadd:/bin/false
+- <sup>9</sup> student:x:1001:1001^:/home/student:/bin/bash
+- <sup>10</sup> tcpdump:x:104:109^:/nonexistent:/usr/sbin/nologin
+- <sup>11</sup> polkitd:x:994:994:polkit:/nonexistent:/usr/sbin/nologin
+
+This file contains seven columns separated by a colon. The columns contain the username, an x, the user id (a number that uniquely identifies a user), the primary group id, a description, the name of the user's home directory, and the login shell.
+
+More information can be found in man page passwd(5):
+
+<sup>1</sup> student@linux:~\$ man 5 passwd
+
+#### *11. user management*
+
+Searching for information about a user in the passwd database can be done with the getent command. The example below shows the information for the user student.
+
+- <sup>1</sup> student@linux:~\$ getent passwd student
+- <sup>2</sup> student:x:1001:1001^:/home/student:/bin/bash
+
+Since the passwd database is a plain text file, grep works as well.
+
+- <sup>1</sup> student@linux:~\$ grep student /etc/passwd
+- <sup>2</sup> student:x:1001:1001^:/home/student:/bin/bash
+
+It may be counterintuitive, but the passwd file does *not* contain the field it's named after, viz. the user's password. Originally, it was kept in the second field. Since the passwd file is world readable, realisation dawned that this was a bad idea, even if the password is stored in an encrypted (hashed) format. The password is now stored in the shadow file.
+
+## <span id="page-119-0"></span>**11.3. /etc/shadow**
+
+The shadow file contains additional information about users, specifically the encrypted password and password-related settings. The file is only readable by the root user.
+
+```
+1 student@debian:~$ ls -l /etc/shadow
+```
+<sup>2</sup> -rw-r----- 1 root shadow 944 Oct 15 14:38 /etc/shadow
+
+On Enterprise Linux, even the owner's permissions are turned off!
+
+- <sup>1</sup> [student@el ~]\$ ls -l /etc/shadow
+- <sup>2</sup> ----------. 1 root root 1234 Oct 15 10:16 /etc/shadow
+
+However, root ignores file permissions and still can read (and edit) the file.
+
+Finding information about a user from the shadow file can also be done with getent, however, you need superuser privileges.
+
+- <sup>1</sup> student@debian:~\$ getent shadow student
+- <sup>2</sup> student@debian:~\$ sudo ^!
+- <sup>3</sup> sudo getent shadow student
+
+```
+4 student:$y$j9T$k/zvYGDp1caN0p50aa9QI.$svec3ZhaLcxykbHKh6SMb4VnhYiJKgdN2ZhDG ⌋
+```
+↪ BLApa6:20007:0:99999:7^^:
+
+Without the sudo password, the command does not return any output.
+
+The second field is the hashed password, with the other fields you can configure password expiration and more. See the shadow(5) man page for details.
+
+## <span id="page-119-1"></span>**11.4. root**
+
+The root user also called the superuser is the most powerful account on your Linux system. This user can do almost anything, including the creation of other users. The root user always has user id 0 (regardless of the name of the account).
+
+```
+1 student@linux:~$ getent passwd root
+```
+
+```
+2 root:x:0:0:root:/root:/bin/bash
+```
+## <span id="page-120-0"></span>**11.5. useradd**
+
+You can add users with the useradd command. The example below shows how to add a user named yanina (last parameter) and at the same time forcing the creation of the home directory (-m), setting the login shell (-s), and setting the comment field that usually contains the user's real name (-c).
+
+After that, we test whether the user was created correctly.
+
+- <sup>1</sup> student@debian:~\$ sudo useradd -m -s /bin/bash -c "Yanina Wickmayer" yanina
+- <sup>2</sup> student@debian:~\$ getent passwd yanina
+- <sup>3</sup> yanina:x:1002:1002:Yanina Wickmayer:/home/yanina:/bin/bash
+
+The user named yanina received userid 1002 and primary group id 1002 (a newly created group with name yanina).
+
+Remark that on **Debian**-based systems, the useradd command does **not** automatically create a home directory and sets the login shell to /bin/sh. Consequently, the -m and -s options are necessary for creating a user that can log in. On **Enterprise Linux**, useradd does create a home directory and /bin/bash is the default login shell, so useradd <user> is sufficient.
+
+At this time, the user is not yet able to log in.
+
+- <sup>1</sup> student@debian:~\$ getent shadow yanina
+- <sup>2</sup> yanina:!:20011:0:99999:7^^:
+
+The password field contains a !, which means that the account is locked. The password must be set with the passwd command.
+
+- <sup>1</sup> student@debian:~\$ sudo passwd yanina
+- <sup>2</sup> New password:
+- <sup>3</sup> Retype new password:
+- <sup>4</sup> passwd: password updated successfully
+- <sup>5</sup> student@debian:~\$ sudo getent shadow yanina
+- <sup>6</sup> yanina:\$y\$j9T\$mUV.AmwvCHj8RlVknMJxi0\$zkYFDtn4oHWhGqd8kTlw5sWr8/xnykHwGBVIzB ⌋
+
+```
+↪ GLRg6:20011:0:99999:7^^:
+```
+The password field now contains a hashed password, so we can test whether the user can log in.
+
+- <sup>1</sup> student@debian:~\$ su yanina
+- <sup>2</sup> Password:
+- <sup>3</sup> yanina@debian:~\$ pwd
+- <sup>4</sup> /home/yanina
+
+### <span id="page-120-1"></span>**11.5.1. /etc/default/useradd**
+
+Both *Enterprise Linux* and *Debian/Ubuntu* have a file called /etc/default/useradd that contains some default user options. Besides using cat to display this file, you can also use useradd -D.
+
+- <sup>1</sup> student@debian:~\$ /sbin/useradd -D
+- <sup>2</sup> GROUP=100
+- <sup>3</sup> HOME=/home
+- <sup>4</sup> INACTIVE=-1
+- <sup>5</sup> EXPIRE=
+- <sup>6</sup> SHELL=/bin/sh
+- <sup>7</sup> SKEL=/etc/skel
+- <sup>8</sup> CREATE\_MAIL\_SPOOL=no
+- <sup>9</sup> LOG\_INIT=yes
+
+## <span id="page-121-0"></span>**11.6. usermod**
+
+You can modify the properties of a user like the comment field, login shell, password expiration, etc. with the usermod command.
+
+The usermod command can also be used to change group membership of users. This is discussed in the chapter about groups.
+
+#### <span id="page-121-1"></span>**11.6.1. changing the comment field**
+
+This example uses usermod to change the description of a new user tux.
+
+student@debian:~\$ sudo useradd -m -s /bin/bash tux
+
+```
+2 student@debian:~$ getent passwd tux
+```
+
+```
+3 tux:x:1003:1003^:/home/tux:/bin/bash
+```
+
+```
+4 student@debian:~$ sudo usermod -c "Tuxedo T. Penguin" tux
+```
+
+```
+5 student@debian:~$ getent passwd tux
+```
+
+```
+6 tux:x:1003:1003:Tuxedo T. Penguin:/home/tux:/bin/bash
+```
+#### <span id="page-121-2"></span>**11.6.2. locking an account**
+
+The command can also be used with the -L option to temporarily lock the account of a user.
+
+- student@debian:~\$ sudo passwd tux
+- New password:
+- Retype new password:
+
+```
+4 passwd: password updated successfully
+```
+- student@debian:~\$ su tux
+- Password:
+- tux@debian:~\$
+
+```
+8 logout
+```
+
+```
+9 student@debian:~$ sudo usermod -L tux
+```
+- student@debian:~\$ su tux
+- Password:
+- su: Authentication failure
+
+To re-enable the account, use the -U option.
+
+```
+1 student@debian:~$ sudo usermod -U tux
+2 student@debian:~$ su - tux
+```
+Password:
+
+```
+4 tux@debian:~$
+```
+
+```
+5 logout
+```
+### <span id="page-121-3"></span>**11.6.3. login shell**
+
+The /etc/passwd file specifies the login shell for the user. In the screenshot below you can see that user annelies will log in with the /bin/bash shell, and user laura with the /bin/ksh shell.
+
+```
+1 student@debian:~$ getent passwd annelies
+```
+
+```
+2 annelies:x:1006:1006:sword fighter:/home/annelies:/bin/bash
+```
+
+```
+3 student@debian:~$ getent passwd laura
+```
+
+```
+4 laura:x:1007:1007:art dealer:/home/laura:/bin/ksh
+```
+You can use the usermod command to change the shell for a user.
+
+```
+1 student@debian:~$ sudo usermod -s /bin/ksh annelies
+```
+
+```
+2 student@debian:~$ getent passwd annelies
+```
+
+```
+3 annelies:x:1006:1006:sword fighter:/home/annelies:/bin/ksh
+```
+## <span id="page-122-0"></span>**11.7. chsh**
+
+Users can change their own login shell with the chsh command.
+
+In the example below, user yanina obtains a list of available shells and then changes their login shell to the Z shell (/bin/zsh). First install zsh before trying this yourself.
+
+```
+1 yanina@debian:~$ cat /etc/shells
+```
+
+```
+2 # /etc/shells: valid login shells
+```
+
+```
+3 /bin/sh
+```
+
+```
+4 /usr/bin/sh
+```
+- /bin/bash
+- /usr/bin/bash
+- /bin/rbash
+- /usr/bin/rbash
+- /bin/dash
+- /usr/bin/dash
+- /bin/zsh
+- /usr/bin/zsh
+- /usr/bin/zsh
+
+```
+14 yanina@debian:~$ getent passwd yanina
+```
+
+```
+15 yanina:x:1002:1002:Yanina Wickmayer:/home/yanina:/bin/bash
+```
+- yanina@debian:~\$ chsh -s /usr/bin/zsh
+- Password:
+- yanina@debian:~\$ exit
+- logout
+- student@debian:~\$ su yanina
+- Password:
+- yanina@debian ~ % echo \$SHELL
+- /usr/bin/zsh
+- yanina@debian ~ % getent passwd yanina
+- yanina:x:1002:1002:Yanina Wickmayer:/home/yanina:/usr/bin/zsh
+
+On Enterprise Linux, chsh has an option -l option that lists the available shells. This option is not available on Debian.
+
+```
+1 [student@el ~]$ chsh -l
+```
+- /bin/sh
+- /bin/bash
+- /usr/bin/sh
+- /usr/bin/bash
+- /usr/bin/zsh
+- 
+
+```
+7 /bin/zsh
+```
+## <span id="page-122-1"></span>**11.8. userdel**
+
+You can delete the user yanina with userdel. The -r option of userdel will also remove the home directory.
+
+```
+1 student@debian:~$ sudo userdel -r yanina
+```
+## <span id="page-123-0"></span>**11.9. managing home directories**
+
+The easiest way to create a home directory is to supply the -m option with useradd. If you forgot the option on a Debian system, you could delete the user and start again, or create the directory yourself. This also requires setting the owner and the permissions on the directory with chmod and chown (both commands are discussed in detail in another chapter).
+
+```
+1 student@debian:~$ sudo useradd -s /bin/bash laura
+```
+
+```
+2 student@debian:~$ getent passwd laura
+```
+
+```
+3 laura:x:1004:1004^:/home/laura:/bin/bash
+```
+
+```
+4 student@debian:~$ sudo mkdir /home/laura
+```
+
+```
+5 student@debian:~$ sudo chown laura:laura /home/laura
+```
+
+```
+6 student@debian:~$ sudo chmod -R 700 /home/laura
+```
+
+```
+7 student@debian:~$ ls -ld /home/laura/
+```
+
+```
+8 drwx------ 2 laura laura 4096 Jun 24 15:17 /home/laura/
+```
+### <span id="page-123-1"></span>**11.9.1. /etc/skel/**
+
+When using useradd the -m option, the /etc/skel/ directory is copied to the newly created home directory. The /etc/skel/ directory contains some (usually hidden) files that contain profile settings and default values for applications. In this way /etc/skel/ serves as a default home directory and as a default user profile.
+
+```
+1 student@debian:~$ ls -la /etc/skel
+```
+
+```
+2 total 20
+```
+<sup>3</sup> drwxr-xr-x 2 root root 4096 Jan 31 2024 .
+
+```
+4 drwxr-xr-x 81 root root 4096 Oct 15 14:07 ^.
+```
+
+```
+5 -rw-r--r-- 1 root root 220 Apr 23 2023 .bash_logout
+```
+
+```
+6 -rw-r--r-- 1 root root 3526 Apr 23 2023 .bashrc
+7 -rw-r--r-- 1 root root 807 Apr 23 2023 .profile
+```
+#### <span id="page-123-2"></span>**11.9.2. deleting home directories**
+
+The -r option of userdel will make sure that the home directory is deleted together with the user account.
+
+```
+1 student@debian:~$ sudo useradd -m -s /bin/bash wim
+2 student@debian:~$ getent passwd wim
+3 wim:x:1005:1005^:/home/wim:/bin/bash
+4 student@debian:~$ sudo userdel -r wim
+5 student@debian:~$ ls -ld /home/wim/
+6 ls: cannot access '/home/wim/': No such file or directory
+```
+## <span id="page-123-3"></span>**11.10. adduser, deluser (debian/ubuntu)**
+
+On Debian/Ubuntu, an additional command to manage users is available: adduser and deluser. The adduser command is a more user-friendly frontend to useradd and does all that is necessary to create a new user that can immediately log in to the system. The disadvantage is that it's an interactive command, so it's not suited to use in a script to automate the installation of a machine.
+
+```
+1 student@debian:~$ sudo adduser kim
+2 Adding user `kim' ^^.
+3 Adding new group `kim' (1003) ^^.
+4 Adding new user `kim' (1003) with group `kim (1003)' ^^.
+5 Creating home directory `/home/kim' ^^.
+6 Copying files from `/etc/skel' ^^.
+7 New password:
+8 Retype new password:
+9 passwd: password updated successfully
+10 Changing the user information for kim
+11 Enter the new value, or press ENTER for the default
+12 Full Name []: Kim Clijsters
+13 Room Number []:
+14 Work Phone []:
+15 Home Phone []:
+16 Other []:
+17 Is the information correct? [Y/n]
+18 Adding new user `kim' to supplemental / extra groups `users' ^^.
+19 Adding user `kim' to group `users' ^^.
+20 student@debian:~$ su - kim
+21 Password:
+22 kim@debian:~$ pwd
+23 /home/kim
+```
+The deluser command is a frontend to userdel and groupdel and removes a user and the associated group. The home directory is not removed by default.
+
+```
+1 student@debian:~$ sudo deluser kim
+2 Removing crontab ^^.
+3 Removing user `kim' ^^.
+4 Done.
+```
+
+```
+5 student@debian:~$ ls /home/
+```
+
+```
+6 kim student yanina
+```
+
+```
+7 student@debian:~$ sudo rm -rf /home/kim/
+```
+## <span id="page-124-0"></span>**11.11. practice: user management**
+
+- 1. Create a user account named serena, including a home directory and a description (or comment) that reads Serena Williams. Do all this in one single command.
+- 2. Create a second user named venus, including home directory, Bash as login shell, a description that reads Venus Williams all in one single command.
+- 3. Verify that both users have correct entries in /etc/passwd, /etc/shadow and /etc/group.
+- 4. Verify that their home directory was created.
+- 5. Create a user named einstime with the date command as their default logon shell, /tmp as their home directory and an empty string as password.
+- 6. What happens when you log on with the einstime user? Can you think of a useful real world example for changing a user's login shell to an application?
+- 7. Create a file named welcome.txt and make sure every new user will see this file in their home directory.
+- 8. Verify this setup by creating (and deleting) a test user account.
+- 9. Change the default login shell for the serena user to /bin/zsh. Verify before and after you make this change.
+
+## <span id="page-125-0"></span>**11.12. solution: user management**
+
+- 1. Create a user account named serena, including a home directory and a description (or comment) that reads Serena Williams. Do all this in one single command.
+- <sup>1</sup> student@debian:~\$ sudo useradd -m -c 'Serena Williams' serena
+- 2. Create a second user named venus, including home directory, Bash as login shell, a description that reads Venus Williams all in one single command.
+- <sup>1</sup> student@debian:~\$ sudo useradd -m -s /bin/bash -c 'Venus Williams' venus
+- 3. Verify that both users have correct entries in /etc/passwd, /etc/shadow and /etc/group.
+- <sup>1</sup> student@debian:~\$ getent passwd serena
+- <sup>2</sup> serena:x:1002:1002:Serena Williams:/home/serena:/bin/sh
+- <sup>3</sup> student@debian:~\$ sudo getent shadow serena
+- <sup>4</sup> serena:!:20011:0:99999:7^^:
+- <sup>5</sup> student@debian:~\$ getent passwd venus
+- <sup>6</sup> venus:x:1003:1003:Venus Williams:/home/venus:/bin/bash
+- <sup>7</sup> student@debian:~\$ sudo getent shadow venus
+- <sup>8</sup> venus:!:20011:0:99999:7^^:
+
+At this time, their password isn't set yet, so the shadow file will show ! as the password hash, which also denotes that the account is locked.
+
+- <sup>1</sup> student@debian:~\$ sudo passwd serena
+- <sup>2</sup> New password:
+- <sup>3</sup> Retype new password:
+- <sup>4</sup> passwd: password updated successfully
+- <sup>5</sup> student@debian:~\$ sudo getent shadow serena
+- <sup>6</sup> serena:\$y\$j9T\$7VErSS/8GYyeALTc7nC0Y.\$PeNsJlxzG3tfZ9yEk1rKgDRc4KJVZvHiWj ⌋
+	- ↪ wfdIeKSi0:20011:0:99999:7^^:
+
+Setting the password for venus is equivalent.
+
+4. Verify that their home directory was created.
+
+- <sup>1</sup> student@debian:~\$ ls -l /home
+- <sup>2</sup> total 16
+- <sup>3</sup> drwxr-xr-x 2 serena serena 4096 Oct 15 14:38 serena
+- <sup>4</sup> drwxr-xr-x 2 student student 4096 Oct 15 15:04 student
+- <sup>5</sup> drwxr-xr-x 2 venus venus 4096 Oct 15 14:38 venus
+- 5. Create a user named einstime with the date command as their default logon shell, /tmp as their home directory and an empty string as password.
+- <sup>1</sup> student@debian:~\$ sudo useradd -s \$(which date) -d /tmp -p '' einstime
+- <sup>2</sup> student@debian:~\$ getent passwd einstime
+- <sup>3</sup> einstime:x:1004:1004^:/tmp:/bin/date
+- <sup>4</sup> student@debian:~\$ sudo getent shadow einstime
+- <sup>5</sup> einstime^:20011:0:99999:7^^:
+- 6. What happens when you log on with the einstime user? Can you think of a useful real world example for changing a user's login shell to an application?
+- <sup>1</sup> student@debian:~\$ su einstime
+- <sup>2</sup> Tue Oct 15 04:33:59 PM UTC 2024
+
+You get to see the current time. This trick can also be useful when you want to restrict a user to a specific application only. Just logging in opens the application for them, and closing the application automatically logs them out.
+
+- 7. Create a file named welcome.txt and make sure every new user will see this file in their home directory.
+- student@debian:~\$ sudo nano /etc/skel/welcome.txt
+- student@debian:~\$ cat /etc/skel/welcome.txt
+- Welcome to Debian 12! Have fun while learning!
+
+8. Verify this setup by creating (and deleting) a test user account.
+
+```
+1 student@debian:~$ sudo useradd -m -s /bin/bash testuser
+2 student@debian:~$ sudo su - testuser
+3 testuser@debian:~$ ls -l
+4 total 4
+5 -rw-r--r-- 1 testuser testuser 47 Oct 15 16:36 welcome.txt
+6 testuser@debian:~$ cat welcome.txt
+7 Welcome to Debian 12! Have fun while learning!
+8 testuser@debian:~$ ^D
+9 logout
+10 student@debian:~$ sudo userdel -r testuser
+9. Change the default login shell for the serena user to /bin/zsh. Verify before and after
+   you make this change.
+```
+
+```
+1 student@debian:~$ getent passwd serena
+2 serena:x:1002:1002:Serena Williams:/home/serena:/bin/sh
+3 student@debian:~$ sudo usermod -s /bin/zsh serena
+```
+- student@debian:~\$ getent passwd serena
+- serena:x:1002:1002:Serena Williams:/home/serena:/bin/zsh
+- student@debian:~\$ su serena
+
+```
+7 Password:
+```
+serena@debian ~ % echo \$SHELL
+
+```
+9 /bin/zsh
+```
+## <span id="page-128-0"></span>**12. user passwords**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Alex M. Schapelle, https://github.com/zero-pytagoras/)*
+
+This chapter will tell you more about passwords for local users.
+
+Three methods for settin[g pass](https://github.com/zero-pytagoras/)[words are explained; using the](https://github.com/paulcobbaut/) passwd command, using openssel passwd, and using the crypt function in a C program.
+
+The chapter will also discuss password settings and disabling, suspending or locking accounts.
+
+#### **12.1. passwd**
+
+<span id="page-128-1"></span>Passwords of users can be set with the passwd command. Users will have to provide their old password before twice entering the new one.
+
+[tania@linux ~]\$ passwd Changing password for user tania. Changing password for tania. (current) UNIX password: New password: BAD PASSWORD: The password is shorter than 8 characters New password: BAD PASSWORD: The password is a palindrome New password: BAD PASSWORD: The password is too similar to the old one passwd: Have exhausted maximum number of retries for service
+
+As you can see, the passwd tool will do some basic verification to prevent users from using too simple passwords. The root user does not have to follow these rules (there will be a warning though). The root user also does not have to provide the old password before entering the new password twice.
+
+```
+root@linux:~# passwd tania
+Enter new UNIX password:
+Retype new UNIX password:
+passwd: password updated successfully
+```
+## **12.2. shadow file**
+
+<span id="page-128-2"></span>User passwords are encrypted and kept in /etc/shadow. The /etc/shadow file is read only and can only be read by root. We will see in the file permissions section how it is possible for users to change their password. For now, you will have to know that users can change their password with the /usr/bin/passwd command.
+
+[root@linux ~^# tail -4 /etc/shadow paul:\$6\$ikp2Xta5BT.Tml.p\$2TZjNnOYNNQKpwLJqoGJbVsZG5/Fti8ovBRd.VzRbiDSl7TEq\ IaSMH.TeBKnTS/SjlMruW8qffC0JNORW.BTW1:16338:0:99999:7^^: tania:\$6\$8Z/zovxj\$9qvoqT8i9KIrmN.k4EQwAF5ryz5yzNwEvYjAa9L5XVXQu.z4DlpvMREH\ eQpQzvRnqFdKkVj17H5ST.c79HDZw0:16356:0:99999:7^^: laura:\$6\$glDuTY5e\$/NYYWLxfHgZFWeoujaXSMcR.Mz.lGOxtcxFocFVJNb98nbTPhWFXfKWG\ SyYh1WCv6763Wq54.w24Yr3uAZBOm/:16356:0:99999:7^^: valentina:\$6\$jrZa6PVI\$1uQgqR6En9mZB6mKJ3LXRB4CnFko6LRhbh.v4iqUk9MVreui1lv7\ GxHOUDSKA0N55ZRNhGHa6T2ouFnVno/0o1:16356:0:99999:7^^: [root@linux ~^#
+
+The /etc/shadow file contains nine colon separated columns. The nine fields contain (from left to right) the user name, the encrypted password (note that only inge and laura have an encrypted password), the day the password was last changed (day 1 is January 1, 1970), number of days the password must be left unchanged, password expiry day, warning number of days before password expiry, number of days after expiry before disabling the account, and the day the account was disabled (again, since 1970). The last field has no meaning yet.
+
+All the passwords in the screenshot above are hashes of hunter2.
+
+## <span id="page-129-0"></span>**12.3. encryption with passwd**
+
+Passwords are stored in an encrypted format. This encryption is done by the crypt function. The easiest (and recommended) way to add a user with a password to the system is to add the user with the useradd -m user command, and then set the user's password with passwd.
+
+```
+[root@RHEL4 ~^# useradd -m xavier
+[root@RHEL4 ~^# passwd xavier
+Changing password for user xavier.
+New UNIX password:
+Retype new UNIX password:
+passwd: all authentication tokens updated successfully.
+[root@RHEL4 ~^#
+```
+## <span id="page-129-1"></span>**12.4. encryption with openssl**
+
+Another way to create users with a password is to use the -p option of useradd, but that option requires an encrypted password. You can generate this encrypted password with the openssl passwd command.
+
+The openssl passwd command will generate several distinct hashes for the same password, for this it uses a salt.
+
+```
+student@linux:~$ openssl passwd hunter2
+86jcUNlnGDFpY
+student@linux:~$ openssl passwd hunter2
+Yj7mDO9OAnvq6
+student@linux:~$ openssl passwd hunter2
+YqDcJeGoDbzKA
+student@linux:~$
+```
+This salt can be chosen and is visible as the first two characters of the hash.
+
+```
+student@linux:~$ openssl passwd -salt 42 hunter2
+42ZrbtP1Ze8G.
+student@linux:~$ openssl passwd -salt 42 hunter2
+42ZrbtP1Ze8G.
+student@linux:~$ openssl passwd -salt 42 hunter2
+42ZrbtP1Ze8G.
+student@linux:~$
+```
+This example shows how to create a user with password.
+
+root@linux:~# useradd -m -p \$(openssl passwd hunter2) mohamed
+
+*Note that this command puts the password in your command history!*
+
+## <span id="page-130-0"></span>**12.5. encryption with crypt**
+
+A third option is to create your own C program using the crypt function, and compile this into a command.
+
+```
+student@linux:~$ cat MyCrypt.c
+#include <stdio.h>
+#define ^_USE_XOPEN
+#include <unistd.h>
+int main(int argc, char^* argv)
+{
+ if(argc^=3)
+   {
+       printf("%s\n", crypt(argv[1],argv[2]));
+   }
+   else
+   {
+       printf("Usage: MyCrypt $password $salt\n" );
+   }
+  return 0;
+}
+```
+This little program can be compiled with gcc like this.
+
+```
+student@linux:~$ gcc MyCrypt.c -o MyCrypt -lcrypt
+```
+To use it, we need to give two parameters to MyCrypt. The first is the unencrypted password, the second is the salt. The salt is used to perturb the encryption algorithm in one of 4096 different ways. This variation prevents two users with the same password from having the same entry in /etc/shadow.
+
+```
+student@linux:~$ ./MyCrypt hunter2 42
+42ZrbtP1Ze8G.
+student@linux:~$ ./MyCrypt hunter2 33
+33d6taYSiEUXI
+```
+Did you notice that the first two characters of the password are the salt?
+
+The standard output of the crypt function is using the DES algorithm which is old and can be cracked in minutes. A better method is to use md5 passwords which can be recognized by a salt starting with \$1\$.
+
+```
+student@linux:~$ ./MyCrypt hunter2 '$1$42'
+$1$42$7l6Y3xT5282XmZrtDOF9f0
+student@linux:~$ ./MyCrypt hunter2 '$6$42'
+$6$42$OqFFAVnI3gTSYG0yI9TZWX9cpyQzwIop7HwpG1LLEsNBiMr4w6OvLX1KDa./UpwXfrFk1i^^.
+```
+The md5 salt can be up to eight characters long. The salt is displayed in /etc/shadow between the second and third \$, so never use the password as the salt!
+
+```
+student@linux:~$ ./MyCrypt hunter2 '$1$hunter2'
+$1$hunter2$YVxrxDmidq7Xf8Gdt6qM2.
+```
+## <span id="page-131-0"></span>**12.6. /etc/login.defs**
+
+The /etc/login.defs file contains some default settings for user passwords like password aging and length settings. (You will also find the numerical limits of user ids and group ids and whether or not a home directory should be created by default).
+
+root@linux:~# grep ^PASS /etc/login.defs PASS\_MAX\_DAYS 99999 PASS\_MIN\_DAYS 0 PASS\_MIN\_LEN 5 PASS\_WARN\_AGE 7
+
+Debian also has this file.
+
+```
+root@linux:~# grep PASS /etc/login.defs
+# PASS_MAX_DAYS Maximum number of days a password may be used.
+# PASS_MIN_DAYS Minimum number of days allowed between password changes.
+# PASS_WARN_AGE Number of days warning given before a password expires.
+PASS_MAX_DAYS 99999
+PASS_MIN_DAYS 0
+PASS_WARN_AGE 7
+#PASS_CHANGE_TRIES
+#PASS_ALWAYS_WARN
+#PASS_MIN_LEN
+#PASS_MAX_LEN
+# NO_PASSWORD_CONSOLE
+root@linux:~#
+```
+## <span id="page-131-1"></span>**12.7. chage**
+
+The chage command can be used to set an expiration date for a user account (-E), set a minimum (-m) and maximum (-M) password age, a password expiration date, and set the number of warning days before the password expiration date. Much of this functionality is also available from the passwd command. The -l option of chage will list these settings for a user.
+
+| root@linux:~#<br>chage<br>-l<br>paul                             |     |                      |
+|------------------------------------------------------------------|-----|----------------------|
+| Last<br>password<br>change                                       |     | : Mar<br>27,<br>2014 |
+| Password<br>expires                                              |     | : never              |
+| Password<br>inactive                                             |     | : never              |
+| Account<br>expires                                               |     | : never              |
+| Minimum<br>number<br>of<br>days<br>between<br>password<br>change | : 0 |                      |
+
+```
+Maximum number of days between password change : 99999
+Number of days of warning before password expires : 7
+root@linux:~#
+```
+## <span id="page-132-0"></span>**12.8. disabling a password**
+
+Passwords in /etc/shadow cannot begin with an exclamation mark. When the second field in /etc/passwd starts with an exclamation mark, then the password can not be used.
+
+Using this feature is often called locking, disabling, or suspending a user account. Besides vi (or vipw) you can also accomplish this with usermod.
+
+The first command in the next screenshot will show the hashed password of laura in /etc/shadow. The next command disables the password of laura, making it impossible for Laura to authenticate using this password.
+
+```
+root@linux:~# grep laura /etc/shadow | cut -c1-70
+laura:$6$JYj4JZqp$stwwWACp3OtE1R2aZuE87j.nbW.puDkNUYVk7mCHfCVMa3CoDUJV
+root@linux:~# usermod -L laura
+```
+As you can see below, the password hash is simply preceded with an exclamation mark.
+
+```
+root@linux:~# grep laura /etc/shadow | cut -c1-70
+laura:!$6$JYj4JZqp$stwwWACp3OtE1R2aZuE87j.nbW.puDkNUYVk7mCHfCVMa3CoDUJ
+root@linux:~#
+```
+The root user (and users with sudo rights on su) still will be able to su into the laura account (because the password is not needed here). Also note that laura will still be able to login if she has set up passwordless ssh!
+
+```
+root@linux:~# su - laura
+laura@linux:~$
+```
+You can unlock the account again with usermod -U.
+
+```
+root@linux:~# usermod -U laura
+root@linux:~# grep laura /etc/shadow | cut -c1-70
+laura:$6$JYj4JZqp$stwwWACp3OtE1R2aZuE87j.nbW.puDkNUYVk7mCHfCVMa3CoDUJV
+```
+Watch out for tiny differences in the command line options of passwd, usermod, and useradd on different Linux distributions. Verify the local files when using features like "disabling, suspending, or locking" on user accounts and their passwords.
+
+## <span id="page-132-1"></span>**12.9. editing local files**
+
+If you still want to manually edit the /etc/passwd or /etc/shadow, after knowing these commands for password management, then use vipw instead of vi(m) directly. The vipw tool will do proper locking of the file.
+
+```
+[root@linux ~^# vipw /etc/passwd
+vipw: the password file is busy (/etc/ptmp present)
+```
+## <span id="page-133-0"></span>**12.10. practice: user passwords**
+
+1. Set the password for serena to hunter2.
+
+2. Also set a password for venus and then lock the venus user account with usermod. Verify the locking in /etc/shadow before and after you lock it.
+
+3. Use passwd -d to disable the serena password. Verify the serena line in /etc/shadow before and after disabling.
+
+4. What is the difference between locking a user account and disabling a user account's password like we just did with usermod -L and passwd -d?
+
+5. Try changing the password of serena to serena as serena.
+
+6. Make sure serena has to change her password in 10 days.
+
+7. Make sure every new user needs to change their password every 10 days.
+
+8. Take a backup as root of /etc/shadow. Use vi to copy an encrypted hunter2 hash from venus to serena. Can serena now log on with hunter2 as a password ?
+
+9. Why use vipw instead of vi ? What could be the problem when using vi or vim ?
+
+10. Use chsh to list all shells (only works on RHEL/CentOS/Fedora), and compare to cat /etc/shells.
+
+11. Which useradd option allows you to name a home directory ?
+
+12. How can you see whether the password of user serena is locked or unlocked ? Give a solution with grep and a solution with passwd.
+
+### <span id="page-133-1"></span>**12.11. solution: user passwords**
+
+1. Set the password for serena to hunter2.
+
+root@linux:~# passwd serena Enter new UNIX password: Retype new UNIX password: passwd: password updated successfully
+
+2. Also set a password for venus and then lock the venus user account with usermod. Verify the locking in /etc/shadow before and after you lock it.
+
+```
+root@linux:~# passwd venus
+Enter new UNIX password:
+Retype new UNIX password:
+passwd: password updated successfully
+root@linux:~# grep venus /etc/shadow | cut -c1-70
+venus:$6$gswzXICW$uSnKFV1kFKZmTPaMVS4AvNA/KO27OxN0v5LHdV9ed0gTyXrjUeM/
+root@linux:~# usermod -L venus
+root@linux:~# grep venus /etc/shadow | cut -c1-70
+venus:!$6$gswzXICW$uSnKFV1kFKZmTPaMVS4AvNA/KO27OxN0v5LHdV9ed0gTyXrjUeM
+```
+Note that usermod -L precedes the password hash with an exclamation mark (!).
+
+3. Use passwd -d to disable the serena password. Verify the serena line in /etc/shadow before and after disabling.
+
+root@linux:~# grep serena /etc/shadow | cut -c1-70 serena:\$6\$Es/omrPE\$F2Ypu8kpLrfKdW0v/UIwA5jrYyBD2nwZ/dt.i/IypRgiPZSdB/B root@linux:~# passwd -d serena passwd: password expiry information changed. root@linux:~# grep serena /etc/shadow serena^:16358:0:99999:7^^: root@linux:~#
+
+4. What is the difference between locking a user account and disabling a user account's password like we just did with usermod -L and passwd -d?
+
+Locking will prevent the user from logging on to the system with his password by putting a ! in front of the password in /etc/shadow.
+
+Disabling with passwd will erase the password from /etc/shadow.
+
+5. Try changing the password of serena to serena as serena.
+
+log on as serena, then execute: passwd serena^^. it should fail!
+
+6. Make sure serena has to change her password in 10 days.
+
+chage -M 10 serena
+
+7. Make sure every new user needs to change their password every 10 days.
+
+vi /etc/login.defs (and change PASS\_MAX\_DAYS to 10)
+
+8. Take a backup as root of /etc/shadow. Use vi to copy an encrypted hunter2 hash from venus to serena. Can serena now log on with hunter2 as a password ?
+
+Yes.
+
+9. Why use vipw instead of vi ? What could be the problem when using vi or vim ?
+
+vipw will give a warning when someone else is already using that file (with vipw).
+
+10. Use chsh to list all shells (only works on RHEL/CentOS/Fedora), and compare to cat /etc/shells.
+
+chsh -l cat /etc/shells
+
+11. Which useradd option allows you to name a home directory ?
+
+-d
+
+12. How can you see whether the password of user serena is locked or unlocked ? Give a solution with grep and a solution with passwd.
+
+grep serena /etc/shadow
+
+passwd -S serena
+
+## <span id="page-136-0"></span>**13. User profiles**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Alex M. Schapelle, https://github.com/zero-pytagoras/)*
+
+Logged on users have a number of preset (and customized) aliases, variables, and functions, but where do they come from ? The shell [uses a number of startu](https://github.com/paulcobbaut/)p files that are executed (or rather sourced) whene[ver the shell is invoked. What follow](https://github.com/zero-pytagoras/)s is an overview of startup scripts.
+
+## **13.1. system profile**
+
+Both the bash and the ksh shell will verify the existence of /etc/profile and source it if it exists.
+
+When reading this script, you will notice (both on Debian and on Red Hat Enterprise Linux) that it builds the PATH environment variable (among others). The script might also change the PS1 variable, set the HOSTNAME and execute even more scripts like /etc/inputrc
+
+This screenshot uses grep to show PATH manipulation in /etc/profile on Debian.
+
+```
+root@linux:~# grep PATH /etc/profile
+  PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
+export PATH
+root@linux:~#
+```
+This screenshot uses grep to show PATHmanipulation in /etc/profile on RHEL7/CentOS7.
+
+```
+[root@linux ~^# grep PATH /etc/profile
+    case ":${PATH}:" in
+                PATH=$PATH:$1
+                PATH=$1:$PATH
+export PATH USER LOGNAME MAIL HOSTNAME HISTSIZE HISTCONTROL
+[root@linux ~^#
+```
+The root user can use this script to set aliases, functions, and variables for every user on the system.
+
+## **13.2. ~/.bash\_profile**
+
+When this file exists in the home directory, then bash will source it. On Debian Linux 5/6/7 this file does not exist by default.
+
+RHEL7/CentOS7 uses a small ~/.bash\_profile where it checks for the existence of ~/.bashrc and then sources it. It also adds \$HOME/bin to the \$PATH variable.
+
+```
+[root@linux ~^# cat /home/paul/.bash_profile
+# .bash_profile
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+        . ~/.bashrc
+fi
+# User specific environment and startup programs
+PATH=$PATH:$HOME/.local/bin:$HOME/bin
+export PATH
+[root@linux ~^#
+```
+## **13.3. ~/.bash\_login**
+
+When .bash\_profile does not exist, then bash will check for ~/.bash\_login and source it.
+
+Neither Debian nor Red Hat have this file by default.
+
+## **13.4. ~/.profile**
+
+When neither ~/.bash\_profile and ~/.bash\_login exist, then bash will verify the existence of ~/.profile and execute it. This file does not exist by default on Red Hat.
+
+On Debian this script can execute ~/.bashrc and will add \$HOME/bin to the \$PATH variable.
+
+```
+root@linux:~# tail -11 /home/paul/.profile
+if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+        . "$HOME/.bashrc"
+    fi
+fi
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+```
+RHEL/CentOS does not have this file by default.
+
+## <span id="page-137-0"></span>**13.5. ~/.bashrc**
+
+The ~/.bashrc script is often sourced by other scripts. Let us take a look at what it does by default.
+
+Red Hat uses a very simple ~/.bashrc, checking for /etc/bashrc and sourcing it. It also leaves room for custom aliases and functions.
+
+```
+[root@linux ~^# cat /home/paul/.bashrc
+# .bashrc
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+       . /etc/bashrc
+fi
+# Uncomment the following line if you don't like systemctl's auto-
+paging feature:
+# export SYSTEMD_PAGER=
+# User specific aliases and functions
+```
+On Debian this script is quite a bit longer and configures \$PS1, some history variables and a number af active and inactive aliases.
+
+```
+root@linux:~# wc -l /home/paul/.bashrc
+110 /home/paul/.bashrc
+```
+### <span id="page-138-0"></span>**13.6. ~/.bash\_logout**
+
+When exiting bash, it can execute ~/.bash\_logout.
+
+Debian use this opportunity to clear the console screen.
+
+```
+serena@linux:~$ cat .bash_logout
+# ~/.bash_logout: executed by bash(1) when login shell exits.
+```
+# when leaving the console clear the screen to increase privacy
+
+```
+if [ "$SHLVL" = 1 ]; then
+    [ -x /usr/bin/clear_console ] ^& /usr/bin/clear_console -q
+fi
+```
+Red Hat Enterprise Linux 5 will simple call the /usr/bin/clear command in this script.
+
+```
+[serena@linux ~]$ cat .bash_logout
+# ~/.bash_logout
+```
+/usr/bin/clear
+
+Red Hat Enterprise Linux 6 and 7 create this file, but leave it empty (except for a comment).
+
+```
+student@linux:~$ cat .bash_logout
+# ~/.bash_logout
+```
+## <span id="page-138-1"></span>**13.7. Debian overview**
+
+Below is a table overview of when Debian is running any of these bash startup scripts.
+
+| script           | su  | su - | ssh | gdm |
+|------------------|-----|------|-----|-----|
+| ~. /bashrc       | no  | yes  | yes | yes |
+| ~/.profile       | no  | yes  | yes | yes |
+| /etc/profile     | no  | yes  | yes | yes |
+| /etc/bash.bashrc | yes | no   | no  | yes |
+
+Table 13.1.: Debian User Environment
+
+## <span id="page-139-0"></span>**13.8. RHEL5 overview**
+
+Below is a table overview of when Red Hat Enterprise Linux 5 is running any of these bash startup scripts.
+
+|                                                              | Table 13.2.: Red Hat User Environment |                          |                          |                          |
+|--------------------------------------------------------------|---------------------------------------|--------------------------|--------------------------|--------------------------|
+| script                                                       | su                                    | su -                     | ssh                      | gdm                      |
+| ~. /bashrc<br>~/.bash_profile<br>/etc/profile<br>/etc/bashrc | yes<br>no<br>no<br>yes                | yes<br>yes<br>yes<br>yes | yes<br>yes<br>yes<br>yes | yes<br>yes<br>yes<br>yes |
+
+## <span id="page-139-1"></span>**13.9. practice: user profiles**
+
+1. Make a list of all the profile files on your system.
+
+2. Read the contents of each of these, often they source extra scripts.
+
+3. Put a unique variable, alias and function in each of those files.
+
+4. Try several different ways to obtain a shell (su, su -, ssh, tmux, gnome-terminal, Ctrl-alt-F1, ...) and verify which of your custom variables, aliases and function are present in your environment.
+
+5. Do you also know the order in which they are executed?
+
+6. When an application depends on a setting in \$HOME/.profile, does it matter whether \$HOME/.bash\_profile exists or not ?
+
+## <span id="page-139-2"></span>**13.10. solution: user profiles**
+
+1. Make a list of all the profile files on your system.
+
+ls -a ~ ; ls -l /etc/pro\* /etc/bash\*
+
+2. Read the contents of each of these, often they source extra scripts.
+
+3. Put a unique variable, alias and function in each of those files.
+
+4. Try several different ways to obtain a shell (su, su -, ssh, tmux, gnome-terminal, Ctrl-alt-F1, ...) and verify which of your custom variables, aliases and function are present in your environment.
+
+5. Do you also know the order in which they are executed?
+
+#### same name aliases, functions and variables will overwrite each other
+
+6. When an application depends on a setting in \$HOME/.profile, does it matter whether \$HOME/.bash\_profile exists or not ?
+
+Yes it does matter. (man bash /INVOCATION)
+
+## <span id="page-142-0"></span>**14. groups**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Alex M. Schapelle, https://github.com/zero-pytagoras/)*
+
+Users can be listed in groups. Groups allow you to set permissions on the group level instead of having to set permissions for [every individual user.](https://github.com/paulcobbaut/)
+
+Every Unix or Linux distribution will have a graphical tool to manage groups. Novice users are advised to use this graphical tool. More experienced users can use command line tools to manage users, but be careful: Some distributions do not allow the mixed use of GUI and CLI tools to manage groups (YaST in Novell Suse). Senior administrators can edit the relevant files directly with vi or vigr.
+
+## **14.1. groupadd**
+
+<span id="page-142-1"></span>Groups can be created with the groupadd command. The example below shows the creation of five (empty) groups.
+
+root@linux:~# groupadd tennis root@linux:~# groupadd football root@linux:~# groupadd snooker root@linux:~# groupadd formula1 root@linux:~# groupadd salsa
+
+## **14.2. group file**
+
+<span id="page-142-2"></span>Users can be a member of several groups. Group membership is defined by the /etc/group file.
+
+```
+root@linux:~# tail -5 /etc/group
+tennis:x:1006:
+football:x:1007:
+snooker:x:1008:
+formula1:x:1009:
+salsa:x:1010:
+root@linux:~#
+```
+The first field is the group's name. The second field is the group's (encrypted) password (can be empty). The third field is the group identification or GID. The fourth field is the list of members, these groups have no members.
+
+*14. groups*
+
+#### <span id="page-143-0"></span>**14.3. groups**
+
+A user can type the groups command to see a list of groups where the user belongs to.
+
+```
+[harry@linux ~]$ groups
+harry sports
+[harry@linux ~]$
+```
+#### <span id="page-143-1"></span>**14.4. usermod**
+
+Group membership can be modified with the useradd or usermod command.
+
+```
+root@linux:~# usermod -a -G tennis inge
+root@linux:~# usermod -a -G tennis katrien
+root@linux:~# usermod -a -G salsa katrien
+root@linux:~# usermod -a -G snooker sandra
+root@linux:~# usermod -a -G formula1 annelies
+root@linux:~# tail -5 /etc/group
+tennis:x:1006:inge,katrien
+football:x:1007:
+snooker:x:1008:sandra
+formula1:x:1009:annelies
+salsa:x:1010:katrien
+root@linux:~#
+```
+Be careful when using usermod to add users to groups. By default, the usermod command will remove the user from every group of which he is a member if the group is not listed in the command! Using the -a (append) switch prevents this behaviour.
+
+### <span id="page-143-2"></span>**14.5. groupmod**
+
+You can change the group name with the groupmod command.
+
+```
+root@linux:~# groupmod -n darts snooker
+root@linux:~# tail -5 /etc/group
+tennis:x:1006:inge,katrien
+football:x:1007:
+formula1:x:1009:annelies
+salsa:x:1010:katrien
+darts:x:1008:sandra
+```
+## <span id="page-143-3"></span>**14.6. groupdel**
+
+You can permanently remove a group with the groupdel command.
+
+```
+root@linux:~# groupdel tennis
+root@linux:~#
+```
+#### <span id="page-144-0"></span>**14.7. gpasswd**
+
+You can delegate control of group membership to another user with the gpasswd command. In the example below we delegate permissions to add and remove group members to serena for the sports group. Then we su to serena and add harry to the sports group.
+
+```
+[root@linux ~^# gpasswd -A serena sports
+[root@linux ~^# su - serena
+[serena@linux ~]$ id harry
+uid=516(harry) gid=520(harry) groups=520(harry)
+[serena@linux ~]$ gpasswd -a harry sports
+Adding user harry to group sports
+[serena@linux ~]$ id harry
+uid=516(harry) gid=520(harry) groups=520(harry),522(sports)
+[serena@linux ~]$ tail -1 /etc/group
+sports:x:522:serena,venus,harry
+[serena@linux ~]$
+```
+Group administrators do not have to be a member of the group. They can remove themselves from a group, but this does not influence their ability to add or remove members.
+
+```
+[serena@linux ~]$ gpasswd -d serena sports
+Removing user serena from group sports
+[serena@linux ~]$ exit
+```
+Information about group administrators is kept in the /etc/gshadow file.
+
+```
+[root@linux ~^# tail -1 /etc/gshadow
+sports:!:serena:venus,harry
+[root@linux ~^#
+```
+To remove all group administrators from a group, use the gpasswd command to set an empty administrators list.
+
+[root@linux ~^# gpasswd -A "" sports
+
+#### **14.8. newgrp**
+
+You can start a child shell with a new temporary primary group using the newgrp command.
+
+```
+root@linux:~# mkdir prigroup
+root@linux:~# cd prigroup/
+root@linux:~/prigroup# touch standard.txt
+root@linux:~/prigroup# ls -l
+total 0
+-rw-r--r--. 1 root root 0 Apr 13 17:49 standard.txt
+root@linux:~/prigroup# echo $SHLVL
+1
+root@linux:~/prigroup# newgrp tennis
+root@linux:~/prigroup# echo $SHLVL
+2
+root@linux:~/prigroup# touch newgrp.txt
+root@linux:~/prigroup# ls -l
+```
+*14. groups*
+
+```
+total 0
+-rw-r--r--. 1 root tennis 0 Apr 13 17:49 newgrp.txt
+-rw-r--r--. 1 root root 0 Apr 13 17:49 standard.txt
+root@linux:~/prigroup# exit
+exit
+root@linux:~/prigroup#
+```
+## <span id="page-145-0"></span>**14.9. vigr**
+
+Similar to vipw, the vigr command can be used to manually edit the /etc/group file, since it will do proper locking of the file. Only experienced senior administrators should use vi or vigr to manage groups.
+
+## <span id="page-145-1"></span>**14.10. practice: groups**
+
+1. Create the groups tennis, football and sports.
+
+- 2. In one command, make venus a member of tennis and sports.
+- 3. Rename the football group to foot.
+- 4. Use vi to add serena to the tennis group.
+- 5. Use the id command to verify that serena is a member of tennis.
+
+6. Make someone responsible for managing group membership of foot and sports. Test that it works.
+
+## <span id="page-145-2"></span>**14.11. solution: groups**
+
+1. Create the groups tennis, football and sports.
+
+groupadd tennis ; groupadd football ; groupadd sports
+
+2. In one command, make venus a member of tennis and sports.
+
+usermod -a -G tennis,sports venus
+
+3. Rename the football group to foot.
+
+groupmod -n foot football
+
+4. Use vi to add serena to the tennis group.
+
+vi /etc/group
+
+5. Use the id command to verify that serena is a member of tennis.
+
+id (and after logoff logon serena should be member)
+
+6. Make someone responsible for managing group membership of foot and sports. Test that it works.
+
+gpasswd -A (to make manager)
+
+gpasswd -a (to add member)
+
+## **Part V.**
+
+# <span id="page-148-0"></span>**Webserver; scripting 102**
+
+## <span id="page-150-0"></span>**15. apache web server**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Hans Roes, https://github.com/Blokker-1999/, Alex M. Schapelle, https://gith ub.com/zero-pytagoras/)*
+
+In this chapter we learn how to [setup a web server with the](https://github.com/paulcobbaut/) apache software.
+
+According to NetC[raft \(http://news.netcraft.com/archi](https://github.com/Blokker-1999/)ves/web\_server\_su[rvey.html\) a](https://github.com/zero-pytagoras/)bout seve[nty percent of all web se](https://github.com/zero-pytagoras/)rvers are running on Apache. The name is derived from a patchy web server, because of all the patches people wrote for the NCSA httpd server.
+
+Later chapters will expand this web server into a LAMP stack (Linux, Apache, Mysql, Perl/PHP/Python).
+
+#### **15.1. introduction to apache**
+
+#### <span id="page-150-1"></span>**15.1.1. installing on Debian**
+
+<span id="page-150-2"></span>This screenshot shows that there is no apache server installed, nor does the /var/^^w directory exist.
+
+root@linux:~# ls -l /var/^^w ls: cannot access /var/^^w: No such file or directory root@linux:~# dpkg -l | grep apache
+
+To install apache on Debian:
+
+```
+root@linux:~# aptitude install apache2
+The following NEW packages will be installed:
+  apache2 apache2-mpm-worker{a} apache2-utils{a} apache2.2-bin{a} apache2.2-
+com\
+mon{a} libapr1{a} libaprutil1{a} libaprutil1-dbd-sqlite3{a} libaprutil1-
+ldap{a}\
+ ssl-cert{a}
+0 packages upgraded, 10 newly installed, 0 to remove and 0 not upgraded.
+Need to get 1,487 kB of archives. After unpacking 5,673 kB will be used.
+Do you want to continue? [Y/n/?]
+```
+After installation, the same two commands as above will yield a different result:
+
+root@linux:~# ls -l /var/^^w total 4 -rw-r--r-- 1 root root 177 Apr 29 11:55 index.html root@linux:~# dpkg -l | grep apache | tr -s ' ' ii apache2 2.2.22-13+deb7u1 amd64 Apache HTTP Server metapackage ii apache2-mpm-worker 2.2.22-13+deb7u1 amd64 Apache HTTP Server - high speed th\ readed model ii apache2-utils 2.2.22-13+deb7u1 amd64 utility programs for webservers ii apache2.2-bin 2.2.22-13+deb7u1 amd64 Apache HTTP Server common binary files ii apache2.2-common 2.2.22-13+deb7u1 amd64 Apache HTTP Server common files
+
+### <span id="page-151-0"></span>**15.1.2. installing on RHEL/CentOS**
+
+Note that Red Hat derived distributions use httpd as package and process name instead of apache.
+
+To verify whether apache is installed in CentOS/RHEL:
+
+```
+[root@linux ~^# rpm -q httpd
+package httpd is not installed
+[root@linux ~^# ls -l /var/^^w
+ls: cannot access /var/^^w: No such file or directory
+```
+To install apache on CentOS:
+
+[root@linux ~^# yum install httpd
+
+After running the yum install httpd command, the Centos 6.5 server has apache installed and the /var/^^w directory exists.
+
+```
+[root@linux ~^# rpm -q httpd
+httpd-2.2.15-30.el6.centos.x86_64
+[root@linux ~^# ls -l /var/^^w
+total 16
+drwxr-xr-x. 2 root root 4096 Apr 3 23:57 cgi-bin
+drwxr-xr-x. 3 root root 4096 May 6 13:08 error
+drwxr-xr-x. 2 root root 4096 Apr 3 23:57 html
+drwxr-xr-x. 3 root root 4096 May 6 13:08 icons
+[root@linux ~^#
+```
+#### <span id="page-151-1"></span>**15.1.3. running apache on Debian**
+
+This is how you start apache2 on Debian.
+
+```
+root@linux:~# service apache2 status
+Apache2 is NOT running.
+root@linux:~# service apache2 start
+Starting web server: apache2apache2: Could not reliably determine the server's \
+fully qualified domain name, using 127.0.1.1 for ServerName
+.
+To verify, run the service apache2 status command again or use ps.
+root@linux:~# service apache2 status
+Apache2 is running (pid 3680).
+root@linux:~# ps -C apache2
+  PID TTY TIME CMD
+ 3680 ? 00:00:00 apache2
+ 3683 ? 00:00:00 apache2
+ 3684 ? 00:00:00 apache2
+ 3685 ? 00:00:00 apache2
+root@linux:~#
+```
+Or use wget and file to verify that your web server serves an html document.
+
+```
+root@linux:~# wget 127.0.0.1
+--2014-05-06 13:27:02-- http:^/127.0.0.1/
+Connecting to 127.0.0.1:80^^. connected.
+HTTP request sent, awaiting response^^. 200 OK
+Length: 177 [text/html]
+Saving to: `index.html'
+100%[==================================================>] 177 --.-
+K/s in 0s
+2014-05-06 13:27:02 (15.8 MB/s) - `index.html' saved [177/177]
+root@linux:~# file index.html
+index.html: HTML document, ASCII text
+root@linux:~#
+```
+Or verify that apache is running by opening a web browser, and browse to the ip-address of your server. An Apache test page should be shown.
+
+You can do the following to quickly avoid the 'could not reliably determine the fqdn' message when restarting apache.
+
+```
+root@linux:~# echo ServerName debian10 >> /etc/apache2/apache2.conf
+root@linux:~# service apache2 restart
+Restarting web server: apache2 ^^. waiting .
+root@linux:~#
+```
+#### <span id="page-152-0"></span>**15.1.4. running apache on CentOS**
+
+Starting the httpd on RHEL/CentOS is done with the service command.
+
+```
+[root@linux ~^# service httpd status
+httpd is stopped
+[root@linux ~^# service httpd start
+Starting httpd: httpd: Could not reliably determine the server's fully qualifie\
+d domain name, using 127.0.0.1 for ServerName
+                                                            [ OK ]
+```
+[root@linux ~^#
+
+To verify that apache is running, use ps or issue the service httpd status command again.
+
+[root@linux ~^# service httpd status httpd (pid 2410) is running^^. [root@linux ~^# ps -C httpd PID TTY TIME CMD 2410 ? 00:00:00 httpd 2412 ? 00:00:00 httpd 2413 ? 00:00:00 httpd 2414 ? 00:00:00 httpd 2415 ? 00:00:00 httpd 2416 ? 00:00:00 httpd 2417 ? 00:00:00 httpd 2418 ? 00:00:00 httpd 2419 ? 00:00:00 httpd [root@linux ~^#
+
+To prevent the 'Could not reliably determine the fqdn' message, issue the following command.
+
+```
+[root@linux ~^# echo ServerName Centos65 >> /etc/httpd/conf/httpd.conf
+[root@linux ~^# service httpd restart
+Stopping httpd: [ OK ]
+Starting httpd: [ OK ]
+[root@linux ~^#
+```
+#### <span id="page-153-0"></span>**15.1.5. index file on CentOS**
+
+CentOS does not provide a standard index.html or index.php file. A simple wget gives an error.
+
+```
+[root@linux ~^# wget 127.0.0.1
+--2014-05-06 15:10:22-- http:^/127.0.0.1/
+Connecting to 127.0.0.1:80^^. connected.
+HTTP request sent, awaiting response^^. 403 Forbidden
+2014-05-06 15:10:22 ERROR 403: Forbidden.
+```
+Instead when visiting the ip-address of your server in a web browser you get a noindex.html page. You can verify this using wget.
+
+```
+[root@linux ~^# wget http:^/127.0.0.1/error/noindex.html
+--2014-05-06 15:16:05-- http:^/127.0.0.1/error/noindex.html
+Connecting to 127.0.0.1:80^^. connected.
+HTTP request sent, awaiting response^^. 200 OK
+Length: 5039 (4.9K) [text/html]
+Saving to: "noindex.html"
+100%[=============================================>] 5,039 --.-K/s in 0s
+2014-05-06 15:16:05 (289 MB/s) - "noindex.html" saved [5039/5039]
+[root@linux ~^# file noindex.html
+noindex.html: HTML document text
+[root@linux ~^#
+Any custom index.html file in /var/^^w/html will immediately serve as an index for this
+web server.
+[root@linux ~^# echo 'Welcome to my website' > /var/^^w/html/index.html
+[root@linux ~^# wget http:^/127.0.0.1
+--2014-05-06 15:19:16-- http:^/127.0.0.1/
+Connecting to 127.0.0.1:80^^. connected.
+HTTP request sent, awaiting response^^. 200 OK
+Length: 22 [text/html]
+Saving to: "index.html"
+100%[=============================================>] 22 --.-K/s in 0s
+2014-05-06 15:19:16 (1.95 MB/s) - "index.html" saved [22/22]
+[root@linux ~^# cat index.html
+Welcome to my website
+```
+#### <span id="page-154-0"></span>**15.1.6. default website**
+
+Changing the default website of a freshly installed apache web server is easy. All you need to do is create (or change) an index.html file in the DocumentRoot directory.
+
+To locate the DocumentRoot directory on Debian:
+
+```
+root@linux:~# grep DocumentRoot /etc/apache2/sites-available/default
+        DocumentRoot /var/^^w
+```
+This means that /var/^^w/index.html is the default web site.
+
+```
+root@linux:~# cat /var/^^w/index.html
+<html><body><h1>It works!^/h1>
+<p>This is the default web page for this server.^/p>
+<p>The web server software is running but no content has been added, yet.^/p>
+^/body>^/html>
+root@linux:~#
+```
+This screenshot shows how to locate the DocumentRoot directory on RHEL/CentOS.
+
+```
+[root@linux ~^# grep ^DocumentRoot /etc/httpd/conf/httpd.conf
+DocumentRoot "/var/^^w/html"
+```
+RHEL/CentOS have no default web page (only the noindex.html error page mentioned before). But an index.html file created in /var/^^w/html/ will automatically be used as default page.
+
+```
+[root@linux ~^# echo '<html><head><title>Default website^/title>^/head><body\
+><p>A new web page^/p>^/body>^/html>' > /var/^^w/html/index.html
+[root@linux ~^# cat /var/^^w/html/index.html
+<html><head><title>Default website^/title>^/head><body><p>A new web page^/p>^/b\
+ody>^/html>
+[root@linux ~^#
+```
+### <span id="page-154-1"></span>**15.1.7. apache configuration**
+
+There are many similarities, but also a couple of differences when configuring apache on Debian or on CentOS. Both Linux families will get their own chapters with examples.
+
+All configuration on RHEL/CentOS is done in /etc/httpd.
+
+```
+[root@linux ~^# ls -l /etc/httpd/
+total 8
+drwxr-xr-x. 2 root root 4096 May 6 13:08 conf
+drwxr-xr-x. 2 root root 4096 May 6 13:08 conf.d
+lrwxrwxrwx. 1 root root 19 May 6 13:08 logs -> ^./^./var/log/httpd
+lrwxrwxrwx. 1 root root 29 May 6 13:08 modules -> ^./^./usr/lib64/httpd/modu\
+les
+lrwxrwxrwx. 1 root root 19 May 6 13:08 run -> ^./^./var/run/httpd
+[root@linux ~^#
+```
+Debian (and ubuntu/mint/...) use /etc/apache2.
+
+```
+root@linux:~# ls -l /etc/apache2/
+total 72
+-rw-r--r-- 1 root root 9659 May 6 14:23 apache2.conf
+drwxr-xr-x 2 root root 4096 May 6 13:19 conf.d
+-rw-r--r-- 1 root root 1465 Jan 31 18:35 envvars
+-rw-r--r-- 1 root root 31063 Jul 20 2013 magic
+drwxr-xr-x 2 root root 4096 May 6 13:19 mods-available
+drwxr-xr-x 2 root root 4096 May 6 13:19 mods-enabled
+-rw-r--r-- 1 root root 750 Jan 26 12:13 ports.conf
+drwxr-xr-x 2 root root 4096 May 6 13:19 sites-available
+drwxr-xr-x 2 root root 4096 May 6 13:19 sites-enabled
+root@linux:~#
+```
+### <span id="page-155-0"></span>**15.2. port virtual hosts on Debian**
+
+#### <span id="page-155-1"></span>**15.2.1. default virtual host**
+
+Debian has a virtualhost configuration file for its default website in /etc/apache2/sitesavailable/default.
+
+```
+root@linux:~# head -2 /etc/apache2/sites-available/default
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+```
+#### <span id="page-155-2"></span>**15.2.2. three extra virtual hosts**
+
+In this scenario we create three additional websites for three customers that share a clubhouse and want to jointly hire you. They are a model train club named Choo Choo, a chess club named Chess Club 42 and a hackerspace named hunter2.
+
+One way to put three websites on one web server, is to put each website on a different port. This screenshot shows three newly created virtual hosts, one for each customer.
+
+```
+root@linux:~# vi /etc/apache2/sites-available/choochoo
+root@linux:~# cat /etc/apache2/sites-available/choochoo
+<VirtualHost *:7000>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/^^w/choochoo
+^/VirtualHost>
+root@linux:~# vi /etc/apache2/sites-available/chessclub42
+root@linux:~# cat /etc/apache2/sites-available/chessclub42
+<VirtualHost *:8000>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/^^w/chessclub42
+^/VirtualHost>
+root@linux:~# vi /etc/apache2/sites-available/hunter2
+root@linux:~# cat /etc/apache2/sites-available/hunter2
+<VirtualHost *:9000>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/^^w/hunter2
+^/VirtualHost>
+```
+Notice the different port numbers 7000, 8000 and 9000. Notice also that we specified a unique DocumentRoot for each website.
+
+Are you using Ubuntu or Mint, then these configfiles need to end in .conf.
+
+#### <span id="page-156-0"></span>**15.2.3. three extra ports**
+
+We need to enable these three ports on apache in the ports.conf file. Open this file with vi and add three lines to listen on three extra ports.
+
+root@linux:~# vi /etc/apache2/ports.conf
+
+Verify with grep that the Listen directives are added correctly.
+
+```
+root@linux:~# grep ^Listen /etc/apache2/ports.conf
+Listen 80
+Listen 7000
+Listen 8000
+Listen 9000
+```
+#### <span id="page-156-1"></span>**15.2.4. three extra websites**
+
+Next we need to create three DocumentRoot directories.
+
+```
+root@linux:~# mkdir /var/^^w/choochoo
+root@linux:~# mkdir /var/^^w/chessclub42
+root@linux:~# mkdir /var/^^w/hunter2
+```
+And we have to put some really simple website in those directories.
+
+```
+root@linux:~# echo 'Choo Choo model train Choo Choo' > /var/^^w/choochoo/inde\
+x.html
+root@linux:~# echo 'Welcome to chess club 42' > /var/^^w/chessclub42/index.ht\
+ml
+root@linux:~# echo 'HaCkInG iS fUn At HuNtEr2' > /var/^^w/hunter2/index.html
+```
+#### <span id="page-156-2"></span>**15.2.5. enabling extra websites**
+
+The last step is to enable the websites with the a2ensite command. This command will create links in sites-enabled.
+
+The links are not there yet...
+
+```
+root@linux:~# cd /etc/apache2/
+root@linux:/etc/apache2# ls sites-available/
+chessclub42 choochoo default default-ssl hunter2
+root@linux:/etc/apache2# ls sites-enabled/
+000-default
+```
+So we run the a2ensite command for all websites.
+
+```
+root@linux:/etc/apache2# a2ensite choochoo
+Enabling site choochoo.
+To activate the new configuration, you need to run:
+  service apache2 reload
+root@linux:/etc/apache2# a2ensite chessclub42
+Enabling site chessclub42.
+To activate the new configuration, you need to run:
+  service apache2 reload
+```
+
+```
+root@linux:/etc/apache2# a2ensite hunter2
+Enabling site hunter2.
+To activate the new configuration, you need to run:
+  service apache2 reload
+```
+The links are created, so we can tell apache.
+
+```
+root@linux:/etc/apache2# ls sites-enabled/
+000-default chessclub42 choochoo hunter2
+root@linux:/etc/apache2# service apache2 reload
+Reloading web server config: apache2.
+root@linux:/etc/apache2#
+```
+#### <span id="page-157-0"></span>**15.2.6. testing the three websites**
+
+Testing the model train club named Choo Choo on port 7000.
+
+```
+root@linux:/etc/apache2# wget 127.0.0.1:7000
+--2014-05-06 21:16:03-- http:^/127.0.0.1:7000/
+Connecting to 127.0.0.1:7000^^. connected.
+HTTP request sent, awaiting response^^. 200 OK
+Length: 32 [text/html]
+Saving to: `index.html'
+100%[============================================>] 32 --.-K/s in 0s
+2014-05-06 21:16:03 (2.92 MB/s) - `index.html' saved [32/32]
+root@linux:/etc/apache2# cat index.html
+Choo Choo model train Choo Choo
+Testing the chess club named Chess Club 42 on port 8000.
+root@linux:/etc/apache2# wget 127.0.0.1:8000
+--2014-05-06 21:16:20-- http:^/127.0.0.1:8000/
+Connecting to 127.0.0.1:8000^^. connected.
+HTTP request sent, awaiting response^^. 200 OK
+Length: 25 [text/html]
+Saving to: `index.html.1'
+100%[===========================================>] 25 --.-K/s in 0s
+2014-05-06 21:16:20 (2.16 MB/s) - `index.html.1' saved [25/25]
+root@linux:/etc/apache2# cat index.html.1
+Welcome to chess club 42
+Testing the hacker club named hunter2 on port 9000.
+root@linux:/etc/apache2# wget 127.0.0.1:9000
+--2014-05-06 21:16:30-- http:^/127.0.0.1:9000/
+Connecting to 127.0.0.1:9000^^. connected.
+HTTP request sent, awaiting response^^. 200 OK
+```
+Length: 26 [text/html] Saving to: `index.html.2' 100%[===========================================>] 26 --.-K/s in 0s
+
+2014-05-06 21:16:30 (2.01 MB/s) - `index.html.2' saved [26/26]
+
+root@linux:/etc/apache2# cat index.html.2 HaCkInG iS fUn At HuNtEr2
+
+Cleaning up the temporary files.
+
+```
+root@linux:/etc/apache2# rm index.html index.html.1 index.html.2
+```
+Try testing from another computer using the ip-address of your server.
+
+#### <span id="page-158-0"></span>**15.3. named virtual hosts on Debian**
+
+#### <span id="page-158-1"></span>**15.3.1. named virtual hosts**
+
+The chess club and the model train club find the port numbers too hard to remember. They would prefere to have their website accessible by name.
+
+We continue work on the same server that has three websites on three ports. We need to make sure those websites are accesible using the names choochoo.local, chessclub42.local and hunter2.local.
+
+We start by creating three new virtualhosts.
+
+```
+root@linux:/etc/apache2/sites-available# vi choochoo.local
+root@linux:/etc/apache2/sites-available# vi chessclub42.local
+root@linux:/etc/apache2/sites-available# vi hunter2.local
+root@linux:/etc/apache2/sites-available# cat choochoo.local
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        ServerName choochoo.local
+        DocumentRoot /var/^^w/choochoo
+^/VirtualHost>
+root@linux:/etc/apache2/sites-available# cat chessclub42.local
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        ServerName chessclub42.local
+        DocumentRoot /var/^^w/chessclub42
+^/VirtualHost>
+root@linux:/etc/apache2/sites-available# cat hunter2.local
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        ServerName hunter2.local
+        DocumentRoot /var/^^w/hunter2
+^/VirtualHost>
+root@linux:/etc/apache2/sites-available#
+```
+Notice that they all listen on port 80 and have an extra ServerName directive.
+
+#### <span id="page-159-0"></span>**15.3.2. name resolution**
+
+We need some way to resolve names. This can be done with DNS, which is discussed in another chapter. For this demo it is also possible to quickly add the three names to the /etc/hosts file.
+
+```
+root@linux:/etc/apache2/sites-available# grep ^192 /etc/hosts
+192.168.42.50 choochoo.local
+192.168.42.50 chessclub42.local
+192.168.42.50 hunter2.local
+```
+Note that you may have another ip address...
+
+#### <span id="page-159-1"></span>**15.3.3. enabling virtual hosts**
+
+Next we enable them with a2ensite.
+
+```
+root@linux:/etc/apache2/sites-available# a2ensite choochoo.local
+Enabling site choochoo.local.
+To activate the new configuration, you need to run:
+  service apache2 reload
+root@linux:/etc/apache2/sites-available# a2ensite chessclub42.local
+Enabling site chessclub42.local.
+To activate the new configuration, you need to run:
+  service apache2 reload
+root@linux:/etc/apache2/sites-available# a2ensite hunter2.local
+Enabling site hunter2.local.
+To activate the new configuration, you need to run:
+  service apache2 reload
+```
+### <span id="page-159-2"></span>**15.3.4. reload and verify**
+
+After a service apache2 reload the websites should be available by name.
+
+```
+root@linux:/etc/apache2/sites-available# service apache2 reload
+Reloading web server config: apache2.
+root@linux:/etc/apache2/sites-available# wget chessclub42.local
+--2014-05-06 21:37:13-- http:^/chessclub42.local/
+Resolving chessclub42.local (chessclub42.local)^^. 192.168.42.50
+Connecting to chessclub42.local (chessclub42.local)|192.168.42.50|:80^^. conne\
+cted.
+HTTP request sent, awaiting response^^. 200 OK
+Length: 25 [text/html]
+Saving to: `index.html'
+100%[=============================================>] 25 --.-K/s in 0s
+2014-05-06 21:37:13 (2.06 MB/s) - `index.html' saved [25/25]
+root@linux:/etc/apache2/sites-available# cat index.html
+Welcome to chess club 42
+```
+### <span id="page-160-0"></span>**15.4. password protected website on Debian**
+
+You can secure files and directories in your website with a .htaccess file that refers to a .htpasswd file. The htpasswd command can create a .htpasswd file that contains a userid and an (encrypted) password.
+
+This screenshot creates a user and password for the hacker named cliff and uses the -c flag to create the .htpasswd file.
+
+```
+root@linux:~# htpasswd -c /var/^^w/.htpasswd cliff
+New password:
+Re-type new password:
+Adding password for user cliff
+root@linux:~# cat /var/^^w/.htpasswd
+cliff:$apr1$vujll0KL$./SZ4w9q0swhX93pQ0PVp.
+```
+Hacker rob also wants access, this screenshot shows how to add a second user and password to .htpasswd.
+
+```
+root@linux:~# htpasswd /var/^^w/.htpasswd rob
+New password:
+Re-type new password:
+Adding password for user rob
+root@linux:~# cat /var/^^w/.htpasswd
+cliff:$apr1$vujll0KL$./SZ4w9q0swhX93pQ0PVp.
+rob:$apr1$HNln1FFt$nRlpF0H.IW11/1DRq4lQo0
+```
+Both Cliff and Rob chose the same password (hunter2), but that is not visible in the .htpasswd file because of the different salts.
+
+Next we need to create a .htaccess file in the DocumentRoot of the website we want to protect. This screenshot shows an example.
+
+root@linux:~# cd /var/^^w/hunter2/ root@linux:/var/^^w/hunter2# cat .htaccess AuthUserFile /var/^^w/.htpasswd AuthName "Members only!" AuthType Basic require valid-user
+
+Note that we are protecting the website on port 9000 that we created earlier.
+
+And because we put the website for the Hackerspace named hunter2 in a subdirectory of the default website, we will need to adjust the AllowOvveride parameter in /etc/apache2/sites-available/default as this screenshot shows (with line numbers on debian10, your may vary).
+
+| 9  | <Directory<br>/var/^^w/>                           |
+|----|----------------------------------------------------|
+| 10 | Options<br>Indexes<br>FollowSymLinks<br>MultiViews |
+| 11 | AllowOverride<br>Authconfig                        |
+| 12 | Order<br>allow,deny                                |
+| 13 | allow<br>from<br>all                               |
+| 14 | ^/Directory                                        |
+
+Now restart the apache2 server and test that it works!
+
+## <span id="page-161-0"></span>**15.5. port virtual hosts on CentOS**
+
+### <span id="page-161-1"></span>**15.5.1. default virtual host**
+
+Unlike Debian, CentOS has no virtualHost configuration file for its default website. Instead the default configuration will throw a standard error page when no index file can be found in the default location (/var/www/html).
+
+### <span id="page-161-2"></span>**15.5.2. three extra virtual hosts**
+
+In this scenario we create three additional websites for three customers that share a clubhouse and want to jointly hire you. They are a model train club named Choo Choo, a chess club named Chess Club 42 and a hackerspace named hunter2.
+
+One way to put three websites on one web server, is to put each website on a different port. This screenshot shows three newly created virtual hosts, one for each customer.
+
+```
+[root@CentOS65 ~^# vi /etc/httpd/conf.d/choochoo.conf
+[root@CentOS65 ~^# cat /etc/httpd/conf.d/choochoo.conf
+<VirtualHost *:7000>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/^^w/html/choochoo
+^/VirtualHost>
+[root@CentOS65 ~^# vi /etc/httpd/conf.d/chessclub42.conf
+[root@CentOS65 ~^# cat /etc/httpd/conf.d/chessclub42.conf
+<VirtualHost *:8000>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/^^w/html/chessclub42
+^/VirtualHost>
+[root@CentOS65 ~^# vi /etc/httpd/conf.d/hunter2.conf
+[root@CentOS65 ~^# cat /etc/httpd/conf.d/hunter2.conf
+<VirtualHost *:9000>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/^^w/html/hunter2
+^/VirtualHost>
+```
+Notice the different port numbers 7000, 8000 and 9000. Notice also that we specified a unique DocumentRoot for each website.
+
+#### <span id="page-161-3"></span>**15.5.3. three extra ports**
+
+We need to enable these three ports on apache in the httpd.conf file.
+
+```
+[root@CentOS65 ~^# vi /etc/httpd/conf/httpd.conf
+root@linux:~# grep ^Listen /etc/httpd/conf/httpd.conf
+Listen 80
+Listen 7000
+Listen 8000
+Listen 9000
+```
+#### <span id="page-162-0"></span>**15.5.4. SELinux guards our ports**
+
+If we try to restart our server, we will notice the following error:
+
+[root@CentOS65 ~^# service httpd restart Stopping httpd: [ OK ] Starting httpd: (13)Permission denied: make\_sock: could not bind to address 0.0.0.0:7000 no listening sockets available, shutting down
+
+[FAILED]
+
+This is due to SELinux reserving ports 7000 and 8000 for other uses. We need to tell SELinux we want to use these ports for http traffic
+
+```
+[root@CentOS65 ~^# semanage port -m -t http_port_t -p tcp 7000
+[root@CentOS65 ~^# semanage port -m -t http_port_t -p tcp 8000
+[root@CentOS65 ~^# service httpd restart
+Stopping httpd: [ OK ]
+Starting httpd: [ OK ]
+```
+#### <span id="page-162-1"></span>**15.5.5. three extra websites**
+
+Next we need to create three DocumentRoot directories.
+
+```
+[root@CentOS65 ~^# mkdir /var/^^w/html/choochoo
+[root@CentOS65 ~^# mkdir /var/^^w/html/chessclub42
+[root@CentOS65 ~^# mkdir /var/^^w/html/hunter2
+```
+And we have to put some really simple website in those directories.
+
+```
+[root@CentOS65 ~^# echo 'Choo Choo model train Choo Choo' > /var/^^w/html/chooc\
+hoo/index.html
+[root@CentOS65 ~^# echo 'Welcome to chess club 42' > /var/^^w/html/chessclub42/\
+index.html
+[root@CentOS65 ~^# echo 'HaCkInG iS fUn At HuNtEr2' > /var/^^w/html/hunter2/ind\
+ex.html
+```
+#### <span id="page-162-2"></span>**15.5.6. enabling extra websites**
+
+The only way to enable or disable configurations in RHEL/CentOS is by renaming or moving the configuration files. Any file in /etc/httpd/conf.d ending on .conf will be loaded by Apache. To disable a site we can either rename the file or move it to another directory.
+
+The files are created, so we can tell apache.
+
+```
+[root@CentOS65 ~^# ls /etc/httpd/conf.d/
+chessclub42.conf choochoo.conf hunter2.conf README welcome.conf
+[root@CentOS65 ~^# service httpd reload
+Reloading httpd:
+```
+#### <span id="page-163-0"></span>**15.5.7. testing the three websites**
+
+Testing the model train club named Choo Choo on port 7000.
+
+```
+[root@CentOS65 ~^# wget 127.0.0.1:7000
+--2014-05-11 11:59:36-- http:^/127.0.0.1:7000/
+Connecting to 127.0.0.1:7000^^. connected.
+HTTP request sent, awaiting response^^. 200 OK
+Length: 32 [text/html]
+Saving to: `index.html'
+100%[===========================================>] 32 --.-K/s in 0s
+2014-05-11 11:59:36 (4.47 MB/s) - `index.html' saved [32/32]
+[root@CentOS65 ~^# cat index.html
+Choo Choo model train Choo Choo
+Testing the chess club named Chess Club 42 on port 8000.
+[root@CentOS65 ~^# wget 127.0.0.1:8000
+--2014-05-11 12:01:30-- http:^/127.0.0.1:8000/
+Connecting to 127.0.0.1:8000^^. connected.
+HTTP request sent, awaiting response^^. 200 OK
+Length: 25 [text/html]
+Saving to: `index.html.1'
+100%[===========================================>] 25 --.-K/s in 0s
+2014-05-11 12:01:30 (4.25 MB/s) - `index.html.1' saved [25/25]
+root@linux:/etc/apache2# cat index.html.1
+Welcome to chess club 42
+Testing the hacker club named hunter2 on port 9000.
+[root@CentOS65 ~^# wget 127.0.0.1:9000
+--2014-05-11 12:02:37-- http:^/127.0.0.1:9000/
+Connecting to 127.0.0.1:9000^^. connected.
+HTTP request sent, awaiting response^^. 200 OK
+Length: 26 [text/html]
+Saving to: `index.html.2'
+100%[===========================================>] 26 --.-K/s in 0s
+2014-05-11 12:02:37 (4.49 MB/s) - `index.html.2' saved [26/26]
+root@linux:/etc/apache2# cat index.html.2
+HaCkInG iS fUn At HuNtEr2
+Cleaning up the temporary files.
+```
+[root@CentOS65 ~^# rm index.html index.html.1 index.html.2
+
+#### <span id="page-164-0"></span>**15.5.8. firewall rules**
+
+If we attempt to access the site from another machine however, we will not be able to view the website yet. The firewall is blocking incoming connections. We need to open these incoming ports first
+
+[root@CentOS65 ~^# iptables -I INPUT -p tcp --dport 80 -j ACCEPT [root@CentOS65 ~^# iptables -I INPUT -p tcp --dport 7000 -j ACCEPT [root@CentOS65 ~^# iptables -I INPUT -p tcp --dport 8000 -j ACCEPT [root@CentOS65 ~^# iptables -I INPUT -p tcp --dport 9000 -j ACCEPT
+
+And if we want these rules to remain active after a reboot, we need to save them
+
+```
+[root@CentOS65 ~^# service iptables save
+iptables: Saving firewall rules to /etc/sysconfig/iptables:[ OK ]
+```
+## <span id="page-164-1"></span>**15.6. named virtual hosts on CentOS**
+
+#### **15.6.1. named virtual hosts**
+
+The chess club and the model train club find the port numbers too hard to remember. They would prefere to have their website accessible by name.
+
+We continue work on the same server that has three websites on three ports. We need to make sure those websites are accesible using the names choochoo.local, chessclub42.local and hunter2.local.
+
+First, we need to enable named virtual hosts in the configuration
+
+```
+[root@CentOS65 ~^# vi /etc/httpd/conf/httpd.conf
+[root@CentOS65 ~^# grep ^NameVirtualHost /etc/httpd/conf/httpd.conf
+NameVirtualHost *:80
+[root@CentOS65 ~^#
+```
+Next we need to create three new virtualhosts.
+
+```
+[root@CentOS65 ~^# vi /etc/httpd/conf.d/choochoo.local.conf
+[root@CentOS65 ~^# vi /etc/httpd/conf.d/chessclub42.local.conf
+[root@CentOS65 ~^# vi /etc/httpd/conf.d/hunter2.local.conf
+[root@CentOS65 ~^# cat /etc/httpd/conf.d/choochoo.local.conf
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        ServerName choochoo.local
+        DocumentRoot /var/^^w/html/choochoo
+^/VirtualHost>
+[root@CentOS65 ~^# cat /etc/httpd/conf.d/chessclub42.local.conf
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        ServerName chessclub42.local
+        DocumentRoot /var/^^w/html/chessclub42
+^/VirtualHost>
+[root@CentOS65 ~^# cat /etc/httpd/conf.d/hunter2.local.conf
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        ServerName hunter2.local
+```
+
+```
+DocumentRoot /var/^^w/html/hunter2
+^/VirtualHost>
+[root@CentOS65 ~^#
+```
+Notice that they all listen on port 80 and have an extra ServerName directive.
+
+#### **15.6.2. name resolution**
+
+We need some way to resolve names. This can be done with DNS, which is discussed in another chapter. For this demo it is also possible to quickly add the three names to the /etc/hosts file.
+
+[root@CentOS65 ~^# grep ^192 /etc/hosts 192.168.1.225 choochoo.local 192.168.1.225 chessclub42.local 192.168.1.225 hunter2.local
+
+Note that you may have another ip address...
+
+#### **15.6.3. reload and verify**
+
+After a service httpd reload the websites should be available by name.
+
+```
+[root@CentOS65 ~^# service httpd reload
+Reloading httpd:
+[root@CentOS65 ~^# wget chessclub42.local
+--2014-05-25 16:59:14-- http:^/chessclub42.local/
+Resolving chessclub42.local^^. 192.168.1.225
+Connecting to chessclub42.local|192.168.1.225|:80^^. connected.
+HTTP request sent, awaiting response^^. 200 OK
+Length: 25 [text/html]
+Saving to: âindex.htmlâ
+100%[=============================================>] 25 --.-K/s in 0s
+2014-05-25 16:59:15 (1014 KB/s) - `index.html' saved [25/25]
+[root@CentOS65 ~^# cat index.html
+Welcome to chess club 42
+```
+### **15.7. password protected website on CentOS**
+
+You can secure files and directories in your website with a .htaccess file that refers to a .htpasswd file. The htpasswd command can create a .htpasswd file that contains a userid and an (encrypted) password.
+
+This screenshot creates a user and password for the hacker named cliff and uses the -c flag to create the .htpasswd file.
+
+[root@CentOS65 ~^# htpasswd -c /var/^^w/.htpasswd cliff New password: Re-type new password: Adding password for user cliff [root@CentOS65 ~^# cat /var/^^w/.htpasswd cliff:QNwTrymMLBctU
+
+Hacker rob also wants access, this screenshot shows how to add a second user and password to .htpasswd.
+
+[root@CentOS65 ~^# htpasswd /var/^^w/.htpasswd rob New password: Re-type new password: Adding password for user rob [root@CentOS65 ~^# cat /var/^^w/.htpasswd cliff:QNwTrymMLBctU rob:EC2vOCcrMXDoM [root@CentOS65 ~^#
+
+Both Cliff and Rob chose the same password (hunter2), but that is not visible in the .htpasswd file because of the different salts.
+
+Next we need to create a .htaccess file in the DocumentRoot of the website we want to protect. This screenshot shows an example.
+
+```
+[root@CentOS65 ~^# cat /var/^^w/html/hunter2/.htaccess
+AuthUserFile /var/^^w/.htpasswd
+AuthName "Members only!"
+AuthType Basic
+require valid-user
+```
+Note that we are protecting the website on port 9000 that we created earlier.
+
+And because we put the website for the Hackerspace named hunter2 in a subdirectory of the default website, we will need to adjust the AllowOvveride parameter in /etc/httpd/conf/httpd.conf under the <Directory "/var/^^w/html"> directive as this screenshot shows.
+
+```
+[root@CentOS65 ~^# vi /etc/httpd/conf/httpd.conf
+<Directory "/var/^^w/html">
+#
+# Possible values for the Options directive are "None", "All",
+# or any combination of:
+# Indexes Includes FollowSymLinks SymLinksifOwnerMatch ExecCGI MultiViews
+#
+# Note that "MultiViews" must be named *explicitly* --- "Options All"
+# doesn't give it to you.
+#
+# The Options directive is both complicated and important. Please see
+# http:^/httpd.apache.org/docs/2.2/mod/core.html#options
+# for more information.
+#
+    Options Indexes FollowSymLinks
+#
+# AllowOverride controls what directives may be placed in .htaccess files.
+```
+
+```
+# It can be "All", "None", or any combination of the keywords:
+# Options FileInfo AuthConfig Limit
+#
+    AllowOverride Authconfig
+#
+# Controls who can get stuff from this server.
+#
+    Order allow,deny
+    Allow from all
+^/Directory>
+```
+Now restart the apache2 server and test that it works!
+
+## <span id="page-167-0"></span>**15.8. troubleshooting apache**
+
+When apache restarts, it will verify the syntax of files in the configuration folder /etc/apache2 on debian or /etc/httpd on CentOS and it will tell you the name of the faulty file, the line number and an explanation of the error.
+
+```
+root@linux:~# service apache2 restart
+apache2: Syntax error on line 268 of /etc/apache2/apache2.conf: Syntax error o\
+n line 1 of /etc/apache2/sites-enabled/chessclub42: /etc/apache2/sites-
+enabled\
+/chessclub42:4: <VirtualHost> was not closed.\n/etc/apache2/sites-enabled/ches\
+sclub42:1: <VirtualHost> was not closed.
+Action 'configtest' failed.
+The Apache error log may have more information.
+ failed!
+```
+Below you see the problem... a missing / before on line 4.
+
+```
+root@linux:~# cat /etc/apache2/sites-available/chessclub42
+<VirtualHost *:8000>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/^^w/chessclub42
+<VirtualHost>
+```
+Let us force another error by renaming the directory of one of our websites:
+
+```
+root@linux:~# mv /var/^^w/choochoo/ /var/^^w/chooshoo
+root@linux:~# !ser
+service apache2 restart
+Restarting web server: apache2Warning: DocumentRoot [/var/^^w/choochoo] does n\
+ot exist
+Warning: DocumentRoot [/var/^^w/choochoo] does not exist
+ ^^. waiting Warning: DocumentRoot [/var/^^w/choochoo] does not exist
+Warning: DocumentRoot [/var/^^w/choochoo] does not exist
+.
+```
+As you can see, apache will tell you exactly what is wrong.
+
+You can also troubleshoot by connecting to the website via a browser and then checking the apache log files in /var/log/apache.
+
+## <span id="page-168-0"></span>**15.9. virtual hosts example**
+
+Below is a sample virtual host configuration. This virtual hosts overrules the default Apache ErrorDocument directive.
+
+```
+<VirtualHost 83.217.76.245:80>
+ServerName cobbaut.be
+ServerAlias ^^w.cobbaut.be
+DocumentRoot /home/paul/public_html
+ErrorLog /home/paul/logs/error_log
+CustomLog /home/paul/logs/access_log common
+ScriptAlias /cgi-bin/ /home/paul/cgi-bin/
+<Directory /home/paul/public_html>
+    Options Indexes IncludesNOEXEC FollowSymLinks
+    allow from all
+^/Directory>
+ErrorDocument 404 http:^/^^w.cobbaut.be/cobbaut.php
+^/VirtualHost>
+```
+## <span id="page-168-1"></span>**15.10. aliases and redirects**
+
+Apache supports aliases for directories, like this example shows.
+
+Alias /paul/ "/home/paul/public\_html/"
+
+Similarly, content can be redirected to another website or web server.
+
+```
+Redirect permanent /foo http:^/^^w.foo.com/bar
+```
+## <span id="page-168-2"></span>**15.11. more on .htaccess**
+
+You can do much more with .htaccess. One example is to use .htaccess to prevent people from certain domains to access your website. Like in this case, where a number of referer spammers are blocked from the website.
+
+```
+student@linux:~/cobbaut.be$ cat .htaccess
+# Options +FollowSymlinks
+RewriteEngine On
+RewriteCond %{HTTP_REFERER} ^http:^/(^^w\.)?buy-adipex.fw.nu.*$ [OR]
+RewriteCond %{HTTP_REFERER} ^http:^/(^^w\.)?buy-levitra.asso.ws.*$ [NC,OR]
+RewriteCond %{HTTP_REFERER} ^http:^/(^^w\.)?buy-tramadol.fw.nu.*$ [NC,OR]
+RewriteCond %{HTTP_REFERER} ^http:^/(^^w\.)?buy-viagra.lookin.at.*$ [NC,OR]
+^^.
+RewriteCond %{HTTP_REFERER} ^http:^/(^^w\.)?^^w.healthinsurancehelp.net.*$ [NC]
+RewriteRule .* - [F,L]
+student@linux:~/cobbaut.be$
+```
+## <span id="page-168-3"></span>**15.12. traffic**
+
+Apache keeps a log of all visitors. The webalizer is often used to parse this log into nice html statistics.
+
+#### <span id="page-169-0"></span>**15.13. self signed cert on Debian**
+
+Below is a very quick guide on setting up Apache2 on Debian 7 with a self-signed certificate.
+
+Chances are these packages are already installed.
+
+```
+root@linux:~# aptitude install apache2 openssl
+No packages will be installed, upgraded, or removed.
+0 packages upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Need to get 0 B of archives. After unpacking 0 B will be used.
+```
+Create a directory to store the certs, and use openssl to create a self signed cert that is valid for 999 days.
+
+```
+root@linux:~# mkdir /etc/ssl/localcerts
+root@linux:~# openssl req -new -x509 -days 999 -nodes -out /etc/ssl/local\
+certs/apache.pem -keyout /etc/ssl/localcerts/apache.key
+Generating a 2048 bit RSA private key
+^^.
+^^.
+writing new private key to '/etc/ssl/localcerts/apache.key'
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:BE
+State or Province Name (full name) [Some-State]:Antwerp
+Locality Name (eg, city) []:Antwerp
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:linux-training.be
+Organizational Unit Name (eg, section) []:
+Common Name (e.g. server FQDN or YOUR name) []:Paul
+Email Address []:
+A little security never hurt anyone.
+root@linux:~# ls -l /etc/ssl/localcerts/
+total 8
+-rw-r--r-- 1 root root 1704 Sep 16 18:24 apache.key
+-rw-r--r-- 1 root root 1302 Sep 16 18:24 apache.pem
+root@linux:~# chmod 600 /etc/ssl/localcerts^*
+root@linux:~# ls -l /etc/ssl/localcerts/
+total 8
+-rw------- 1 root root 1704 Sep 16 18:24 apache.key
+-rw------- 1 root root 1302 Sep 16 18:24 apache.pem
+Enable the apache ssl mod.
+root@linux:~# a2enmod ssl
+Enabling module ssl.
+See /usr/share/doc/apache2.2-common/README.Debian.gz on how to configure SSL\
+ and create self-signed certificates.
+To activate the new configuration, you need to run:
+  service apache2 restart
+```
+Create the website configuration.
+
+```
+root@linux:~# vi /etc/apache2/sites-available/choochoos
+root@linux:~# cat /etc/apache2/sites-available/choochoos
+<VirtualHost *:7000>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/^^w/choochoos
+        SSLEngine On
+        SSLCertificateFile /etc/ssl/localcerts/apache.pem
+        SSLCertificateKeyFile /etc/ssl/localcerts/apache.key
+^/VirtualHost>
+root@linux:~#
+```
+And create the website itself.
+
+```
+root@linux:/var/^^w/choochoos# vi index.html
+root@linux:/var/^^w/choochoos# cat index.html
+Choo Choo HTTPS secured model train Choo Choo
+```
+Enable the website and restart (or reload) apache2.
+
+```
+root@linux:/var/^^w/choochoos# a2ensite choochoos
+Enabling site choochoos.
+To activate the new configuration, you need to run:
+  service apache2 reload
+root@linux:/var/^^w/choochoos# service apache2 restart
+Restarting web server: apache2 ^^. waiting .
+```
+Chances are your browser will warn you about the self signed certificate.
+
+#### *15. apache web server*
+
+### <span id="page-171-0"></span>**15.14. self signed cert on RHEL/CentOS**
+
+Below is a quick way to create a self signed cert for https on RHEL/CentOS. You may need these packages:
+
+```
+[root@paulserver ~^# yum install httpd openssl mod_ssl
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+* base: ftp.belnet.be
+* extras: ftp.belnet.be
+* updates: mirrors.vooservers.com
+base | 3.7 kB 00:00
+Setting up Install Process
+Package httpd-2.2.15-31.el6.centos.x86_64 already installed and latest version
+Package openssl-1.0.1e-16.el6_5.15.x86_64 already installed and latest version
+Package 1:mod_ssl-2.2.15-31.el6.centos.x86_64 already ins^^. and latest version
+Nothing to do
+```
+We use openssl to create the certificate.
+
+```
+[root@paulserver ~^# mkdir certs
+[root@paulserver ~^# cd certs
+[root@paulserver certs^# openssl genrsa -out ca.key 2048
+```
+Generating RSA private key, 2048 bit long modulus .........^^+ .........................................................^^+ e is 65537 (0x10001) [root@paulserver certs^# openssl req -new -key ca.key -out ca.csr You are about to be asked to enter information that will be incorporated into your certificate request. What you are about to enter is what is called a Distinguished Name or a DN. There are quite a few fields but you can leave some blank For some fields there will be a default value, If you enter '.', the field will be left blank. ----- Country Name (2 letter code) [XX]:BE State or Province Name (full name) []:antwerp Locality Name (eg, city) [Default City]:antwerp Organization Name (eg, company) [Default Company Ltd]:antwerp Organizational Unit Name (eg, section) []: Common Name (eg, your name or your server's hostname) []:paulserver Email Address []: Please enter the following 'extra' attributes to be sent with your certificate request A challenge password []: An optional company name []: [root@paulserver certs^# openssl x509 -req -days 365 -in ca.csr -signkey ca.ke\ y -out ca.crt Signature ok subject=/C=BE/ST=antwerp/L=antwerp/O=antwerp/CN=paulserver Getting Private key
+
+We copy the keys to the right location (You may be missing SELinux info here).
+
+[root@paulserver certs^# cp ca.crt /etc/pki/tls/certs/ [root@paulserver certs^# cp ca.key ca.csr /etc/pki/tls/private/
+
+We add the location of our keys to this file, and also add the NameVirtualHost \*:443 directive.
+
+```
+[root@paulserver certs^# vi /etc/httpd/conf.d/ssl.conf
+[root@paulserver certs^# grep ^SSLCerti /etc/httpd/conf.d/ssl.conf
+SSLCertificateFile /etc/pki/tls/certs/ca.crt
+SSLCertificateKeyFile /etc/pki/tls/private/ca.key
+```
+Create a website configuration.
+
+```
+[root@paulserver certs^# vi /etc/httpd/conf.d/choochoos.conf
+[root@paulserver certs^# cat /etc/httpd/conf.d/choochoos.conf
+<VirtualHost *:443>
+        SSLEngine on
+        SSLCertificateFile /etc/pki/tls/certs/ca.crt
+        SSLCertificateKeyFile /etc/pki/tls/private/ca.key
+        DocumentRoot /var/^^w/choochoos
+        ServerName paulserver
+^/VirtualHost>
+[root@paulserver certs^#
+```
+Create a simple website and restart apache.
+
+[root@paulserver certs^# mkdir /var/^^w/choochoos [root@paulserver certs^# echo HTTPS model train choochoos > /var/^^w/choochoos/\ index.html [root@paulserver httpd^# service httpd restart Stopping httpd: [ OK ] Starting httpd: [ OK ]
+
+And your browser will probably warn you that this certificate is self signed.
+
+## <span id="page-173-0"></span>**15.15. practice: apache**
+
+- 1. Verify that Apache is installed and running.
+- 2. Browse to the Apache HTML manual.
+- 3. Create three virtual hosts that listen on ports 8472, 31337 and 1201. Test that it all works.
+
+4. Create three named virtual hosts startrek.local, starwars.local and stargate.local. Test that it all works.
+
+- 5. Create a virtual hosts that listens on another ip-address.
+- 6. Protect one of your websites with a user/password combo.
+
+## <span id="page-174-0"></span>**16. introduction to sql using mysql or mariadb**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, contributions by Bert Van Vreckem, https://github.com/bertvv/)*
+
+**MySQL** is a relational database server that understands Structured Query Language (SQL). MySQL was developed by the Swedish Company MySQL AB when it was first released in 1995. In 2008 MySQL AB was [bought by Sun Microsyste](https://github.com/bertvv/)[ms, which was acq](https://github.com/paulcobbaut/)uired in 2010 by Oracle Corporation. So, ironically, MySQL is now owned by the company that it originally sought to compete with. This was a big concern for the open source community, so a co-founder of MySQL, Michael Widenius, forked MySQL to create MariaDB. On many Linux distributions, MySQL has even been replaced by MariaDB as the default database server.
+
+MySQL's rise to fame can for a significant part be attributed to the fact that it was used by early 'web 2.0' companies like Facebook, Amazon, etc. as part of the so-called LAMP stack. LAMP stands for Linux, Apache, MySQL, and PHP/Perl/Python. Together, these separate applications form a powerful combination that was (and still is) used as a platform to build dynamic web applications. MySQL is still very popular in the web development community, but it is also used in many other organizations with huge databases like Facebook, Flickr, Google, Nokia, Wikipedia and YouTube.
+
+This chapter will teach you how to install and configure MySQL and MariaDB, how to create and use small databases and tables, and how to run SQL queries from the command line or in a script.
+
+Remark that this is not a database course, so more advanced subjects like high availability, performance tuning, etc. are beyond the scope of this book.
+
+### **16.1. Installing MySQL**
+
+<span id="page-174-1"></span>On Ubuntu or Enterprise Linux you can install the package mysql-server with a package manager. This will install both the MySQL server and client application.
+
+On recent versions of Debian (e.g. 12), the package mysql-server is *not* available in the default repositories. You can download a .deb package from the MySQL website, or use the MariaDB package instead by installing the package default-mysql-server.
+
+On recent versions of Fedora (e.g. 39), installing the package mysql-server will in fact install MariaDB instead of MySQL. You can install MySQL from the package community-mysqlserver or download a package from the MySQL website.
+
+For example, the installation on Ubuntu 24.04 LTS:
+
+- <sup>1</sup> student@ubuntu:~\$ sudo apt install mysql-server
+- <sup>2</sup> Reading package lists^^. Done
+- <sup>3</sup> Building dependency tree^^. Done
+- <sup>4</sup> Reading state information^^. Done
+- <sup>5</sup> The following additional packages will be installed:
+- <sup>6</sup> libcgi-fast-perl libcgi-pm-perl libclone-perl libencode-locale-perl
+	- libevent-pthreads-2.1-7t64 libfcgi-bin libfcgi-perl libfcgi0t64 ↪
+	- libhtml-parser-perl libhtml-tagset-perl libhtml-template-perl ↪
+
+#### *16. introduction to sql using mysql or mariadb*
+
+```
+7 libhttp-date-perl libhttp-message-perl libio-html-perl
+      liblwp-mediatypes-perl libmecab2 libprotobuf-lite32t64 libtimedate-perl
+      liburi-perl mecab-ipadic mecab-ipadic-utf8 mecab-utils mysql-client-8.0
+   ↪
+   ↪
+8 mysql-client-core-8.0 mysql-common mysql-server-8.0 mysql-server-core-8.0
+9 Suggested packages:
+10 libdata-dump-perl libipc-sharedcache-perl libio-compress-brotli-perl
+   ↪ libbusiness-isbn-perl libregexp-ipv6-perl lib^^w-perl mailx tinyca
+11 The following NEW packages will be installed:
+12 libcgi-fast-perl libcgi-pm-perl libclone-perl libencode-locale-perl
+      libevent-pthreads-2.1-7t64 libfcgi-bin libfcgi-perl libfcgi0t64
+      libhtml-parser-perl libhtml-tagset-perl libhtml-template-perl
+   ↪
+   ↪
+13 libhttp-date-perl libhttp-message-perl libio-html-perl
+      liblwp-mediatypes-perl libmecab2 libprotobuf-lite32t64 libtimedate-perl
+      liburi-perl mecab-ipadic mecab-ipadic-utf8 mecab-utils mysql-client-8.0
+   ↪
+   ↪
+14 mysql-client-core-8.0 mysql-common mysql-server mysql-server-8.0
+   ↪ mysql-server-core-8.0
+15 0 upgraded, 28 newly installed, 0 to remove and 175 not upgraded.
+16 Need to get 29.6 MB of archives.
+17 After this operation, 242 MB of additional disk space will be used.
+18 Do you want to continue? [Y/n] y
+19 Get:1 http:^/archive.ubuntu.com/ubuntu noble/main amd64 mysql-common all
+   ↪ 5.8+1.1.0build1 [6,746 B]
+20 [^^.some output omitted^^.]
+21 student@ubuntu:~$ systemctl status mysql
+22 ● mysql.service - MySQL Community Server
+23 Loaded: loaded (/usr/lib/systemd/system/mysql.service; enabled; preset:
+   ↪ enabled)
+24 Active: active (running) since Wed 2024-10-09 09:50:34 UTC; 1min 40s ago
+25 Process: 2527 ExecStartPre=/usr/share/mysql/mysql-systemd-start pre
+   ↪ (code=exited, status=0/SUCCESS)
+26 Main PID: 2536 (mysqld)
+27 Status: "Server is operational"
+28 Tasks: 37 (limit: 2275)
+29 Memory: 365.2M (peak: 379.5M)
+30 CPU: 1.568s
+31 CGroup: /system.slice/mysql.service
+32 └─2536 /usr/sbin/mysqld
+33
+34 Oct 09 09:50:34 ubuntu systemd[1]: Starting mysql.service - MySQL Community
+   ↪ Server^^.
+35 Oct 09 09:50:34 ubuntu systemd[1]: Started mysql.service - MySQL Community
+   ↪ Server.
+```
+As you can see, the database server is started immediately on Ubuntu. This will not be the case on Enterprise Linux, where you have to start the service manually:
+
+```
+1 [student@el ~]$ sudo dnf install -y mysql-server
+2 [^^.output omitted^^.]
+3 [student@el ~]$ systemctl status mysqld.service
+4 ○ mysqld.service - MySQL 8.0 database server
+5 Loaded: loaded (/usr/lib/systemd/system/mysqld.service; disabled;
+   ↪ preset: disabled)
+6 Active: inactive (dead)
+7 [student@el ~]$ sudo systemctl enable --now mysqld.service
+8 Created symlink /etc/systemd/system/multi-user.target.wants/mysqld.service →
+   ↪ /usr/lib/systemd/system/mysqld.service.
+9 [student@el ~]$ systemctl status mysqld.service
+10 ● mysqld.service - MySQL 8.0 database server
+```
+
+```
+11 Loaded: loaded (/usr/lib/systemd/system/mysqld.service; enabled;
+   ↪ preset: disabled)
+12 Active: active (running) since Wed 2024-10-09 09:56:00 UTC; 2s ago
+13 Process: 7915 ExecStartPre=/usr/libexec/mysql-check-socket (code=exited,
+   ↪ status=0/SUCCESS)
+14 Process: 7937 ExecStartPre=/usr/libexec/mysql-prepare-db-dir
+   ↪ mysqld.service (code=exited, status=0/SUCCESS)
+15 Main PID: 8011 (mysqld)
+16 Status: "Server is operational"
+17 Tasks: 38 (limit: 11128)
+18 Memory: 455.9M
+19 CPU: 2.541s
+20 CGroup: /system.slice/mysqld.service
+21 └─8011 /usr/libexec/mysqld --basedir=/usr
+  To verify the installed version, use dpkg -l on Ubuntu:
+1 student@ubuntu:~$ dpkg -l mysql-server | tail -1 | awk '{ print $2,$3 }'
+2 mysql-server 8.0.39-0ubuntu0.24.04.2
+   Issue rpm -q to get version information about MySQL on Enterprise Linux:
+1 [student@el ~]$ rpm -q mysql-server
+2 mysql-server-8.0.36-1.el9_3.x86_64
+   Finally, to check if MySQL is listening on a network socket (and which one), use ss:
+```
+
+```
+1 [student@el ~]$ sudo ss -tlnp
+2 State Recv-Q Send-Q Local Address:Port Peer Address:Port Process
+  ↪
+3 LISTEN 0 128 0.0.0.0:22 0.0.0.0:*
+  ↪ users:(("sshd",pid=629,fd=3))
+4 LISTEN 0 4096 0.0.0.0:111 0.0.0.0:*
+  ↪ users:(("rpcbind",pid=517,fd=4),("systemd",pid=1,fd=31))
+  ↪
+5 LISTEN 0 70 *:33060 *:*
+  ↪ users:(("mysqld",pid=847,fd=21))
+6 LISTEN 0 151 *:3306 *:*
+  ↪ users:(("mysqld",pid=847,fd=23))
+7 LISTEN 0 128 [^:]:22 [^:]:*
+  ↪ users:(("sshd",pid=629,fd=4))
+8 LISTEN 0 4096 [^:]:111 [^:]:*
+  ↪ users:(("rpcbind",pid=517,fd=6),("systemd",pid=1,fd=34))
+```
+MySQL listens on port 3306 by default. Some systems may have a default configuration causing the service to only listen on the loopback interface. We'll discuss below how to change this. In this example, we see that MySQL listens on all interfaces (\*:3306). It also listens on port 33060, which is used for the X Protocol, a new protocol used by MySQL Shell.
+
+## <span id="page-176-0"></span>**16.2. Installing MariaDB**
+
+On Debian, the package mysql-server is *not* available. You can install the package defaultmysql-server or mariadb-server instead, which has the same result.
+
+```
+1 student@debian:~$ sudo apt install default-mysql-server
+```
+
+```
+2 Reading package lists^^. Done
+```
+
+```
+3 Building dependency tree^^. Done
+```
+
+```
+4 Reading state information^^. Done
+```
+
+```
+5 The following additional packages will be installed:
+```
+#### *16. introduction to sql using mysql or mariadb*
+
+```
+6 galera-4 gawk libcgi-fast-perl libcgi-pm-perl libclone-perl
+       libconfig-inifiles-perl libdaxctl1 libdbd-mariadb-perl libdbi-perl
+       libencode-locale-perl libfcgi-bin libfcgi-perl libfcgi0ldbl libgpm2
+    ↪
+    ↪
+7 libhtml-parser-perl libhtml-tagset-perl libhtml-template-perl
+       libhttp-date-perl libhttp-message-perl libio-html-perl
+       liblwp-mediatypes-perl liblzo2-2 libmariadb3 libncurses6 libndctl6
+       libpmem1
+    ↪
+    ↪
+    ↪
+8 libregexp-ipv6-perl libsigsegv2 libsnappy1v5 libterm-readkey-perl
+       libtimedate-perl liburi-perl liburing2 mariadb-client
+       mariadb-client-core mariadb-common mariadb-plugin-provider-bzip2
+    ↪
+    ↪
+9 mariadb-plugin-provider-lz4 mariadb-plugin-provider-lzma
+       mariadb-plugin-provider-lzo mariadb-plugin-provider-snappy
+       mariadb-server mariadb-server-core mysql-common psmisc pv socat
+    ↪
+    ↪
+10 Suggested packages:
+11 gawk-doc libmldbm-perl libnet-daemon-perl libsql-statement-perl gpm
+       libdata-dump-perl libipc-sharedcache-perl libbusiness-isbn-perl
+       lib^^w-perl mailx mariadb-test netcat-openbsd doc-base
+    ↪
+    ↪
+12 The following NEW packages will be installed:
+13 default-mysql-server galera-4 gawk libcgi-fast-perl libcgi-pm-perl
+       libclone-perl libconfig-inifiles-perl libdaxctl1 libdbd-mariadb-perl
+       libdbi-perl libencode-locale-perl libfcgi-bin libfcgi-perl
+    ↪
+    ↪
+14 libfcgi0ldbl libgpm2 libhtml-parser-perl libhtml-tagset-perl
+       libhtml-template-perl libhttp-date-perl libhttp-message-perl
+       libio-html-perl liblwp-mediatypes-perl liblzo2-2 libmariadb3 libncurses6
+       libndctl6
+    ↪
+    ↪
+    ↪
+15 libpmem1 libregexp-ipv6-perl libsigsegv2 libsnappy1v5 libterm-readkey-perl
+       libtimedate-perl liburi-perl liburing2 mariadb-client
+       mariadb-client-core mariadb-common mariadb-plugin-provider-bzip2
+    ↪
+    ↪
+16 mariadb-plugin-provider-lz4 mariadb-plugin-provider-lzma
+       mariadb-plugin-provider-lzo mariadb-plugin-provider-snappy
+       mariadb-server mariadb-server-core mysql-common psmisc pv socat
+    ↪
+    ↪
+17 0 upgraded, 48 newly installed, 0 to remove and 58 not upgraded.
+18 Need to get 19.4 MB of archives.
+19 After this operation, 196 MB of additional disk space will be used.
+20 Do you want to continue? [Y/n]
+```
+On EL (including Fedora), install Mariadb with sudo dnf install mariadb-server.
+
+Again, on Debian, the service will be started automatically, while on EL, you have to do this yourself.
+
+```
+1 [student@fedora ~]$ sudo dnf install mariadb-server
+2 [^^.output omitted^^.]
+3 [student@fedora ~]$ systemctl status mariadb.service
+4 ○ mariadb.service - MariaDB 10.5 database server
+5 Loaded: loaded (/usr/lib/systemd/system/mariadb.service; disabled;
+   ↪ preset: disabled)
+6 Drop-In: /usr/lib/systemd/system/service.d
+7 └─10-timeout-abort.conf
+8 Active: inactive (dead)
+9 Docs: man:mariadbd(8)
+10 https:^/mariadb.com/kb/en/library/systemd/
+11 [student@fedora ~]$ sudo systemctl enable --now mariadb.service
+12 Created symlink /etc/systemd/system/mysql.service →
+   ↪ /usr/lib/systemd/system/mariadb.service.
+13 Created symlink /etc/systemd/system/mysqld.service →
+   ↪ /usr/lib/systemd/system/mariadb.service.
+14 Created symlink /etc/systemd/system/multi-user.target.wants/mariadb.service
+```
+
+```
+↪ → /usr/lib/systemd/system/mariadb.service.
+```
+
+```
+15 [student@fedora ~]$ systemctl status mariadb.service
+16 ● mariadb.service - MariaDB 10.5 database server
+17 Loaded: loaded (/usr/lib/systemd/system/mariadb.service; enabled;
+   ↪ preset: disabled)
+18 Drop-In: /usr/lib/systemd/system/service.d
+19 └─10-timeout-abort.conf
+20 Active: active (running) since Wed 2024-10-09 10:10:41 UTC; 1s ago
+21 Docs: man:mariadbd(8)
+22 https:^/mariadb.com/kb/en/library/systemd/
+23 Process: 4593 ExecStartPre=/usr/libexec/mariadb-check-socket
+   ↪ (code=exited, status=0/SUCCESS)
+24 Process: 4616 ExecStartPre=/usr/libexec/mariadb-prepare-db-dir
+   ↪ mariadb.service (code=exited, status=0/SUCCESS)
+25 Process: 4717 ExecStartPost=/usr/libexec/mariadb-check-upgrade
+   ↪ (code=exited, status=0/SUCCESS)
+26 Main PID: 4699 (mariadbd)
+27 Status: "Taking your SQL requests now^^."
+28 Tasks: 15 (limit: 2322)
+29 Memory: 66.2M
+30 CPU: 357ms
+31 CGroup: /system.slice/mariadb.service
+32 └─4699 /usr/libexec/mariadbd --basedir=/usr
+```
+## <span id="page-178-0"></span>**16.3. Securing MySQL/MariaDB**
+
+After installation, some default settings are in place that are not very secure. For example, MySQL has its own user management system, which is separate from the Linux users. It also has a root/admin user and initially, the password is empty.
+
+You can (and should) run the mysql\_secure\_installation script to improve security. This script will ask you to set a root password, remove anonymous users, disallow root login remotely and remove the test database.
+
+Remark that for MariaDB, the script is also called mysql\_secure\_installation (although it may be a symbolic link to a script called mariadb-secure-installation)!
+
+The example below shows how the script runs on Debian. Carefully read the output and answer the questions.
+
+```
+1 student@debian:~$ sudo mysql_secure_installation
+2
+3 NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
+4 SERVERS IN PRODUCTION USE! PLEASE READ EACH STEP CAREFULLY!
+5
+6 In order to log into MariaDB to secure it, we'll need the current
+7 password for the root user. If you've just installed MariaDB, and
+8 haven't set the root password yet, you should just press enter here.
+9
+10 Enter current password for root (enter for none):
+11 OK, successfully used password, moving on^^.
+12
+13 Setting the root password or using the unix_socket ensures that nobody
+14 can log into the MariaDB root user without the proper authorisation.
+15
+16 You already have your root account protected, so you can safely answer 'n'.
+17
+18 Switch to unix_socket authentication [Y/n]
+19 Enabled successfully!
+```
+
+```
+20 Reloading privilege tables^.
+21 ^^. Success!
+22
+23 You already have your root account protected, so you can safely answer 'n'.
+24
+25 Change the root password? [Y/n] n
+26 ^^. skipping.
+27
+28 By default, a MariaDB installation has an anonymous user, allowing anyone
+29 to log into MariaDB without having to have a user account created for
+30 them. This is intended only for testing, and to make the installation
+31 go a bit smoother. You should remove them before moving into a
+32 production environment.
+33
+34 Remove anonymous users? [Y/n] y
+35 ^^. Success!
+36
+37 Normally, root should only be allowed to connect from 'localhost'. This
+38 ensures that someone cannot guess at the root password from the network.
+39
+40 Disallow root login remotely? [Y/n] y
+41 ^^. Success!
+42
+43 By default, MariaDB comes with a database named 'test' that anyone can
+44 access. This is also intended only for testing, and should be removed
+45 before moving into a production environment.
+46
+47 Remove test database and access to it? [Y/n] y
+48 - Dropping test database^^.
+49 ^^. Success!
+50 - Removing privileges on test database^^.
+51 ^^. Success!
+52
+53 Reloading the privilege tables will ensure that all changes made so far
+54 will take effect immediately.
+55
+56 Reload privilege tables now? [Y/n] y
+57 ^^. Success!
+58
+59 Cleaning up^^.
+60
+61 All done! If you've completed all of the above steps, your MariaDB
+62 installation should now be secure.
+63
+64 Thanks for using MariaDB!
+```
+The script performs the following tasks:
+
+- Secure the root user. There are two ways to do this:
+	- **–** Switch to unix\_socket authentication: this means that the root user does not get a password, but you can only log in as the database root user if you have superuser privileges on the system (i.e. with the command sudo mysql). This is a more recent method and may not be available on older distributions or MySQL/MariaDB versions.
+	- **–** Set a root password: you enter a password that you later can use to authenticate with the command mysql -uroot -pPASSWORD (see below). In this case, you don't need superuser privileges on the system, so it can be more convenient (but arguably less secure).
+- **–** In the example above, we chose for unix\_socket authentication, so we did *not* set a root password.
+- Remove anonymous users: these are users with a blank user name and are used to define default access permissions. However, this can pose a security risk so it's better to remove them.
+- Disallow root login remotely: the root user should only be allowed to connect from the local machine. This is a security measure to prevent unauthorized access.
+- Remove the default test database that is present in new installations. There is no reason to keep it, especially in a production system.
+
+## <span id="page-180-0"></span>**16.4. Accessing MySQL**
+
+#### <span id="page-180-1"></span>**16.4.1. Linux users**
+
+The installation of mysql creates a user account in /etc/passwd and a group account in /etc/group. Details of the user may differ between distributions. For example, here is the output on Debian:
+
+```
+1 student@debian:~$ getent passwd mysql
+```
+- <sup>2</sup> mysql:x:104:109:MySQL Server,,,:/nonexistent:/bin/false
+- <sup>3</sup> student@debian:~\$ getent group mysql
+
+```
+4 mysql:x:109:
+```
+On Fedora, you get:
+
+```
+1 [student@fedora ~]$ getent passwd mysql
+```
+- <sup>2</sup> mysql:x:27:27:MySQL Server:/var/lib/mysql:/sbin/nologin
+- <sup>3</sup> [student@fedora ~]\$ getent group mysql
+
+```
+4 mysql:x:27:
+```
+As you can see, it's not possible for the mysql user to log in, as the shell is set to /bin/false or /sbin/nologin. However, the process that runs the MySQL server will be started as this user:
+
+```
+1 student@debian:~$ ps -eo uid,user,gid,group,comm | grep maria
+```
+
+```
+2 104 mysql 109 mysql mariadbd
+```
+#### <span id="page-180-2"></span>**16.4.2. MySQL Client Application**
+
+You can now access the MySQL or MariaDB server from the commandline using the mysql client application. If you chose unix\_socket authentication, you can log in with sudo mysql (see the example below).
+
+If you set a root password during the execution of the mysql\_secure\_installation script, you can log in with mysql -uroot -p. It will prompt you for the password.
+
+```
+1 student@debian:~$ sudo mysql
+2 Welcome to the MariaDB monitor. Commands end with ; or \g.
+3 Your MariaDB connection id is 39
+4 Server version: 10.11.6-MariaDB-0+deb12u1 Debian 12
+5
+6 Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+7
+8 Type 'help;' or '\h' for help. Type '\c' to clear the current input
+   ↪ statement.
+9
+10 MariaDB [(none)]>
+```
+Or on Enterprise Linux, with MySQL installed:
+
+```
+1 [student@el ~]$ sudo mysql
+2 Welcome to the MySQL monitor. Commands end with ; or \g.
+3 Your MySQL connection id is 8
+4 Server version: 8.0.36 Source distribution
+5
+6 Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+7
+8 Oracle is a registered trademark of Oracle Corporation and/or its
+9 affiliates. Other names may be trademarks of their respective
+10 owners.
+11
+12 Type 'help;' or '\h' for help. Type '\c' to clear the current input
+   ↪ statement.
+13
+```
+mysql>
+
+You can quit the MySQL client with the command quit or exit, or by pressing Ctrl-D.
+
+You could also put the password in clear text on the command line, but that would not be very secure. Anyone with access to your bash history would be able to read your mysql root password. Remark that there should *not* be a space between the option -p and the password!
+
+```
+1 student@linux~$ mysql -uroot -phunter2
+```
+
+```
+2 Welcome to the MySQL monitor. Commands end with ; or \g.
+```
+
+```
+3 ^^.
+```
+On the prompt, you can issue SQL statements (ending with a semicolon) to interact with the database. For example, to see which databases are available, use the command show databases;. More examples are given below.
+
+Remark that the prompt has full history, even over previous sessions. You can use the up and down arrow keys to navigate through the history or search it using Ctrl-R.
+
+#### <span id="page-181-0"></span>**16.4.3. ~/.my.cnf**
+
+You can save the MySQL configuration in your home directory in the hidden file .my.cnf. In the screenshot below we put the root user and password in .my.cnf.
+
+```
+1 student@linux:~$ pwd
+```
+
+```
+2 /home/kevin
+```
+
+```
+3 student@linux:~$ cat .my.cnf
+```
+
+```
+4 [client]
+```
+
+```
+5 user=root
+```
+
+```
+6 password=hunter2
+```
+
+```
+7 student@linux:~$
+```
+This enables us to log on as the root mysql user just by typing mysql.
+
+```
+1 student@linux:~$ mysql
+```
+
+```
+2 Welcome to the MySQL monitor. Commands end with ; or \g.
+```
+
+```
+3 Your MySQL connection id is 56
+```
+
+```
+4 Server version: 5.5.24-0ubuntu0.12.04.1 (Ubuntu)
+```
+## <span id="page-182-0"></span>**16.5. Interacting with MySQL/MariaDB databases**
+
+#### <span id="page-182-1"></span>**16.5.1. Listing all databases**
+
+You can use the mysql command to take a look at the databases and to execute SQL queries on them. The screenshots below show you how. First, we log on to our MySQL server and execute the command show databases to see which databases exist on our MySQL server.
+
+```
+1 MariaDB [(none)]> show databases;
+```
+
+```
+2 +--------------------+
+3 | Database |
+4 +--------------------+
+5 | information_schema |
+6 | mysql |
+7 | performance_schema |
+8 | sys |
+9 +--------------------+
+10 4 rows in set (0.004 sec)
+```
+#### <span id="page-182-2"></span>**16.5.2. Creating a database**
+
+You can create a new database with the create database command.
+
+```
+1 MariaDB [(none)]> create database famouspeople;
+2 Query OK, 1 row affected (0.001 sec)
+3
+4 MariaDB [(none)]> show databases;
+5 +--------------------+
+6 | Database |
+7 +--------------------+
+8 | famouspeople |
+9 | information_schema |
+10 | mysql |
+11 | performance_schema |
+12 | sys |
+13 +--------------------+
+14 5 rows in set (0.001 sec)
+```
+You can create the database on the condition that it doesn't already exist. If you try to create a database that already exists, you will get a warning.
+
+```
+1 MariaDB [(none)]> create database if not exists famouspeople;
+2 Query OK, 0 rows affected, 1 warning (0.000 sec)
+3
+4 MariaDB [(none)]> show warnings;
+5 +-------+------+-------------------------------------------------------+
+6 | Level | Code | Message |
+7 +-------+------+-------------------------------------------------------+
+8 | Note | 1007 | Can't create database 'famouspeople'; database exists |
+9 +-------+------+-------------------------------------------------------+
+10 1 row in set (0.000 sec)
+```
+#### <span id="page-182-3"></span>**16.5.3. Using a database**
+
+Next we tell mysql to use one particular database with the use \$database command. This screenshot shows how to make famouspeople the current database (in use).
+
+- MariaDB [(none)]> use famouspeople;
+- Database changed
+- MariaDB [famouspeople]>
+
+On MariaDB, the prompt shows the name of the current database. On MySQL, you can use the command select database(); to see the current database.
+
+```
+1 mysql> use famouspeople;
+2 Database changed
+3 mysql> select database();
+4 +--------------+
+5 | database() |
+6 +--------------+
+7 | famouspeople |
+8 +--------------+
+9 1 row in set (0.00 sec)
+```
+#### <span id="page-183-0"></span>**16.5.4. Database access**
+
+To create a database user and give them access to a MySQL database, use the grant command.
+
+```
+1 MariaDB [famouspeople]> grant all on famouspeople.* to kevin@localhost
+   ↪ IDENTIFIED BY "hunter2";
+```
+Query OK, 0 rows affected (0.008 sec)
+
+This user can now log in to the database famouspeople from the local machine:
+
+```
+1 student@debian:~$ mysql -ukevin -phunter2 famouspeople
+2 Welcome to the MariaDB monitor. Commands end with ; or \g.
+3 Your MariaDB connection id is 43
+4 Server version: 10.11.6-MariaDB-0+deb12u1 Debian 12
+5
+6 Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+7
+8 Type 'help;' or '\h' for help. Type '\c' to clear the current input
+   ↪ statement.
+9
+```
+
+```
+10 MariaDB [famouspeople]>
+```
+The mysql database has a table user that contains information about (database) users. You can use the select command to see this information. The table has a lot of columns, as you can see in the output of the describe query, so we will only select a few important fields: Host, User and Password.
+
+| MariaDB<br>[(none)]><br>Reading<br>table<br>2<br>You<br>can<br>turn<br>off<br>3<br>4<br>Database<br>changed<br>5<br>MariaDB<br>[mysql]> | use<br>mysql;<br>information<br>for<br>completion<br>this<br>feature<br>to<br>get<br>a<br>describe<br>user; | of<br>table<br>and<br>column<br>names<br>quicker<br>startup<br>with<br>-A    |
+|-----------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|
+|                                                                                                                                         |                                                                                                             |                                                                              |
+|                                                                                                                                         |                                                                                                             |                                                                              |
+|                                                                                                                                         |                                                                                                             |                                                                              |
+|                                                                                                                                         |                                                                                                             |                                                                              |
+| 6                                                                                                                                       |                                                                                                             |                                                                              |
+| 7                                                                                                                                       |                                                                                                             | +------------------------+---------------------+------+-----+----------+---- |
+| ---+<br>↪                                                                                                                               |                                                                                                             |                                                                              |
+| Field<br>8                                                                                                                              | Type                                                                                                        | Null   Key   Default<br>  Extra                                              |
+| 9                                                                                                                                       |                                                                                                             | +------------------------+---------------------+------+-----+----------+---- |
+| ---+<br>↪                                                                                                                               |                                                                                                             |                                                                              |
+| Host<br>10                                                                                                                              | char(255)                                                                                                   | NO<br> <br> <br> <br>                                                        |
+| User<br>11                                                                                                                              | char(128)                                                                                                   | NO<br> <br> <br> <br>                                                        |
+| Password<br>12                                                                                                                          | longtext                                                                                                    | YES<br> <br>  NULL<br> <br>                                                  |
+
+```
+13 | Select_priv | varchar(1) | YES | | NULL | |
+14 [^^.some output omitted^^.]
+15 | default_role | longtext | NO | | | |
+16 | max_statement_time | decimal(12,6) | NO | | 0.000000 |
+   ↪ |
+17 +------------------------+---------------------+------+-----+----------+----
+   ↪ ---+
+18 47 rows in set (0.002 sec)
+19
+20 MariaDB [mysql]> select User,Host,Password from user;
+21 +-------------+-----------+-------------------------------------------+
+22 | User | Host | Password |
+23 +-------------+-----------+-------------------------------------------+
+24 | mariadb.sys | localhost | |
+25 | root | localhost | invalid |
+26 | mysql | localhost | invalid |
+27 | kevin | localhost | *58815970BE77B3720276F63DB198B1FA42E5CC02 |
+28 +-------------+-----------+-------------------------------------------+
+```
+
+```
+29 4 rows in set (0.001 sec)
+```
+We see that there are four users in the mysql database. The root user has an invalid password, as does the mysql user. This means that they can not log in using the mysql -uUSER command. The kevin user does have a password hash, so he can log in with mysql -ukevin -p.
+
+The Host field mentions localhost, which means that the user can only log in from the local machine. If you want to allow a user to log in from any machine, you can use the wildcard %, e.g.
+
+```
+1 MariaDB [mysql]> grant all on famouspeople.* to kyra@'%' IDENTIFIED BY
+   ↪ "prey42";
+2 Query OK, 0 rows affected (0.008 sec)
+3
+4 MariaDB [mysql]> select User,Host,Password from user;
+5 +-------------+-----------+-------------------------------------------+
+6 | User | Host | Password |
+7 +-------------+-----------+-------------------------------------------+
+8 | mariadb.sys | localhost | |
+9 | root | localhost | invalid |
+10 | mysql | localhost | invalid |
+11 | kevin | localhost | *58815970BE77B3720276F63DB198B1FA42E5CC02 |
+12 | kyra | % | *AA6D4E2D10EF6CC8E577E2169F131F8A9144D29B |
+13 +-------------+-----------+-------------------------------------------+
+```
+
+```
+14 5 rows in set (0.001 sec)
+```
+#### <span id="page-184-0"></span>**16.5.5. Deleting a database**
+
+When a database is no longer needed, you can permanently remove it with the drop database command.
+
+mysql> drop database demodb;
+
+Query OK, 1 row affected (0.09 sec)
+
+Here, too, you can add a condition to only drop the database if it exists.
+
+```
+1 MariaDB [(none)]> drop database if exists famouspeople;
+2 Query OK, 0 rows affected (0.012 sec)
+3
+4 MariaDB [(none)]> show databases;
+```
+*16. introduction to sql using mysql or mariadb*
+
+```
+5 +--------------------+
+6 | Database |
+7 +--------------------+
+8 | information_schema |
+9 | mysql |
+10 | performance_schema |
+11 | sys |
+12 +--------------------+
+13 4 rows in set (0.000 sec)
+```
+#### <span id="page-185-0"></span>**16.5.6. Backup and restore a database**
+
+You can take a backup of a database, or move it to another computer using the mysql and mysqldump commands. In the screenshot below, we take a backup of the famouspeople database.
+
+- <sup>1</sup> student@debian:~\$ sudo mysqldump famouspeople > famouspeople-backup-\$(date ↪ -I).sql
+- <sup>2</sup> student@debian:~\$ ls
+- <sup>3</sup> famouspeople-backup-2024-10-09.sql
+- <sup>4</sup> student@debian:~\$ file mysql-backup-2024-10-09.sql
+- <sup>5</sup> famouspeople-backup-2024-10-09.sql: Unicode text, UTF-8 text, with very long ↪ lines (2374)
+
+To restore the database, you can use the mysql command.
+
+```
+1 student@debian:~$ sudo mysql famouspeople <
+```
+↪ famouspeople-backup-2024-10-09.sql
+
+#### <span id="page-185-1"></span>**16.5.7. Using MySQL non-interactively**
+
+When you are automating the process of initialising a database on a new system, you may want to execute SQL queries non-interactively. The mysql command provides two ways of doing this:
+
+- The -e "\$sql\_query" option
+- The stdin stream of the command
+
+The latter is useful when you need to execute multiple queries. In this case, you can use a *here document* to pass the queries to the mysql command.
+
+This example shows the -e option, used by the root user:
+
+| 1                                | student@debian:~\$                                                    | sudo<br>mysql                                                                         | -e<br>'select<br>user,host,password<br>from                                                                                                                                                                                                                          | mysql.user;'        |
+|----------------------------------|-----------------------------------------------------------------------|---------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|
+| 2<br>3                           | <br>User                                                              | Host                                                                                  | +-------------+-----------+-------------------------------------------+<br>  Password                                                                                                                                                                                |                     |
+| 4<br>5<br>6<br>7<br>8<br>9<br>10 | <br>mariadb.sys<br> <br>root<br> <br>mysql<br> <br>kevin<br> <br>kyra | <br>localhost<br> <br>  localhost<br> <br>  localhost<br> <br>  localhost<br> <br>  % | +-------------+-----------+-------------------------------------------+<br>invalid<br>invalid<br>*58815970BE77B3720276F63DB198B1FA42E5CC02<br>  *AA6D4E2D10EF6CC8E577E2169F131F8A9144D29B<br>+-------------+-----------+-------------------------------------------+ | <br> <br> <br> <br> |
+
+And here is an example for a "normal" database user executing multiple queries in a *here document* (the database tables in the output will be created in the next section).
+
+```
+1 student@debian:~$ mysql -ukevin -phunter2 famouspeople ^< _EOF_
+2 SHOW TABLES;
+3 DESCRIBE people;
+4 _EOF_
+5 Tables_in_famouspeople
+6 country
+7 invoices
+8 people
+9 Field Type Null Key Default Extra
+10 name varchar(70) YES NULL
+11 field varchar(20) YES NULL
+12 birthyear int(5) YES NULL
+13 countrycode char(3) YES NULL
+```
+#### <span id="page-186-0"></span>**16.5.8. Accessing a MySQL database over the network**
+
+In order to allow users to access the database server over the network, you may need to reconfigure it to listen on external network interfaces. On some installations, the default install only listens on the loopback interface lo. You can check this with ss:
+
+| 1 |        | student@debian:~\$ | ss<br>-tln |                       |                   |         |
+|---|--------|--------------------|------------|-----------------------|-------------------|---------|
+| 2 | State  | Recv-Q             | Send-Q     | Local<br>Address:Port | Peer Address:Port | Process |
+| 3 | LISTEN | 0                  | 4096       | 0.0.0.0:111           | 0.0.0.0:*         |         |
+| 4 | LISTEN | 0                  | 128        | 0.0.0.0:22            | 0.0.0.0:*         |         |
+| 5 | LISTEN | 0                  | 80         | 127.0.0.1:3306        | 0.0.0.0:*         |         |
+| 6 | LISTEN | 0                  | 4096       | [^:]:111              | [^:]:*            |         |
+| 7 | LISTEN | 0                  | 128        | [^:]:22               | [^:]:*            |         |
+
+The 127.0.0.1:3306 output shows that MariaDB/MySQL is in this case only listening on the loopback interface. We need to change this setting in the configuration. The structure of the MariaDB/MySQL configuration files (stored in /etc/mysql on Debian or /etc/my.cnf.d/ on EL) is a bit complicated, so it's not always clear where to make the necessary changes.
+
+In the screenshot below, we search all configuration files for the setting we need, i.e. bindaddress and print the file and line number where it is found.
+
+- student@debian:~\$ find /etc/mysql/ -type f -exec grep -nH '^bind-address' {} ↪ \;
+- grep: /etc/mysql/debian.cnf: Permission denied
+
+```
+3 /etc/mysql/mariadb.conf.d/50-server.cnf:27:bind-address =
+   ↪ 127.0.0.1
+```
+In this case, the setting we need is in the file /etc/mysql/mariadb.conf.d/50-server.cnf. We can change the setting to 0.0.0.0 to make the server listen on all interfaces. Alternatively, you could specify the IP address of a specific network interface to only listen on that interface.
+
+```
+1 student@debian:~$ sudo nano /etc/mysql/mariadb.conf.d/50-server.cnf
+2 student@debian:~$ find /etc/mysql/ -type f -exec grep -nH ' bind-address' {}
+```
+
+```
+↪ \;
+3 grep: /etc/mysql/debian.cnf: Permission denied
+```
+
+```
+4 /etc/mysql/mariadb.conf.d/50-server.cnf:27:bind-address = 0.0.0.0
+5 student@debian:~$ sudo systemctl restart mariadb
+6 student@debian:~$ ss -tlnp
+7 State Recv-Q Send-Q Local Address:Port Peer Address:Port Process
+8 LISTEN 0 80 0.0.0.0:3306 0.0.0.0:*
+9 LISTEN 0 4096 0.0.0.0:111 0.0.0.0:*
+10 LISTEN 0 128 0.0.0.0:22 0.0.0.0:*
+```
+*16. introduction to sql using mysql or mariadb*
+
+| 11 | LISTEN | 0 | 4096 | [^:]:111 | [^:]:* |
+|----|--------|---|------|----------|--------|
+| 12 | LISTEN | 0 | 128  | [^:]:22  | [^:]:* |
+
+After making the necessary change and restarting the service, the server now listens on all interfaces (0.0.0.0:3306). You can then access the database from another machine using the IP address (or hostname, if it has a DNS record) of the server.
+
+```
+1 [student@fedora ~]$ mysql -h 192.168.56.21 -ukyra -pprey42 famouspeople -e
+   ↪ 'show tables;'
+2 +------------------------+
+3 | Tables_in_famouspeople |
+4 +------------------------+
+5 | country |
+6 | invoices |
+7 | people |
+8 +------------------------+
+```
+Remark that you may need to adjust the firewall settings on the server to allow incoming connections on port 3306! Also, the user should be allowed to connect from the remote host. In the example above, the user kyra is allowed to connect from any host (%). If you do the same for the user kevin, this will fail since he is only allowed to connect from localhost.
+
+<sup>1</sup> [student@fedora ~]\$ mysql -h 192.168.56.21 -ukevin -phunter2 -e 'show ↪ tables;'
+
+```
+2 ERROR 1045 (28000): Access denied for user 'kevin'@'192.168.56.109' (using
+   ↪ password: YES)
+```
+## <span id="page-187-0"></span>**16.6. MySQL tables**
+
+In a relational database, you can create tables to store data. A table is a collection of rows and columns. Each row represents a record and each column represents a field in the record.
+
+#### <span id="page-187-1"></span>**16.6.1. Listing tables**
+
+You can see a list of tables in the current database with the show tables; command. Our famouspeople database has no tables yet.
+
+```
+1 MariaDB [(none)]> use famouspeople;
+```
+
+```
+2 Database changed
+```
+
+```
+3 MariaDB [famouspeople]> show tables;
+```
+
+```
+4 Empty set (0.000 sec)
+```
+#### <span id="page-187-2"></span>**16.6.2. Creating a table**
+
+The create table command will create a new table.
+
+This screenshot shows the creation of a country table. We use the countrycode as a primary key (all country codes are uniquely defined). Most country codes are two or three letters, so a char of three uses less space than a varchar of three. The country name and the name of the capital are both defined as varchar. The population can be seen as an integer.
+
+```
+1 MariaDB [famouspeople]> create table country (
+```
+
+```
+2 ^> countrycode char(3) not null,
+```
+
+```
+3 ^> countryname varchar(70) not null,
+```
+
+```
+4 ^> population int,
+```
+
+```
+5 ^> countrycapital varchar(50),
+```
+
+```
+6 ^> primary key (countrycode)
+```
+
+```
+7 ^> );
+8 Query OK, 0 rows affected (0.017 sec)
+9
+10 MariaDB [famouspeople]> show tables;
+11 +------------------------+
+12 | Tables_in_famouspeople |
+13 +------------------------+
+14 | country |
+15 +------------------------+
+```
+1 row in set (0.001 sec)
+
+You are allowed to type the create table command on one long line, but administrators often use multiple lines to improve readability.
+
+```
+1 MariaDB [famouspeople]> create table country ( countrycode char(3) NOT NULL,
+```
+- countryname varchar(70) NOT NULL, population int, countrycapital ↪
+- varchar(50), primary key (countrycode) ); ↪
+
+```
+2 Query OK, 0 rows affected (0.18 sec)
+```
+#### <span id="page-188-0"></span>**16.6.3. Describing a table**
+
+To see a description of the structure of a table, issue the describe \$tablename command as shown below.
+
+```
+1 MariaDB [famouspeople]> describe country;
+2 +----------------+-------------+------+-----+---------+-------+
+3 | Field | Type | Null | Key | Default | Extra |
+4 +----------------+-------------+------+-----+---------+-------+
+5 | countrycode | char(3) | NO | PRI | NULL | |
+6 | countryname | varchar(70) | NO | | NULL | |
+7 | population | int(11) | YES | | NULL | |
+8 | countrycapital | varchar(50) | YES | | NULL | |
+9 +----------------+-------------+------+-----+---------+-------+
+10 4 rows in set (0.002 sec)
+```
+#### <span id="page-188-1"></span>**16.6.4. Removing a table**
+
+To remove a table from a database, issue the drop table \$tablename command as shown below.
+
+```
+1 MariaDB [famouspeople]> drop table country;
+```
+
+```
+2 Query OK, 0 rows affected (0.020 sec)
+```
+## <span id="page-188-2"></span>**16.7. MySQL records**
+
+### <span id="page-188-3"></span>**16.7.1. Creating records**
+
+Use insert to enter data into the table. The screenshot shows several insert statements that insert values depending on the position of the data in the statement.
+
+```
+1 MariaDB [famouspeople]> insert into country values
+   ↪ ('BE','Belgium','11977634','Brussels');
+2 Query OK, 1 row affected (0.003 sec)
+3
+```
+*16. introduction to sql using mysql or mariadb*
+
+```
+4 MariaDB [famouspeople]> insert into country values
+   ↪ ('DE','Germany','84119100','Berlin');
+5 Query OK, 1 row affected (0.002 sec)
+6
+7 MariaDB [famouspeople]> insert into country values
+   ↪ ('JP','Japan','123201945','Tokyo');
+8 Query OK, 1 row affected (0.001 sec)
+```
+Some administrators prefer to use uppercase for SQL keywords. The MySQL client accepts both.
+
+```
+1 MariaDB [famouspeople]> INSERT INTO country VALUES
+   ↪ ('FR','France','68374591','Paris');
+2 Query OK, 1 row affected (0.003 sec)
+```
+Note that you get an error when using a duplicate primary key.
+
+```
+1 MariaDB [famouspeople]> insert into country values
+   ↪ ('DE','Germany','84119100','Berlin');
+2 ERROR 1062 (23000): Duplicate entry 'DE' for key 'PRIMARY'
+```
+#### <span id="page-189-0"></span>**16.7.2. Viewing all records**
+
+Below an example of a simple select query to look at the contents of a table.
+
+```
+1 MariaDB [famouspeople]> select * from country;
+2 +-------------+-------------+------------+----------------+
+3 | countrycode | countryname | population | countrycapital |
+4 +-------------+-------------+------------+----------------+
+5 | BE | Belgium | 11977634 | Brussels |
+6 | DE | Germany | 84119100 | Berlin |
+7 | FR | France | 68374591 | Paris |
+8 | JP | Japan | 123201945 | Tokyo |
+9 +-------------+-------------+------------+----------------+
+```
+
+```
+10 4 rows in set (0.001 sec)
+```
+#### <span id="page-189-1"></span>**16.7.3. Updating records**
+
+Consider the following insert statement. The capital of Spain is not Barcelona, it is Madrid.
+
+```
+1 MariaDB [famouspeople]> insert into country values
+   ↪ ('ES','Spain','47280433','Barcelona');
+```
+
+```
+2 Query OK, 1 row affected (0.003 sec)
+```
+Using an update statement, the record can be updated.
+
+```
+1 MariaDB [famouspeople]> update country set countrycapital='Madrid' where
+   ↪ countrycode='ES';
+2 Query OK, 1 row affected (0.003 sec)
+```
+
+```
+3 Rows matched: 1 Changed: 1 Warnings: 0
+```
+#### <span id="page-190-0"></span>**16.7.4. Viewing selected records**
+
+We can use a select statement to verify this change, using a where clause to only show the record(s) we want to see.
+
+```
+1 MariaDB [famouspeople]> select * from country where countrycode='ES';
+2 +-------------+-------------+------------+----------------+
+```
+
+| 3      | <br>countrycode<br> | countryname | <br>population<br> | countrycapital<br>                                                        |
+|--------|---------------------|-------------|--------------------|---------------------------------------------------------------------------|
+| 4<br>5 | <br>ES              | Spain       | <br>47280433<br>   | +-------------+-------------+------------+----------------+<br>Madrid<br> |
+| 6      |                     |             |                    | +-------------+-------------+------------+----------------+               |
+
+1 row in set (0.000 sec)
+
+Another example of the where clause with the wildcard %. This will show all countries with a country code ending in E.
+
+```
+1 MariaDB [famouspeople]> select * from country where countrycode like '%E';
+```
+
+| +-------------+-------------+------------+----------------+<br>4<br> <br>BE<br>  Belgium<br> <br>11977634<br> <br>Brussels<br>5<br> <br>DE<br>  Germany<br> <br>84119100<br> <br>Berlin<br>6<br>+-------------+-------------+------------+----------------+<br>7 | <br> |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------|
+
+```
+8 2 rows in set (0.000 sec)
+```
+What is the total population of these countries?
+
+```
+1 MariaDB [famouspeople]> select sum(population) from country where
+   ↪ countrycode like '%E';
+2 +-----------------+
+3 | sum(population) |
+4 +-----------------+
+5 | 96096734 |
+6 +-----------------+
+7 1 row in set (0.000 sec)
+```
+#### <span id="page-190-1"></span>**16.7.5. Ordering records**
+
+We know that select allows us to see all records in a table. Using the order by clause, we can change the order in which the records are presented.
+
+ MariaDB [famouspeople]> select countryname,population from country order by ↪ population;
+
+| 2  |                        | +-------------+------------+ |
+|----|------------------------|------------------------------|
+| 3  | <br>countryname        | <br>population<br>           |
+| 4  |                        | +-------------+------------+ |
+| 5  | <br>Belgium            | <br>11977634<br>             |
+| 6  | <br>Spain              | <br>47280433<br>             |
+| 7  | <br>France             | <br>68374591<br>             |
+| 8  | <br>Germany            | <br>84119100<br>             |
+| 9  | <br>Japan              | <br>123201945<br>            |
+| 10 |                        | +-------------+------------+ |
+| 11 | 5<br>rows<br>in<br>set | (0.001<br>sec)               |
+|    |                        |                              |
+
+#### <span id="page-191-0"></span>**16.7.6. Grouping records**
+
+Consider this table of people. The screenshot shows how to use the avg function to calculate an average.
+
+```
+1 MariaDB [famouspeople]> select * from people;
+2 +-----------------+-----------+-----------+-------------+
+3 | name | field | birthyear | countrycode |
+4 +-----------------+-----------+-----------+-------------+
+5 | Barack Obama | politics | 1961 | US |
+6 | Deng Xiaoping | politics | 1904 | CN |
+7 | Guy Verhofstadt | politics | 1953 | BE |
+8 | Justine Henin | tennis | 1982 | BE |
+9 | Kim Clijsters | tennis | 1983 | BE |
+10 | Li Na | tennis | 1982 | CN |
+11 | Liu Yang | astronaut | 1978 | CN |
+12 | Serena Williams | tennis | 1981 | US |
+13 | Venus Williams | tennis | 1980 | US |
+14 +-----------------+-----------+-----------+-------------+
+15 9 rows in set (0.001 sec)
+16
+17 MariaDB [famouspeople]> select AVG(birthyear) from people;
+18 +----------------+
+19 | AVG(birthyear) |
+20 +----------------+
+21 | 1967.1111 |
+22 +----------------+
+23 1 row in set (0.001 sec)
+```
+Using the group by clause, we can have an average per field.
+
+```
+1 MariaDB [famouspeople]> select field,avg(birthyear) from people group by
+   ↪ field;
+```
+
+| 2 |                        | +-----------+----------------+ |
+|---|------------------------|--------------------------------|
+| 3 | <br>field<br>          | avg(birthyear)<br>             |
+| 4 |                        | +-----------+----------------+ |
+| 5 | <br>astronaut<br>      | 1978.0000<br>                  |
+| 6 | <br>politics<br>       | 1939.3333<br>                  |
+| 7 | <br>tennis<br>         | 1981.6000<br>                  |
+| 8 |                        | +-----------+----------------+ |
+| 9 | 3<br>rows<br>in<br>set | (0.000<br>sec)                 |
+
+#### <span id="page-191-1"></span>**16.7.7. Deleting records**
+
+You can use delete to permanently remove a record from a table.
+
+```
+1 MariaDB [famouspeople]> delete from country where countryname='Spain';
+2 Query OK, 1 row affected (0.06 sec)
+3
+4 MariaDB [famouspeople]> select * from country where countryname='Spain';
+5 Empty set (0.00 sec)
+```
+## <span id="page-192-0"></span>**16.8. Joining two tables**
+
+#### <span id="page-192-1"></span>**16.8.1. Inner join**
+
+With an inner join you can take values from two tables and combine them in one result. Consider the country and the people tables from the previous section when looking at this screenshot of an inner join.
+
+```
+1 MariaDB [famouspeople]> select name,field,countryname from country inner
+   ↪ join people on people.countrycode=country.countrycode;
+```
+
+```
+2 +-----------------+-----------+-------------+
+3 | name | field | countryname |
+4 +-----------------+-----------+-------------+
+5 | Deng Xiaoping | politics | China |
+6 | Guy Verhofstadt | politics | Belgium |
+7 | Justine Henin | tennis | Belgium |
+8 | Kim Clijsters | tennis | Belgium |
+9 | Li Na | tennis | China |
+10 | Liu Yang | astronaut | China |
+11 +-----------------+-----------+-------------+
+```
+
+```
+12 6 rows in set (0.000 sec)
+```
+This inner join will show only records with a match on countrycode in both tables.
+
+### <span id="page-192-2"></span>**16.8.2. Left join**
+
+A left join is different from an inner join in that it will take all rows from the left table, regardless of a match in the right table.
+
+ MariaDB [famouspeople]> select Name,Field,countryname from country left join ↪ people on people.countrycode=country.countrycode;
+
+| 2<br>3                                                   | +-----------------+-----------+-------------+<br> <br>Name                                                                                                                                                                                   | Field                                                                                                                                                        | countryname<br>                                                                                                                                          |  |
+|----------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|--|
+| 4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14 | +-----------------+-----------+-------------+<br> <br>Deng<br>Xiaoping<br> <br>Guy<br>Verhofstadt<br> <br>Justine<br>Henin<br> <br>Kim<br>Clijsters<br> <br>Li<br>Na<br> <br>Liu<br>Yang<br> <br>NULL<br> <br>NULL<br> <br>NULL<br> <br>NULL | <br>politics<br> <br> <br>politics<br> <br> <br>tennis<br> <br> <br>tennis<br> <br>  tennis<br> <br>  astronaut<br> <br>  NULL<br>  NULL<br>  NULL<br>  NULL | China<br> <br>Belgium<br> <br>Belgium<br> <br>Belgium<br> <br>China<br> <br>China<br> <br>  Germany<br> <br>  Spain<br> <br>  France<br> <br>  Japan<br> |  |
+| 15                                                       | +-----------------+-----------+-------------+                                                                                                                                                                                                |                                                                                                                                                              |                                                                                                                                                          |  |
+
+```
+16 10 rows in set (0.000 sec)
+```
+You can see that some countries are present, even when they have no matching records in the people table.
+
+## <span id="page-192-3"></span>**16.9. MySQL triggers**
+
+#### <span id="page-192-4"></span>**16.9.1. Using a** *before* **trigger**
+
+Consider the following create table command. The last field (amount) is the multiplication of the two fields named unitprice and unitcount.
+
+```
+1 MariaDB [famouspeople]> create table invoices (
+2 ^> id char(8) NOT NULL,
+3 ^> customerid char(3) NOT NULL,
+4 ^> unitprice int,
+5 ^> unitcount smallint,
+6 ^> amount int );
+7 Query OK, 0 rows affected (0.018 sec)
+```
+We can let MySQL do the calculation for that by using a before trigger. The screenshot below shows the creation of a trigger that calculates the amount by multiplying two fields that are about to be inserted.
+
+```
+1 MariaDB [famouspeople]> create trigger total_amount before INSERT on invoices
+```
+<sup>2</sup> ^> for each row set new.amount = new.unitprice \* new.unitcount ;
+
+```
+3 Query OK, 0 rows affected (0.02 sec)
+```
+Here we verify that the trigger works by inserting a new record, without providing the total amount. In the first attempt, we provide an empty value for the amount field. This will result in an error. In the second attempt, we do provide a value (0), but it will be overwritten by the trigger.
+
+```
+1 MariaDB [famouspeople]> insert into invoices values
+   ↪ ('20241009','ABC','199','10','');
+2 ERROR 1366 (22007): Incorrect integer value: '' for column
+   ↪ `famouspeople`.`invoices`.`amount` at row 1
+```
+
+```
+3 MariaDB [famouspeople]> insert into invoices values
+   ↪ ('20241009','DEF','159','40','0');
+```
+<sup>4</sup> Query OK, 1 row affected (0.004 sec)
+
+Looking at the record proves that the trigger works.
+
+| 1      | MariaDB<br>[famouspeople]><br>select<br>*<br>from<br>invoices;<br>+----------+------------+-----------+-----------+--------+ |                |               |           |                |
+|--------|------------------------------------------------------------------------------------------------------------------------------|----------------|---------------|-----------|----------------|
+| 2<br>3 | <br>id                                                                                                                       | customerid<br> | unitprice<br> | unitcount | <br>amount<br> |
+| 4<br>5 | +----------+------------+-----------+-----------+--------+<br> <br>20241009<br>                                              | ABC<br>        | 199<br>       | 10        | 1990<br>       |
+| 6<br>7 | +----------+------------+-----------+-----------+--------+<br>1<br>row<br>in<br>set                                          | (0.000<br>sec) |               |           |                |
+
+### <span id="page-193-0"></span>**16.9.2. Removing a trigger**
+
+When a trigger is no longer needed, you can delete it with the drop trigger command.
+
+```
+1 mysql> drop trigger total_amount;
+2 Query OK, 0 rows affected (0.00 sec)
+```
+## <span id="page-193-1"></span>**16.10. practice: mysql**
+
+Write a script that, without any user interaction, performs the following tasks on your favourite Linux distribution. Use variables to store the database name, user name and password. Use here documents for the SQL queries.
+
+- 1. Install MariaDB or MySQL using the system package manager.
+- 2. Execute the queries performed by the mysql\_secure\_installation script.
+
+Tip: in the case of MariaDB, you can locate the script and peruse its contents. In the script, a function do\_query is defined that executes SQL statements. Look for lines containing do\_query and extract the SQL statements.
+
+- 3. Create a database user that has all privileges on the database famouspeople and that can log in from any host.
+- 4. With this user, reconstruct the database famouspeople described above with all its contents: tables and records.
+
+## <span id="page-194-0"></span>**16.11. solution: mysql**
+
+In this solution, we install MariaDB on an Enterprise Linux system (tested on AlmaLinux 9). You can adapt to your favourite Linux distribution.
+
+In order to find which queries are performed by mysql\_secure\_installation, you can do the following:
+
+```
+1 [student@el ~]$ which mysql_secure_installation
+2 /usr/bin/mysql_secure_installation
+3 [student@el ~]$ file /usr/bin/mysql_secure_installation
+4 /usr/bin/mysql_secure_installation: symbolic link to
+   ↪ mariadb-secure-installation
+5 [student@el my.cnf.d]$ file /usr/bin/mariadb-secure-installation
+6 /usr/bin/mariadb-secure-installation: a /usr/bin/sh script, ASCII text
+   ↪ executable
+7 [student@el ~]$ grep do_query /usr/bin/mariadb-secure-installation
+8 do_query() {
+9 do_query "show create user root@localhost"
+10 do_query "UPDATE mysql.global_priv SET priv=json_set(priv, '$.plugin',
+       'mysql_native_password', '$.authentication_string',
+      PASSWORD('$esc_pass')) WHERE User='root';"
+   ↪
+   ↪
+11 do_query "DELETE FROM mysql.global_priv WHERE User='';"
+12 do_query "DELETE FROM mysql.global_priv WHERE User='root' AND Host NOT
+   ↪ IN ('localhost', '127.0.0.1', '^:1');"
+13 do_query "DROP DATABASE IF EXISTS test;"
+14 do_query "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%'"
+15 do_query " "
+16 do_query "UPDATE mysql.global_priv SET priv=json_set(priv,
+       '$.password_last_changed', UNIX_TIMESTAMP(), '$.plugin',
+       'mysql_native_password', '$.authentication_string', 'invalid',
+       '$.auth_or', json_array(json_object(), json_object('plugin',
+       'unix_socket'))) WHERE User='root';"
+   ↪
+   ↪
+   ↪
+   ↪
+```
+We're not going to use the query to set the user password, since we'll keep unix\_socket authentication.
+
+```
+1 ^!/bin/bash
+2 #
+3 # init-db.sh -- Install and initialize a MariaDB database instance
+4
+5 set -o nounset
+6 set -o errexit
+7 set -o pipefail
+8
+9 # Variables
+10 db_name="famouspeople"
+11 db_user="kevin"
+12 db_password="hunter2"
+13
+14 ^# Install the MariaDB server
+15 dnf install -y mariadb-server
+```
+
+```
+16
+17 ^# Allow remote access to the database
+18 sed -i 's/^#bind-address.*$/bind-address=0.0.0.0/'
+    ↪ /etc/my.cnf.d/mariadb-server.cnf
+19
+20 ^# Start and enable the MariaDB service
+21 if ! sudo systemctl is-enabled mariadb; then
+22 systemctl enable --now mariadb
+23 else
+24 # Restart the service if it's already enabled
+25 systemctl restart mariadb
+26 fi
+27
+28 ^# Perform the tasks of mysql_secure_installation:
+29 # Remove anonymous users, disallow root login remotely, remove test database
+30 # Root password is not set, we'll use `unix_socket` authentication
+31 echo "Securing the MariaDB installation"
+32
+33 mysql ^< _EOF_
+34 DELETE FROM mysql.global_priv WHERE User='';
+35 DELETE FROM mysql.global_priv WHERE User='root' AND Host NOT IN
+    ↪ ('localhost', '127.0.0.1', '^:1');
+36 DROP DATABASE IF EXISTS test;
+37 DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
+38 FLUSH PRIVILEGES;
+39 _EOF_
+40
+41 ^# Initialize the database
+42
+43 echo "Creating a database and user"
+44
+45 mysql ^< _EOF_
+46 CREATE DATABASE IF NOT EXISTS ${db_name};
+47 GRANT ALL PRIVILEGES ON ${db_name}.* TO '${db_user}'@'%' IDENTIFIED BY
+    ↪ '${db_password}';
+48 FLUSH PRIVILEGES;
+49 _EOF_
+50
+51 echo "Creating tables and adding content as the newly created database user"
+52
+53 mysql -u"${db_user}" -p"${db_password}" ${db_name} ^< _EOF_
+54 DROP TABLE IF EXISTS country;
+55 CREATE TABLE country (
+56 countrycode char(3) NOT NULL,
+57 countryname varchar(70) NOT NULL,
+58 population int,
+59 countrycapital varchar(50),
+60 PRIMARY KEY (countrycode)
+61 );
+62 INSERT INTO country VALUES ('BE','Belgium','11977634','Brussels');
+63 INSERT INTO country VALUES ('DE','Germany','84119100','Berlin');
+64 INSERT INTO country VALUES ('JP','Japan','123201945','Tokyo');
+65 INSERT INTO country VALUES ('FR','France','68374591','Paris');
+66 INSERT INTO country VALUES ('ES','Spain','47280433','Madrid');
+67
+68 DROP TABLE IF EXISTS people;
+69 CREATE TABLE people (
+70 name varchar(70) NOT NULL,
+```
+
+```
+71 field varchar(20),
+72 birthyear int,
+73 countrycode char(3)
+74 );
+75 INSERT INTO people VALUES ('Barack Obama','politics','1961','US');
+76 INSERT INTO people VALUES ('Deng Xiaoping','politics','1904','CN');
+77 INSERT INTO people VALUES ('Guy Verhofstadt','politics','1953','BE');
+78 INSERT INTO people VALUES ('Justine Henin','tennis','1982','BE');
+79 INSERT INTO people VALUES ('Kim Clijsters','tennis','1983','BE');
+80 INSERT INTO people VALUES ('Li Na','tennis','1982','CN');
+81 INSERT INTO people VALUES ('Liu Yang','astronaut','1978','CN');
+82 INSERT INTO people VALUES ('Serena Williams','tennis','1981','US');
+83 INSERT INTO people VALUES ('Venus Williams','tennis','1980','US');
+84 _EOF_
+```
+Afterwards, we can test the result from the command line. In this case, the database VM has the IP address 192.168.56.11. On another machine on the same network where the mysql client is installed, issue (for example) the following command:
+
+ student@linux:~\$ mysql -h 192.168.56.11 -ukevin -phunter2 famouspeople -e ↪ "select \* from people;"
+
+| +-----------------+-----------+-----------+-------------+<br> <br>name                                                                                                                                                                                                                                                                                                            | field                                                                                               | birthyear                                                                                                                        | <br>countrycode<br>                                                                            |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|
+| +-----------------+-----------+-----------+-------------+<br> <br>Barack<br>Obama<br> <br> <br>Deng<br>Xiaoping<br> <br> <br>Guy<br>Verhofstadt<br> <br> <br>Justine<br>Henin<br> <br> <br>Kim<br>Clijsters<br> <br> <br>Li<br>Na<br> <br>Liu<br>Yang<br> <br>Serena<br>Williams<br> <br> <br>Venus<br>Williams<br> <br>+-----------------+-----------+-----------+-------------+ | politics<br>politics<br>politics<br>tennis<br>tennis<br>  tennis<br>  astronaut<br>tennis<br>tennis | <br>1961  <br> <br>1904  <br> <br>1953  <br> <br>1982  <br> <br>1983  <br> <br>1982  <br> <br>1978  <br> <br>1981  <br> <br>1980 | US<br> <br>CN<br> <br>BE<br> <br>BE<br> <br>BE<br> <br>CN<br> <br>CN<br> <br>US<br> <br>US<br> |
+
+## <span id="page-198-0"></span>**17. scripting loops**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Alex M. Schapelle, https://github.com/zero-pytagoras/, Bert Van Vreckem https://github.com/bertvv/)*
+
+## **17.1[. test](https://github.com/bertvv/)**
+
+<span id="page-198-1"></span>The test command can evaluate **logical expressions** and indicate through their *exit status* whether the expression was *true* or *false*. In Bash, boolean values *do not exist* as a data type and are represented by the exit status of commands. *True* is represented by the exit status 0 (denoting that the command finished successfully), and *false* is represented by any other exit status (1-255, denoting any failure).
+
+Let's start by testing whether 10 is greater than 55, and then show the exit status.
+
+```
+1 [student@linux ~]$ test 10 -gt 55 ; echo $?
+```
+
+```
+2 1
+```
+The test command returns 1 if the test fails. And as you see in the next screenshot, test returns 0 when a test succeeds.
+
+```
+1 [student@linux ~]$ test 56 -gt 55 ; echo $?
+```
+<sup>2</sup> 0
+
+If you prefer true and false, then write the test like this.
+
+```
+1 [student@linux ~]$ test 56 -gt 55 ^& echo true ^| echo false
+```
+
+```
+2 true
+```
+
+```
+3 [student@linux ~]$ test 6 -gt 55 ^& echo true ^| echo false
+```
+
+```
+4 false
+```
+## **17.2. square brackets [ ]**
+
+<span id="page-198-2"></span>The test command can also be written as square brackets. In this case, the final argument must be a closing square bracket ].
+
+The screenshot below is identical to the one above.
+
+```
+1 [student@linux ~]$ [ 56 -gt 55 ] ^& echo true ^| echo false
+```
+
+```
+2 true
+```
+
+```
+3 [student@linux ~]$ [ 6 -gt 55 ] ^& echo true ^| echo false
+```
+<sup>4</sup> false
+
+**Remark** that the square bracket is a **command** that takes arguments like any other command. Consequently, you **must** put a space between the square bracket and the arguments. You can check this fact by looking at the contents of the /bin directory.
+
+```
+1 [vagrant@el ~]$ ls /bin | head -3
+```
+
+```
+2 [
+```
+
+```
+3 addr2line
+```
+
+```
+4 alias
+```
+The first command in /bin is the square bracket!
+
+**Remark** that there also exists a test written as [[ ]]. This is a **Bash built-in** and is more powerful than the square bracket. The double square bracket is a **keyword** and not a command. However, this notation is specific to recent versions of Bash and is not POSIX compliant. Using it makes your script less portable. We will not discuss this notation here.
+
+#### <span id="page-199-0"></span>**17.3. more tests**
+
+Below are some example tests. Take a look at the man page of test(1) and bash(1) (under *CONDITIONAL EXPRESSIONS*) to see more options for tests.
+
+| Test                                 | Description                                       |
+|--------------------------------------|---------------------------------------------------|
+| [<br>-d<br>foo<br>]                  | Does the directory foo exist?                     |
+| [<br>-e<br>bar<br>]                  | Does the file (or directory) bar exist?           |
+| [<br>-f<br>foo<br>]                  | Is foo a regular file?                            |
+| [<br>-r<br>bar<br>]                  | Is bar a readable file?                           |
+| [<br>-w<br>bar<br>]                  | Is bar a writeable file?                          |
+| [<br>foo<br>-nt<br>bar<br>]          | Is file foo newer than file bar?                  |
+| [<br>'/etc'<br>=<br>"\${PWD}"<br>]   | Is the string /etc equal to the variable \$PWD?   |
+| [<br>"\${1}"<br>^=<br>'secret'<br>]  | Is the first parameter not equal to secret?       |
+| [<br>55<br>-lt<br>"\${bar}"<br>]     | Is 55 less than the value of \${bar}?             |
+| [<br>"\${foo}"<br>-ge<br>'1000'<br>] | Is the value of \${foo} greater or equal to 1000? |
+
+Numerical values must be *integers*. Floating point numbers can not be interpreted by Bash.
+
+Tests can be combined with logical AND and OR.
+
+```
+1 student@linux:~$ [ 66 -gt 55 -a 66 -lt 500 ]; echo $?
+2 0
+3 student@linux:~$ [ 66 -gt 55 -a 660 -lt 500 ]; echo $?
+4 1
+5 student@linux:~$ [ 66 -gt 55 -o 660 -lt 500 ]; echo $?
+6 0
+  However, the -a and -o options are deprecated and not recommended. Instead, use the ^&
+  and ^| operators.
+1 student@linux:~$ [ 66 -gt 55 ] ^& [ 66 -lt 500 ]; echo $?
+```
+<sup>2</sup> 0 <sup>3</sup> student@linux:~\$ [ 66 -gt 55 ] ^& [ 660 -lt 500 ]; echo \$? <sup>4</sup> 1 <sup>5</sup> student@linux:~\$ [ 66 -gt 55 ] ^| [ 660 -lt 500 ]; echo \$? <sup>6</sup> 0
+
+## <span id="page-199-1"></span>**17.4. if then else**
+
+The if then else construction is about choice. If a certain condition is met, then execute something, else execute something else. The example below tests whether a file exists, and if the file exists then a proper message is echoed.
+
+```
+1 ^!/bin/bash
+2 file="isit.txt"
+3
+4 if [ -f "${file}" ]
+5 then
+6 echo "${file} exists!"
+7 else
+8 echo "${file} not found!"
+9 fi
+```
+If we name the above script choice.sh, then it executes like this:
+
+```
+1 [student@linux scripts]$ ./choice.sh
+2 isit.txt not found!
+3 [student@linux scripts]$ touch isit.txt
+4 [student@linux scripts]$ ./choice.sh
+5 isit.txt exists!
+6 [student@linux scripts]$
+```
+## <span id="page-200-0"></span>**17.5. if then elif**
+
+You can nest a new if inside an else with elif. This is a simple example.
+
+```
+1 ^!/bin/bash
+2 count=42
+3 if [ "${count}" -eq '42' ]
+4 then
+5 echo "42 is correct."
+6 elif [ "${count}" -gt '42' ]
+7 then
+8 echo "Too much."
+9 else
+10 echo "Not enough."
+11 fi
+```
+## <span id="page-200-1"></span>**17.6. for loop**
+
+The example below shows the syntax of a typical for loop in bash.
+
+```
+1 for i in 1 2 4
+2 do
+3 echo "${i}"
+4 done
+```
+An example of a for loop combined with an embedded shell.
+
+```
+1 ^!/bin/bash
+2 for counter in $(seq 1 20)
+3 do
+4 echo "counting from 1 to 20, now at ${counter}"
+5 sleep 1
+6 done
+```
+The same example as above can be written without the embedded shell using the Bash {from^.to} shorthand.
+
+*17. scripting loops*
+
+```
+1 ^!/bin/bash
+2 for counter in {1^.20}
+3 do
+4 echo "counting from 1 to 20, now at ${counter}"
+5 sleep 1
+6 done
+```
+This for loop uses file globbing (from the shell expansion). Putting the instruction on the command line has identical functionality.
+
+```
+1 [student@linux ~]$ ls
+2 count.sh go.sh
+3 [student@linux ~]$ for file in *.sh ; do cp "${file}" "${file.backup}" ; done
+4 [student@linux ~]$ ls
+5 count.sh count.sh.backup go.sh go.sh.backup
+```
+The for loop you know from C-like programming languages like Java can also be used in Bash. However, it is much less common.
+
+```
+1 ^!/bin/bash
+2 for (( i=0; i<10; i^+ ))
+3 do
+4 echo "counting from 0 to 9, now at ${i}"
+5 done
+```
+#### **17.7. while loop**
+
+Below a simple example of a while loop.
+
+```
+1 i=100;
+2 while [ "${i}" -ge '0' ]
+3 do
+4 echo "Counting down from 100 to 0, now at $i;"
+5 (( i-- ))
+6 done
+```
+Endless loops can be made with while true or while : , where the colon : is the equivalent of *no operation* in the *Korn* and *Bash* shells.
+
+```
+1 ^!/bin/ksh
+2 # endless loop
+3 while :
+4 do
+5 echo "hello"
+6 sleep 1
+7 done
+```
+#### **17.8. until loop**
+
+Below a simple example of an until loop.
+
+```
+1 i=100
+2 until [ "${i}" -le '0' ]
+3 do
+4 echo "Counting down from 100 to 1, now at ${i}"
+5 (( i-- ))
+6 done
+```
+#### **17.9. practice: scripting tests and loops**
+
+- 1. Write a script that uses a for loop to count from 3 to 7.
+- 2. Write a script that uses a for loop to count from 1 to 17000.
+- 3. Write a script that uses a while loop to count from 3 to 7.
+- 4. Write a script that uses an until loop to count down from 8 to 4.
+- 5. Write a script that uses a for loop to count the number of files ending in .txt in the current directory and displays a message "There are N files ending in .txt".
+- 6. Improve the script with conditional statements so the displayed message is also correct when there are zero files or one file ending in .txt.
+
+#### **17.10. solution: scripting tests and loops**
+
+1. Write a script that uses a for loop to count from 3 to 7.
+
+```
+1 ^!/bin/bash
+2
+3 for i in 3 4 5 6 7
+4 do
+5 echo "Counting from 3 to 7, now at ${i}"
+6 done
+```
+You can also use brace expansion, e.g. for i in {3^.7}.
+
+2. Write a script that uses a for loop to count from 1 to 17000.
+
+```
+1 ^!/bin/bash
+2
+3 for i in $(seq 1 17000)
+4 do
+5 echo "Counting from 1 to 17000, now at ${i}"
+6 done
+```
+3. Write a script that uses a while loop to count from 3 to 7.
+
+```
+1 ^!/bin/bash
+2
+3 i=3
+4 while [ "${i}" -le '7' ]
+5 do
+6 echo "Counting from 3 to 7, now at ${i}"
+7 i=(( i+1 )) # or (( i^+ ))
+8 done
+```
+4. Write a script that uses an until loop to count down from 8 to 4.
+
+```
+1 ^!/bin/bash
+2
+3 i=8
+4 until [ "${i}" -lt '4' ]
+5 do
+6 echo "Counting down from 8 to 4, now at ${i}"
+7 (( i-- ))
+8 done
+```
+5. Write a script that uses a for loop to count the number of files ending in .txt in the current directory and displays a message "There are N files ending in .txt".
+
+```
+1 ^!/bin/bash
+2
+3 i=0
+4 for file in *.txt
+5 do
+6 (( i^+ ))
+7 done
+8 echo "There are ${i} files ending in .txt"
+```
+6. Improve the script with conditional statements so the displayed message is also correct when there are zero files or one file ending in .txt.
+
+```
+1 ^! /bin/bash
+2
+3 if ! ls ./*.txt > /dev/null 2>&1; then
+4 echo "There are no files ending in .txt"
+5 exit 0
+6 fi
+7
+8 i=0
+9 for file in *.txt
+10 do
+11 (( i^+ ))
+12 done
+13
+14 if [ "${i}" -eq '1' ]; then
+15 echo "There is 1 file ending in .txt"
+16 else
+17 echo "There are ${i} files ending in .txt"
+18 fi
+```
+## <span id="page-204-0"></span>**18. scripting parameters**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Alex M. Schapelle, https://github.com/zero-pytagoras/, Bert Van Vreckem https://github.com/bertvv/)*
+
+#### **18.1[. script paramet](https://github.com/bertvv/)[ers](https://github.com/zero-pytagoras/)**
+
+<span id="page-204-1"></span>On the CLI, you often pass on options and arguments to a command to alter its behaviour. Bash *shell scripts* also can have options and arguments, called *positional parameters*. These parameters are stored in variables with names \${1}, \${2}, \${3}, and so on.
+
+```
+1 ^! /bin/bash --
+```
+
+```
+2 echo "The first argument is ${1}"
+```
+
+```
+3 echo "The second argument is ${2}"
+```
+
+```
+4 echo "The third argument is ${3}"
+```
+If you save this script in a file called pars.sh, and make it executable, you can run it with parameters:
+
+- <sup>1</sup> [student@linux scripts]\$ ./pars.sh one two three
+- <sup>2</sup> The first argument is one
+- <sup>3</sup> The second argument is two
+- <sup>4</sup> The third argument is three
+
+**Pay attention!** In many code examples you encounter on the Internet, you'll see the positional parameters referenced as \$1, \$2, \$3, etc, without the braces. This is also valid in Bash. However, if you want to reference the tenth positional parameter and you write \$10, Bash will interpret this as the value of the first positional parameter followed by a zero. To avoid this, you should always use braces around the number, like \${10}. For example:
+
+```
+1 ^! /bin/bash --
+2
+3 # Confusing use of positional parameters, this will not expand as expected
+4 echo "The first argument is $1"
+5 echo "The tenth argument is $10"
+```
+If you run this script (let's call it tenparams.sh):
+
+- <sup>1</sup> [student@linux scripts]\$ ./tenparams.sh one two three four five six seven ↪ eight nine ten
+- <sup>2</sup> The first argument is one
+- <sup>3</sup> The tenth argument is one0
+
+So, if you write a \$ followed by a number, only the first digit will be interpreted as the positional parameter! We recommend to always using braces to avoid this confusion.
+
+```
+1 ^! /bin/bash --
+2
+3 # Confusing use of positional parameters, this will not expand as expected
+4 echo "The first argument is ${1}"
+5 echo "The tenth argument is ${10}"
+```
+#### *18. scripting parameters*
+
+When you run a script, other special pre-defined variables are available. The man page of bash(1) has a full list, but we list a few here.
+
+| Variable | Description                                 |
+|----------|---------------------------------------------|
+| \${0}    | The name of the script                      |
+| \$#      | The number of parameters                    |
+| \$*      | All the parameters (as one long string)     |
+| \$@      | All the parameters (as a list)              |
+| \$?      | The return code (0-255) of the last command |
+| \$\$     | The process ID of the script                |
+
+An example script that uses these variables:
+
+```
+1 ^! /bin/bash --
+2
+3 cat ^< _EOF_
+4 The script name is: ${0}
+5 Number of arguments: $#
+6 The first argument is ${1}
+7 The second argument is ${2}
+8 The third argument is ${3}
+9 PID of the script: $$
+10 Last return code: $?
+11 All the arguments (list): $@
+12 All the arguments (string): $*
+13 _EOF_
+```
+The output would look like this (if you save the script in a file called special-vars.sh):
+
+```
+1 [student@linux scripts]$ ./special-vars.sh one two three
+2 The script name is: ./special-vars.sh
+3 Number of arguments: 3
+4 The first argument is one
+5 The second argument is two
+6 The third argument is three
+7 PID of the script: 5612
+8 Last return code: 0
+9 All the arguments (list): one two three
+```
+<sup>10</sup> All the arguments (string): one two three
+
+If you pass on less parameters than the script expects, the missing parameters will be interpreted as empty strings. If you start the script with set -o nounset (or set -u for short), the script will exit with an error if you try to reference a positional parameter that was not passed on. When parsing parameters, always check the number of arguments first to avoid this.
+
+## <span id="page-205-0"></span>**18.2. shift through parameters**
+
+The shift command will drop the first positional parameter, and move all the others one position to the left, i.e. \${1} will dissapear, \${2} will become \${1}, \${3} will become \${2}, and so on.
+
+Using a while loop in combination with shift statement, you can parse all parameters one by one. This is a sample script (called shift.sh) that does this:
+
+```
+1 ^! /bin/bash --
+2
+3 if [ "$#" -eq "0" ]
+4 then
+5 echo "You have to give at least one parameter."
+6 exit 1
+7 fi
+8
+9 while (( $# ))
+10 do
+11 echo "arg: ${1}"
+12 shift
+13 done
+  The while loop can also be written as while [ "$#" -gt "0" ].
+```
+Below is some sample output of the script above.
+
+```
+1 [student@linux scripts]$ ./shift.sh one
+2 arg: one
+3 [student@linux scripts]$ ./shift.sh one two three 1201 "33 42"
+4 arg: one
+5 arg: two
+6 arg: three
+7 arg: 1201
+8 arg: 33 42
+9 [student@linux scripts]$ ./shift.sh
+```
+#### You have to give at least one parameter.
+
+## <span id="page-206-0"></span>**18.3. for loop through parameters**
+
+You can also use a for loop to iterate over the positional parameters. This is a sample script (called for.sh) that does this:
+
+```
+1 ^! /bin/bash --
+2
+3 if [ "$#" -eq "0" ]
+4 then
+5 echo "You have to give at least one parameter."
+6 exit 1
+7 fi
+8
+9 for arg in "${@}"
+10 do
+11 echo "arg: ${arg}"
+12 done
+```
+This script behaves in the same way as the shift.sh script. However, after the loop, all positional parameters are still available.
+
+## <span id="page-206-1"></span>**18.4. runtime input**
+
+You can ask the user for input with the read command in a script.
+
+```
+1 ^!/bin/bash
+2 read -p 'Enter your name ' -r name
+3 echo "Hello, ${name}!"
+```
+Use option -p to display a prompt, and -r to prevent backslashes from being interpreted as escape characters.
+
+You can also use read to read lines from a file and then iterate on them.
+
+```
+1 ^! /bin/bash --
+2 while read -r line
+3 do
+4 echo "line: ${line}"
+5 done < inputfile.txt
+```
+Example output:
+
+```
+1 [student@linux scripts]$ cat inputfile.txt
+2 one
+3 two
+4 three
+5 [student@linux scripts]$ ./readlines.sh
+6 line: one
+7 line: two
+8 line: three
+```
+## <span id="page-207-0"></span>**18.5. sourcing a config file**
+
+The source (as seen in the shell chapters), or the shortcut . can be used to source a configuration file. With source, the specified file is executed *in the current shell*, i.e. without creating a subshell. Consequently, variables set in the configuration file are available in the script that sources the file.
+
+Below a sample configuration file for an application.
+
+```
+1 [student@linux scripts]$ cat myApp.conf
+2 # The config file of myApp
+3
+4 # Enter the path here
+5 myAppPath=/var/myApp
+6
+7 # Enter the number of quines here
+8 quines=5
+```
+And here an application (my-app.sh) that uses this file.
+
+```
+1 ^! /bin/bash --
+2 #
+3 # Welcome to the myApp application
+4 #
+5
+6 # Source the configuration file
+7 . ./myApp.conf
+8
+9 echo "There are ${quines} quines"
+```
+The running application can use the values inside the sourced configuration file.
+
+```
+1 [student@linux scripts]$ ./my-app.sh
+2 There are 5 quines
+```
+## **18.6. get script options with getopts**
+
+The getopts function allows you to parse options given to a command. The following script allows for any combination of the options a, f and z.
+
+```
+1 ^! /bin/bash --
+2
+3 while getopts ":afz" option;
+4 do
+5 case "${option}" in
+6 a)
+7 echo 'received -a'
+8 ^;
+9 f)
+10 echo 'received -f'
+11 ^;
+12 z)
+13 echo 'received -z'
+14 ^;
+15 *)
+16 echo "invalid option -${OPTARG}"
+17 ^;
+18 esac
+19 done
+```
+This is sample output from the script above. First we use correct options, then we enter twice an invalid option.
+
+```
+1 student@linux$ ./options.ksh
+2 student@linux$ ./options.ksh -af
+3 received -a
+4 received -f
+5 student@linux$ ./options.ksh -zfg
+6 received -z
+7 received -f
+8 invalid option -g
+9 student@linux$ ./options.ksh -a -b -z
+10 received -a
+11 invalid option -b
+12 received -z
+```
+You can also check for options that need an argument, as this example script(argoptions.sh) shows.
+
+```
+1 ^! /bin/bash --
+2
+3 while getopts ":af:z" option
+4 do
+5 case $option in
+6 a)
+7 echo 'received -a'
+8 ^;
+9 f)
+10 echo "received -f with ${OPTARG}"
+11 ^;
+12 z)
+13 echo 'received -z'
+14 ^;
+15 :)
+```
+
+```
+16 echo "option -${OPTARG} needs an argument"
+17 ^;
+18 *)
+19 echo "invalid option -${OPTARG}"
+20 ^;
+21 esac
+22 done
+```
+This is sample output from the script above.
+
+```
+1 student@linux$ ./argoptions.sh -a -f hello -z
+2 received -a
+3 received -f with hello
+4 received -z
+5 student@linux$ ./argoptions.sh -zaf 42
+6 received -z
+7 received -a
+8 received -f with 42
+9 student@linux$ ./argoptions.sh -zf
+10 received -z
+11 option -f needs an argument
+```
+Additionally, there's a utility command called getopt (part of the GNU project) that can be used to parse complex cases with mixed use of long options (like ^-verbose), combinations of multiple short options (like -abc for -a -b -c), and options with arguments (like -f file). The getopt command will rewrite the command line options in a "canonical" form that is easier to parse with a while loop. However, getopt is not portable: BSD and macOS don't have GNU getopt, but they have their own version of getopt that is less powerful. Using getopt is out of the scope of this chapter.
+
+## **18.7. get shell options with shopt**
+
+You can toggle the values of variables controlling optional shell behaviour with the shopt built-in shell command. The example below first verifies whether the cdspell option is set; it is not. The next shopt command sets the value, and the third shopt command verifies that the option really is set. You can now use minor spelling mistakes in the cd command. The man page of bash(1) has a complete list of options.
+
+```
+1 student@linux:~$ shopt -q cdspell ; echo $?
+2 1
+3 student@linux:~$ shopt -s cdspell
+4 student@linux:~$ shopt -q cdspell ; echo $?
+5 0
+6 student@linux:~$ cd /Etc
+7 /etc
+```
+## <span id="page-209-0"></span>**18.8. practice: parameters and options**
+
+- 1. Write a script that receives four parameters, and outputs them in reverse order.
+- 2. Write a script that receives two parameters (two filenames) and outputs whether those files exist.
+- 3. Write a script that takes a filename as parameter, or asks for a filename if none was given. Verify the existence of the file, then verify that you own the file, and whether it is writable. If not, then make it writable.
+
+4. Make a configuration file for the previous script. Put a logging switch in the config file, logging means writing detailed output of everything the script does to a log file in /tmp.
+
+#### <span id="page-210-0"></span>**18.9. solution: parameters and options**
+
+1. Write a script that receives four parameters, and outputs them in reverse order.
+
+```
+1 ^!/bin/bash
+2 echo "${4} ${3} ${2} ${1}"
+```
+2. Write a script that receives two parameters (two filenames) and outputs whether those files exist.
+
+```
+1 ^!/bin/bash
+2
+3 if [ "$#" -ne '2' ]
+4 then
+5 echo "This script needs two parameters, got $#" >&2
+6 echo "Usage: ${0} <file1> <file2>" >&2
+7 exit 1
+8 fi
+9
+10 if [ -f "${1}" ]
+11 then
+12 echo "${1} exists!"
+13 else
+14 echo "${1} not found!"
+15 fi
+16
+17 if [ -f "${2}" ]
+18 then
+19 echo "${2} exists!"
+20 else
+21 echo "${2} not found!"
+22 fi
+```
+3. Write a script (e.g. named chkw.sh) that takes a filename as parameter, or asks for a filename if none was given. Verify the existence of the file, then verify that you own the file, and whether it is writable. If not, then make it writable.
+
+```
+1 ^! /bin/bash
+2
+3 # Check if a filename was given as a parameter
+4 if [ "$#" -eq '0' ]; then
+5 read -r -p "Enter a filename: " filename
+6 else
+7 filename="${1}"
+8 fi
+9
+10 # Check if the file exists
+11 if [ ! -f "${filename}" ]; then
+12 echo "File does not exist, or is not a file"
+13 exit 1
+14 fi
+15
+16 # Check if the file is owned by the user
+17 if [ ! -O "${filename}" ]; then
+18 echo "You do not own this file"
+```
+#### *18. scripting parameters*
+
+```
+19 exit 1
+20 fi
+21
+22 # Check if the file is writable
+23 if [ ! -w "${filename}" ]; then
+24 echo "File is not writable"
+25 chmod u+w "${filename}"
+26 echo "File is now writable"
+27 else
+28 echo "File is writable"
+29 fi
+      Interaction with the script:
+1 [student@linux scripts]$ touch test{1^.3}.txt
+2 [student@linux scripts]$ ls -l
+3 total 4
+4 -rwxr--r--. 1 student student 970 25 okt 12:39 chkw.sh
+5 -rw-------. 1 student student 0 25 okt 12:41 test1.txt
+6 -rw-------. 1 student student 0 25 okt 12:41 test2.txt
+7 -rw-------. 1 student student 0 25 okt 12:41 test3.txt
+8 [student@linux scripts]$ chmod -w test1.txt
+9 [student@linux scripts]$ sudo chown root:root test2.txt
+10 [student@linux scripts]$ ls -l
+11 total 4
+12 -rwxr--r--. 1 student student 970 25 okt 12:39 chkw.sh
+13 -r--------. 1 student student 0 25 okt 12:41 test1.txt
+14 -rw-------. 1 root root 0 25 okt 12:41 test2.txt
+15 -rw-------. 1 student student 0 25 okt 12:41 test3.txt
+16 [student@linux scripts]$ ./chkw.sh
+17 Enter a filename: test1.txt
+18 File is not writable
+19 File is now writable
+20 [student@linux scripts]$ ./chkw.sh test2.txt
+21 You do not own this file
+22 [student@linux scripts]$ ./chkw.sh test3.txt
+23 File is writable
+24 [student@linux scripts]$ ls -l
+25 total 4
+26 -rwxr--r--. 1 student student 970 25 okt 12:39 chkw.sh
+27 -rw-------. 1 student student 0 25 okt 12:41 test1.txt
+28 -rw-------. 1 root root 0 25 okt 12:41 test2.txt
+29 -rw-------. 1 student student 0 25 okt 12:41 test3.txt
+```
+4. Make a configuration file for the previous script. Put a logging switch in the config file, logging means writing detailed output of everything the script does to a log file in /tmp.
+
+```
+1 ^! /bin/bash
+2
+3 . .chkwrc
+4
+5 if [ "${logging}" = 'on' ]; then
+6 log="tee -a ${logfile}"
+7 date -Is ^> "${logfile}"
+8 echo "Filename: ${1}" ^> "${logfile}"
+9 else
+10 log='cat'
+11 fi
+12
+13 # Check if a filename was given as a parameter
+```
+
+```
+14 if [ "$#" -eq '0' ]; then
+15 read -r -p "Enter a filename: " filename
+16 else
+17 filename="${1}"
+18 fi
+19
+20 # Check if the file exists
+21 if [ ! -f "${filename}" ]; then
+22 echo "File does not exist, or is not a file" | ${log}
+23 exit 1
+24 fi
+25
+26 # Check if the file is owned by the user
+27 if [ ! -O "${filename}" ]; then
+28 echo "You do not own this file" | ${log}
+29 exit 1
+30 fi
+31
+32 # Check if the file is writable
+33 if [ ! -w "${filename}" ]; then
+34 echo "File is not writable" | ${log}
+35 chmod u+w "${filename}"
+36 echo "File is now writable" | ${log}
+37 else
+38 echo "File is writable" | ${log}
+39 fi
+      Configuration file (.chkwrc):
+1 logging=on
+2 logfile=/tmp/chkw.log
+      Interaction with the script:
+1 [student@linux scripts] $ ls -l
+2 total 4
+3 -rwxr--r--. 1 student student 1133 26 okt 13:26 chkw.sh
+4 -r--------. 1 student student 0 25 okt 12:41 test1.txt
+5 -rw-------. 1 root root 0 25 okt 12:41 test2.txt
+6 -r--r-----. 1 student student 0 25 okt 12:41 test3.txt
+7 [student@linux scripts] $ ./chkw.sh test1.txt
+8 File is not writable
+9 File is now writable
+10 [student@linux scripts] $ ./chkw.sh test2.txt
+11 You do not own this file
+12 [student@linux scripts] $ ./chkw.sh test3.txt
+13 File is not writable
+14 File is now writable
+15 [student@linux scripts] $ cat /tmp/chkw.log
+16 2024-10-26T13:27:26+02:00
+17 File is not writable
+18 File is now writable
+19 2024-10-26T13:27:50+02:00
+20 Filename: test2.txt
+21 You do not own this file
+22 2024-10-26T13:27:54+02:00
+23 Filename: test3.txt
+24 File is not writable
+25 File is now writable
+```
+## **Part VI.**
+
+# <span id="page-214-0"></span>**Advanced text processing**
+
+## <span id="page-216-0"></span>**19. file globbing**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Alex M. Schapelle, https://github.com/zero-pytagoras/, Bert Van Vreckem https://github.com/bertvv/)*
+
+This chapter will explain **file globbing**. Typing [man 7 glob](https://github.com/paulcobbaut/) (on Debian) will tell you that long ago there was a program called /etc/glob [that would expand](https://github.com/zero-pytagoras/) *wildcard patterns*. Soon after[ward, this became a shell b](https://github.com/bertvv/)uilt-in.
+
+A string is a wildcard pattern if it contains ?, \* or [. *Globbing* (or dynamic filename generation) is the operation that expands a wildcard pattern into a list of pathnames that match the pattern.
+
+### **19.1. \* asterisk**
+
+<span id="page-216-1"></span>The asterisk \* is interpreted by the shell as a sign to generate filenames, matching the asterisk to any combination of characters (even none). When no path is given, the shell will use filenames in the current directory. See the man page of glob(7) for more information.
+
+```
+1 student@linux:~/gen$ ls
+2 file1 file2 file3 File4 File55 FileA fileå fileab Fileab FileAB
+   ↪ fileabc fileæ fileø filex filey filez
+3 student@linux:~/gen$ ls File*
+4 File4 File55 FileA Fileab FileAB
+5 student@linux:~/gen$ ls file*
+6 file1 file2 file3 fileå fileab fileabc fileæ fileø filex filey filez
+7 student@linux:~/gen$ ls *ile55
+8 File55
+9 student@linux:~/gen$ ls F*ile55
+10 File55
+11 student@linux:~/gen$ ls F*55
+12 File55
+```
+## **19.2. ? question mark**
+
+<span id="page-216-2"></span>Similar to the asterisk, the question mark ? is interpreted by the shell as a sign to generate filenames, matching the question mark with exactly one character.
+
+```
+1 student@linux:~/gen$ ls File?
+```
+
+```
+2 File4 FileA
+```
+
+```
+3 student@linux:~/gen$ ls Fil?4
+```
+
+```
+4 File4
+```
+
+```
+5 student@linux:~/gen$ ls Fil^?
+```
+
+```
+6 File4 FileA
+```
+
+```
+7 student@linux:~/gen$ ls File^?
+```
+
+```
+8 File55 Fileab FileAB
+```
+## <span id="page-217-0"></span>**19.3. [] square brackets**
+
+The square bracket [ is interpreted by the shell as a sign to generate filenames, matching any of the characters between [ and the first subsequent ]. The order in this list between the brackets is not important. Each pair of brackets is replaced by exactly one character.
+
+```
+1 student@linux:~/gen$ ls File[5A]
+2 FileA
+3 student@linux:~/gen$ ls File[A5]3
+4 ls: cannot access 'File[A5]3': No such file or directory
+5 student@linux:~/gen$ ls File[A5]
+6 FileA
+7 student@linux:~/gen$ ls File[A5][5b]
+8 File55
+9 student@linux:~/gen$ ls File[a5][5b]
+10 File55 Fileab
+11 student@linux:~/gen$ ls File[a5][5b][abcdefghijklm]
+12 ls: cannot access 'File[a5][5b][abcdefghijklm]': No such file or directory
+13 student@linux:~/gen$ ls file[a5][5b][abcdefghijklm]
+14 fileabc
+  You can also exclude characters from a list between square brackets with the exclamation
+   mark !. And you are allowed to make combinations of these wildcards.
+```
+
+```
+1 student@linux:~/gen$ ls file[a5][!Z]
+2 fileab
+3 student@linux:~/gen$ ls file[!5]*
+4 file1 file2 file3 fileå fileab fileabc fileæ fileø filex filey filez
+5 student@linux:~/gen$ ls file[!5]?
+6 fileab
+```
+### <span id="page-217-1"></span>**19.4. a-z and 0-9 ranges**
+
+The bash shell will also understand ranges of characters between brackets.
+
+```
+1 student@linux:~/gen$ ls file[a-z]*
+2 fileab fileabc filex filey filez
+3 student@linux:~/gen$ ls file[0-9]
+4 file1 file2 file3
+5 student@linux:~/gen$ ls file[a-z][a-z][0-9]*
+6 ls: cannot access 'file[a-z][a-z][0-9]*': No such file or directory
+7 student@linux:~/gen$ ls file[a-z][a-z][a-z]*
+8 fileabc
+```
+### <span id="page-217-2"></span>**19.5. named character classes**
+
+```
+Instead of ranges, you can also specify named character classes: [[:alnum:]]" [[:alpha:]],
+[[:blank:]], [[:cntrl:]], [[:digit:]], [[:graph:]], [[:lower:]], [[:print:]],
+[[:punct:]], [[:space:]], [[:upper:]], [[:xdigit:]]. Instead of, e.g. [a-z], you can
+also use [[:lower:]].
+```
+
+```
+1 student@linux:~/gen$ ls file[a-z]*
+2 fileab fileabc filex filey filez
+3 student@linux:~/gen$ ls file[[:lower:]]*
+4 fileå fileab fileabc fileæ fileø filex filey filez
+```
+Remark that the named character classes work better for international characters. In the example above, [a-z] does not match the Danish characters æ, ø, and å, but [[:lower:]] does.
+
+## **19.6. \$LANG and square brackets**
+
+But, don't forget the influence of the \$LANG variable. Depending on the selected language or locale, the shell will interpret the square brackets and named character classes differently. Sort order may also be affected.
+
+For example, when we select the default locale called C:
+
+```
+1 student@linux:~/gen$ sudo localectl set-locale C
+2 [^^. log out and log in again ^^.]
+3 student@linux:~/gen$ echo $LANG
+4 C
+5 student@linux:~/gen$ ls
+6 File4 File55 FileA FileAB Fileab file1 file2 file3 fileab
+      fileabc filex filey filez 'file'$'\303\245' 'file'$'\303\246'
+      'file'$'\303\270'
+   ↪
+   ↪
+7 student@linux:~/gen$ ls file[[:lower:]]*
+8 fileab fileabc filex filey filez
+```
+The Danish characters can't be displayed properly and don't match the [[:lower:]] character class.
+
+Let us change the locale to da\_DK.UTF-8 (Danish/Denmark with UTF-8 support) and see what happens:
+
+```
+1 student@linux:~/gen$ sudo localectl set-locale da_DK.UTF-8
+2 [^^. log out and log in again ^^.]
+3 student@linux:~/gen$ echo $LANG
+4 da_DK.UTF-8
+5 student@linux:~/gen$ ls
+6 file1 file2 file3 File4 File55 FileA FileAB Fileab fileab fileabc
+   ↪ filex filey filez fileæ fileø fileå
+7 student@linux:~/gen$ ls file[[:lower:]]*
+```
+<sup>8</sup> fileab fileabc filex filey filez fileæ fileø fileå
+
+Now the Danish characters are displayed properly and match the [[:lower:]] character class.
+
+In the en\_US.UTF-8 locale (US English, with UTF-8 support), the Danish characters are displayed properly, and also match the [[:lower:]] character class. However, they are sorted differently:
+
+```
+1 student@linux:~/gen$ sudo localectl set-locale en_US.UTF-8
+2 [^^. log out and log in again ^^.]
+3 student@linux:~/gen$ echo $LANG
+4 en_US.UTF-8
+5 student@linux:~/gen$ ls
+6 file1 file2 file3 File4 File55 FileA fileå fileab Fileab FileAB
+   ↪ fileabc fileæ fileø filex filey filez
+7 student@linux:~/gen$ ls file[[:lower:]]*
+8 fileå fileab fileabc fileæ fileø filex filey filez
+```
+## <span id="page-219-0"></span>**19.7. preventing file globbing**
+
+If a wildcard pattern does not match any filenames, the shell will not expand the pattern. Consequently, when in an empty directory, echo \* will display a \*. It will echo the names of all files when the directory is not empty.
+
+```
+1 student@linux:~$ mkdir test42
+2 student@linux:~$ cd test42/
+3 student@linux:~/test42$ echo *
+4 *
+5 student@linux:~/test42$ touch test{1,2,3}
+6 student@linux:~/test42$ echo *
+7 test1 test2 test3
+```
+Globbing can be prevented using quotes or by escaping the special characters, as shown in this screenshot.
+
+```
+1 student@linux:~/test42$ echo *
+2 test1 test2 test3
+3 student@linux:~/test42$ echo \*
+4 *
+5 student@linux:~/test42$ echo '*'
+6 *
+7 student@linux:~/test42$ echo "*"
+8 *
+```
+## <span id="page-219-1"></span>**19.8. practice: shell globbing**
+
+In the questions below, use the ls command with globbing patterns to list the specified files. Don't pipe the output to grep or another tool to filter on regular expressions!
+
+- 1. Create a test directory glob and enter it.
+- 2. Create the following files :
+
+| vagrant@ubuntu:~/glob\$ ls<br>1 |         |        |             |       |        |       |       |         |
+|---------------------------------|---------|--------|-------------|-------|--------|-------|-------|---------|
+| 2                               | 'file(' | file10 | 'file<br>2' | File2 | file33 | fileA | fileà | fileAAA |
+| 3                               | file1   | file11 | file2       | File3 | filea  | fileá | fileå | fileAB  |
+
+(remark that file 2 has a space in the name!)
+
+- 3. List all files starting with file
+- 4. List all files starting with File
+- 5. List all files starting with file and ending in *a number*.
+- 6. List all files starting with file and ending with *a letter*
+- 7. List all files starting with File and having a *digit* as *fifth* character.
+- 8. List all files starting with File and having a *digit* as *fifth* and last character (i.e. the name consists of five characters).
+- 9. List all files starting with *a letter* and ending in *a number*.
+- 10. List all files that have *exactly five characters*.
+- 11. List all files that start with f or F and end with 3 or A.
+- 12. List all files that start with f have i or R as second character and end in a number.
+- 13. List all files that do not start with the letter F.
+- 14. Show the influence of \$LANG (the system locale) in listing A-Z or a-z ranges.
+- 15. You receive information that one of your servers was cracked. The cracker probably replaced the ls command with a rootkit so it can no longer be used safely. You know that the echo command is safe to use. Can echo replace ls? How can you list the files in the current directory with echo?
+
+#### <span id="page-220-0"></span>**19.9. solution: shell globbing**
+
+- 1. Create a test directory glob and enter it.
+- <sup>1</sup> mkdir glob**;** cd glob
+- 2. Create the files:
+- <sup>1</sup> student@ubuntu:~\$ touch file1 file10 file11 file2 File2 File3 file33 ↪ fileAB
+- <sup>2</sup> student@ubuntu:~\$ touch filea fileá fileà fileå fileA fileAAA 'file(' ↪ 'file 2'
+- 3. List all files starting with file
+
+| 1 |         | student@ubuntu:~/glob\$ ls           |             | file*  |       |       |         |
+|---|---------|--------------------------------------|-------------|--------|-------|-------|---------|
+| 2 | 'file(' | file10                               | 'file<br>2' | file33 | fileA | fileà | fileAAA |
+| 3 | file1   | file11                               | file2       | filea  | fileá | fileå | fileAB  |
+|   |         | 4. List all files starting with File |             |        |       |       |         |
+
+- <sup>1</sup> student@ubuntu:~/glob\$ ls File\*
+- <sup>2</sup> File2 File3
+
+5. List all files starting with file and ending in *a number*.
+
+```
+1 student@ubuntu:~/glob$ ls file*[0-9]
+2 file1 file10 file11 'file 2' file2 file33
+```
+6. List all files starting with file and ending with *a letter*
+
+```
+1 student@ubuntu:~/glob$ ls file*[A-Za-z]
+2 filea fileA fileAAA fileAB
+3 student@ubuntu:~/glob$ ls file*[[:alpha:]]
+4 filea fileA fileá fileà fileå fileAAA fileAB
+```
+Remark that the first solution is not complete, as it does not list the files with special characters in the name! In this case, it's better to use the named class [:alpha:].
+
+7. List all files starting with File and having a *digit* as *fifth* character.
+
+```
+1 student@ubuntu:~/glob$ ls File[0-9]*
+```
+
+```
+2 File2 File3
+```
+8. List all files starting with File and having a *digit* as *fifth* and last character (i.e. the name consists of five characters).
+
+```
+1 student@ubuntu:~/glob$ ls File[0-9]
+2 File2
+```
+9. List all files starting with *a letter* and ending in *a number*.
+
+```
+1 student@ubuntu:~/glob$ ls [[:alpha:]]*[[:digit:]]
+2 file1 file10 file11 'file 2' file2 File2 File3 file33
+```
+10. List all files that have *exactly five characters*.
+
+```
+1 student@ubuntu:~/glob$ ls ?????
+2 'file(' file1 file2 File2 File3 filea fileA fileá fileà
+   ↪ fileå
+```
+11. List all files that start with f or F and end with 3 or A.
+
+```
+1 student@ubuntu:~/glob$ ls [fF]*[3A]
+2 File3 file33 fileA fileAAA
+```
+12. List all files that start with f have i or R as second character and end in a number.
+
+```
+1 student@ubuntu:~/glob$ ls f[iR]*[0-9]
+2 file1 file10 file11 'file 2' file2 file33
+```
+13. List all files that do not start with the letter F.
+
+| 1 | student@ubuntu:~/glob\$ ls<br>[^F]* |        |             |        |       |       |         |  |  |
+|---|-------------------------------------|--------|-------------|--------|-------|-------|---------|--|--|
+| 2 | 'file('                             | file10 | 'file<br>2' | file33 | fileA | fileà | fileAAA |  |  |
+| 3 | file1                               | file11 | file2       | filea  | fileá | fileå | fileAB  |  |  |
+
+14. Show the influence of \$LANG (the system locale) in listing A-Z or a-z ranges.
+
+```
+1 student@ubuntu:~/glob$ LANG=C ls file[[:alpha:]]*
+2 fileA fileAAA fileAB filea 'file'$'\303\240' 'file'$'\303\241'
+   ↪ 'file'$'\303\245'
+3 student@ubuntu:~/glob$ LANG=en_US.UTF-8 ls file[[:alpha:]]*
+4 filea fileA fileá fileà fileå fileAAA fileAB
+5 student@ubuntu:~/glob$ LANG=da_DK.UTF-8 ls file[[:alpha:]]*
+6 fileA filea fileá fileà fileAB fileå fileAAA
+15. You receive information that one of your servers was cracked. The cracker probably
+```
+replaced the ls command with a rootkit so it can no longer be used safely. You know that the echo command is safe to use. Can echo replace ls? How can you list the files in the current directory with echo?
+
+```
+1 student@ubuntu:~/glob$ echo *
+```
+<sup>2</sup> file( file1 file10 file11 file 2 file2 File2 File3 file33 filea fileA ↪ fileá fileà fileå fileAAA fileAB
+
+A disadvantage is that you can't see properties of the files, like permissions, owner, group, size, and date. For this, you can use stat, e.g. stat -c '%A %h %U %G %s %y %n' \*.
+
+## <span id="page-222-0"></span>**20. regular expressions**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Alex M. Schapelle, https://github.com/zero-pytagoras/)*
+
+Regular expressions are a very powerful tool in Linux. They can be used with a variety of programs like bash, vi, rename, [grep, sed and more.](https://github.com/paulcobbaut/)
+
+This chapter introduces you to the basics of [regular expressi](https://github.com/zero-pytagoras/)ons.
+
+#### **20.1. regex versions**
+
+<span id="page-222-1"></span>There are three different versions of regular expression syntax:
+
+```
+BRE: Basic Regular Expressions
+ERE: Extended Regular Expressions
+PRCE: Perl Regular Expressions
+```
+Depending on the tool being used, one or more of these syntaxes can be used.
+
+For example the grep tool has the -E option to force a string to be read as ERE while -G forces BRE and -P forces PRCE.
+
+Note that grep also has -F to force the string to be read literally.
+
+The sed tool also has options to choose a regex syntax.
+
+Read the manual of the tools you use!
+
+#### **20.2. grep**
+
+#### <span id="page-222-2"></span>**20.2.1. print lines matching a pattern**
+
+<span id="page-222-3"></span>grep is a popular Linux tool to search for lines that match a certain pattern. Below are some examples of the simplest regular expressions.
+
+This is the content of the test file. This file contains three lines (or three newline characters).
+
+student@linux:~\$ cat names Tania Laura Valentina
+
+When grepping for a single character, only the lines containing that character are returned.
+
+```
+student@linux:~$ grep u names
+Laura
+student@linux:~$ grep e names
+Valentina
+student@linux:~$ grep i names
+Tania
+Valentina
+```
+The pattern matching in this example should be very straightforward; if the given character occurs on a line, then grep will return that line.
+
+### <span id="page-223-0"></span>**20.2.2. concatenating characters**
+
+Two concatenated characters will have to be concatenated in the same way to have a match.
+
+This example demonstrates that ia will match Tania but not Valentina and in will match Valentina but not Tania.
+
+```
+student@linux:~$ grep a names
+Tania
+Laura
+Valentina
+student@linux:~$ grep ia names
+Tania
+student@linux:~$ grep in names
+Valentina
+student@linux:~$
+```
+#### <span id="page-223-1"></span>**20.2.3. one or the other**
+
+PRCE and ERE both use the pipe symbol to signify OR. In this example we grep for lines containing the letter i or the letter a.
+
+```
+student@linux:~$ cat list
+Tania
+Laura
+student@linux:~$ grep -E 'i|a' list
+Tania
+Laura
+```
+Note that we use the -E switch of grep to force interpretion of our string as an ERE.
+
+We need to escape the pipe symbol in a BRE to get the same logical OR.
+
+```
+student@linux:~$ grep -G 'i|a' list
+student@linux:~$ grep -G 'i\|a' list
+Tania
+Laura
+```
+#### <span id="page-224-0"></span>**20.2.4. one or more**
+
+The \* signifies zero, one or more occurences of the previous and the + signifies one or more of the previous.
+
+```
+student@linux:~$ cat list2
+ll
+lol
+lool
+loool
+student@linux:~$ grep -E 'o*' list2
+ll
+lol
+lool
+loool
+student@linux:~$ grep -E 'o+' list2
+lol
+lool
+loool
+student@linux:~$
+```
+#### <span id="page-224-1"></span>**20.2.5. match the end of a string**
+
+For the following examples, we will use this file.
+
+```
+student@linux:~$ cat names
+Tania
+Laura
+Valentina
+Fleur
+Floor
+```
+The two examples below show how to use the dollar character to match the end of a string.
+
+```
+student@linux:~$ grep a$ names
+Tania
+Laura
+Valentina
+student@linux:~$ grep r$ names
+Fleur
+Floor
+```
+#### <span id="page-224-2"></span>**20.2.6. match the start of a string**
+
+The caret character (^) will match a string at the start (or the beginning) of a line.
+
+Given the same file as above, here are two examples.
+
+```
+student@linux:~$ grep ^Val names
+Valentina
+student@linux:~$ grep ^F names
+Fleur
+Floor
+```
+Both the dollar sign and the little hat are called anchors in a regex.
+
+#### <span id="page-225-0"></span>**20.2.7. separating words**
+
+Regular expressions use a \b sequence to reference a word separator. Take for example this file:
+
+```
+student@linux:~$ cat text
+The governer is governing.
+The winter is over.
+Can you get over there?
+```
+Simply grepping for over will give too many results.
+
+```
+student@linux:~$ grep over text
+The governer is governing.
+The winter is over.
+Can you get over there?
+```
+Surrounding the searched word with spaces is not a good solution (because other characters can be word separators). This screenshot below show how to use \b to find only the searched word:
+
+```
+student@linux:~$ grep '\bover\b' text
+The winter is over.
+Can you get over there?
+student@linux:~$
+```
+Note that grep also has a -w option to grep for words.
+
+```
+student@linux:~$ cat text
+The governer is governing.
+The winter is over.
+Can you get over there?
+student@linux:~$ grep -w over text
+The winter is over.
+Can you get over there?
+student@linux:~$
+```
+#### <span id="page-225-1"></span>**20.2.8. grep features**
+
+Sometimes it is easier to combine a simple regex with grep options, than it is to write a more complex regex. These options where discussed before:
+
+grep -i grep -v grep -w grep -A5 grep -B5 grep -C5
+
+#### <span id="page-226-0"></span>**20.2.9. preventing shell expansion of a regex**
+
+The dollar sign is a special character, both for the regex and also for the shell (remember variables and embedded shells). Therefore it is advised to always quote the regex, this prevents shell expansion.
+
+```
+student@linux:~$ grep 'r$' names
+Fleur
+Floor
+```
+## <span id="page-226-1"></span>**20.3. rename**
+
+#### <span id="page-226-2"></span>**20.3.1. the rename command**
+
+On Debian Linux the /usr/bin/rename command is a link to /usr/bin/prename installed by the perl package.
+
+student@linux ~ \$ dpkg -S \$(readlink -f \$(which rename)) perl: /usr/bin/prename
+
+Red Hat derived systems do not install the same rename command, so this section does not describe rename on Red Hat (unless you copy the perl script manually).
+
+There is often confusion on the internet about the rename command because solutions that work fine in Debian (and Ubuntu, xubuntu, Mint, ^^.) cannot be used in Red Hat (and CentOS, Fedora, ^^.).
+
+#### <span id="page-226-3"></span>**20.3.2. perl**
+
+The rename command is actually a perl script that uses perl regular expressions. The complete manual for these can be found by typing perldoc perlrequick (after installing perldoc).
+
+```
+root@linux:~# aptitude install perl-doc
+The following NEW packages will be installed:
+  perl-doc
+0 packages upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+Need to get 8,170 kB of archives. After unpacking 13.2 MB will be used.
+Get: 1 http:^/mirrordirector.raspbian.org/raspbian/ wheezy/main perl-do^^.
+Fetched 8,170 kB in 19s (412 kB/s)
+Selecting previously unselected package perl-doc.
+(Reading database ^^. 67121 files and directories currently installed.)
+Unpacking perl-doc (from ^^./perl-doc_5.14.2-21+rpi2_all.deb) ^^.
+Adding 'diversion of /usr/bin/perldoc to /usr/bin/perldoc.stub by perl-doc'
+Processing triggers for man-db ^^.
+Setting up perl-doc (5.14.2-21+rpi2) ^^.
+```
+
+```
+root@linux:~# perldoc perlrequick
+```
+#### <span id="page-227-0"></span>**20.3.3. well known syntax**
+
+The most common use of the rename is to search for filenames matching a certain string and replacing this string with an other string.
+
+This is often presented as s/string/other string/ as seen in this example:
+
+```
+student@linux ~ $ ls
+abc allfiles.TXT bllfiles.TXT Scratch tennis2.TXT
+abc.conf backup cllfiles.TXT temp.TXT tennis.TXT
+student@linux ~ $ rename 's/TXT/text/' *
+student@linux ~ $ ls
+abc allfiles.text bllfiles.text Scratch tennis2.text
+abc.conf backup cllfiles.text temp.text tennis.text
+```
+And here is another example that uses rename with the well know syntax to change the extensions of the same files once more:
+
+```
+student@linux ~ $ ls
+abc allfiles.text bllfiles.text Scratch tennis2.text
+abc.conf backup cllfiles.text temp.text tennis.text
+student@linux ~ $ rename 's/text/txt/' *.text
+student@linux ~ $ ls
+abc allfiles.txt bllfiles.txt Scratch tennis2.txt
+abc.conf backup cllfiles.txt temp.txt tennis.txt
+student@linux ~ $
+```
+These two examples appear to work because the strings we used only exist at the end of the filename. Remember that file extensions have no meaning in the bash shell.
+
+The next example shows what can go wrong with this syntax.
+
+```
+student@linux ~ $ touch atxt.txt
+student@linux ~ $ rename 's/txt/problem/' atxt.txt
+student@linux ~ $ ls
+abc allfiles.txt backup cllfiles.txt temp.txt tennis.txt
+abc.conf aproblem.txt bllfiles.txt Scratch tennis2.txt
+student@linux ~ $
+```
+Only the first occurrence of the searched string is replaced.
+
+#### <span id="page-227-1"></span>**20.3.4. a global replace**
+
+The syntax used in the previous example can be described as s/regex/replacement/. This is simple and straightforward, you enter a regex between the first two slashes and a replacement string between the last two.
+
+This example expands this syntax only a little, by adding a modifier.
+
+```
+student@linux ~ $ rename -n 's/TXT/txt/g' aTXT.TXT
+aTXT.TXT renamed as atxt.txt
+student@linux ~ $
+```
+The syntax we use now can be described as s/regex/replacement/g where s signifies switch and g stands for global.
+
+Note that this example used the -n switch to show what is being done (instead of actually renaming the file).
+
+#### <span id="page-228-0"></span>**20.3.5. case insensitive replace**
+
+Another modifier that can be useful is i. this example shows how to replace a case insensitive string with another string.
+
+```
+student@linux:~/files$ ls
+file1.text file2.TEXT file3.txt
+student@linux:~/files$ rename 's/.text/.txt/i' *
+student@linux:~/files$ ls
+file1.txt file2.txt file3.txt
+student@linux:~/files$
+```
+#### <span id="page-228-1"></span>**20.3.6. renaming extensions**
+
+Command line Linux has no knowledge of MS-DOS like extensions, but many end users and graphical application do use them.
+
+Here is an example on how to use rename to only rename the file extension. It uses the dollar sign to mark the ending of the filename.
+
+```
+student@linux ~ $ ls *.txt
+allfiles.txt bllfiles.txt cllfiles.txt really.txt.txt temp.txt tennis.txt
+student@linux ~ $ rename 's/.txt$/.TXT/' *.txt
+student@linux ~ $ ls *.TXT
+allfiles.TXT bllfiles.TXT cllfiles.TXT really.txt.TXT
+temp.TXT tennis.TXT
+student@linux ~ $
+```
+Note that the dollar sign in the regex means at the end. Without the dollar sign this command would fail on the really.txt.txt file.
+
+### <span id="page-228-2"></span>**20.4. sed**
+
+#### <span id="page-228-3"></span>**20.4.1. stream editor**
+
+The stream editor or short sed uses regex for stream editing.
+
+In this example sed is used to replace a string.
+
+```
+echo Sunday | sed 's/Sun/Mon/'
+Monday
+```
+The slashes can be replaced by a couple of other characters, which can be handy in some cases to improve readability.
+
+```
+echo Sunday | sed 's:Sun:Mon:'
+Monday
+echo Sunday | sed 's_Sun_Mon_'
+Monday
+echo Sunday | sed 's|Sun|Mon|'
+Monday
+```
+#### <span id="page-229-0"></span>**20.4.2. interactive editor**
+
+While sed is meant to be used in a stream, it can also be used interactively on a file.
+
+```
+student@linux:~/files$ echo Sunday > today
+student@linux:~/files$ cat today
+Sunday
+student@linux:~/files$ sed -i 's/Sun/Mon/' today
+student@linux:~/files$ cat today
+Monday
+```
+#### <span id="page-229-1"></span>**20.4.3. simple back referencing**
+
+The ampersand character can be used to reference the searched (and found) string.
+
+In this example the ampersand is used to double the occurence of the found string.
+
+```
+echo Sunday | sed 's/Sun/^&/'
+SunSunday
+echo Sunday | sed 's/day/^&/'
+Sundayday
+```
+#### <span id="page-229-2"></span>**20.4.4. back referencing**
+
+Parentheses (often called round brackets) are used to group sections of the regex so they can leter be referenced.
+
+Consider this simple example:
+
+```
+student@linux:~$ echo Sunday | sed 's_\(Sun\)_\1ny_'
+Sunnyday
+student@linux:~$ echo Sunday | sed 's_\(Sun\)_\1ny \1_'
+Sunny Sunday
+```
+#### <span id="page-229-3"></span>**20.4.5. a dot for any character**
+
+In a regex a simple dot can signify any character.
+
+```
+student@linux:~$ echo 2014-04-01 | sed 's/....-^.-^./YYYY-MM-DD/'
+YYYY-MM-DD
+student@linux:~$ echo abcd-ef-gh | sed 's/....-^.-^./YYYY-MM-DD/'
+YYYY-MM-DD
+```
+#### <span id="page-229-4"></span>**20.4.6. multiple back referencing**
+
+When more than one pair of parentheses is used, each of them can be referenced separately by consecutive numbers.
+
+```
+student@linux:~$ echo 2014-04-01 | sed 's/\(....\)-\(^.\)-\(^.\)/\1+\2+\3/'
+2014+04+01
+student@linux:~$ echo 2014-04-01 | sed 's/\(....\)-\(^.\)-\(^.\)/\3:\2:\1/'
+01:04:2014
+```
+This feature is called grouping.
+
+#### <span id="page-230-0"></span>**20.4.7. white space**
+
+The \s can refer to white space such as a space or a tab.
+
+This example looks for white spaces (\s) globally and replaces them with 1 space.
+
+```
+student@linux:~$ echo -e 'today\tis\twarm'
+today is warm
+student@linux:~$ echo -e 'today\tis\twarm' | sed 's_\s_ _g'
+today is warm
+```
+#### **20.4.8. optional occurrence**
+
+A question mark signifies that the previous is optional.
+
+The example below searches for three consecutive letter o, but the third o is optional.
+
+```
+student@linux:~$ cat list2
+ll
+lol
+lool
+loool
+student@linux:~$ grep -E 'ooo?' list2
+lool
+loool
+student@linux:~$ cat list2 | sed 's/ooo\?/A/'
+ll
+lol
+lAl
+lAl
+```
+#### **20.4.9. exactly n times**
+
+You can demand an exact number of times the oprevious has to occur.
+
+This example wants exactly three o's.
+
+```
+student@linux:~$ cat list2
+ll
+lol
+lool
+loool
+student@linux:~$ grep -E 'o{3}' list2
+loool
+student@linux:~$ cat list2 | sed 's/o\{3\}/A/'
+ll
+lol
+lool
+lAl
+student@linux:~$
+```
+#### **20.4.10. between n and m times**
+
+And here we demand exactly from minimum 2 to maximum 3 times.
+
+```
+student@linux:~$ cat list2
+ll
+lol
+lool
+loool
+student@linux:~$ grep -E 'o{2,3}' list2
+lool
+loool
+student@linux:~$ grep 'o\{2,3\}' list2
+lool
+loool
+student@linux:~$ cat list2 | sed 's/o\{2,3\}/A/'
+ll
+lol
+lAl
+lAl
+student@linux:~$
+```
+#### **20.5. bash history**
+
+The bash shell can also interprete some regular expressions.
+
+This example shows how to manipulate the exclamation mask history feature of the bash shell.
+
+```
+student@linux:~$ mkdir hist
+student@linux:~$ cd hist/
+student@linux:~/hist$ touch file1 file2 file3
+student@linux:~/hist$ ls -l file1
+-rw-r--r-- 1 paul paul 0 Apr 15 22:07 file1
+student@linux:~/hist$ !l
+ls -l file1
+-rw-r--r-- 1 paul paul 0 Apr 15 22:07 file1
+student@linux:~/hist$ !l:s/1/3
+ls -l file3
+-rw-r--r-- 1 paul paul 0 Apr 15 22:07 file3
+student@linux:~/hist$
+```
+This also works with the history numbers in bash.
+
+```
+student@linux:~/hist$ history 6
+ 2089 mkdir hist
+ 2090 cd hist/
+ 2091 touch file1 file2 file3
+ 2092 ls -l file1
+ 2093 ls -l file3
+ 2094 history 6
+student@linux:~/hist$ !2092
+ls -l file1
+-rw-r--r-- 1 paul paul 0 Apr 15 22:07 file1
+student@linux:~/hist$ !2092:s/1/2
+ls -l file2
+```
+-rw-r--r-- 1 paul paul 0 Apr 15 22:07 file2 student@linux:~/hist\$
+
+## **Part VII.**
+
+# <span id="page-234-0"></span>**Scripting 201; job scheduling**
+
+## <span id="page-236-0"></span>**21. more scripting**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Alex M. Schapelle, https://github.com/zero-pytagoras/)*
+
+#### **21.1. eval**
+
+<span id="page-236-1"></span>eval reads arguments as input to the shell (the resulting commands are executed). This allows using the value of a variable as a variable.
+
+```
+student@linux:~/test42$ answer=42
+student@linux:~/test42$ word=answer
+student@linux:~/test42$ eval x=\$$word ; echo $x
+42
+```
+Both in bash and Korn the arguments can be quoted.
+
+```
+kahlan@solexp11$ answer=42
+kahlan@solexp11$ word=answer
+kahlan@solexp11$ eval "y=\$$word" ; echo $y
+42
+```
+Sometimes the eval is needed to have correct parsing of arguments. Consider this example where the date command receives one parameter 1 week ago.
+
+```
+student@linux~$ date --date="1 week ago"
+Thu Mar 8 21:36:25 CET 2012
+```
+When we set this command in a variable, then executing that variable fails unless we use eval.
+
+```
+student@linux~$ lastweek='date --date="1 week ago"'
+student@linux~$ $lastweek
+date: extra operand `ago"'
+Try `date --help' for more information.
+student@linux~$ eval $lastweek
+Thu Mar 8 21:36:39 CET 2012
+```
+## **21.2. (( ))**
+
+<span id="page-236-2"></span>The (( )) allows for evaluation of numerical expressions.
+
+```
+student@linux:~/test42$ (( 42 > 33 )) ^& echo true ^| echo false
+true
+student@linux:~/test42$ (( 42 > 1201 )) ^& echo true ^| echo false
+false
+student@linux:~/test42$ var42=42
+student@linux:~/test42$ (( 42 ^= var42 )) ^& echo true ^| echo false
+true
+student@linux:~/test42$ (( 42 ^= $var42 )) ^& echo true ^| echo false
+true
+student@linux:~/test42$ var42=33
+student@linux:~/test42$ (( 42 ^= var42 )) ^& echo true ^| echo false
+false
+```
+## <span id="page-237-0"></span>**21.3. let**
+
+The let built-in shell function instructs the shell to perform an evaluation of arithmetic expressions. It will return 0 unless the last arithmetic expression evaluates to 0.
+
+```
+[student@linux ~]$ let x="3 + 4" ; echo $x
+7
+[student@linux ~]$ let x="10 + 100/10" ; echo $x
+20
+[student@linux ~]$ let x="10-2+100/10" ; echo $x
+18
+[student@linux ~]$ let x="10*2+100/10" ; echo $x
+30
+```
+The shell can also convert between different bases.
+
+```
+[student@linux ~]$ let x="0xFF" ; echo $x
+255
+[student@linux ~]$ let x="0xC0" ; echo $x
+192
+[student@linux ~]$ let x="0xA8" ; echo $x
+168
+[student@linux ~]$ let x="8#70" ; echo $x
+56
+[student@linux ~]$ let x="8#77" ; echo $x
+63
+[student@linux ~]$ let x="16#c0" ; echo $x
+192
+```
+There is a difference between assigning a variable directly, or using let to evaluate the arithmetic expressions (even if it is just assigning a value).
+
+```
+kahlan@solexp11$ dec=15 ; oct=017 ; hex=0x0f
+kahlan@solexp11$ echo $dec $oct $hex
+15 017 0x0f
+kahlan@solexp11$ let dec=15 ; let oct=017 ; let hex=0x0f
+kahlan@solexp11$ echo $dec $oct $hex
+15 15 15
+```
+#### <span id="page-238-0"></span>**21.4. case**
+
+You can sometimes simplify nested if statements with a case construct.
+
+```
+[student@linux ~]$ ./help
+What animal did you see ? lion
+You better start running fast!
+[student@linux ~]$ ./help
+What animal did you see ? dog
+Don't worry, give it a cookie.
+[student@linux ~]$ cat help
+^!/bin/bash
+#
+# Wild Animals Helpdesk Advice
+#
+echo -n "What animal did you see ? "
+read animal
+case $animal in
+        "lion" | "tiger")
+                echo "You better start running fast!"
+        ^;
+        "cat")
+                echo "Let that mouse go^^."
+        ^;
+        "dog")
+                echo "Don't worry, give it a cookie."
+        ^;
+        "chicken" | "goose" | "duck" )
+                echo "Eggs for breakfast!"
+        ^;
+        "liger")
+                echo "Approach and say 'Ah you big fluffy kitty^^.'."
+        ^;
+        "babelfish")
+                echo "Did it fall out your ear ?"
+        ^;
+        *)
+                echo "You discovered an unknown animal, name it!"
+        ^;
+esac
+[student@linux ~]$
+```
+## <span id="page-238-1"></span>**21.5. shell functions**
+
+Shell functions can be used to group commands in a logical way.
+
+```
+kahlan@solexp11$ cat funcs.ksh
+^!/bin/ksh
+function greetings {
+echo Hello World!
+echo and hello to $USER to!
+}
+```
+*21. more scripting*
+
+```
+echo We will now call a function
+greetings
+echo The end
+```
+This is sample output from this script with a function.
+
+```
+kahlan@solexp11$ ./funcs.ksh
+We will now call a function
+Hello World!
+and hello to kahlan to!
+The end
+```
+A shell function can also receive parameters.
+
+```
+kahlan@solexp11$ cat addfunc.ksh
+^!/bin/ksh
+```
+
+```
+function plus {
+let result="$1 + $2"
+echo $1 + $2 = $result
+}
+plus 3 10
+plus 20 13
+plus 20 22
+```
+This script produces the following output.
+
+```
+kahlan@solexp11$ ./addfunc.ksh
+3 + 10 = 13
+20 + 13 = 33
+20 + 22 = 42
+```
+## <span id="page-239-0"></span>**21.6. practice : more scripting**
+
+1. Write a script that asks for two numbers, and outputs the sum and product (as shown here).
+
+```
+Enter a number: 5
+Enter another number: 2
+Sum: 5 + 2 = 7
+Product: 5 x 2 = 10
+```
+2. Improve the previous script to test that the numbers are between 1 and 100, exit with an error if necessary.
+
+3. Improve the previous script to congratulate the user if the sum equals the product.
+
+4. Write a script with a case insensitive case statement, using the shopt nocasematch option. The nocasematch option is reset to the value it had before the scripts started.
+
+5. If time permits (or if you are waiting for other students to finish this practice), take a look at Linux system scripts in /etc/init.d and /etc/rc.d and try to understand them. Where does execution of a script start in /etc/init.d/samba ? There are also some hidden scripts in ~, we will discuss them later.
+
+## <span id="page-240-0"></span>**21.7. solution : more scripting**
+
+1. Write a script that asks for two numbers, and outputs the sum and product (as shown here).
+
+```
+Enter a number: 5
+Enter another number: 2
+Sum: 5 + 2 = 7
+Product: 5 x 2 = 10
+^!/bin/bash
+echo -n "Enter a number : "
+read n1
+echo -n "Enter another number : "
+read n2
+let sum="$n1+$n2"
+let pro="$n1*$n2"
+echo -e "Sum\t: $n1 + $n2 = $sum"
+echo -e "Product\t: $n1 * $n2 = $pro"
+```
+2. Improve the previous script to test that the numbers are between 1 and 100, exit with an error if necessary.
+
+```
+echo -n "Enter a number between 1 and 100 : "
+read n1
+if [ $n1 -lt 1 -o $n1 -gt 100 ]
+then
+       echo Wrong number^^.
+       exit 1
+fi
+```
+3. Improve the previous script to congratulate the user if the sum equals the product.
+
+```
+if [ $sum -eq $pro ]
+then echo Congratulations $sum ^= $pro
+fi
+```
+4. Write a script with a case insensitive case statement, using the shopt nocasematch option. The nocasematch option is reset to the value it had before the scripts started.
+
+```
+^!/bin/bash
+#
+# Wild Animals Case Insensitive Helpdesk Advice
+#
+if shopt -q nocasematch; then
+  nocase=yes;
+else
+  nocase=no;
+```
+
+```
+shopt -s nocasematch;
+fi
+echo -n "What animal did you see ? "
+read animal
+case $animal in
+        "lion" | "tiger")
+                echo "You better start running fast!"
+        ^;
+        "cat")
+                echo "Let that mouse go^^."
+        ^;
+        "dog")
+                echo "Don't worry, give it a cookie."
+        ^;
+        "chicken" | "goose" | "duck" )
+                echo "Eggs for breakfast!"
+        ^;
+        "liger")
+                echo "Approach and say 'Ah you big fluffy kitty.'"
+        ^;
+        "babelfish")
+                echo "Did it fall out your ear ?"
+        ^;
+        *)
+                echo "You discovered an unknown animal, name it!"
+        ^;
+esac
+if [ nocase = yes ] ; then
+        shopt -s nocasematch;
+else
+        shopt -u nocasematch;
+fi
+```
+5. If time permits (or if you are waiting for other students to finish this practice), take a look at Linux system scripts in /etc/init.d and /etc/rc.d and try to understand them. Where does execution of a script start in /etc/init.d/samba ? There are also some hidden scripts in ~, we will discuss them later.
+
+## <span id="page-242-0"></span>**22. background jobs**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Alex M. Schapelle, https://github.com/zero-pytagoras/)*
+
+#### **22.1. background [proc](https://github.com/zero-pytagoras/)[esses](https://github.com/paulcobbaut/)**
+
+#### <span id="page-242-1"></span>**22.1.1. jobs**
+
+<span id="page-242-2"></span>Stuff that runs in background of your current shell can be displayed with the jobs command. By default you will not have any jobs running in background.
+
+root@linux ~# jobs root@linux ~#
+
+This jobs command will be used several times in this section.
+
+#### **22.1.2. control-Z**
+
+<span id="page-242-3"></span>Some processes can be suspended with the Ctrl-Z key combination. This sends a SIGSTOP signal to the Linux kernel, effectively freezing the operation of the process.
+
+When doing this in vi(m), then vi(m) goes to the background. The background vi(m) can be seen with the jobs command.
+
+[student@linux ~]\$ vi procdemo.txt
+
+| [5]+ | Stopped |  |  | vim procdemo.txt |  |
+|------|---------|--|--|------------------|--|
+
+#### **22.1.3. & ampersand**
+
+<span id="page-242-4"></span>Processes that are started in background using the & character at the end of the command line are also visible with the jobs command.
+
+```
+[student@linux ~]$ find / > allfiles.txt 2> /dev/null &
+[6] 5230
+[student@linux ~]$ jobs
+[5]+ Stopped vim procdemo.txt
+[6]- Running find / >allfiles.txt 2>/dev/null &
+[student@linux ~]$
+```
+#### <span id="page-243-0"></span>**22.1.4. jobs -p**
+
+An interesting option is jobs -p to see the process id of background processes.
+
+```
+[student@linux ~]$ sleep 500 &
+[1] 4902
+[student@linux ~]$ sleep 400 &
+[2] 4903
+[student@linux ~]$ jobs -p
+4902
+4903
+[student@linux ~]$ ps `jobs -p`
+ PID TTY STAT TIME COMMAND
+4902 pts/0 S 0:00 sleep 500
+4903 pts/0 S 0:00 sleep 400
+[student@linux ~]$
+```
+#### <span id="page-243-1"></span>**22.1.5. fg**
+
+Running the fg command will bring a background job to the foreground. The number of the background job to bring forward is the parameter of fg.
+
+```
+[student@linux ~]$ jobs
+[1] Running sleep 1000 &
+[2]- Running sleep 1000 &
+[3]+ Running sleep 2000 &
+[student@linux ~]$ fg 3
+sleep 2000
+```
+#### <span id="page-243-2"></span>**22.1.6. bg**
+
+Jobs that are suspended in background can be started in background with bg. The bg will send a SIGCONT signal.
+
+Below an example of the sleep command (suspended with Ctrl-Z) being reactivated in background with bg.
+
+| [student@linux<br>~]\$<br>[student@linux<br>~]\$<br>[1]<br>6702 | jobs<br>sleep | 5000 | &          |   |
+|-----------------------------------------------------------------|---------------|------|------------|---|
+| [student@linux<br>~]\$                                          | sleep         | 3000 |            |   |
+| [2]+<br>Stopped<br>[student@linux<br>~]\$                       | jobs          |      | sleep 3000 |   |
+| [1]-<br>Running                                                 |               |      | sleep 5000 | & |
+| [2]+<br>Stopped                                                 |               |      | sleep 3000 |   |
+| [student@linux<br>~]\$                                          | bg<br>2       |      |            |   |
+| [2]+<br>sleep<br>3000<br>&                                      |               |      |            |   |
+| [student@linux<br>~]\$                                          | jobs          |      |            |   |
+| [1]-<br>Running                                                 |               |      | sleep 5000 | & |
+| [2]+<br>Running                                                 |               |      | sleep 3000 | & |
+| [student@linux<br>~]\$                                          |               |      |            |   |
+
+### <span id="page-244-0"></span>**22.2. practice : background processes**
+
+1. Use the jobs command to verify whether you have any processes running in background.
+
+2. Use vi to create a little text file. Suspend vi in background.
+
+3. Verify with jobs that vi is suspended in background.
+
+4. Start find / > allfiles.txt 2>/dev/null in foreground. Suspend it in background before it finishes.
+
+5. Start two long sleep processes in background.
+
+6. Display all jobs in background.
+
+7. Use the kill command to suspend the last sleep process.
+
+8. Continue the find process in background (make sure it runs again).
+
+9. Put one of the sleep commands back in foreground.
+
+10. (if time permits, a general review question...) Explain in detail where the numbers come from in the next screenshot. When are the variables replaced by their value ? By which shell ?
+
+```
+[student@linux ~]$ echo $$ $PPID
+4224 4223
+[student@linux ~]$ bash -c "echo $$ $PPID"
+4224 4223
+[student@linux ~]$ bash -c 'echo $$ $PPID'
+5059 4224
+[student@linux ~]$ bash -c `echo $$ $PPID`
+4223: 4224: command not found
+```
+### <span id="page-244-1"></span>**22.3. solution : background processes**
+
+1. Use the jobs command to verify whether you have any processes running in background.
+
+jobs (maybe the catfun is still running?)
+
+2. Use vi to create a little text file. Suspend vi in background.
+
+```
+vi text.txt
+(inside vi press ctrl-z)
+```
+3. Verify with jobs that vi is suspended in background.
+
+[student@linux ~]\$ jobs [1]+ Stopped vim text.txt
+
+4. Start find / > allfiles.txt 2>/dev/null in foreground. Suspend it in background before it finishes.
+
+```
+[student@linux ~]$ find / > allfiles.txt 2>/dev/null
+  (press ctrl-z)
+[2]+ Stopped find / > allfiles.txt 2> /dev/null
+```
+5. Start two long sleep processes in background.
+
+sleep 4000 & ; sleep 5000 &
+
+6. Display all jobs in background.
+
+|      | [student@linux<br>~]\$<br>jobs |                                                |
+|------|--------------------------------|------------------------------------------------|
+| [1]- | Stopped                        | vim text.txt                                   |
+| [2]+ | Stopped                        | find /<br>><br>allfiles.txt<br>2><br>/dev/null |
+| [3]  | Running                        | sleep 4000<br>&                                |
+| [4]  | Running                        | sleep 5000<br>&                                |
+
+7. Use the kill command to suspend the last sleep process.
+
+```
+[student@linux ~]$ kill -SIGSTOP 4519
+[student@linux ~]$ jobs
+[1] Stopped vim text.txt
+[2]- Stopped find / > allfiles.txt 2> /dev/null
+[3] Running sleep 4000 &
+[4]+ Stopped sleep 5000
+```
+8. Continue the find process in background (make sure it runs again).
+
+bg 2 (verify the job-id in your jobs list)
+
+9. Put one of the sleep commands back in foreground.
+
+fg 3 (again verify your job-id)
+
+10. (if time permits, a general review question...) Explain in detail where the numbers come from in the next screenshot. When are the variables replaced by their value ? By which shell ?
+
+```
+[student@linux ~]$ echo $$ $PPID
+4224 4223
+[student@linux ~]$ bash -c "echo $$ $PPID"
+4224 4223
+[student@linux ~]$ bash -c 'echo $$ $PPID'
+5059 4224
+[student@linux ~]$ bash -c `echo $$ $PPID`
+4223: 4224: command not found
+```
+The current bash shell will replace the \$\$ and \$PPID while scanning the line, and before executing the echo command.
+
+```
+[student@linux ~]$ echo $$ $PPID
+4224 4223
+```
+The variables are now double quoted, but the current bash shell will replace \$\$ and \$PPID while scanning the line, and before executing the bash -c command.
+
+```
+[student@linux ~]$ bash -c "echo $$ $PPID"
+4224 4223
+```
+The variables are now single quoted. The current bash shell will not replace the \$\$ and the \$PPID. The bash -c command will be executed before the variables replaced with their value. This latter bash is the one replacing the \$\$ and \$PPID with their value.
+
+```
+[student@linux ~]$ bash -c 'echo $$ $PPID'
+5059 4224
+```
+With backticks the shell will still replace both variable before the embedded echo is executed. The result of this echo is the two process id's. These are given as commands to bash -c. But two numbers are not commands!
+
+[student@linux ~]\$ bash -c `echo \$\$ \$PPID` 4223: 4224: command not found
+
+## <span id="page-248-0"></span>**23. scheduling**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/)*
+
+Linux administrators use the at to schedule one time jobs. Recurring jobs are better scheduled with cron. The next two sections will discuss both tools.
+
+### **23.1. one time jobs with at**
+
+#### <span id="page-248-1"></span>**23.1.1. at**
+
+<span id="page-248-2"></span>Simple scheduling can be done with the at command. This screenshot shows the scheduling of the date command at 22:01 and the sleep command at 22:03.
+
+```
+root@linux:~# at 22:01
+at> date
+at> <EOT>
+job 1 at Wed Aug 1 22:01:00 2007
+root@linux:~# at 22:03
+at> sleep 10
+at> <EOT>
+job 2 at Wed Aug 1 22:03:00 2007
+root@linux:~#
+```
+*In real life you will hopefully be scheduling more useful commands ;-)*
+
+#### **23.1.2. atq**
+
+It is easy to check when jobs are scheduled with the atq or at -l commands.
+
+```
+root@linux:~# atq
+1 Wed Aug 1 22:01:00 2007 a root
+2 Wed Aug 1 22:03:00 2007 a root
+root@linux:~# at -l
+1 Wed Aug 1 22:01:00 2007 a root
+2 Wed Aug 1 22:03:00 2007 a root
+root@linux:~#
+```
+The at command understands English words like tomorrow and teatime to schedule commands the next day and at four in the afternoon.
+
+```
+root@linux:~# at 10:05 tomorrow
+at> sleep 100
+at> <EOT>
+job 5 at Thu Aug 2 10:05:00 2007
+root@linux:~# at teatime tomorrow
+at> tea
+```
+
+```
+at> <EOT>
+job 6 at Thu Aug 2 16:00:00 2007
+root@linux:~# atq
+6 Thu Aug 2 16:00:00 2007 a root
+5 Thu Aug 2 10:05:00 2007 a root
+root@linux:~#
+```
+#### <span id="page-249-0"></span>**23.1.3. atrm**
+
+Jobs in the at queue can be removed with atrm.
+
+```
+root@linux:~# atq
+6 Thu Aug 2 16:00:00 2007 a root
+5 Thu Aug 2 10:05:00 2007 a root
+root@linux:~# atrm 5
+root@linux:~# atq
+6 Thu Aug 2 16:00:00 2007 a root
+root@linux:~#
+```
+#### <span id="page-249-1"></span>**23.1.4. at.allow and at.deny**
+
+You can also use the /etc/at.allow and /etc/at.deny files to manage who can schedule jobs with at.
+
+The /etc/at.allow file can contain a list of users that are allowed to schedule at jobs. When /etc/at.allow does not exist, then everyone can use at unless their username is listed in /etc/at.deny.
+
+If none of these files exist, then everyone can use at.
+
+## <span id="page-249-2"></span>**23.2. cron**
+
+#### <span id="page-249-3"></span>**23.2.1. crontab file**
+
+The crontab(1) command can be used to maintain the crontab(5) file. Each user can have their own crontab file to schedule jobs at a specific time. This time can be specified with five fields in this order: minute, hour, day of the month, month and day of the week. If a field contains an asterisk (\*), then this means all values of that field.
+
+The following example means : run script42 eight minutes after two, every day of the month, every month and every day of the week.
+
+8 14 \* \* \* script42
+
+Run script8472 every month on the first of the month at 25 past midnight.
+
+#### 25 0 1 \* \* script8472
+
+Run this script33 every two minutes on Sunday (both 0 and 7 refer to Sunday).
+
+#### ^/2 \* \* \* 0
+
+Instead of these five fields, you can also type one of these: @reboot, @yearly or @annually, @monthly, @weekly, @daily or @midnight, and @hourly.
+
+#### <span id="page-250-0"></span>**23.2.2. crontab command**
+
+Users should not edit the crontab file directly, instead they should type crontab -e which will use the editor defined in the EDITOR or VISUAL environment variable. Users can display their cron table with crontab -l.
+
+#### <span id="page-250-1"></span>**23.2.3. cron.allow and cron.deny**
+
+The cron daemon crond is reading the cron tables, taking into account the /etc/cron.allow and /etc/cron.deny files.
+
+These files work in the same way as at.allow and at.deny. When the cron.allow file exists, then your username has to be in it, otherwise you cannot use cron. When the cron.allow file does not exists, then your username cannot be in the cron.deny file if you want to use cron.
+
+### <span id="page-250-2"></span>**23.2.4. /etc/crontab**
+
+The /etc/crontab file contains entries for when to run hourly/daily/weekly/monthly tasks. It will look similar to this output.
+
+```
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+```
+
+| 20 | 3 | * | * | * | root | run-parts | --report | /etc/cron.daily   |
+|----|---|---|---|---|------|-----------|----------|-------------------|
+| 40 | 3 | * | * | 7 | root | run-parts | --report | /etc/cron.weekly  |
+| 55 | 3 | 1 | * | * | root | run-parts | --report | /etc/cron.monthly |
+
+### **23.2.5. /etc/cron.\***
+
+The directories shown in the next screenshot contain the tasks that are run at the times scheduled in /etc/crontab. The /etc/cron.d directory is for special cases, to schedule jobs that require finer control than hourly/daily/weekly/monthly.
+
+```
+student@linux:~$ ls -ld /etc/cron.*
+drwxr-xr-x 2 root root 4096 2008-04-11 09:14 /etc/cron.d
+drwxr-xr-x 2 root root 4096 2008-04-19 15:04 /etc/cron.daily
+drwxr-xr-x 2 root root 4096 2008-04-11 09:14 /etc/cron.hourly
+drwxr-xr-x 2 root root 4096 2008-04-11 09:14 /etc/cron.monthly
+drwxr-xr-x 2 root root 4096 2008-04-11 09:14 /etc/cron.weekly
+```
+## <span id="page-250-3"></span>**23.2.6. /etc/cron.\***
+
+Note that Red Hat uses anacron to schedule daily, weekly and monthly cron jobs.
+
+```
+root@linux:/etc# cat anacrontab
+# /etc/anacrontab: configuration file for anacron
+# See anacron(8) and anacrontab(5) for details.
+SHELL=/bin/sh
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+```
+
+```
+# the maximal random delay added to the base delay of the jobs
+RANDOM_DELAY=45
+# the jobs will be started during the following hours only
+START_HOURS_RANGE=3-22
+#period in days delay in minutes job-identifier command
+1 5 cron.daily nice run-parts /etc/cron.daily
+7 25 cron.weekly nice run-parts /etc/cron.weekly
+@monthly 45 cron.monthly nice run-parts /etc/cron.monthly
+root@linux:/etc#
+```
+#### <span id="page-251-0"></span>**23.3. practice : scheduling**
+
+1. Schedule two jobs with at, display the at queue and remove a job.
+
+2. As normal user, use crontab -e to schedule a script to run every four minutes.
+
+3. As root, display the crontab file of your normal user.
+
+4. As the normal user again, remove your crontab file.
+
+5. Take a look at the cron files and directories in /etc and understand them. What is the run-parts command doing ?
+
+#### <span id="page-251-1"></span>**23.4. solution : scheduling**
+
+1. Schedule two jobs with at, display the at queue and remove a job.
+
+```
+root@linux ~# at 9pm today
+at> echo go to bed >> /root/todo.txt
+at> <EOT>
+job 1 at 2010-11-14 21:00
+root@linux ~# at 17h31 today
+at> echo go to lunch >> /root/todo.txt
+at> <EOT>
+job 2 at 2010-11-14 17:31
+root@linux ~# atq
+2 2010-11-14 17:31 a root
+1 2010-11-14 21:00 a root
+root@linux ~# atrm 1
+root@linux ~# atq
+2 2010-11-14 17:31 a root
+root@linux ~# date
+Sun Nov 14 17:31:01 CET 2010
+root@linux ~# cat /root/todo.txt
+go to lunch
+```
+2. As normal user, use crontab -e to schedule a script to run every four minutes.
+
+student@linux ~\$ crontab -e no crontab for paul - using an empty one crontab: installing new crontab
+
+3. As root, display the crontab file of your normal user.
+
+```
+root@linux ~# crontab -l -u paul
+^/4 * * * * echo `date` >> /home/paul/crontest.txt
+```
+4. As the normal user again, remove your crontab file.
+
+```
+student@linux ~$ crontab -r
+student@linux ~$ crontab -l
+no crontab for paul
+```
+5. Take a look at the cron files and directories in /etc and understand them. What is the run-parts command doing ?
+
+run-parts runs a script in a directory
+
+<span id="page-254-0"></span>**Part VIII. SSH; Docker**
+
+## <span id="page-256-0"></span>**24. ssh client and server**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Alex M. Schapelle, https://github.com/zero-pytagoras/, Bert Van Vreckem https://github.com/bertvv)*
+
+The **secure shell** or ssh is a coll[ection of tools using a secure proto](https://github.com/paulcobbaut/)col for communications with remote Linux comput[ers.](https://github.com/zero-pytagoras/)
+
+This [chapter gives an overview](https://github.com/bertvv) of the most common commands related to the use of the sshd server and the ssh client.
+
+## **24.1. about ssh**
+
+<span id="page-256-1"></span>**Secure SHell** (ssh) is the common way to securely connect to a remote system, e.g. a server in a datacenter, and open a terminal to execute commands. It is considered an essential tool for managing Linux systems, so it is included by default even on minimal installations of most distributions. Server-installations of Linux have the openssh-server package installed and enabled.
+
+Even some popular services, like Github, also use SSH for communication. Synchronizing code between a local source code repository and a remote repository on github.com is only allowed over SSH.
+
+#### **24.1.1. secure shell in general**
+
+<span id="page-256-2"></span>The **SSH protocol** is secure in two ways. Firstly the connection is *authenticated* both ways, and secondly the connection is *encrypted*.
+
+An SSH connection always starts with a cryptographic *handshake*. The *authentication* takes place (using user id/password or public/private keys) and communication can begin over the encrypted connection. When both sides are accepted as trustworthy parties, it is followed by *encryption* of the transport layer using a symmetric cypher. The latter is exchanged between the two parties directly after authenticating. In other words, the tunnel is already encrypted before you start typing anything.
+
+The *SSH protocol* will remember the servers it handshaked with, and warn you in case something suspicious happened, e.g. when the signature or *fingerprint* of the server changed. This is a *'mitm'*-attack prevention.
+
+The openssh package is maintained by the *OpenBSD* people and is distributed with a lot of operating systems, including Linux.
+
+Older protocols like telnet, rlogin and rsh can also be used to remotely connect to your servers. However, these protocols do not encrypt the login session, which means confidential information about the server, including your user id and password, can be sniffed by tools like wireshark or tcpdump. Consequently, they are no longer installed by default on most Linux distributions and you should **never** use them in a production environment. To securely connect to your servers, use ssh.
+
+#### **24.1.2. public and private keys**
+
+The ssh protocol uses the well known system of *public and private keys*. The below explanation is succinct, more information about public key cryptography can be found on wikipedia.
+
+<span id="page-257-0"></span>Imagine Alice and Bob, two people that like to communicate with each other. Using *public and private keys* they can communicate with *c[onfidentiality](http://en.wikipedia.org/wiki/Public-key_cryptography)* and with *authentication*.
+
+Alice and Bob both need to generate a key pair, each consisting of two cryptographic keys. A key pair has as property that a message that is encrypted with one key can only be decrypted with the other key. This concept is also called *asymmetric encryption*. One key is kept *private* and the other is made *public*.
+
+When Alice wants to send an encrypted message to Bob, she uses the *public key* of Bob. Since Bob should be the only person to have his *private key*, Alice is certain that Bob is the only person that can read the encrypted message.
+
+A *digital signature* is based on the same principle. Alice signs a message with her *private key*, which usually means that a *hash* of the message (i.e. a unique number that represents the message) is encrypted with her *private key*. When Bob wants to verify that the message came from Alice, Bob uses the *public key* of Alice to decrypt the signature. If the decrypted hash matches the hash of the received message, Bob can be certain the message came from Alice and was not altered during transfer.
+
+#### **24.1.3. public-key cryptosystems**
+
+<span id="page-257-1"></span>This chapter does not explain the technical implementation of cryptographic algorithms, it only explains how to use the ssh tools some common key exchange types. More information about these algorithms can be found here:
+
+- https://en.wikipedia.org/wiki/RSA\_(cryptosystem)
+- https://en.wikipedia.org/wiki/Digital\_Signature\_Algorithm
+- https://en.wikipedia.org/wiki/EdDSA
+- https://en.wikipedia.org/wiki/Elliptic\_Curve\_Digital\_Signature\_Algorithm
+
+#### **24.1[.4. ssh remote login: autentica](https://en.wikipedia.org/wiki/EdDSA)[tion fingerprint](https://en.wikipedia.org/wiki/Digital_Signature_Algorithm)**
+
+<span id="page-257-2"></span>The following screenshot shows how to use ssh to log on to a remote computer running Linux. The local user is named paul and he is logging on as user admin42 on the remote system.
+
+- <sup>1</sup> paul@linux:~\$ ssh admin42@192.168.1.30
+- <sup>2</sup> The authenticity of host '192.168.1.30 (192.168.1.30)' can't be established.
+- <sup>3</sup> RSA key fingerprint is b5:fb:3c:53:50:b4:ab:81:f3:cd:2e:bb:ba:44:d3:75.
+- <sup>4</sup> Are you sure you want to continue connecting (yes/no)?
+
+As you can see, the user paul is presented with an rsa authentication fingerprint from the remote system. The user can accepts this by typing yes. We will see later that an entry will be added to the ~/.ssh/known\_hosts file.
+
+- <sup>1</sup> paul@linux:~\$ ssh admin42@192.168.1.30
+- <sup>2</sup> The authenticity of host '192.168.1.30 (192.168.1.30)' can't be established.
+- <sup>3</sup> RSA key fingerprint is b5:fb:3c:53:50:b4:ab:81:f3:cd:2e:bb:ba:44:d3:75.
+- <sup>4</sup> Are you sure you want to continue connecting (yes/no)? yes
+- <sup>5</sup> Warning: Permanently added '192.168.1.30' (RSA) to the list of known hosts.
+- <sup>6</sup> admin42@192.168.1.30's password:
+
+```
+7 Welcome to Ubuntu 12.04 LTS (GNU/Linux 3.2.0-26-generic-pae i686)
+```
+8
+
+```
+9 * Documentation: https:^/help.ubuntu.com/
+10
+11 1 package can be updated.
+12 0 updates are security updates.
+13
+14 Last login: Wed Jun 6 19:25:57 2024 from 172.28.0.131
+15 admin42@ubuserver:~$
+```
+The user can get log out of the remote server by typing exit or by using Ctrl-d.
+
+admin42@ubuserver:~\$ exit
+
+logout
+
+```
+3 Connection to 192.168.1.30 closed.
+```
+student@linux:~\$
+
+The fingerprint guarantees server-side authentication. If the user would connect a second time to this server, the authentication question will no longer be asked (as the fingerprint is retained in the known\_hosts file). If for any reason the fingerprint of the server does **not** match the one in the known\_hosts file, the user will be warned and the connection will be refused.
+
+- paul@linux:~\$ ssh admin42@192.168.1.30
+- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+- @ WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED! @
+- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+- IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+- Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+- It is also possible that a host key has just been changed.
+- The fingerprint for the RSA key sent by the remote host is
+- 6e:45:f9:a8:af:38:3d:a1:a5:c7:76:1d:02:f8:77:00.
+- Please contact your system administrator.
+- Add correct host key in /home/paul/.ssh/known\_hosts to get rid of this ↪ message.
+- Offending ECDSA key in /home/paul/.ssh/known\_hosts:14
+- Host key for 192.168.1.30 has changed and you have requested strict checking.
+- Host key verification failed.
+
+#### <span id="page-258-0"></span>**24.1.5. ssh beyond remote login**
+
+Next to 'simply' allowing to log in on a remote node, ssh also allows for remote exection of commands, and transferring files.
+
+#### **24.1.5.1. executing a command in remote**
+
+This screenshot shows how to execute the pwd command on the remote server. There is no need to exit the server manually.
+
+```
+1 paul@linux:~$ ssh admin42@192.168.1.30 pwd
+```
+
+```
+2 admin42@192.168.1.30's password:
+```
+
+```
+3 /home/admin42
+```
+paul@linux:~\$
+
+#### **24.1.5.2. scp**
+
+The scp command works just like cp, but allows the source and destination of the copy to be behind ssh. Here is an example where we copy the /etc/hosts file from the remote server to the home directory of user paul.
+
+```
+1 pau;@linux:~$ scp admin42@192.168.1.30:/etc/hosts /home/paul/serverhosts
+2 admin42@192.168.1.30's password:
+3 hosts 100% 809 0.8KB/s 00:00
+```
+Here is an example of the reverse, copying a local file to a remote server.
+
+```
+1 student@linux:~$ scp ~/serverhosts admin42@192.168.1.30:/etc/hosts.new
+2 admin42@192.168.1.30's password:
+```
+<sup>3</sup> serverhosts 100% 809 0.8KB/s 00:00
+
+**Remark** that the scp command *used to be* based on the *SCP protocol*. However, this protocol is now considered to be *insecure*. Fortunately, this does not mean that you can't use the scp command anymore, since it nowadays uses the actually secure *SFTP protocol* (Secure File Transfer Protocol) to copy files between hosts.
+
+### **24.2. setting up passwordless ssh**
+
+<span id="page-259-0"></span>Above, the server-side authentication based on a fingerprint was explained. Client-side authentication is by default based on a user/password combination. However: we could use a pub/priv keypair to take care of this authentication - avoiding to type your password every time you want to log in.
+
+To set up passwordless ssh (client-side) authentication through public/private keys, use sshkeygen to generate a key pair without a passphrase, and then copy your public key to the destination server.
+
+Let's do this step by step. In the example that follows, we will set up ssh without password between Alice and Bob. Alice is using Ubuntu on her laptoph, and has as an account on an Enterprise Linux server named Bob. Server Bob wants to give Alice access using ssh and the public and private key system. This means that even if the password of Alice is changed on this server Bob, Alice will still have access.
+
+#### **24.2.1. generate with ssh-keygen**
+
+<span id="page-259-1"></span>The example below shows how Alice uses ssh-keygen to generate an RSA key pair. Alice does not enter a passphrase<sup>1</sup> .
+
+```
+1 [alice@linux ~]$ ssh-keygen -t rsa
+```
+- <sup>2</sup> Generating public/private rsa key pair.
+- <sup>3</sup> Enter file in which to [sa](#page-259-2)ve the key (/home/alice/.ssh/id\_rsa):
+- <sup>4</sup> Created directory '/home/alice/.ssh'.
+- <sup>5</sup> Enter passphrase (empty for no passphrase):
+- <sup>6</sup> Enter same passphrase again:
+- <sup>7</sup> Your identification has been saved in /home/alice/.ssh/id\_rsa.
+- <sup>8</sup> Your public key has been saved in /home/alice/.ssh/id\_rsa.pub.
+- <sup>9</sup> The key fingerprint is:
+- <sup>10</sup> 9b:ac:ac:56:c2:98:e5:d9:18:c4:2a:51:72:bb:45:eb alice@linux
+- <sup>11</sup> [alice@linux ~]\$
+
+<span id="page-259-2"></span><sup>1</sup> It is possible to specify a passphrase when generating the keypair; that passphrase will be used to encrypt the private key part of this file using 128-bit AES.
+
+With the -t option, you can specify the type of key to create. The default is rsa-sha2-512 (i.e. RSA-key with SHA-2 as hash algorithm).
+
+Safe key types include:
+
+- rsa (default)
+- ecdsa (Elliptic Curve Digital Signature Algorithm)
+- ed25519 (Edwards-curve Digital Signature Algorithm)
+
+Key types to avoid include:
+
+- dsa (Digital Signature Algorithm) is considered weak and should not be used. In SSH, this keytype is called ssh-dss and has been deprecated as of August 2015 - see https://www.openssh.com/txt/release-7.0 .
+- ssh-rsa uses the SHA-1 hash algorithm, which is considered weak. The latter has been deprecated as af August 2021 - see https://www.openssh.com/txt/release-8.7 .
+
+It an older server is still using these keys, you should consider updating the keypairs. A workaround, e.g. to use the deprecated key one more time be able to log in to work on the updates, could be found on https://www.openssh.com/legacy.html . This is further elaborated in the 'Troubleshooting' section below.
+
+#### <span id="page-260-0"></span>**24.2.2. id\_rsa and id\_rsa.pub**
+
+The ssh-keygen command generate two keys in a hidden folder .ssh. The public key is named ~/.ssh/id\_rsa.pub. The private key is named ~/.ssh/id\_rsa.
+
+```
+1 [alice@linux ~]$ ls -l .ssh/id*
+```
+
+```
+2 total 16
+```
+<sup>3</sup> -rw------- 1 alice alice 1671 May 1 07:38 id\_rsa
+
+```
+4 -rw-r--r-- 1 alice alice 393 May 1 07:38 id_rsa.pub
+```
+The files will be named id\_ecdsa and id\_ecdsa.pub when using ecdsa instead of rsa.
+
+#### <span id="page-260-1"></span>**24.2.3. ~/.ssh**
+
+In general, the .ssh directory is used to store the user's ssh related files. If it doesn't exist, the hidden .ssh directory will be created automatically when generating the keypair. If you create the .ssh directory manually, then you need to chmod 700 it! Otherwise ssh will refuse to use the keys (world readable private keys are not secure!).
+
+As you can see, the .ssh directory is secure in Alice's home directory on her laptop.
+
+```
+1 [alice@linux ~]$ ls -ld .ssh
+```
+<sup>2</sup> drwx------ 2 alice alice 4096 May 1 07:38 .ssh
+
+Server Bob decides to manually create the .ssh directory, so he needs to manually secure it.
+
+- <sup>1</sup> bob@linux:~\$ mkdir .ssh
+- <sup>2</sup> bob@linux:~\$ ls -ld .ssh
+- <sup>3</sup> drwxr-xr-x 2 bob bob 4096 2024-05-14 16:53 .ssh
+- <sup>4</sup> bob@linux:~\$ chmod 700 .ssh/
+
+Next to storing the keypair(s) generated by a user, it can also contain other files. Most notably is the file known\_hosts, containing an entry for each fingerprint that has been accepted before when connecting to a new server.
+
+### <span id="page-261-0"></span>**24.2.4. .ssh/authorized\_keys**
+
+In your ~/.ssh directory, you can create a file called authorized\_keys. This file can contain one or more public keys from people you trust. Those trusted people can use their private keys to prove their identity and gain access to your account via ssh (without password). The example shows Bob's authorized\_keys file containing the public key of Alice.
+
+- <sup>1</sup> bob@linux:~\$ cat .ssh/authorized\_keys
+- <sup>2</sup> ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEApCQ9xzyLzJes1sR+hPyqW2vyzt1D4zTLqk\
+- <sup>3</sup> MDWBR4mMFuUZD/O583I3Lg/Q+JIq0RSksNzaL/BNLDou1jMpBe2Dmf/u22u4KmqlJBfDhe\
+- <sup>4</sup> yTmGSBzeNYCYRSMq78CT9l9a+y6x/shucwhaILsy8A2XfJ9VCggkVtu7XlWFDL2cum08/0\
+- <sup>5</sup> mRFwVrfc/uPsAn5XkkTscl4g21mQbnp9wJC40pGSJXXMuFOk8MgCb5ieSnpKFniAKM+tEo\
+- <sup>6</sup> /vjDGSi3F/bxu691jscrU0VUdIoOSo98HUfEf7jKBRikxGAC7I4HLa+/zX73OIvRFAb2hv\
+- <sup>7</sup> tUhn6RHrBtUJUjbSGiYeFTLDfcTQ^= alice@linux
+
+#### <span id="page-261-1"></span>**24.2.5. copy the public key to the other computer**
+
+But wait a minute? How did this key get onto server Bob? To copy the public key from Alice's laptop tot server Bob, Alice decided to use scp.
+
+<sup>1</sup> [alice@linux .ssh]\$ scp id\_rsa.pub bob@192.168.48.92:~/.ssh/authorized\_keys
+
+<sup>2</sup> bob@192.168.48.92's password:
+
+```
+3 id_rsa.pub 100% 393 0.4KB/s 00:00
+```
+Be careful when copying a second key! Do not overwrite the first key, instead append the key to the same ~/.ssh/authorized\_keys file!
+
+<sup>1</sup> cat id\_rsa.pub ^> ~/.ssh/authorized\_keys
+
+Alice could also have used ssh-copy-id like in this example.
+
+<sup>1</sup> ssh-copy-id -i .ssh/id\_rsa.pub bob@192.168.48.92
+
+#### <span id="page-261-2"></span>**24.2.6. passwordless ssh**
+
+Alice can now use ssh to connect passwordless to server Bob. In combination with ssh's capability to execute commands on the remote host, this can be useful in pipes across different machines.
+
+```
+1 [alice@linux ~]$ ssh bob@192.168.48.92 "ls -l .ssh"
+```
+
+```
+2 total 4
+```
+
+```
+3 -rw-r--r-- 1 bob bob 393 2024-05-14 17:03 authorized_keys
+```
+
+```
+4 [alice@linux ~]$
+```
+## **24.3. ssh-agent**
+
+When generating keys with ssh-keygen, you have the option to enter a passphrase to protect access to the keys by encrypting them with a symmetric cipher. To avoid having to type this passphrase every time, you can add the key to ssh-agent using ssh-add.
+
+Most Linux distributions will start the ssh-agent automatically when you log on.
+
+```
+1 paul@linux~$ ps -ef | grep ssh-agent
+2 paul 2405 2365 0 08:13 ? 00:00:00 /usr/bin/ssh-agent^^.
+```
+If the ssh-agent is not running, you can start it with eval \$(ssh-agent).
+
+```
+1 student@debian:~$ ps -ef | grep ssh-agent
+2 student 1608 1393 0 14:52 pts/0 00:00:00 grep ssh-agent
+3 student@debian:~$ eval $(ssh-agent)
+4 Agent pid 1610
+5 student@debian:~$ ps -ef | grep ssh-agent
+6 student 1610 1 0 14:52 ? 00:00:00 ssh-agent
+7 student 1612 1393 0 14:52 pts/0 00:00:00 grep ssh-agent
+```
+This screenshot shows how to use ssh-add with option -L to list the keys that are currently added to the ssh-agent, and to add a key (without arguments):
+
+```
+1 student@debian:~$ ssh-add -L
+```
+- <sup>2</sup> The agent has no identities.
+- <sup>3</sup> student@debian:~\$ ssh-add
+- <sup>4</sup> Identity added: /home/student/.ssh/id\_rsa (student@debian)
+
+```
+5 student@debian:~$ ssh-add -L
+```
+<sup>6</sup> ssh-rsa AAAAB3NzaC1yc2EAAAAD......MeoDHPqR5/yUsCO6MzVOCaZpf8Toc=
+
+```
+↪ student@debian
+```
+All keys can be removed from the ssh-agent with ssh-add -D.
+
+## **24.4. X forwarding via ssh**
+
+Another popular feature of ssh is called *X11 forwarding*. *X11* is the foundation of graphical user interfaces on Linux and Unix systems, so *X11 forwarding* allows you to run graphical applications on a remote computer and have them displayed on your local computer. On the server side, the X11Forwarding option must be set to yes in the /etc/ssh/sshd\_config file. On the client side, add option -X to the ssh command.
+
+Below an example of X forwarding between a Kali Linux VM (client) and a Linux Mint VM (server), both with a graphical desktop. The default user kali is logged in and verifies that the app drawing is not installed. Next, they log in to the Linux Mint VM as user student and start drawing. The application will run on the remote computer from mint, but will be displayed within the Kali VM, as shown in the screenshot.
+
+Figure 24.1.: SSH X Forwarding.
+
+## **24.5. configuration in /etc/ssh/**
+
+Configuration of *SSH* client and server is done in the /etc/ssh directory. In the next sections we will discuss most of the files found in /etc/ssh/.
+
+#### **24.5.1. sshd**
+
+The ssh server is provided by the openssh-server package.
+
+```
+1 root@linux~# dpkg -l openssh-server | tail -1
+2 ii openssh-server 1:5.9p1-5ubuntu1 secure shell (SSH) server,^^.
+```
+On Debian based distributions, the service is called ssh. On Enterprise Linux based distributions, the service is called sshd.
+
+Example on EL:
+
+```
+1 [student@el ~]$ systemctl status sshd
+2 ● sshd.service - OpenSSH server daemon
+3 Loaded: loaded (/usr/lib/systemd/system/sshd.service; enabled; preset:
+   ↪ enabled)
+4 Active: active (running) since Mon 2024-11-11 10:03:58 UTC; 3h 24min ago
+5 Docs: man:sshd(8)
+6 man:sshd_config(5)
+7 Main PID: 668 (sshd)
+8 Tasks: 1 (limit: 11128)
+9 Memory: 6.5M
+10 CPU: 208ms
+11 CGroup: /system.slice/sshd.service
+12 └─668 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+  On Debian:
+1 vagrant@debian:~$ systemctl status ssh
+2 ● ssh.service - OpenBSD Secure Shell server
+3 Loaded: loaded (/lib/systemd/system/ssh.service; enabled; preset:
+   ↪ enabled)
+4 Active: active (running) since Mon 2024-11-11 10:04:31 UTC; 3h 22min ago
+5 Docs: man:sshd(8)
+6 man:sshd_config(5)
+7 Process: 577 ExecStartPre=/usr/sbin/sshd -t (code=exited,
+   ↪ status=0/SUCCESS)
+8 Main PID: 611 (sshd)
+9 Tasks: 1 (limit: 2304)
+10 Memory: 7.6M
+11 CPU: 121ms
+12 CGroup: /system.slice/ssh.service
+13 └─611 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+  The standard port for ssh is 22. You can change this in the /etc/ssh/sshd_config file.
+1 [vagrant@el ~]$ sudo ss -tlnp
+2 State Recv-Q Send-Q Local Address:Port Peer Address:Port Process
+```
+
+```
+3 LISTEN 0 4096 0.0.0.0:111 0.0.0.0:*
+  ↪ users:(("rpcbind",pid=539,fd=4),("systemd",pid=1,fd=31))
+4 LISTEN 0 128 0.0.0.0:22 0.0.0.0:*
+  ↪ users:(("sshd",pid=668,fd=3))
+```
+
+```
+5 LISTEN 0 4096 [^:]:111 [^:]:*
+  ↪ users:(("rpcbind",pid=539,fd=6),("systemd",pid=1,fd=34))
+6 LISTEN 0 128 [^:]:22 [^:]:*
+  ↪ users:(("sshd",pid=668,fd=4))
+```
+#### <span id="page-264-0"></span>**24.5.2. sshd keys**
+
+The public keys used by the sshd server for fingerprints are located in /etc/ssh and are world readable. The private keys are only readable by root.
+
+```
+1 root@linux~# ls -l /etc/ssh/ssh_host_*
+2 -rw------- 1 root root 668 Jun 7 2024 /etc/ssh/ssh_host_ecdsa_key
+3 -rw-r--r-- 1 root root 598 Jun 7 2024 /etc/ssh/ssh_host_ecdsa_key.pub
+4 -rw------- 1 root root 1679 Jun 7 2024 /etc/ssh/ssh_host_rsa_key
+5 -rw-r--r-- 1 root root 390 Jun 7 2024 /etc/ssh/ssh_host_rsa_key.pub
+```
+## <span id="page-264-1"></span>**24.6. troubleshooting ssh**
+
+Troubleshooting SSH can be a hard issue: as security standards have evolved through time, and even the SSH protocol has evolved from version 1 to 2, you might encounter compatibility issues between an SSH client and server.
+
+Use ssh -v to get debug information about the ssh connection attempt.
+
+```
+1 student@linux:~$ ssh -v paul@192.168.1.192
+2 OpenSSH_4.3p2 Debian-8ubuntu1, OpenSSL 0.9.8c 05 Sep 2006
+3 debug1: Reading configuration data /home/paul/.ssh/config
+4 debug1: Reading configuration data /etc/ssh/ssh_config
+5 debug1: Applying options for *
+6 debug1: Connecting to 192.168.1.192 [192.168.1.192] port 22.
+7 debug1: Connection established.
+8 debug1: identity file /home/paul/.ssh/identity type -1
+9 debug1: identity file /home/paul/.ssh/id_rsa type 1
+10 debug1: identity file /home/paul/.ssh/id_dsa type -1
+11 debug1: Remote protocol version 1.99, remote software version OpenSSH_3
+12 debug1: match: OpenSSH_3.9p1 pat OpenSSH_3.*
+13 debug1: Enabling compatibility mode for protocol 2.0
+14 ^^.
+```
+#### **24.6.1. ssh protocol versions**
+
+The ssh protocol has two versions, 1 and 2, that are incompatible. Version 1 is considered insecure since it contains some known vulnerabilities. If you encounter an installation that still uses protocol version version 1, you should endeavour to update it as soon as possible. In current installations, version 1 should no longer be supported. It was removed in 2017 with the release of OpenSSH 7.6.
+
+Check the version of OpenSSH installed with ssh -V or with your package manager. For example, on Enterprise Linux:
+
+```
+1 [student@el ssh]$ ssh -V
+```
+
+```
+2 OpenSSH_8.7p1, OpenSSL 3.0.7 1 Nov 2022
+```
+
+```
+3 [student@el ssh]$ dnf list installed openssh*
+```
+
+```
+4 Installed Packages
+```
+<sup>5</sup> openssh.x86\_64 8.7p1-38.el9\_4.4 @baseos
+
+*24. ssh client and server*
+
+| 6 | openssh-clients.x86_64 | 8.7p1-38.el9_4.4 | @baseos |
+|---|------------------------|------------------|---------|
+| 7 | openssh-server.x86_64  | 8.7p1-38.el9_4.4 | @baseos |
+
+and on Debian:
+
+```
+1 student@debian:~$ ssh -V
+```
+- <sup>2</sup> OpenSSH\_9.2p1 Debian-2+deb12u2, OpenSSL 3.0.11 19 Sep 2023
+- <sup>3</sup> student@debian:~\$ apt list --installed openssh\*
+- <sup>4</sup> Listing^^. Done
+- <sup>5</sup> openssh-client/now 1:9.2p1-2+deb12u2 amd64 [installed,upgradable to: ↪ 1:9.2p1-2+deb12u3]
+- <sup>6</sup> openssh-server/now 1:9.2p1-2+deb12u2 amd64 [installed,upgradable to: ↪ 1:9.2p1-2+deb12u3]
+- <sup>7</sup> openssh-sftp-server/now 1:9.2p1-2+deb12u2 amd64 [installed,upgradable to:
+
+```
+↪ 1:9.2p1-2+deb12u3]
+```
+You can try to check the protocol version via /etc/ssh/ssh\_config for the client side and /etc/ssh/sshd\_config for the openssh-server daemon. However, on newer installations, the Protocol directive is not present in the configuration files. An example on an older installation:
+
+```
+1 student@linux:/etc/ssh$ grep Protocol ssh_config
+```
+
+```
+2 # Protocol 2,1
+```
+- <sup>3</sup> student@linux:/etc/ssh\$ grep Protocol sshd\_config
+- <sup>4</sup> Protocol 2
+
+#### <span id="page-265-0"></span>**24.6.2. dealing with older devices**
+
+Unfortunately, some older devices still use insecure key exchange or signing algorithms. For example, the example below is an attempt to connect to a Cisco device (with IOS version 16.09.08, released in 2021) from a Linux system with the OpenSSH client version 9.8:
+
+- <sup>1</sup> [student@linux ~]\$ ssh cisco@172.16.255.254
+- <sup>2</sup> Unable to negotiate with 172.16.255.254 port 22: no matching key exchange method found. Their offer: ↪
+	- diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1 ↪
+
+The Cisco device only uses the SHA-1 hash algorithm for signing messages. This is considered to be insecure, so is no longer supported by the OpenSSH client, at least not by default. Enabling SHA-1 can be done with the following command:
+
+- <sup>1</sup> [student@linux ~]\$ sudo update-crypto-policies --set DEFAULT:SHA1
+- <sup>2</sup> Setting system policy to DEFAULT:SHA1
+- <sup>3</sup> Note: System-wide crypto policies are applied on application start-up.
+- <sup>4</sup> It is recommended to restart the system for the change of policies
+- <sup>5</sup> to fully take place.
+
+Trying the connection again yields:
+
+- <sup>1</sup> [student@linux ~]\$ ssh cisco@172.16.255.254
+- <sup>2</sup> Unable to negotiate with 172.16.255.254 port 22: no matching host key type ↪ found. Their offer: ssh-rsa
+
+The Cisco device only supports the ssh-rsa host key type, which is also turned off on the client side. Turning it on can be done with the following command:
+
+```
+1 [student@linux ~]$ ssh -o HostKeyAlgorithms=+ssh-rsa cisco@172.16.255.254
+2 The authenticity of host '172.16.255.254 (172.16.255.254)' can't be
+   ↪ established.
+3 RSA key fingerprint is SHA256:oDUj7I3RQi0FSKSaVX7gz8JfM1wpsYVbyF3ADNJTcAw.
+4 This key is not known by any other names.
+5 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+6 Warning: Permanently added '172.16.255.254' (RSA) to the list of known hosts.
+7 (cisco@172.16.255.254) Password:
+8
+9 [^^. Some output omitted ^^.]
+10
+11 Router#
+12 Router#exit
+13 Connection to 172.16.255.254 closed.
+14 [student@linux ~]$
+```
+Restoring the setting in order to no longer allow SHA-1 can be done with:
+
+```
+1 [student@linux ~]$ sudo update-crypto-policies --set DEFAULT
+```
+
+```
+2 Setting system policy to DEFAULT
+```
+#### **24.7. practice: ssh**
+
+<span id="page-266-0"></span>Lab preparation: Make sure that you have access to *two Linux computers*, e.g. by setting up two VirtualBox VMs either manually or with an automation tool like Vagrant. Ensure that both VMs are attached to the same type of network (preferably Host-only or Internal) and that they have an IP address within the same subnet. One VM will assume the role of the client, the other the server.
+
+- 1. On the server, check which version of the OpenSSH server is installed, which *should* be the case (especially for VMs created with Vagrant). If not, install it.
+- 2. Verify in the ssh configuration files that the Protocol setting is absent, or that only protocol version 2 is allowed.
+- 3. Use ssh to log on to the server, show your current directory and then exit the server.
+- 4. Use scp to copy a file from the client to the server.
+- 5. Use scp to copy a file from the server to the client.
+- 6. Use ssh-keygen to create a key pair without passphrase on the client. Set up passwordless ssh between the client and server
+- 7. Verify that the permissions on the client key files are correct; world readable for the public keys and only root access for the private keys.
+- 8. On the server, check which public keys are authorized for the user you are using to log in.
+- 9. Verify that the ssh-agent is running.
+- 10. (optional) Protect your keypair with a passphrase, then add this key to the ssh-agent and test your passwordless ssh to the server.
+- 11. (optional, only works when you have a graphical install of Linux) Use ssh with X forwarding to run a graphical on the server, but display it on your client.
+
+## <span id="page-267-0"></span>**24.8. solution: ssh**
+
+In this setup, we have two VMs created with Vagrant:
+
+| Hostname | Role       | Distro      | IP address       |
+|----------|------------|-------------|------------------|
+| debian   | SSH client | Debian 12   | 192.168.56.21/24 |
+| el       | SSH server | AlmaLinux 9 | 192.168.56.11/24 |
+
+1. On the server, check which version of the OpenSSH server is installed, which *should* be the case (especially for VMs created with Vagrant). If not, install it.
+
+```
+1 [vagrant@el ~]$ dnf list installed openssh*
+2 Installed Packages
+3 openssh.x86_64 8.7p1-38.el9_4.4 @baseos
+4 openssh-clients.x86_64 8.7p1-38.el9_4.4 @baseos
+5 openssh-server.x86_64 8.7p1-38.el9_4.4 @baseos
+6 [vagrant@el ~]$ ssh -V
+7 OpenSSH_8.7p1, OpenSSL 3.0.7 1 Nov 2022
+8 [vagrant@el ~]$ systemctl status sshd
+9 ● sshd.service - OpenSSH server daemon
+10 Loaded: loaded (/usr/lib/systemd/system/sshd.service; enabled;
+   ↪ preset: enabled)
+11 Active: active (running) since Mon 2024-11-11 10:03:58 UTC; 4h 22min
+   ↪ ago
+12 Docs: man:sshd(8)
+13 man:sshd_config(5)
+14 Main PID: 668 (sshd)
+15 Tasks: 1 (limit: 11128)
+16 Memory: 6.5M
+17 CPU: 208ms
+18 CGroup: /system.slice/sshd.service
+19 └─668 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100
+   ↪ startups"
+```
+- 2. Verify in the ssh configuration files that the Protocol setting is absent, or that only protocol version 2 is allowed.
+- <sup>1</sup> [vagrant@el ~]\$ sudo find /etc/ssh/ -type f -exec grep -nHi protocol {} ↪ \;
+- <sup>2</sup> [vagrant@el ~]\$
+
+No output, so the Protocol setting is absent. Since we have OpenSSH 8.7p1, this is what we can expect, as support for Protocol 1 was dropped in OpenSSH 7.6.
+
+3. Use ssh to log on to the server, show your current directory and then exit the server.
+
+```
+1 vagrant@debian:~$ ssh vagrant@192.168.56.11 pwd
+2 The authenticity of host '192.168.56.11 (192.168.56.11)' can't be
+   ↪ established.
+3 ED25519 key fingerprint is
+   ↪ SHA256:yw/ZrRXF4zpgbcjCSvM47MyFfg2DfOoiO1tMLVlthGU.
+4 This key is not known by any other names.
+5 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+6 Warning: Permanently added '192.168.56.11' (ED25519) to the list of
+   ↪ known hosts.
+7 vagrant@192.168.56.11's password:
+8 /home/vagrant
+```
+4. Use scp to copy a file from the client to the server.
+
+On the server, the home directory of user vagrant is now empty:
+
+```
+1 [vagrant@el ~]$ ls -l
+2 total 0
+```
+On the client, we create a file and copy it to the server:
+
+```
+1 vagrant@debian:~$ echo "Hello from Debian" > hello.txt
+2 vagrant@debian:~$ scp hello.txt vagrant@192.168.56.11:/home/vagrant
+3 vagrant@192.168.56.11's password:
+4 hello.txt
+```
+On the server, the file is now present:
+
+```
+1 [vagrant@el ~]$ ls -l
+2 total 4
+3 -rw-r--r--. 1 vagrant vagrant 18 Nov 11 14:37 hello.txt
+4 [vagrant@el ~]$ cat hello.txt
+5 Hello from Debian
+```
+5. Use scp to copy a file from the server to the client.
+
+Let's remove the file locally and copy it back from the server:
+
+```
+1 vagrant@debian:~$ ls
+2 hello.txt
+3 vagrant@debian:~$ rm hello.txt
+4 vagrant@debian:~$ ls -l
+5 total 0
+6 vagrant@debian:~$ scp vagrant@192.168.56.11:/home/vagrant/hello.txt .
+7 vagrant@192.168.56.11's password:
+8 hello.txt 100% 18 7.3KB/s 00:00
+9 vagrant@debian:~$ ls -l
+10 total 4
+11 -rw-r--r-- 1 vagrant vagrant 18 Nov 11 14:36 hello.txt
+12 vagrant@debian:~$ cat hello.txt
+13 Hello from Debian
+6. Use ssh-keygen to create a key pair without passphrase on the client. Set up pass-
+  wordless ssh between the client and server.
+1 vagrant@debian:~$ ssh-keygen
+2 Generating public/private rsa key pair.
+3 Enter file in which to save the key (/home/vagrant/.ssh/id_rsa):
+4 Enter passphrase (empty for no passphrase):
+5 Enter same passphrase again:
+6 Your identification has been saved in /home/vagrant/.ssh/id_rsa
+7 Your public key has been saved in /home/vagrant/.ssh/id_rsa.pub
+8 The key fingerprint is:
+9 SHA256:U1EQJVRL/BV8IX9XwVBGIBfAJfdtLkds5VNvM70kFxU vagrant@debian
+10 The key's randomart image is:
+11 +---[RSA 3072]----+
+12 | .B@BOOE@|
+13 | =*.^=@|
+14 | . .o X#|
+15 | . =*B|
+16 | S ^.o|
+17 | . o |
+18 | |
+19 | |
+```
+
+```
+20 | |
+21 +----[SHA256]-----+
+22 vagrant@debian:~$ ssh-copy-id -i .ssh/id_rsa.pub vagrant@192.168.56.11
+23 /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed:
+    ↪ ".ssh/id_rsa.pub"
+24 /usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to
+    ↪ filter out any that are already installed
+25 /usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you
+    ↪ are prompted now it is to install the new keys
+26 vagrant@192.168.56.11's password:
+27
+28 Number of key(s) added: 1
+29
+30 Now try logging into the machine, with: "ssh 'vagrant@192.168.56.11'"
+31 and check to make sure that only the key(s) you wanted were added.
+32
+33 vagrant@debian:~$ ssh vagrant@192.168.56.11
+34
+35 This system is built by the Bento project by Chef Software
+36 More information can be found at https:^/github.com/chef/bento
+37
+38 Use of this system is acceptance of the OS vendor EULA and License
+    ↪ Agreements.
+39 Last login: Mon Nov 11 10:04:49 2024 from 10.0.2.2
+40 [vagrant@el ~]$
+ 7. Verify that the permissions on the client key files are correct; world readable for the
+   public keys and only root access for the private keys.
+1 vagrant@debian:~$ ls -ld .ssh/
+2 drwx------ 2 vagrant root 4096 Nov 11 14:41 .ssh/
+3 vagrant@debian:~$ ls -l .ssh/
+4 total 16
+5 -rw------- 1 vagrant vagrant 89 Oct 11 14:35 authorized_keys
+6 -rw------- 1 vagrant vagrant 2602 Nov 11 14:40 id_rsa
+7 -rw-r--r-- 1 vagrant vagrant 568 Nov 11 14:40 id_rsa.pub
+8 -rw------- 1 vagrant vagrant 978 Nov 11 14:30 known_hosts
+8. On the server, check which public keys are authorized for the user you are using to log
+   in.
+1 [vagrant@el ~]$ ls -l .ssh/
+2 total 4
+3 -rw-------. 1 vagrant vagrant 657 Nov 11 14:47 authorized_keys
+4 [vagrant@el ~]$ cat .ssh/authorized_keys
+5 ssh-ed25519 AAAAC3NzaC1lZDI1N......KVM04 vagrant
+6 ssh-rsa AAAAB3NzaC1yc2EAAAADA......8Toc= vagrant@debian
+       The first key is the one used by Vagrant to log in to the VM, the other one is the
+       key we just added.
+```
+9. Verify that the ssh-agent is running.
+
+In this case, the SSH agent is *not* running on the client, so we start it manually:
+
+```
+1 vagrant@debian:~$ ps -ef | grep ssh-agent
+2 vagrant 1608 1393 0 14:52 pts/0 00:00:00 grep ssh-agent
+3 vagrant@debian:~$ eval $(ssh-agent)
+4 Agent pid 1610
+5 vagrant@debian:~$ ps -ef | grep ssh-agent
+```
+
+| 6 | vagrant | 1610 | 1    | 0<br>14:52<br>?     | 00:00:00         | ssh-agent |
+|---|---------|------|------|---------------------|------------------|-----------|
+| 7 | vagrant | 1612 | 1393 | 0<br>14:52<br>pts/0 | 00:00:00<br>grep | ssh-agent |
+
+10. (optional) Protect your keypair with a passphrase, then add this key to the ssh-agent and test your passwordless ssh to the server.
+
+We removed the RSA keypair and created a new ED25519 keypair with a passphrase.
+
+```
+1 vagrant@debian:~$ rm -rf .ssh/id_rsa*
+2 vagrant@debian:~$ ssh-keygen -t ed25519
+3 Generating public/private ed25519 key pair.
+4 Enter file in which to save the key (/home/vagrant/.ssh/id_ed25519):
+5 Enter passphrase (empty for no passphrase): [ENTER PASSPHRASE HERE]
+6 Enter same passphrase again: [ENTER PASSPHRASE HERE]
+7 Your identification has been saved in /home/vagrant/.ssh/id_ed25519
+8 Your public key has been saved in /home/vagrant/.ssh/id_ed25519.pub
+9 The key fingerprint is:
+10 SHA256:yo7yb0/iQK6TOGazv7DjibRb0pS5XPkiJ5xdxptoVhw vagrant@debian
+11 The key's randomart image is:
+12 +--[ED25519 256]--+
+13 | |
+14 | |
+15 | E |
+16 | o + . |
+17 | +.o *S |
+18 | =o=.*.o |
+19 | = @oB^+. |
+20 |^=@.*=oo |
+21 ^=OB*+o+^. |
+22 +----[SHA256]-----+
+      Next, we copy the public key to the server. Remark that we are not prompted
+      for the passphrase here! This is only necessary when we want to access the
+      private key.
+1 vagrant@debian:~$ ssh-copy-id -i .ssh/id_ed25519.pub
+   ↪ vagrant@192.168.56.11
+2 /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed:
+   ↪ ".ssh/id_ed25519.pub"
+3 /usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to
+   ↪ filter out any that are already installed
+4 /usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you
+   ↪ are prompted now it is to install the new keys
+5
+6 Number of key(s) added: 1
+7
+8 Now try logging into the machine, with: "ssh 'vagrant@192.168.56.11'"
+9 and check to make sure that only the key(s) you wanted were added.
+      We remove all current keys from the agent and add the new key. At this point,
+      we are prompted for the passphrase.
+1 vagrant@debian:~$ ssh-add -D
+2 All identities removed.
+3 vagrant@debian:~$ ssh-add -L
+4 The agent has no identities.
+```
+
+```
+5 vagrant@debian:~$ ssh-add
+```
+- Enter passphrase for /home/vagrant/.ssh/id\_ed25519: [ENTER PASSPHRASE ↪ HERE]
+- Identity added: /home/vagrant/.ssh/id\_ed25519 (vagrant@debian)
+
+#### *24. ssh client and server*
+
+Now we can log in to the server without being prompted for the passphrase:
+
+- <sup>1</sup> vagrant@debian:~\$ ssh vagrant@192.168.56.11
+- <sup>2</sup> Last login: Mon Nov 11 14:47:53 2024 from 192.168.56.21
+- <sup>3</sup> [vagrant@el ~]\$
+- 11. (optional, only works when you have a graphical install of Linux) Use ssh with X forwarding to run a graphical on the server, but display it on your client.
+
+See example in the theory section.
+
+## <span id="page-272-0"></span>**25. Docker**
+
+*(Written by Thomas Parmentier, https://github.com/ThomasParmentier/, with contributions by: Bert Van Vreckem https://github.com/bertvv)*
+
+**Docker** is by far the most popular containerization platform (even the most popular all-round development tool in general according to [Stack Overflow\). Its main goal is to pro](https://github.com/ThomasParmentier/)vide a fast and consistent way to build and deploy a[pplications.](https://github.com/bertvv)
+
+This chapter gives a short overview of the history behind Docker and explains some of its basic concepts.
+
+## **25.1. why Docker**
+
+<span id="page-272-1"></span>Docker was first shown as a public demo by Solomon Hykes on PyCon US 2013. He worked for a cloud-provider company using Linux Containers (LXC) to rapidly deploy application servers for its customers. At the time, LXC was a known technology (which is still being used today), although it never got widely adopted due to its rather complex nature.
+
+Docker became an almost universal development tool mainly because of the simplifications it provides (compared to LXC). Some more (recent) history:
+
+- This is a recording of the (noticeably short) first live demonstration of Docker.
+- In this presentation Solomon Hykes explains why he felt the need to develop Docker.
+
+## **25.2. [containeriza](https://youtu.be/3N3n9FzebAA?si=yQeME3UlTj4BS4or)tion**
+
+<span id="page-272-2"></span>Essentially, the goal of containerization is the same as virtualization: isolating applications from each other and the hardware. Isolation can have multiple drivers: security, portability, uniform deployment, testing …
+
+Virtualization is achieved through a hypervisor running different parallel (guest) operating systems called *virtual machines*, while container platforms such as Docker run isolated applications bundled with all components required for them to operate properly: *containers*. These containers do *not* include a full-blown operating system, instead sharing the required features of the host kernel, much like LCX. This means containers are a more light-weight and flexible solution than virtual machines.
+
+Bear in mind that Docker is not the only containerization platform - you can also use LXC, CRI-O or Podman - but it is by far the most popular one.
+
+## **25.3. concepts**
+
+<span id="page-272-3"></span>We will now highlight some of the core concepts of Docker, providing general information and demonstrating some of the most useful commands.
+
+More detailed information can be found in the official DockerDocs. The paragraphs below mainly serve as a summary of these docs. It's strongly suggested to try out the steps from the Introduction, as this is the best way to familiarize yourself with the concepts and commands of Docker.
+
+#### **25.3.1. containers**
+
+<span id="page-273-0"></span>A container is a packaged version of an application, including all its dependencies. It is a small, standalone, deployable unit able to run in semi-isolation on a host system. Docker containers are created using images.
+
+#### **25.3.2. images & layers**
+
+<span id="page-273-1"></span>Images can be regarded as templates with instructions on how to create containers at runtime. You could call images the static version of containers: the same image can be used to create multiple run-time containers. Most container images are not tied to a container platform and can be used within other framework. Meaning you can f.e. use Docker images to start Podman containers.
+
+Images can specify a wide range of options for the container(s) to be created, ranging from the contained application and its files to the networking and storage options. Most of these options affect the file system within the container, each such a change is called an *image layer*.
+
+Container images are composed of these layers, starting from a base image and adding an additional layer to the image for each configuration change to the file system.Examples of base images are the Python image and the MongoDB image. Possible layers that can be added to these base images to create a new image can be f.e. source code files of an application you want to run and configuration files for its settings.
+
+Note that images are immutable: once layers have been added to an image they can not be changed or remove[d. You can still use t](https://hub.docker.com/_/python)he i[mage as a base for a ne](https://hub.docker.com/r/mongodb/mongodb-community-server)w image, with additional layers. This is generally done using Dockerfiles.
+
+#### **25.3.3. Dockerfiles**
+
+Dockerfiles are text files used to create container images. They contain a fixed set of commands for the Docker image builder, dictating which base image should be used and which additional image layers should be added.
+
+Some of the most common instructions in a Dockerfile include:
+
+- FROM <image> this specifies the base image that the build will extend.
+- WORKDIR <path> this instruction specifies the "working directory" or the path in the image where files will be copied and commands will be executed.
+- COPY <host-path> <image-path> this instruction tells the builder to copy files from the host and put them into the container image.
+- RUN <command> this instruction tells the builder to run the specified command.
+- ENV <name> <value> this instruction sets an environment variable that a running container will use.
+- EXPOSE <port-number> this instruction sets configuration on the image that indicates a port the image would like to expose.
+- CMD ["<command>", "<arg1>"] this instruction sets the default command a container using this image will run.
+
+Example of a Dockerfile:
+
+```
+1 FROM python:3.12
+2 WORKDIR /usr/local/app
+3
+4 # Install the application dependencies
+5 COPY requirements.txt ./
+6 RUN pip install --no-cache-dir -r requirements.txt
+7
+```
+
+```
+8 # Copy in the source code
+9 COPY src ./src
+10 EXPOSE 5000
+11
+12 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
+```
+To read through all of the instructions or go into greater detail, check out the Dockerfile reference.
+
+#### **25.3.4. volumes**
+
+Since containers are rather light-weight, they can be deployed and destroyed relatively quickly. Keep in kind that containers are ephemeral by nature, meaning its file system is deleted upon deleting the container. If you want your container data to be persistent, you can use volumes.
+
+Volumes provide persistent storage to docker containers using a sort of link to storage outside the container. Docker can create and manage these volumes, allowing you to link them to containers when required.
+
+Example of linking a persistent volume called log-data to the container directory /logs. The volume will effectively be mounted at this point in the container file system.
+
+<sup>1</sup> docker run -d -p 80:80 -v log-data:/logs docker/welcome-to-docker
+
+#### **25.3.5. Docker Compose**
+
+<span id="page-274-0"></span>Starting and managing multiple containers can become cumbersome if done manually. That's where Docker Compose comes in. Compose allows you to bundle all containers you want to manage as one within a YAML file, allowing you to start or destroy all of them with a single command (docker compose up). For example, this command can allow you to spin up a completely containerized LAMP-stack given the correct Docker Compose file.
+
+## **25.4. practice: Docker**
+
+- To get started with Docker: Introduction to Docker
+- <span id="page-274-1"></span>• To get acquainted with the basic concepts: What's Next
+
+## **A. git**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/, with contributions by: Alex M. Schapelle, https://github.com/zero-pytagoras/)*
+
+This chapter is an introduction to using git [on the command](https://github.com/zero-pytagoras/) line. The git repository is hosted by github, but you are free to choose another server (or create your own).
+
+There are many excellent online tutorials for git. This list can save you one Google query:
+
+http:^/gitimmersion.com/ http:^/git-scm.com/book
+
+## <span id="page-276-0"></span>**A.1. git**
+
+Linus Torvalds created git back in 2005 when Bitkeeper changed its license and the Linux kernel developers where no longer able to use it for free.
+
+git quickly became popular and is now the most widely used distributed version control system in the world.
+
+Geek and Poke demonstrates why we need version control (image property of Geek and Poke CCA 3.0).
+
+Besides source code for software, you can also find German and Icelandic law on github (and probably much more by the time you are reading this).
+
+## <span id="page-277-0"></span>**A.2. installing git**
+
+We install git with aptitude install git as seen in this screenshot on Debian 6.
+
+```
+root@linux:~# aptitude install git
+The following NEW packages will be installed:
+  git libcurl3-gnutls{a} liberror-perl{a}
+0 packages upgraded, 3 newly installed, 0 to remove and 0 not upgraded.
+^^.
+Processing triggers for man-db ^^.
+Setting up libcurl3-gnutls (7.21.0-2.1+squeeze2) ^^.
+Setting up liberror-perl (0.17-1) ^^.
+Setting up git (1:1.7.2.5-3) ^^.
+```
+## <span id="page-277-1"></span>**A.3. starting a project**
+
+First we create a project directory, with a simple file in it.
+
+```
+student@linux~$ mkdir project42
+student@linux~$ cd project42/
+student@linux~/project42$ echo "echo The answer is 42." >> question.sh
+```
+#### <span id="page-278-0"></span>**A.3.1. git init**
+
+Then we tell git to create an empty git repository in this directory.
+
+```
+student@linux~/project42$ ls -la
+total 12
+drwxrwxr-x 2 paul paul 4096 Dec 8 16:41 .
+drwxr-xr-x 46 paul paul 4096 Dec 8 16:41 ^.
+-rw-rw-r-- 1 paul paul 23 Dec 8 16:41 question.sh
+student@linux~/project42$ git init
+Initialized empty Git repository in /home/paul/project42/.git/
+student@linux~/project42$ ls -la
+total 16
+drwxrwxr-x 3 paul paul 4096 Dec 8 16:44 .
+drwxr-xr-x 46 paul paul 4096 Dec 8 16:41 ^.
+drwxrwxr-x 7 paul paul 4096 Dec 8 16:44 .git
+-rw-rw-r-- 1 paul paul 23 Dec 8 16:41 question.sh
+```
+#### <span id="page-278-1"></span>**A.3.2. git config**
+
+Next we use git config to set some global options.
+
+```
+student@linux$ git config --global user.name Paul
+student@linux$ git config --global user.email "paul.cobbaut@gmail.com"
+student@linux$ git config --global core.editor vi
+```
+We can verify this config in ~/.gitconfig:
+
+```
+student@linux~/project42$ cat ~/.gitconfig
+[user]
+    name = Paul
+    email = paul.cobbaut@gmail.com
+[core]
+    editor = vi
+```
+## <span id="page-278-2"></span>**A.3.3. git add**
+
+Time now to add file to our project with git add, and verify that it is added with git status.
+
+```
+student@linux~/project42$ git add question.sh
+student@linux~/project42$ git status
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+# (use "git rm --cached <file>^^." to unstage)
+#
+# new file: question.sh
+#
+```
+*A. git*
+
+The git status tells us there is a new file ready to be committed.
+
+#### <span id="page-279-0"></span>**A.3.4. git commit**
+
+With git commit you force git to record all added files (and all changes to those files) permanently.
+
+```
+student@linux~/project42$ git commit -m "starting a project"
+[master (root-commit) 5c10768] starting a project
+ 1 file changed, 1 insertion(+)
+ create mode 100644 question.sh
+student@linux~/project42$ git status
+# On branch master
+nothing to commit (working directory clean)
+```
+#### <span id="page-279-1"></span>**A.3.5. changing a committed file**
+
+The screenshots below show several steps. First we change a file:
+
+```
+student@linux~/project42$ git status
+# On branch master
+nothing to commit (working directory clean)
+student@linux~/project42$ vi question.sh
+```
+Then we verify the status and see that it is modified:
+
+```
+student@linux~/project42$ git status
+# On branch master
+# Changes not staged for commit:
+# (use "git add <file>^^." to update what will be committed)
+# (use "git checkout -- <file>^^." to discard changes in working directory)
+#
+# modified: question.sh
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+Next we add it to the git repository.
+
+```
+student@linux~/project42$ git add question.sh
+student@linux~/project42$ git commit -m "adding a she-bang to the main script"
+[master 86b8347] adding a she-bang to the main script
+ 1 file changed, 1 insertion(+)
+student@linux~/project42$ git status
+# On branch master
+nothing to commit (working directory clean)
+```
+#### <span id="page-280-0"></span>**A.3.6. git log**
+
+We can see all our commits again using git log.
+
+student@linux~/project42\$ git log commit 86b8347192ea025815df7a8e628d99474b41fb6c Author: Paul <paul.cobbaut@gmail.com> Date: Sat Dec 8 17:12:24 2012 +0100
+
+adding a she-bang to the main script
+
+commit 5c10768f29aecc16161fb197765e0f14383f7bca Author: Paul <paul.cobbaut@gmail.com> Date: Sat Dec 8 17:09:29 2012 +0100
+
+starting a project
+
+The log format can be changed.
+
+```
+student@linux~/project42$ git log --pretty=oneline
+86b8347192ea025815df7a8e628d99474b41fb6c adding a she-bang to the main script
+5c10768f29aecc16161fb197765e0f14383f7bca starting a project
+```
+The log format can be customized a lot.
+
+```
+student@linux~/project42$ git log --pretty=format:"%an: %ar :%s"
+Paul: 8 minutes ago :adding a she-bang to the main script
+Paul: 11 minutes ago :starting a project
+```
+#### <span id="page-280-1"></span>**A.3.7. git mv**
+
+Renaming a file can be done with mv followed by a git remove and a git add of the new filename. But it can be done easier and in one command using git mv.
+
+```
+student@linux~/project42$ git mv question.sh thequestion.sh
+student@linux~/project42$ git status
+# On branch master
+# Changes to be committed:
+# (use "git reset HEAD <file>^^." to unstage)
+#
+# renamed: question.sh -> thequestion.sh
+#
+student@linux~/project42$ git commit -m "improved naming scheme"
+[master 69b2c8b] improved naming scheme
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ rename question.sh => thequestion.sh (100%)
+```
+## <span id="page-280-2"></span>**A.4. git branches**
+
+Working on the project can be done in one or more git branches. Here we create a new branch that will make changes to the script. We will merge this branch with the master branch when we are sure the script works. (It can be useful to add git status commands when practicing).
+
+```
+student@linux~/project42$ git branch
+* master
+student@linux~/project42$ git checkout -b newheader
+Switched to a new branch 'newheader'
+student@linux~/project42$ vi thequestion.sh
+student@linux~/project42$ git add thequestion.sh
+student@linux~/project42$ source thequestion.sh
+The answer is 42.
+```
+It seems to work, so we commit in this branch.
+
+```
+student@linux~/project42$ git commit -m "adding a new company header"
+[newheader 730a22b] adding a new company header
+ 1 file changed, 4 insertions(+)
+student@linux~/project42$ git branch
+  master
+* newheader
+student@linux~/project42$ cat thequestion.sh
+^!/bin/bash
+#
+# copyright linux-training.be
+#
+```
+echo The answer is 42.
+
+*A. git*
+
+Let us go back to the master branch and see what happened there.
+
+```
+student@linux~/project42$ git checkout master
+Switched to branch 'master'
+student@linux~/project42$ cat thequestion.sh
+^!/bin/bash
+echo The answer is 42.
+```
+Nothing happened in the master branch, because we worked in another branch.
+
+When we are sure the branch is ready for production, then we merge it into the master branch.
+
+```
+student@linux~/project42$ cat thequestion.sh
+^!/bin/bash
+echo The answer is 42.
+student@linux~/project42$ git merge newheader
+Updating 69b2c8b^.730a22b
+Fast-forward
+ thequestion.sh | 4 ++++
+ 1 file changed, 4 insertions(+)
+student@linux~/project42$ cat thequestion.sh
+^!/bin/bash
+#
+# copyright linux-training.be
+#
+echo The answer is 42.
+```
+The newheader branch can now be deleted.
+
+270
+
+```
+student@linux~/project42$ git branch
+* master
+  newheader
+student@linux~/project42$ git branch -d newheader
+Deleted branch newheader (was 730a22b).
+student@linux~/project42$ git branch
+* master
+```
+## <span id="page-282-0"></span>**A.5. to be continued...**
+
+The git story is not finished.
+
+There are many excellent online tutorials for git. This list can save you one Google query:
+
+http:^/gitimmersion.com/ http:^/git-scm.com/book
+
+## **A.6. github.com**
+
+Create an account on github.com. This website is a frontend for an immense git server with over two and a half million users and almost five million projects (including Fedora, Linux kernel, Android, Ruby on Rails, Wine, X.org, VLC...)
+
+https:^/github.com/signup/free
+
+This account is free of charge, we will use it in the examples below.
+
+## <span id="page-282-1"></span>**A.7. add your public key to github**
+
+I prefer to use github with a public key, so it probably is a good idea that you also upload your public key to github.com.
+
+You can upload your own key via the web interface:
+
+https:^/github.com/settings/ssh
+
+Please do not forget to protect your private key!
+
+## <span id="page-282-2"></span>**A.8. practice: git**
+
+1.Crate local project called git\_practice.
+
+2.Create a project on gitlab.com to host a local project that you have created.
+
+3.The project should have REAMDE.md file as well as TODO.md file in it.
+
+4.Write in REAMDE.md file description of the project and what you think it might be.
+
+5.Initialize your project with git command, setup your username, mail and remote server.
+
+6.Use git push -u origin master to send project saves to remote host.
+
+*A. git*
+
+7.Verify on gitlab.com that the project has been setup and is updated with REAMDE.md and TODO.md.
+
+8.Add git\_hello.sh script that prints hello to username from its current location.
+
+9.Push the script to gitlab repository.
+
+## <span id="page-283-0"></span>**A.9. solution: git**
+
+1.Crate local project called git\_practice.
+
+aschapelle@vaio3:~\$ mkdir git\_practice; cd git\_practice
+
+2.Create a project on gitlab.com to host a local project that you have created.
+
+3.The project should have REAMDE.md file as well as TODO.md file in it.
+
+aschapelle@vaio3:~/git\_practice\$ touch REAMDE.md TODO.md
+
+4.Write in REAMDE.md file description of the project and what you think it might be.
+
+aschapelle@vaio3:~/git\_practice\$ echo "This is readme file for git\_practice project" > README.md; aschapelle@vaio3:~/git\_practice\$echo "This is todo file for git\_practice project" > TODO.md
+
+5.Initialize your project with git command, setup your username, mail and remote server.
+
+aschapelle@vaio3:~/git\_practice\$ git init aschapelle@vaio3:~/git\_practice\$ git config user.name alex.schapelle aschapelle@vaio3:~/git\_practice\$ git config user.mail alex@vaiolabs.com aschapelle@vaio3:~/git\_practice\$ git remote add origin https:^/gitlab.com/url\_to\_your\_project.git
+
+6.Use git push -u origin master to send project saves to remote host.
+
+aschapelle@vaio3:~/git\_practice\$ git push -u origin master
+
+7.Verify on gitlab.com that the project has been setup and is updated with REAMDE.md and TODO.md.
+
+8.Add git\_hello.sh script that prints hello to username from its current location.
+
+aschapelle@vaio3:~/git\_practice\$ git push -u origin master
+
+9.Push the script to gitlab repository.
+
+aschapelle@vaio3:~/git\_practice\$ git push -u origin master
+
+## <span id="page-284-0"></span>**B. Introduction to vi**
+
+*(Written by Paul Cobbaut, https://github.com/paulcobbaut/)*
+
+The vi editor is installed on almost every Unix. Linux will very often install vim (vi improved) which is similar. Every system a[dministrator should know](https://github.com/paulcobbaut/) vi(m), because it is an easy tool to solve problems.
+
+The vi editor is not intuitive, but once you get to know it, vi becomes a very powerful application. Most Linux distributions will include the vimtutor which is a 45 minute lesson in vi(m).
+
+## **B.1. command mode and insert mode**
+
+<span id="page-284-1"></span>The vi editor starts in command mode. In command mode, you can type commands. Some commands will bring you into insert mode. In insert mode, you can type text. The escape key will return you to command mode.
+
+|     | Table B.1.: getting to command mode |
+|-----|-------------------------------------|
+| key | action                              |
+
+## **B.2. start typing (a A i I o O)**
+
+<span id="page-284-2"></span>The difference between a A i I o and O is the location where you can start typing. a will append after the current character and A will append at the end of the line. i will insert before the current character and I will insert at the beginning of the line. o will put you in a new line after the current line and O will put you in a new line before the current line.
+
+|         | Table B.2.: switch to insert mode                                                                  |  |  |  |
+|---------|----------------------------------------------------------------------------------------------------|--|--|--|
+| command | action                                                                                             |  |  |  |
+| a       | start typing after the current character                                                           |  |  |  |
+| A       | start typing at the end of the current line                                                        |  |  |  |
+| i       | start typing before the current character                                                          |  |  |  |
+| I<br>o  | start typing at the start of the current line<br>start typing on a new line after the current line |  |  |  |
+| O       | start typing on a new line before the current line                                                 |  |  |  |
+
+## <span id="page-285-0"></span>**B.3. replace and delete a character (r x X)**
+
+When in command mode (it doesn't hurt to hit the escape key more than once) you can use the x key to delete the current character. The big X key (or shift x) will delete the character left of the cursor. Also when in command mode, you can use the r key to replace one single character. The r key will bring you in insert mode for just one key press, and will return you immediately to command mode.
+
+| Table B.3.: replace and delete |                                                                                                                                                                                                                |  |  |  |
+|--------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--|--|--|
+| command<br>action              |                                                                                                                                                                                                                |  |  |  |
+| x<br>X<br>r<br>p<br>xp         | delete the character below the cursor<br>delete the character before the cursor<br>replace the character below the cursor<br>paste after the cursor (here the last deleted character)<br>switch two characters |  |  |  |
+
+## <span id="page-285-1"></span>**B.4. undo, redo and repeat (u .)**
+
+When in command mode, you can undo your mistakes with u. Use ctrl-r to redo the undo.
+
+You can do your mistakes twice with . (in other words, the . will repeat your last command).
+
+| Table B.4.: undo and repeat |                                                                      |  |  |
+|-----------------------------|----------------------------------------------------------------------|--|--|
+| command<br>action           |                                                                      |  |  |
+| u<br>ctrl-r                 | undo the last action<br>redo the last undo<br>repeat the last action |  |  |
+
+## <span id="page-285-2"></span>**B.5. cut, copy and paste a line (dd yy p P)**
+
+When in command mode, dd will cut the current line. yy will copy the current line. You can paste the last copied or cut line after (p) or before (P) the current line.
+
+| Table B.5.: cut, copy and paste a line |                                                                                                                            |  |  |  |
+|----------------------------------------|----------------------------------------------------------------------------------------------------------------------------|--|--|--|
+| command                                | action                                                                                                                     |  |  |  |
+| dd<br>yy<br>p<br>P                     | cut the current line<br>(yank yank) copy the current line<br>paste after the current line<br>paste before the current line |  |  |  |
+
+## <span id="page-285-3"></span>**B.6. cut, copy and paste lines (3dd 2yy)**
+
+When in command mode, before typing dd or yy, you can type a number to repeat the command a number of times. Thus, 5dd will cut 5 lines and 4yy will copy (yank) 4 lines. That last one will be noted by vi in the bottom left corner as "4 line yanked".
+
+| Table B.6.: cut, copy and paste lines |  |  |  |  |  |
+|---------------------------------------|--|--|--|--|--|
+|---------------------------------------|--|--|--|--|--|
+
+| command | action          |
+|---------|-----------------|
+| 3dd     | cut three lines |
+| 4yy     | copy four lines |
+
+#### <span id="page-286-0"></span>**B.7. start and end of a line (0 or ^ and \$)**
+
+When in command mode, the 0 and the caret ^ will bring you to the start of the current line, whereas the \$ will put the cursor at the end of the current line. You can add 0 and \$ to the d command, d0 will delete every character between the current character and the start of the line. Likewise d\$ will delete everything from the current character till the end of the line. Similarly y0 and y\$ will yank till start and end of the current line.
+
+| Table B.7.: start and end of line |                                                                                                                             |  |
+|-----------------------------------|-----------------------------------------------------------------------------------------------------------------------------|--|
+| command                           | action                                                                                                                      |  |
+| 0<br>^<br>\$<br>d0                | jump to start of current line<br>jump to start of current line<br>jump to end of current line<br>delete until start of line |  |
+| d\$                               | delete until end of line                                                                                                    |  |
+
+## <span id="page-286-1"></span>**B.8. join two lines (J) and more**
+
+When in command mode, pressing J will append the next line to the current line. With yyp you duplicate a line and with ddp you switch two lines.
+
+| Table B.8.: join two lines |                                                        |
+|----------------------------|--------------------------------------------------------|
+| command                    | action                                                 |
+| J<br>yyp<br>ddp            | join two lines<br>duplicate a line<br>switch two lines |
+
+## <span id="page-286-2"></span>**B.9. words (w b)**
+
+When in command mode, w will jump to the next word and b will move to the previous word. w and b can also be combined with d and y to copy and cut words (dw db yw yb).
+
+| Table B.9.: words |                                   |  |
+|-------------------|-----------------------------------|--|
+| command           | action                            |  |
+| w<br>b            | forward one word<br>back one word |  |
+| 3w                | forward three words               |  |
+| dw                | delete one word                   |  |
+| yw                | yank (copy) one word              |  |
+
+| command | action               |
+|---------|----------------------|
+| 5yb     | yank five words back |
+| 7dw     | delete seven words   |
+
+## <span id="page-287-0"></span>**B.10. save (or not) and exit (:w :q :q! )**
+
+Pressing the colon : will allow you to give instructions to vi (technically speaking, typing the colon will open the ex editor). :w will write (save) the file, :q will quit an unchanged file without saving, and :q! will quit vi discarding any changes. :wq will save and quit and is the same as typing ZZ in command mode.
+
+| Table B.10.: save and exit vi |                                        |  |
+|-------------------------------|----------------------------------------|--|
+| command                       | action                                 |  |
+| :w                            | save (write)                           |  |
+| :w fname                      | save as fname                          |  |
+| :q                            | quit                                   |  |
+| :wq                           | save and quit                          |  |
+| ZZ                            | save and quit                          |  |
+| :q!                           | quit (discarding your changes)         |  |
+| :w!                           | save (and write to non-writable file!) |  |
+
+The last one is a bit special. With :w! vi will try to chmod the file to get write permission (this works when you are the owner) and will chmod it back when the write succeeds. This should always work when you are root (and the file system is writable).
+
+## <span id="page-287-1"></span>**B.11. Searching (/ ?)**
+
+When in command mode typing / will allow you to search in vi for strings (can be a regular expression). Typing /foo will do a forward search for the string foo and typing ?bar will do a backward search for bar.
+
+| Table B.11.: searching |                                                  |  |
+|------------------------|--------------------------------------------------|--|
+| command                | action                                           |  |
+| /string                | forward search for string                        |  |
+| ?string                | backward search for string                       |  |
+| n                      | go to next occurrence of search string           |  |
+| /^string               | forward search string at beginning of line       |  |
+| /string\$              | forward search string at end of line             |  |
+| /br[aeio]l             | search for bral brel bril and brol               |  |
+| /\<he\>                | search for the word he (and not for here or the) |  |
+
+## <span id="page-287-2"></span>**B.12. replace all ( :1,\$ s/foo/bar/g )**
+
+To replace all occurrences of the string foo with bar, first switch to ex mode with : . Then tell vi which lines to use, for example 1,\$ will do the replace all from the first to the last line. You can write 1,5 to only process the first five lines. The s/foo/bar/g will replace all occurrences of foo with bar.
+
+| Table B.12.: replace |
+|----------------------|
+|----------------------|
+
+| command           | action                               |
+|-------------------|--------------------------------------|
+| :4,8 s/foo/bar/g  | replace foo with bar on lines 4 to 8 |
+| :1,\$ s/foo/bar/g | replace foo with bar on all lines    |
+
+## <span id="page-288-0"></span>**B.13. reading files (:r :r !cmd)**
+
+When in command mode, :r foo will read the file named foo, :r !foo will execute the command foo. The result will be put at the current location. Thus :r !ls will put a listing of the current directory in your text file.
+
+|                     | Table B.13.: read files and input                                        |
+|---------------------|--------------------------------------------------------------------------|
+| command             | action                                                                   |
+| :r fname<br>:r !cmd | (read) file fname and paste contents<br>execute cmd and paste its output |
+
+## <span id="page-288-1"></span>**B.14. text buffers**
+
+There are 36 buffers in vi to store text. You can use them with the " character.
+
+|                      | Table B.14.: text buffers                                                                             |
+|----------------------|-------------------------------------------------------------------------------------------------------|
+| command              | action                                                                                                |
+| "add<br>"g7yy<br>"ap | delete current line and put text in buffer a<br>copy seven lines into buffer g<br>paste from buffer a |
+
+## <span id="page-288-2"></span>**B.15. multiple files**
+
+You can edit multiple files with vi. Here are some tips.
+
+| Table B.15.: multiple files                       |                                                                                                                                                                    |  |
+|---------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|--|
+| command                                           | action                                                                                                                                                             |  |
+| vi file1 file2 file3<br>:args<br>:n<br>:e<br>:rew | start editing three files<br>lists files and marks active file<br>start editing the next file<br>toggle with last edited file<br>rewind file pointer to first file |  |
+
+## <span id="page-288-3"></span>**B.16. abbreviations**
+
+With :ab you can put abbreviations in vi. Use :una to undo the abbreviation.
+
+|                                 | Table B.16.: abbreviations                              |  |
+|---------------------------------|---------------------------------------------------------|--|
+| command                         | action                                                  |  |
+| :ab str long string<br>:una str | abbreviate str to be 'long string'<br>un-abbreviate str |  |
+
+## **B.17. key mappings**
+
+Similarly to their abbreviations, you can use mappings with :map for command mode and :map! for insert mode.
+
+This example shows how to set the F6 function key to toggle between set number and set nonumber. The <bar> separates the two commands, set number! toggles the state and set number? reports the current state.
+
+```
+:map <F6> :set number!<bar>set number?<CR>
+```
+## **B.18. setting options**
+
+Some options that you can set in vim.
+
+```
+:set number ( also try :se nu )
+:set nonumber
+:syntax on
+:syntax off
+:set all (list all options)
+:set tabstop=8
+:set tx (CR/LF style endings)
+:set notx
+```
+You can set these options (and much more) in ~/.vimrc for vim or in ~/.exrc for standard vi.
+
+```
+student@linux:~$ cat ~/.vimrc
+set number
+set tabstop=8
+set textwidth=78
+map <F6> :set number!<bar>set number?<CR>
+student@linux:~$
+```
+## **B.19. practice: vi(m)**
+
+1. Start the vimtutor and do some or all of the exercises. You might need to run aptitude install vim on xubuntu.
+
+2. What 3 key sequence in command mode will duplicate the current line.
+
+3. What 3 key sequence in command mode will switch two lines' place (line five becomes line six and line six becomes line five).
+
+4. What 2 key sequence in command mode will switch a character's place with the next one.
+
+5. vi can understand macro's. A macro can be recorded with q followed by the name of the macro. So qa will record the macro named a. Pressing q again will end the recording. You can recall the macro with @ followed by the name of the macro. Try this example: i 1 'Escape Key' qa yyp 'Ctrl a' q 5@a (Ctrl a will increase the number with one).
+
+6. Copy /etc/passwd to your ~/passwd. Open the last one in vi and press Ctrl v. Use the arrow keys to select a Visual Block, you can copy this with y or delete it with d. Try pasting it.
+
+7. What does dwwP do when you are at the beginning of a word in a sentence ?
+
+## **B.20. solution: vi(m)**
+
+1. Start the vimtutor and do some or all of the exercises. You might need to run aptitude install vim on xubuntu.
+
+#### vimtutor
+
+2. What 3 key sequence in command mode will duplicate the current line.
+
+#### yyp
+
+3. What 3 key sequence in command mode will switch two lines' place (line five becomes line six and line six becomes line five).
+
+#### ddp
+
+4. What 2 key sequence in command mode will switch a character's place with the next one.
+
+#### xp
+
+5. vi can understand macro's. A macro can be recorded with q followed by the name of the macro. So qa will record the macro named a. Pressing q again will end the recording. You can recall the macro with @ followed by the name of the macro. Try this example: i 1 'Escape Key' qa yyp 'Ctrl a' q 5@a (Ctrl a will increase the number with one).
+
+6. Copy /etc/passwd to your ~/passwd. Open the last one in vi and press Ctrl v. Use the arrow keys to select a Visual Block, you can copy this with y or delete it with d. Try pasting it.
+
+```
+cp /etc/passwd ~
+vi passwd
+(press Ctrl-V)
+```
+7. What does dwwP do when you are at the beginning of a word in a sentence ?
+
+dwwP can switch the current word with the next word.
+
+## <span id="page-292-0"></span>**C. GNU Free Documentation License**
+
+Version 1.3, 3 November 2008
+
+Copyright © 2000, 2001, 2002, 2007, 2008 Free Software Foundation, Inc.
+
+Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed.
+
+## <span id="page-292-1"></span>**C.1. PREAMBLE**
+
+The purpose of this License is to make a manual, textbook, or other functional and useful document "free" in the sense of freedom: to assure everyone the effective freedom to copy and redistribute it, with or without modifying it, either commercially or noncommercially. Secondarily, this License preserves for the author and publisher a way to get credit for their work, while not being considered responsible for modifications made by others.
+
+This License is a kind of "copyleft", which means that derivative works of the document must themselves be free in the same sense. It complements the GNU General Public License, which is a copyleft license designed for free software.
+
+We have designed this License in order to use it for manuals for free software, because free software needs free documentation: a free program should come with manuals providing the same freedoms that the software does. But this License is not limited to software manuals; it can be used for any textual work, regardless of subject matter or whether it is published as a printed book. We recommend this License principally for works whose purpose is instruction or reference.
+
+## <span id="page-292-2"></span>**C.2. APPLICABILITY AND DEFINITIONS**
+
+This License applies to any manual or other work, in any medium, that contains a notice placed by the copyright holder saying it can be distributed under the terms of this License. Such a notice grants a world-wide, royalty-free license, unlimited in duration, to use that work under the conditions stated herein. The "Document", below, refers to any such manual or work. Any member of the public is a licensee, and is addressed as "you". You accept the license if you copy, modify or distribute the work in a way requiring permission under copyright law.
+
+A "Modified Version" of the Document means any work containing the Document or a portion of it, either copied verbatim, or with modifications and/or translated into another language.
+
+A "Secondary Section" is a named appendix or a front-matter section of the Document that deals exclusively with the relationship of the publishers or authors of the Document to the Document's overall subject (or to related matters) and contains nothing that could fall directly within that overall subject. (Thus, if the Document is in part a textbook of mathematics, a Secondary Section may not explain any mathematics.) The relationship could be a matter of historical connection with the subject or with related matters, or of legal, commercial, philosophical, ethical or political position regarding them.
+
+The "Invariant Sections" are certain Secondary Sections whose titles are designated, as being those of Invariant Sections, in the notice that says that the Document is released under this
+
+#### *C. GNU Free Documentation License*
+
+License. If a section does not fit the above definition of Secondary then it is not allowed to be designated as Invariant. The Document may contain zero Invariant Sections. If the Document does not identify any Invariant Sections then there are none.
+
+The "Cover Texts" are certain short passages of text that are listed, as Front-Cover Texts or Back-Cover Texts, in the notice that says that the Document is released under this License. A Front-Cover Text may be at most 5 words, and a Back-Cover Text may be at most 25 words.
+
+A "Transparent" copy of the Document means a machine-readable copy, represented in a format whose specification is available to the general public, that is suitable for revising the document straightforwardly with generic text editors or (for images composed of pixels) generic paint programs or (for drawings) some widely available drawing editor, and that is suitable for input to text formatters or for automatic translation to a variety of formats suitable for input to text formatters. A copy made in an otherwise Transparent file format whose markup, or absence of markup, has been arranged to thwart or discourage subsequent modification by readers is not Transparent. An image format is not Transparent if used for any substantial amount of text. A copy that is not "Transparent" is called "Opaque".
+
+Examples of suitable formats for Transparent copies include plain ASCII without markup, Texinfo input format, LaTeX input format, SGML or XML using a publicly available DTD, and standard-conforming simple HTML, PostScript or PDF designed for human modification. Examples of transparent image formats include PNG, XCF and JPG. Opaque formats include proprietary formats that can be read and edited only by proprietary word processors, SGML or XML for which the DTD and/or processing tools are not generally available, and the machine-generated HTML, PostScript or PDF produced by some word processors for output purposes only.
+
+The "Title Page" means, for a printed book, the title page itself, plus such following pages as are needed to hold, legibly, the material this License requires to appear in the title page. For works in formats which do not have any title page as such, "Title Page" means the text near the most prominent appearance of the work's title, preceding the beginning of the body of the text.
+
+The "publisher" means any person or entity that distributes copies of the Document to the public.
+
+A section "Entitled XYZ" means a named subunit of the Document whose title either is precisely XYZ or contains XYZ in parentheses following text that translates XYZ in another language. (Here XYZ stands for a specific section name mentioned below, such as "Acknowledgements", "Dedications", "Endorsements", or "History".) To "Preserve the Title" of such a section when you modify the Document means that it remains a section "Entitled XYZ" according to this definition.
+
+The Document may include Warranty Disclaimers next to the notice which states that this License applies to the Document. These Warranty Disclaimers are considered to be included by reference in this License, but only as regards disclaiming warranties: any other implication that these Warranty Disclaimers may have is void and has no effect on the meaning of this License.
+
+## <span id="page-293-0"></span>**C.3. VERBATIM COPYING**
+
+You may copy and distribute the Document in any medium, either commercially or noncommercially, provided that this License, the copyright notices, and the license notice saying this License applies to the Document are reproduced in all copies, and that you add no other conditions whatsoever to those of this License. You may not use technical measures to obstruct or control the reading or further copying of the copies you make or distribute. However, you may accept compensation in exchange for copies. If you distribute a large enough number of copies you must also follow the conditions in section 3.
+
+You may also lend copies, under the same conditions stated above, and you may publicly display copies.
+
+## <span id="page-294-0"></span>**C.4. COPYING IN QUANTITY**
+
+If you publish printed copies (or copies in media that commonly have printed covers) of the Document, numbering more than 100, and the Document's license notice requires Cover Texts, you must enclose the copies in covers that carry, clearly and legibly, all these Cover Texts: Front-Cover Texts on the front cover, and Back-Cover Texts on the back cover. Both covers must also clearly and legibly identify you as the publisher of these copies. The front cover must present the full title with all words of the title equally prominent and visible. You may add other material on the covers in addition. Copying with changes limited to the covers, as long as they preserve the title of the Document and satisfy these conditions, can be treated as verbatim copying in other respects.
+
+If the required texts for either cover are too voluminous to fit legibly, you should put the first ones listed (as many as fit reasonably) on the actual cover, and continue the rest onto adjacent pages.
+
+If you publish or distribute Opaque copies of the Document numbering more than 100, you must either include a machine-readable Transparent copy along with each Opaque copy, or state in or with each Opaque copy a computer-network location from which the general network-using public has access to download using public-standard network protocols a complete Transparent copy of the Document, free of added material. If you use the latter option, you must take reasonably prudent steps, when you begin distribution of Opaque copies in quantity, to ensure that this Transparent copy will remain thus accessible at the stated location until at least one year after the last time you distribute an Opaque copy (directly or through your agents or retailers) of that edition to the public.
+
+It is requested, but not required, that you contact the authors of the Document well before redistributing any large number of copies, to give them a chance to provide you with an updated version of the Document.
+
+## <span id="page-294-1"></span>**C.5. MODIFICATIONS**
+
+You may copy and distribute a Modified Version of the Document under the conditions of sections 2 and 3 above, provided that you release the Modified Version under precisely this License, with the Modified Version filling the role of the Document, thus licensing distribution and modification of the Modified Version to whoever possesses a copy of it. In addition, you must do these things in the Modified Version:
+
+- A. Use in the Title Page (and on the covers, if any) a title distinct from that of the Document, and from those of previous versions (which should, if there were any, be listed in the History section of the Document). You may use the same title as a previous version if the original publisher of that version gives permission.
+- B. List on the Title Page, as authors, one or more persons or entities responsible for authorship of the modifications in the Modified Version, together with at least five of the principal authors of the Document (all of its principal authors, if it has fewer than five), unless they release you from this requirement.
+- C. State on the Title page the name of the publisher of the Modified Version, as the publisher.
+- D. Preserve all the copyright notices of the Document.
+- E. Add an appropriate copyright notice for your modifications adjacent to the other copyright notices.
+
+#### *C. GNU Free Documentation License*
+
+- F. Include, immediately after the copyright notices, a license notice giving the public permission to use the Modified Version under the terms of this License, in the form shown in the Addendum below.
+- G. Preserve in that license notice the full lists of Invariant Sections and required Cover Texts given in the Document's license notice.
+- H. Include an unaltered copy of this License.
+- I. Preserve the section Entitled "History", Preserve its Title, and add to it an item stating at least the title, year, new authors, and publisher of the Modified Version as given on the Title Page. If there is no section Entitled "History" in the Document, create one stating the title, year, authors, and publisher of the Document as given on its Title Page, then add an item describing the Modified Version as stated in the previous sentence.
+- J. Preserve the network location, if any, given in the Document for public access to a Transparent copy of the Document, and likewise the network locations given in the Document for previous versions it was based on. These may be placed in the "History" section. You may omit a network location for a work that was published at least four years before the Document itself, or if the original publisher of the version it refers to gives permission.
+- K. For any section Entitled "Acknowledgements" or "Dedications", Preserve the Title of the section, and preserve in the section all the substance and tone of each of the contributor acknowledgements and/or dedications given therein.
+- L. Preserve all the Invariant Sections of the Document, unaltered in their text and in their titles. Section numbers or the equivalent are not considered part of the section titles.
+- M. Delete any section Entitled "Endorsements". Such a section may not be included in the Modified Version.
+- N. Do not retitle any existing section to be Entitled "Endorsements" or to conflict in title with any Invariant Section.
+- O. Preserve any Warranty Disclaimers.
+
+If the Modified Version includes new front-matter sections or appendices that qualify as Secondary Sections and contain no material copied from the Document, you may at your option designate some or all of these sections as invariant. To do this, add their titles to the list of Invariant Sections in the Modified Version's license notice. These titles must be distinct from any other section titles.
+
+You may add a section Entitled "Endorsements", provided it contains nothing but endorsements of your Modified Version by various parties—for example, statements of peer review or that the text has been approved by an organization as the authoritative definition of a standard.
+
+You may add a passage of up to five words as a Front-Cover Text, and a passage of up to 25 words as a Back-Cover Text, to the end of the list of Cover Texts in the Modified Version. Only one passage of Front-Cover Text and one of Back-Cover Text may be added by (or through arrangements made by) any one entity. If the Document already includes a cover text for the same cover, previously added by you or by arrangement made by the same entity you are acting on behalf of, you may not add another; but you may replace the old one, on explicit permission from the previous publisher that added the old one.
+
+The author(s) and publisher(s) of the Document do not by this License give permission to use their names for publicity for or to assert or imply endorsement of any Modified Version.
+
+## <span id="page-295-0"></span>**C.6. COMBINING DOCUMENTS**
+
+You may combine the Document with other documents released under this License, under the terms defined in section 4 above for modified versions, provided that you include in the combination all of the Invariant Sections of all of the original documents, unmodified, and list them all as Invariant Sections of your combined work in its license notice, and that you preserve all their Warranty Disclaimers.
+
+The combined work need only contain one copy of this License, and multiple identical Invariant Sections may be replaced with a single copy. If there are multiple Invariant Sections with the same name but different contents, make the title of each such section unique by adding at the end of it, in parentheses, the name of the original author or publisher of that section if known, or else a unique number. Make the same adjustment to the section titles in the list of Invariant Sections in the license notice of the combined work.
+
+In the combination, you must combine any sections Entitled "History" in the various original documents, forming one section Entitled "History"; likewise combine any sections Entitled "Acknowledgements", and any sections Entitled "Dedications". You must delete all sections Entitled "Endorsements".
+
+## <span id="page-296-0"></span>**C.7. COLLECTIONS OF DOCUMENTS**
+
+Youmaymake a collection consisting of the Document and other documents released under this License, and replace the individual copies of this License in the various documents with a single copy that is included in the collection, provided that you follow the rules of this License for verbatim copying of each of the documents in all other respects.
+
+You may extract a single document from such a collection, and distribute it individually under this License, provided you insert a copy of this License into the extracted document, and follow this License in all other respects regarding verbatim copying of that document.
+
+## <span id="page-296-1"></span>**C.8. AGGREGATION WITH INDEPENDENT WORKS**
+
+A compilation of the Document or its derivatives with other separate and independent documents or works, in or on a volume of a storage or distribution medium, is called an "aggregate" if the copyright resulting from the compilation is not used to limit the legal rights of the compilation's users beyond what the individual works permit. When the Document is included in an aggregate, this License does not apply to the other works in the aggregate which are not themselves derivative works of the Document.
+
+If the Cover Text requirement of section 3 is applicable to these copies of the Document, then if the Document is less than one half of the entire aggregate, the Document's Cover Texts may be placed on covers that bracket the Document within the aggregate, or the electronic equivalent of covers if the Document is in electronic form. Otherwise they must appear on printed covers that bracket the whole aggregate.
+
+## **C.9. TRANSLATION**
+
+Translation is considered a kind of modification, so you may distribute translations of the Document under the terms of section 4. Replacing Invariant Sections with translations requires special permission from their copyright holders, but you may include translations of some or all Invariant Sections in addition to the original versions of these Invariant Sections. You may include a translation of this License, and all the license notices in the Document, and any Warranty Disclaimers, provided that you also include the original English version of this License and the original versions of those notices and disclaimers. In case of a disagreement between the translation and the original version of this License or a notice or disclaimer, the original version will prevail.
+
+If a section in the Document is Entitled "Acknowledgements", "Dedications", or "History", the requirement (section 4) to Preserve its Title (section 1) will typically require changing the actual title.
+
+## **C.10. TERMINATION**
+
+You may not copy, modify, sublicense, or distribute the Document except as expressly provided under this License. Any attempt otherwise to copy, modify, sublicense, or distribute it is void, and will automatically terminate your rights under this License.
+
+However, if you cease all violation of this License, then your license from a particular copyright holder is reinstated (a) provisionally, unless and until the copyright holder explicitly and finally terminates your license, and (b) permanently, if the copyright holder fails to notify you of the violation by some reasonable means prior to 60 days after the cessation.
+
+Moreover, your license from a particular copyright holder is reinstated permanently if the copyright holder notifies you of the violation by some reasonable means, this is the first time you have received notice of violation of this License (for any work) from that copyright holder, and you cure the violation prior to 30 days after your receipt of the notice.
+
+Termination of your rights under this section does not terminate the licenses of parties who have received copies or rights from you under this License. If your rights have been terminated and not permanently reinstated, receipt of a copy of some or all of the same material does not give you any rights to use it.
+
+## **C.11. FUTURE REVISIONS OF THIS LICENSE**
+
+The Free Software Foundation may publish new, revised versions of the GNU Free Documentation License from time to time. Such new versions will be similar in spirit to the present version, but may differ in detail to address new problems or concerns. See http: //www.gnu.org/copyleft/.
+
+Each version of the License is given a distinguishing version number. If the Document specifies that a particular numbered version of this License "or any later version" applies to it, you have the option of following the terms and conditions either of that specified version [or of](http://www.gnu.org/copyleft/) [any later version that has](http://www.gnu.org/copyleft/) been published (not as a draft) by the Free Software Foundation. If the Document does not specify a version number of this License, you may choose any version ever published (not as a draft) by the Free Software Foundation. If the Document specifies that a proxy can decide which future versions of this License can be used, that proxy's public statement of acceptance of a version permanently authorizes you to choose that version for the Document.
+
+## **C.12. RELICENSING**
+
+"Massive Multiauthor Collaboration Site" (or "MMC Site") means any World Wide Web server that publishes copyrightable works and also provides prominent facilities for anybody to edit those works. A public wiki that anybody can edit is an example of such a server. A "Massive Multiauthor Collaboration" (or "MMC") contained in the site means any set of copyrightable works thus published on the MMC site.
+
+"CC-BY-SA" means the Creative Commons Attribution-Share Alike 3.0 license published by Creative Commons Corporation, a not-for-profit corporation with a principal place of business in San Francisco, California, as well as future copyleft versions of that license published by that same organization.
+
+"Incorporate" means to publish or republish a Document, in whole or in part, as part of another Document.
+
+An MMC is "eligible for relicensing" if it is licensed under this License, and if all works that were first published under this License somewhere other than this MMC, and subsequently incorporated in whole or in part into the MMC, (1) had no cover texts or invariant sections, and (2) were thus incorporated prior to November 1, 2008.
+
+The operator of an MMC Site may republish an MMC contained in the site under CC-BY-SA on the same site at any time before August 1, 2009, provided the MMC is eligible for relicensing.

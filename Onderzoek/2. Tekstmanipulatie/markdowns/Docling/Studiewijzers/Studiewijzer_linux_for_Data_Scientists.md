@@ -1,0 +1,395 @@
+## Linux for Data Scientists (2024-2025) (CURLINKEDDLNX2024) Studiewijzer Linux for Data Scientists (2024-2025)
+
+## Inhoudsopgave
+
+- 1. Doel en plaats van de cursus in het curriculum
+- 2. Leerinhoud
+- 3. Leerdoelen en competenties
+- 4. Leermateriaal
+- 5. Werkvormen
+- 6. Werk- en leeraanwijzingen
+- 7. Evaluatie
+- 8. Studiebegeleiding
+- 9. Planning
+- 10. Extra info voor Afstandsleren (TIAO)
+
+## Studiewijzer Linux for Data Scientists (2024-2025) (Leerpad)
+
+## Linux for Data Scientists
+
+In deze studiewijzer vind je alle praktische informatie terug in verband met de organisatie van het opleidingsonderdeel " Linux for Data Scientists " binnen de specialisatierichting Data Engineering in modeltraject 2 van de opleiding toegepaste informatica.
+
+## Lees deze studiewijzer goed en grondig door!
+
+Wat betreft praktische afspraken, regelingen, verwachtingen, enz. in verband met deze cursus zijn de enige geldige bronnen van informatie:
+
+- De studiefichefiche van dit opleidingsonderdeel, te bekijken via de Chamilo- cursus of https://hogent.be/studiefiches/ (https://hogent.be/studiefiches/) ;
+- Deze studiewijzer;
+- Studiemateriaal op Chamilo;
+- Aankondigingen op Chamilo-deze worden ook telkens per e-mail naar de betrokken studenten gestuurd;
+- Het Teams-kanaal voor deze cursus;
+- Het Onderwijs- en Examenreglement (OER) (https://www.hogent.be/student/eenvlotte-start/onderwijs-en-examenregeling/) , incl. departementale aanvullingen (DOER).
+
+Jullie zijn zelf verantwoordelijk voor het opvolgen en lezen van alle aankondigingen. Studenten worden geacht hun opleidingsgerelateerde e-mails regelmatig op te volgen.
+
+Indien er ergens twijfel over bestaat, of er is iets niet duidelijk, neem dan zo snel mogelijk contact op met je lector. De aangewezen manieren worden opgesomd in Sectie Studiebegeleiding .
+
+De ervaring leert dat de onderlinge communicatie tussen studenten via andere platformen enkel leidt tot verwarring, foute informatie en pijnlijke discussies achteraf. Wie vertrouwt op informatie die via een ander platform verspreid is, en die niet rechtstreeks van de lectoren komt, doet dat op eigen risico!
+
+<!-- image -->
+
+## 1. Doel en plaats van de cursus in het curriculum (Pagina)
+
+## Doelstellingen
+
+Het doel van deze cursus is de student bewust te maken van de enorme mogelijkheden van Linux als een toolbox voor het automatiseren van de meest uiteenlopende dataverwerkingstaken.
+
+Deze cursus gaat uit van de premisse dat een belangrijk deel van de functie van een Data Engineer bestaat uit het zoveel mogelijk automatiseren van "data workflows," gaande van het verzamelen van data (uit experimenten, sensoren, ...), deze opschonen en in een geschikte vorm gieten voor data-analyse, tot het rapporteren van de resultaten. Daarnaast staat een Data Engineer o.a. ook in voor het opzetten en configureren van de nodige infrastructuur voor data science-toepassingen.
+
+## Plaats in het curriculum
+
+Dit opleidingsonderdeel situeert zich binnen het keuzepakket Data Engineering in het eerste semester van het tweede modeltraject van de opleiding.
+
+De cursus bouwt verder op de basiskennis Linux die je verworven hebt in het opleidingsonderdeel Computer Systems. Ook de vaardigheden die je opgedaan hebt in de Linux-gerelateerde opdrachten in System Engineering Lab zullen je van pas komen. Wat je in deze cursus opsteekt, zal je in het tweede semester ongetwijfeld kunnen gebruiken in het Data Engineering Project. Het opleidingsonderdeel Machine Learning Operations In het derde jaar van het modeltraject bouwt verder op dit vak.
+
+<!-- image -->
+
+<!-- image -->
+
+## 2. Leerinhoud (Pagina)
+
+## Leerinhoud
+
+- Werken met Virtuele Machines &amp; containers
+- Basiskennis Linux server, SSH, software-installatie, web-/database-serverconfiguratie
+- Bash scripting
+- Text processing: I/O redirection, filters, web scraping
+- Systeembeheertaken plannen
+- Automatiseren van gegevensverwerking met Linux tools
+
+<!-- image -->
+
+## 3. Leerdoelen en competenties (Pagina)
+
+## Leerdoelen en competenties
+
+Na het succesvol afronden van deze cursus:
+
+(Basiskennis Liunux systeembeheer):
+
+- kan je de Bash-shell gebruiken voor eenvoudige taken
+- kan je een virtuele machine installeren en configureren op de eigen pc
+- kan je bestaande virtuele machines opstarten en gebruiken, op de eigen pc of via een cloud-dienst
+- kan je zelfstandig een eenvoudige web- en databaseserver installeren op Linux en beschikbaar maken voor een applicatie
+
+(Automatiseren gegevensverwerking)
+
+- kan je gegevensverwerkings- en systeembeheertaken op Linux uitvoeren en deze automatiseren met shell scripts
+- kan je bestaande VM-systemen configureren en aanpassen (VirtualBox, Docker, Kubernetes, ...)
+- kan je de nodige tools voor de automatisering van een "data pipeline" installeren, configureren en gebruiken
+
+<!-- image -->
+
+## 4. Leermateriaal (Pagina)
+
+## Leermateriaal
+
+Als je deze cursus opent op Chamilo merk je bovenaan de pagina een banner waar je kan doorklikken naar de beschikbare leermaterialen. Dat omvat:
+
+- Een leerpad met een overzicht van alle te kennen leerstof en alle nodige leermaterialen (slides, lesopnames, achtergrondinfo, ...).
+- De syllabus voor het vak (https://hogenttin.github.io/linux-training-hogent/) ( Linux for Data Scientists ) die je zowel online kan raadplegen (https://hogenttin.github.io/linux-training-hogent/datalinux/) als downloaden in PDF-formaat (https://hogenttin.github.io/linux-training-hogent/datalinux.pdf) (dit laatste is nodig voor het examen)
+- De opgaven van de labo-opdrachten die ter beschikking gesteld worden in de vorm van een Github repository. Zie de sectie " Werk- en leeraanwijzingen " voor meer info.
+
+Als je deze cursus volgt, dan verwachten we dat je al een zekere basiskennis van Linux hebt, meer bepaald de onderwerpen die in het vak Computer Systems zijn aan bod gekomen. Als je deze wilt opfrissen, dan kan je deze hier raadplegen (http://hogenttin.github.io/linuxtraining-hogent/) ( Introduction to Linux ), zowel online (https://hogenttin.github.io/linuxtraining-hogent/introlinux/) als in PDF (https://hogenttin.github.io/linux-traininghogent/introlinux.pdf) -formaat. Merk op dat het hier niet gaat om de "officiële" syllabus van Computer Systems, maar de inhoud komt wel overeen.
+
+## Software
+
+Om alle taken en labo's voor dit vak te kunnen uitvoeren, heb je deze software nodig:
+
+- Oracle VirtualBox , incl. Extension Pack. Installeer aub VirtualBox versie 7.0.20 en niet de laatste versie (7.1.x) om stabiliteitsproblemen en bugs te vermijden.
+- Git client (op Windows, installeer zeker ook Git Bash)
+- Een goede teksteditor zoals Visual Studio Code
+
+Instructies zijn te vinden in het leerpad (stap 0. First Linux VM)
+
+<!-- image -->
+
+## 5. Werkvormen (Pagina)
+
+## Werkvormen
+
+## Dagonderwijs, virtuele campus
+
+Een typisch contactmoment begint met klassikale instructie over het onderwerp van die sessie. Via een presentatie/demonstratie geeft de lector uitleg over de belangrijkste commando's, enz.
+
+Daarna werk je zelfstandig aan bijhorende oefeningen en labo-taken. De lector treedt dan op als coach en helpt je bij problemen of twijfel.
+
+We verwachten dat je buiten de contactmomenten verder werkt aan eventuele niet afgewerkte oefeningen, en dat je je voorbereidt op de volgende les aan de hand van de aangereikte leermaterialen.
+
+## Afstandsleren (TIAO)
+
+Studenten afstandsleren kunnen aan de hand van het leerpad op eigen tempo de leerstof verwerken en inoefenen. In geval van vragen of problemen kunnen ze de lector contacteren (zie " Studiebegeleiding ").
+
+<!-- image -->
+
+## 6. Werk- en leeraanwijzingen (Pagina)
+
+## Werk- en leeraanwijzingen
+
+In deze cursus wordt een grotere zelfstandigheid en verantwoordelijkheid van je verwacht dan je tot nu toe gewend bent. We stappen geleidelijk af van het systeem om "hapklare" stukken theorie te geven die vervolgens meteen ingeoefend worden. Aarzel echter niet om hulp te vragen bij je begeleidende lectoren als je ergens aan twijfelt of vast zit!
+
+In het leerpad met de cursusinhoud is elk hoofdstuk (dat overeenkomt met een lesweek) onderverdeeld in volgende secties:
+
+- Voorbereiding: dit doe je zelf buiten de lesuren, vóór het contactmoment
+- Achtergrondinfo: dit is geen onderdeel van de leerstof, maar zeer nuttig ter aanvulling of ondersteuning van het onderwerp uit dat hoofdstuk
+- Oefeningen met oplossingen: (eerder) korte oefeningen waarvan de oplossing gegeven is. Deze doe je zelf buiten de contactmomenten, ter voorbereiding of herhaling van de les.
+- Labo-oefeningen: deze voer je uit tijdens de contactmomenten, onder begeleiding van de lector.
+
+##  Oplossingen van labo-oefeningen
+
+De oplossingen van labo-oefeningen worden niet gepubliceerd. De ervaring leert dat de motivatie om ze daadwerkelijk zelf op te lossen dan zeer klein wordt.
+
+Zit je vast bij een labo-taak, of twijfel je over jouw oplossing? Vraag feedback tijdens de contactmomenten!
+
+##  Je slaagkans vergroten
+
+Met Linux kunnen werken is een vaardigheid die regelmatige oefening vereist.
+
+Als je studeren voor dit vak uitstelt tot de examenperiode, zal je merken dat je slaagkans zeer laag is. Ook in de tweede zittijd merken we dat deze studenten het erg moeilijk blijven hebben.
+
+Om te slagen voor dit vak is het daarom belangrijk dat je tijdens het semester voldoende tijd investeert in het bijhouden en inoefenen van de leerstof.
+
+<!-- image -->
+
+## 7. Evaluatie (Pagina)
+
+## Evaluatie
+
+De beoordeling voor dit opleidingsonderdeel gebeurt op basis van:
+
+- 70% Vaardigheidstest binnen examenrooster
+- 30% Schriftelijk examen (op PC)
+- 40% Scripting-opdracht (op PC)
+- 30% Portfolio met mondelinge verdediging
+- Opdracht: automatiseren van een data-workflow (buiten examenrooster)
+
+De verdeling voor de tweede examenkans ziet er hetzelfde uit.
+
+## Berekening examencijfer
+
+Het examencijfer wordt berekend uit de gewogen som van de behaalde score op de drie onderdelen, met volgende uitzonderingen:
+
+- Minstens één van de drie onderdelen is niet gerealiseerd of niet ingediend : Afwezig voor dat onderdeel en, conform het Onderwijs- en Examenreglement, bijgevolg ook Afwezig voor het gehele opleidingsonderdeel
+- Op minstens één van de drie onderdelen is als score 0 behaald : de student kan niet slagen en krijgt max. 9/20 , ook al zou de som van de andere onderdelen tot een hoger examencijfer leiden.
+
+## Opdracht data-workflow (30% - buiten examenrooster)
+
+Het afwerken, indienen en verdedigen van deze opdracht gebeurt tijdens het semester. Je geeft een demonstratie aan de lector of dient een screencast met Panopto in.
+
+De opgave van deze opdracht en alle praktische afspraken daarrond worden gepubliceerd onder Documenten .
+
+## Vaardigheidstest (binnen examenrooster)
+
+De vaardigheidstest op pc binnen het examenrooster duurt 2 uur 30 minuten. Je kiest zelf hoe je de beschikbare tijd verdeelt tussen beide onderdelen (zie verder).
+
+Tijdens de vaardigheidstest zijn volgende hulpmiddelen toegelaten:
+
+- Eigen laptop en alle bestanden en applicaties die er op geïnstalleerd staan, met uitzondering van apps die communicatie met derden toelaten. Je bent zelf verantwoordelijk voor de goede werking van je laptop! Controleer voor aanvang van het examen nog eens goed de correcte werking van je pc. Zet desnoods (indien mogelijk) automatische updates uit en sluit zeker alle applicaties die communicatie toelaten (Discord, Outlook, Messenger, ...).
+- De VirtualBox VM met Linux Mint, die we ook al in de lessen gebruikten.
+- man-pages en andere geïnstalleerde documentatie (bv /usr/share/doc)
+- Je mag tijdens beide delen van het examen commando's uitproberen om te controleren of ze correct werken.
+- Studenten met een Macbook met Apple Silicon kunnen hun VM importeren in UTM (https://mac.getutm.app) , een gratis virtualisatieplatform voor macOS. Merk op dat x64 besturingssystemen dan onder emulatie draaien, wat een negatieve impact kan hebben op de performantie. Een ander alternatief is om zelf een Ubuntu Server (https://ubuntu.com/download/server/arm) of Debian Linux (https://www.debian.org/releases/stable/arm64/) VM voor ARM opzetten onder een voor macOS geschikt virtualisatieplatform zoals Parallels of VMWare Fusion. Merk wel op dat we vanuit de opleiding of HOGENT niet in de mogelijkheid verkeren om hier licenties voor te verschaffen.
+- Elektronische leermiddelen die bij de cursus horen. Zorg dat al het nodige leermateriaal op je laptop staat!
+- Chamilo-leerpad van de cursus (mag via de browser geraadpleegd worden)
+- De syllabus Linux for Data Scientists en eventueel Introduction to Linux in PDFvorm .
+- PDF handouts van de slides (open de slides in een webbrowser en gebruik shortcut Ctrl+P, stel evt. in op "landscape" en sla op als PDF).
+- Eigen cursusnota's , en uitgewerkte oefeningen, hetzij elektronisch, hetzij afgedrukt
+- Een lokale kopie van je Github-repository mey labo-opdrachten, de broncode van je data-workflow opdracht en het voorbereide script van de take-home opdracht (zie verder). Deze openen in de browser is niet toegelaten.
+
+- Geluidwerende oordoppen of over-ear gehoorbeschermers (maar geen hoofdtelefoons, oortjes, ... die geluid kunnen afspelen)
+
+## Volgende hulpmiddelen zijn niet toegelaten:
+
+- Gebruik van Internet: zoekmachines, Wikipedia, Fora, vraag/antwoordsites ,  Github, enz.
+- Chamilo en de slides van de cursus zijn de enige websites die mogen open staan tijdens de vaardigheidstest, voor het bekijken van het studiemateriaal van deze cursus! Zorg dat je alle nodige info lokaal op je laptop hebt staan en maak gebruik van de man-pages.
+- Applicaties die communicatie met derden toelaten, zoals Messenger, Skype, Discord, email, ... Je moet deze applicaties vóór aanvang van het examen afsluiten (niet op de achtergrond laten draaien!) en bureabladmeldingen uitschakelen.
+- Andere tools gebaseerd op Large Language Models zoals ChatGPT, Github Copilot, Google Gemini, Opera Aria, ...
+- Smartphone of tablet
+- Oortjes, hoofdtelefoon
+
+## Schriftelijk examen (30% - op PC, via Ans)
+
+Dit examen peilt je inzichten die je hebt ontwikkeld gedurende deze cursus. Het examen bestaat uit een combinatie van gesloten vragen (bv. multiple choice - zonder giscorrectie of hogere cesuur) en korte open vragen.
+
+Dit deel van het examen wordt afgenomen via de elektronische toetsomgeving Ans.
+
+## Scripting-opdracht (40% - op PC, via exam.hogent.be)
+
+Dit deel van de vaardigheidstest bestaat uit het schrijven van een complex script. Je kan je hierop voorbereiden aan de hand van een take-home opdracht. Je vindt deze opgave onder Documenten &gt; Take-home scriptingopgave (zodra deze gepubliceerd wordt, rond lesweek 10).
+
+Het onderdeel scripting op het examen zal een variant zijn op deze take-home opdracht, waar gevraagd zal worden een aantal wijzigingen aan te brengen aan de implementatie van het script. Deze wordt op het geroosterde examenmoment beschikbaar gemaakt via exam.hogent.be.
+
+- Je mag jouw oplossing van de take-home opgave gebruiken als startpunt en de nodige aanpassingen aanbrengen.
+- Als je niet aan de take-home opdracht gewerkt hebt, of je hebt de oplossing van een medestudent overgenomen zonder dat je zelf weet hoe het  werkt, zal je zeker onvoldoende tijd hebben om de opgave af te werken tijdens de vaardigheidsproef.
+- Het script dat je uitwerkt vooraf, en het script dat je uitwerkt op het examen moeten allebei kunnen werken in de Linux Mint VM die je gebruikte tijdens het semester. Tip: log binnen je VM in op exam.hogent.be om de opgave te downloaden en ook het afgewerkte script in te dienen!
+- Vóór het verbeteren voeren we een automatische screening uit om enkele basisvereisten te controleren. Indien deze niet voldaan zijn, kan je script niet inhoudelijk beoordeeld worden en krijg je voor dit onderdeel 0. Zie eerder voor de gevolgen hiervan.
+
+Deze basisvereisten zijn:
+
+- Het ingediende script is een tekstbestand met extensie .sh (dus geen .zip, .rar, .txt, ...)
+- Het bestand heeft geen DOS (CRLF) maar Unix-regeleindes (LF)
+- Het bestand heeft een geldige " shebang " (in principe #!/bin/bash )
+- Het script bevat GEEN syntaxfouten , meer bepaald: controle met zowel bash -n SCRIPT als shellcheck --severity=error SCRIPT slagen met exit-code 0.
+
+## Tweede examenkans
+
+Voor de tweede examenkans is de puntenverdeling gelijklopend met de eerste zittijd. Daarboven gelden nu de hieronder opgesomde afspraken.
+
+Het contacteren van de lectoren in geval van vragen gebeurt volgens de geldende afspraken (zie rubriek 8. Studiebegeleiding ),
+
+## Opdracht data-workflow (30% - buiten examenrooster)
+
+- Als je deze niet gemaakt hebt, moet je dat alsnog doen.
+- Wie de data-workflow opdracht wél al gemaakt en gedemonstreerd had, hoeft deze niet opnieuw te maken. Je behoudt in dat geval het resultaat van de eerste examenkans.
+
+- Wil je een hogere score halen, dan kan je verder werken aan je gekozen casus, of een andere, meer uitdagende kiezen.
+- De deadline voor indienen is maandag 18 augustus 2025, 23:59u . We verwachten 2 deliverables :
+- De broncode in de subdirectory data-workflow/ van je Github-repository die je ook voor de labo-opdrachten gebruikt hebt.
+- Wijzigingen na de deadline zijn niet meer toegelaten!
+- Een Panopto-opname met een demonstratie van de werking van de scripts. Let op! Als de lector geen toegang heeft tot de opname, beschouwen we deze als niet ingediend.
+- Het indienen van het eindresultaat gebeurt via een formulier, de link wordt hier later toegevoegd. Daarin vul je de URLs naar je Github-repo en Panopto opname in, vóór het verstrijken van de deadline
+- Niet tijdig indienen =&gt; Afw voor deze opdracht
+- Uitstel vragen is zinloos, de lectoren zijn niet bevoegd om dit toe te laten. Zie het DOER, art. 7 §4 voor meer info.
+
+## Schriftelijk examen (30% - op PC, via Ans
+
+Zie hierboven, zelfde afspraken als in de eerste examenperiode.
+
+## Scripting-opdracht (40% - op PC, via exam.hogent.be)
+
+Je krijgt op het examen een andere variant op de take-home opgave. Je kan je voorbereiding van de take-home opdracht dus blijven gebruiken voor de tweede examenkans!
+
+Verder gelden dezelfde afspraken als in de eerste examenperiode.
+
+<!-- image -->
+
+## 8. Studiebegeleiding (Pagina)
+
+## Studiebegeleiding
+
+Indien je vragen hebt over de inhoud van de cursus, of twijfelt over/vastzit bij een oefening, blijf daar dan niet mee zitten en vraag hulp! Dit kan in de eerste plaats tijdens de contactmomenten .
+
+Als je buiten de contactmomenten een vraag wil stellen, klik in de banner bovenaan de intro-pagina van de Chamilo-cursus op de tegel aan de rechterkant. Je komt dan terecht in het algemene team voor deze cursus . Stel je vraag in het daartoe bestemde kanaal, maar kijk eerst eens of je vraag (en het antwoord erop) er al niet staat. Als je het antwoord kent op de vraag van een medestudent, dan waarderen we ook als je daar op antwoordt.
+
+Heb je een vraag die persoonlijk van aard is of niet relevant is voor andere studenten?
+
+- Studenten dagonderwijs en Virtuele Campus spreken best hun begeleidende lector aan tijdens de contactmomenten.
+- Studenten afstandsleren kunnen een afspraak maken voor een contactmoment. Afhankelijk van de beschikbaarheid van de lector kan dit op de campus doorgaan of via Teams.
+- De lectoren persoonlijk contacteren via e-mail of Teams doe je enkel als het echt nodig is .
+- In geen geval is het ok om de lectoren via Teams op te bellen voor een spraak- of video-oproep. Als dit nodig is zullen de lectoren met jou een Teams-gesprek inplannen op een vooraf afgesproken moment.
+
+Hou er rekening mee dat de lectoren niet dagelijks kunnen antwoorden op vragen! Ook tijdens een vakantie of reces mag je niet rekenen op een antwoord.
+
+## Contactinformatie lectoren
+
+- Thomas Parmentier ( thomas.parmentier@hogent.be
+- subject=%5BLinux%20OPS%5D%20ONDERWERP&amp;body=Beste%20meneer%20Parmentier%0A%0ABERICHT%0A%0AM
+- (mailto:thomas.parmentier@hogent.be? vaktitularis, contactpersoon afstandsleren (TIAO),campus Aalst, Virtuele Campus, campus Schoonmeersen.
+- Bert Van Vreckem ( bert.vanvreckem@hogent.be (mailto:bert.vanvreckem@hogent.be? subject=%5BLinux%20OPS%5D%20ONDERWERP&amp;body=Beste%20meneer%20Van%20Vreckem%0A%0ABERICHT%0A campus Schoonmeersen.
+
+##  Tip
+
+Het geeft altijd een slechte indruk als je niet lijkt te weten bij welke lector je in principe de lessen moet bijwonen...
+
+<!-- image -->
+
+## 9. Planning (Pagina)
+
+## Planning
+
+Het leerpad met de cursusinhoud is onderverdeeld per lesweek. Op die manier heb je een idee van welk onderwerp in welke lesweek aan bod komt. In grote lijnen:
+
+|   Week | Onderwerp                                                                          |
+|--------|------------------------------------------------------------------------------------|
+|      1 | Intro cursus [repo_curl] Software installation, curl                               |
+|      2 | Intro Git Intro data-workflow opdracht [script101] Combining commands into scripts |
+|      3 | [script101] Combining commands into scripts (vervolg)                              |
+|      4 | [users] Organising users                                                           |
+|      5 | [httpd_script102] Webserver, scripting Bash                                        |
+|      6 | [text_processing] Advanced text processing                                         |
+|      7 | [script103] Scripting                                                              |
+|      8 | [script202_cron] Advanced scripting, cron and jobs                                 |
+|      9 | [ssh_docker] SSH, (Docker)                                                         |
+|     10 | Docker                                                                             |
+|     11 | [automate] Workflow automation                                                     |
+|     12 | Herhaling, vragen, data-workflow demo's                                            |
+|     13 | (inhaalactiviteiten, indien ingericht door je lector)                              |
+
+Wanneer een lesdag wegvalt door een verlofdag of afwezigheid van de lector, kan de planning voor jouw klasgroep afwijken!
+
+## Deadlines en bijzondere data
+
+Let op! Voor afstandsstudenten gelden aangepaste deadlines, zie Extra Info voor Afstandsleren.
+
+Deadlines liggen altijd op het einde van de opgegeven dag, dus ten laatste om 23:59.
+
+| Publicatie take-home scripting opdracht                                                                         | Ca. lesweek 9 of 10                      |
+|-----------------------------------------------------------------------------------------------------------------|------------------------------------------|
+| Deadline laatste wijzigingen data-workflow broncode                                                             | zo 8 december 2024 (W11)                 |
+| Demonstratie data-workflow opdracht (on- campus)                                                                | lesweek 11 of 12 (tijdens contactmoment) |
+| Deadline demonstratie data-workflow opdracht (via Panopto)                                                      | zo 15 december 2024 (W12)                |
+| Deadline indienen data-workflow opdracht in 2e examenkans (laatste wijziging broncode én indienen Panopto demo) | ma 18 augustus 2025                      |
+
+Merk op dat de lectoren geen bevoegdheid hebben tot het verlenen van uitstel op deadlines. Het is zinloos om ons dit te vragen. Gelieve je grondig gemotiveerde aanvraag te richten naar het opleidingshoofd.
+
+De opgave van de data-workflow opdracht wordt bij het begin van het semester gepubliceerd, dus een gewettigde afwezigheid vlak voor/tijdens de dag van de deadline is daardoor niet voldoende als argument!
+
+<!-- image -->
+
+## 10. Extra info voor Afstandsleren (TIAO) (Pagina)
+
+## Info voor studenten afstandsleren (TIAO)
+
+Voor studenten afstandsleren (TIAO) zijn er enkele specifieke afspraken die afwijken van de andere in deze studiewijzer. Deze info is dus NIET bestemd voor de reguliere studenten die de lessen op de campus volgen!
+
+- Contactinfo lector: thomas.parmentier@hogent.be
+- Let op! Vragen stellen over de cursus (inhoud en organisatie) gebeurt in eerste instantie via Teams. Volg de link naar het kanaal via de tegel aan de rechterkant van de banner bovenaan de Chamilo-pagina. Enkel voor persoonlijke vragen contacteer je de lector rechtstreeks.
+
+Korte verkenning van het opleidingsonderdeel
+
+(https://chamilo.hogent.be/index.php?
+
+- go=CourseViewer&amp;application=Chamilo%5CApplication%5CWeblcms&amp;course=64587&amp;tool=LectureCapture&amp;browser=
+- Geplande contactmomenten:
+- 3 oktober 2024 om 20u00: link naar de vergadering
+
+(https://teams.microsoft.com/l/meetup- join/19%3ameeting\_NmZlMGJmOTAtODVjZS00NTdhLWJjNTgtOWY5M2QxNDM3M2U1%40thread.v2/0? context=%7b%22Tid%22%3a%225cf7310e-091a-4bc5-acd7-
+
+26c721d4cccd%22%2c%22Oid%22%3a%22e6a200ee-c432-43a1-aa95-
+
+## 11dd8e78ba7a%22%7d) .
+
+- 12 november 2024 om 20u00: link naar de vergadering.
+
+(https://teams.microsoft.com/l/meetup- join/19%3ameeting\_OGQ5ZTUzMDctOTNlZi00YWJjLTkyZTktMDdhNzQ3MDRiYzEw%40thread.v2/0? context=%7b%22Tid%22%3a%225cf7310e-091a-4bc5-acd7-
+
+- 26c721d4cccd%22%2c%22Oid%22%3a%22e6a200ee-c432-43a1-aa95-
+
+## 11dd8e78ba7a%22%7d)
+
+- 10 december 2024 om 20u00: link naar de vergadering.
+
+(https://teams.microsoft.com/l/meetup- join/19%3ameeting\_OGZlNDVmMTMtY2MxZi00Yjk3LWFkYTQtZWJjMzgxNWQ4ZjQ5%40thread.v2/0?
+
+context=%7b%22Tid%22%3a%225cf7310e-091a-4bc5-acd7-
+
+26c721d4cccd%22%2c%22Oid%22%3a%22e6a200ee-c432-43a1-aa95-
+
+## 11dd8e78ba7a%22%7d)
+
+- Deadline :
+- Indienen opdracht data-workflow via deze link
+- (https://forms.office.com/Pages/ResponsePage.aspx? id=DjH3XBoJxUus1ybHIdTMzaj5qWO25thMvlMdjvTUN1tUNVAyUk9VVVIxWkg0MDhQS0xYTVYyMjVSOS4u) voor 5 januari 2025 om 23u59 (d.w.z. na deze datum geen wijzigingen meer aanbrengen aan de code en Panopto-opname met je demo publiceren).
+- Wat betreft de lesopnames: In het leerpad vind je nog de lesopnames van een vorig academiejaar . We laten deze staan zodat bv. afstandsstudenten die voorop willen lopen op de lessen op de campus er alvast over kunnen beschikken. De lesopnames van dit academiejaar worden elke week opgenomen en zo snel mogelijk gepubliceerd onder Lesopnames (zie tegel in de banner op de Chamilo-pagina van dit vak).
+
+<!-- image -->

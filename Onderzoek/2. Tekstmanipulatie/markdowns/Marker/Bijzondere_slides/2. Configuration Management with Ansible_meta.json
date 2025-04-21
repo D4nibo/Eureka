@@ -1,0 +1,2023 @@
+{
+  "table_of_contents": [
+    {
+      "title": "2. Conguration Management\nwith Ansible",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          70.12390971183777,
+          74.18005673587322
+        ],
+        [
+          520.8245956897736,
+          72.53552548587322
+        ],
+        [
+          520.5408325195312,
+          140.09490966796875
+        ],
+        [
+          68.96180033683777,
+          141.57992261648178
+        ]
+      ]
+    },
+    {
+      "title": "Conguration management",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          70.453125,
+          74.41818830370903
+        ],
+        [
+          489.9675598144531,
+          72.77365705370903
+        ],
+        [
+          489.9675598144531,
+          107.0873626768589
+        ],
+        [
+          69.48304370045662,
+          108.7318939268589
+        ]
+      ]
+    },
+    {
+      "title": "Learning goals",
+      "heading_level": null,
+      "page_id": 2,
+      "polygon": [
+        [
+          68.09855252504349,
+          72.54664820432663
+        ],
+        [
+          263.445068359375,
+          70.90211695432663
+        ],
+        [
+          263.445068359375,
+          104.05328834056854
+        ],
+        [
+          68.09855252504349,
+          105.69781959056854
+        ]
+      ]
+    },
+    {
+      "title": "What's wrong with scripting?",
+      "heading_level": null,
+      "page_id": 3,
+      "polygon": [
+        [
+          69.77023735642433,
+          76.10833963751793
+        ],
+        [
+          457.16497802734375,
+          74.46380838751793
+        ],
+        [
+          457.16497802734375,
+          102.07207685709
+        ],
+        [
+          69.77023735642433,
+          103.71660810709
+        ]
+      ]
+    },
+    {
+      "title": "Adding a user",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          69.7656624019146,
+          76.4313752502203
+        ],
+        [
+          252.3650665283203,
+          74.7868440002203
+        ],
+        [
+          252.3650665283203,
+          102.73753912746906
+        ],
+        [
+          68.6035530269146,
+          104.38207037746906
+        ]
+      ]
+    },
+    {
+      "title": "What about\u2026",
+      "heading_level": null,
+      "page_id": 5,
+      "polygon": [
+        [
+          67.96594977378845,
+          74.72187051177025
+        ],
+        [
+          251.12506103515625,
+          73.07733926177025
+        ],
+        [
+          251.12506103515625,
+          101.77178955078125
+        ],
+        [
+          66.80384039878845,
+          102.54669636487961
+        ]
+      ]
+    },
+    {
+      "title": "Bash doesn't scale!",
+      "heading_level": null,
+      "page_id": 6,
+      "polygon": [
+        [
+          69.61296886205673,
+          76.12259905040264
+        ],
+        [
+          318.62103271484375,
+          76.12259905040264
+        ],
+        [
+          318.62103271484375,
+          101.77178955078125
+        ],
+        [
+          69.61296886205673,
+          101.77178955078125
+        ]
+      ]
+    },
+    {
+      "title": "Enter conguration management",
+      "heading_level": null,
+      "page_id": 7,
+      "polygon": [
+        [
+          67.90456026792526,
+          74.3722043633461
+        ],
+        [
+          503.58024448156357,
+          72.7276731133461
+        ],
+        [
+          503.4849548339844,
+          103.34921336174011
+        ],
+        [
+          66.74245089292526,
+          104.99374461174011
+        ]
+      ]
+    },
+    {
+      "title": "Declarative",
+      "heading_level": null,
+      "page_id": 8,
+      "polygon": [
+        [
+          69.12041649222374,
+          74.00611448287964
+        ],
+        [
+          220.861083984375,
+          72.36158323287964
+        ],
+        [
+          220.861083984375,
+          101.77178955078125
+        ],
+        [
+          67.95830711722374,
+          103.41218563914299
+        ]
+      ]
+    },
+    {
+      "title": "Example: CFEngine DSL",
+      "heading_level": null,
+      "page_id": 9,
+      "polygon": [
+        [
+          69.09238159656525,
+          75.8860170096159
+        ],
+        [
+          379.1490173339844,
+          74.2414857596159
+        ],
+        [
+          379.1490173339844,
+          103.28752712905407
+        ],
+        [
+          69.09238159656525,
+          104.93205837905407
+        ]
+      ]
+    },
+    {
+      "title": "Example: Puppet manifest (DSL)",
+      "heading_level": null,
+      "page_id": 10,
+      "polygon": [
+        [
+          69.71140131354332,
+          75.494011759758
+        ],
+        [
+          486.3009948730469,
+          73.849480509758
+        ],
+        [
+          486.3009948730469,
+          101.85996103286743
+        ],
+        [
+          69.71140131354332,
+          103.50449228286743
+        ]
+      ]
+    },
+    {
+      "title": "Example: Chef recipe (Ruby)",
+      "heading_level": null,
+      "page_id": 11,
+      "polygon": [
+        [
+          68.18216070532799,
+          74.9388042986393
+        ],
+        [
+          434.29302978515625,
+          73.2942730486393
+        ],
+        [
+          434.29302978515625,
+          102.19773283600807
+        ],
+        [
+          68.18216070532799,
+          103.84226408600807
+        ]
+      ]
+    },
+    {
+      "title": "Example: Ansible playbook (YAML)",
+      "heading_level": null,
+      "page_id": 12,
+      "polygon": [
+        [
+          69.29993912577629,
+          76.03113304078579
+        ],
+        [
+          515.7489624023438,
+          74.38660179078579
+        ],
+        [
+          515.7489624023438,
+          101.77178955078125
+        ],
+        [
+          69.29993912577629,
+          103.38890509307384
+        ]
+      ]
+    },
+    {
+      "title": "Idempotence",
+      "heading_level": null,
+      "page_id": 13,
+      "polygon": [
+        [
+          68.75957138836384,
+          76.32908764481544
+        ],
+        [
+          245.98907470703125,
+          74.68455639481544
+        ],
+        [
+          245.98907470703125,
+          101.77178955078125
+        ],
+        [
+          68.75957138836384,
+          103.13069868087769
+        ]
+      ]
+    },
+    {
+      "title": "Advantages",
+      "heading_level": null,
+      "page_id": 14,
+      "polygon": [
+        [
+          67.91982784867287,
+          77.36496216058731
+        ],
+        [
+          227.49307250976562,
+          75.72043091058731
+        ],
+        [
+          227.49307250976562,
+          102.42046323418617
+        ],
+        [
+          67.91982784867287,
+          104.06499448418617
+        ]
+      ]
+    },
+    {
+      "title": "Recommendation",
+      "heading_level": null,
+      "page_id": 15,
+      "polygon": [
+        [
+          67.74546533823013,
+          74.01718074083328
+        ],
+        [
+          304.8610534667969,
+          72.37264949083328
+        ],
+        [
+          304.8610534667969,
+          101.77178955078125
+        ],
+        [
+          67.74546533823013,
+          103.26191288232803
+        ]
+      ]
+    },
+    {
+      "title": "Ansible demo",
+      "heading_level": null,
+      "page_id": 16,
+      "polygon": [
+        [
+          67.58901253342628,
+          77.24428097903728
+        ],
+        [
+          282.1981506347656,
+          75.59974972903728
+        ],
+        [
+          282.1981506347656,
+          106.34490966796875
+        ],
+        [
+          67.58901253342628,
+          106.7122014760971
+        ]
+      ]
+    },
+    {
+      "title": "Ansible control/managed nodes",
+      "heading_level": null,
+      "page_id": 17,
+      "polygon": [
+        [
+          68.02439570426941,
+          75.63439138233662
+        ],
+        [
+          484.1009521484375,
+          73.98986013233662
+        ],
+        [
+          484.1009521484375,
+          102.62548385560513
+        ],
+        [
+          68.02439570426941,
+          104.27001510560513
+        ]
+      ]
+    },
+    {
+      "title": "Requirements for Ansible\ncontrol/managed node",
+      "heading_level": null,
+      "page_id": 17,
+      "polygon": [
+        [
+          70.453125,
+          327.80411595106125
+        ],
+        [
+          410.5830078125,
+          326.15958470106125
+        ],
+        [
+          410.5830078125,
+          391.13021248579025
+        ],
+        [
+          70.453125,
+          392.77474373579025
+        ]
+      ]
+    },
+    {
+      "title": "Lab assignment setup",
+      "heading_level": null,
+      "page_id": 18,
+      "polygon": [
+        [
+          69.31643024086952,
+          74.70961858332157
+        ],
+        [
+          359.64501953125,
+          73.06508733332157
+        ],
+        [
+          359.64501953125,
+          102.05947361886501
+        ],
+        [
+          69.31643024086952,
+          103.70400486886501
+        ]
+      ]
+    },
+    {
+      "title": "Complete environment for the lab\nassignment",
+      "heading_level": null,
+      "page_id": 18,
+      "polygon": [
+        [
+          70.453125,
+          325.807045340538
+        ],
+        [
+          524.3154296875,
+          324.162514090538
+        ],
+        [
+          524.3154296875,
+          389.44957160949707
+        ],
+        [
+          70.453125,
+          391.09410285949707
+        ]
+      ]
+    },
+    {
+      "title": "vmlab environment",
+      "heading_level": null,
+      "page_id": 19,
+      "polygon": [
+        [
+          67.00613141059875,
+          76.75642462074757
+        ],
+        [
+          312.49359130859375,
+          75.11189337074757
+        ],
+        [
+          312.49359130859375,
+          101.96258544921875
+        ],
+        [
+          67.00613141059875,
+          102.37703256309032
+        ]
+      ]
+    },
+    {
+      "title": "Add a new VM",
+      "heading_level": null,
+      "page_id": 20,
+      "polygon": [
+        [
+          68.44694063067436,
+          77.03841972351074
+        ],
+        [
+          262.2610778808594,
+          77.03841972351074
+        ],
+        [
+          262.2610778808594,
+          102.37343791127205
+        ],
+        [
+          68.44694063067436,
+          102.37343791127205
+        ]
+      ]
+    },
+    {
+      "title": "The inventory le",
+      "heading_level": null,
+      "page_id": 21,
+      "polygon": [
+        [
+          68.40761907398701,
+          75.74125228822231
+        ],
+        [
+          299.8690490722656,
+          74.09672103822231
+        ],
+        [
+          299.8690490722656,
+          102.49301497638226
+        ],
+        [
+          68.40761907398701,
+          104.13754622638226
+        ]
+      ]
+    },
+    {
+      "title": "Connecting to managed hosts",
+      "heading_level": null,
+      "page_id": 22,
+      "polygon": [
+        [
+          69.16575819253922,
+          75.97494857013226
+        ],
+        [
+          461.9249572753906,
+          74.33041732013226
+        ],
+        [
+          461.9249572753906,
+          103.03353016078472
+        ],
+        [
+          69.16575819253922,
+          104.67806141078472
+        ]
+      ]
+    },
+    {
+      "title": "Main playbook",
+      "heading_level": null,
+      "page_id": 23,
+      "polygon": [
+        [
+          69.06038351356983,
+          76.23370704054832
+        ],
+        [
+          263.9570617675781,
+          74.58917579054832
+        ],
+        [
+          263.9570617675781,
+          102.1518743634224
+        ],
+        [
+          69.06038351356983,
+          103.7964056134224
+        ]
+      ]
+    },
+    {
+      "title": "Running a playbook",
+      "heading_level": null,
+      "page_id": 24,
+      "polygon": [
+        [
+          69.15080979466438,
+          75.32629270851612
+        ],
+        [
+          332.9090270996094,
+          73.68176145851612
+        ],
+        [
+          332.9090270996094,
+          101.81597830355167
+        ],
+        [
+          69.15080979466438,
+          103.46050955355167
+        ]
+      ]
+    },
+    {
+      "title": "Installing a role",
+      "heading_level": null,
+      "page_id": 25,
+      "polygon": [
+        [
+          69.61927272379398,
+          74.69215346872807
+        ],
+        [
+          273.6850280761719,
+          73.04762221872807
+        ],
+        [
+          273.6850280761719,
+          101.85098381340504
+        ],
+        [
+          68.45716334879398,
+          103.49551506340504
+        ]
+      ]
+    },
+    {
+      "title": "Play it again, Sam!",
+      "heading_level": null,
+      "page_id": 26,
+      "polygon": [
+        [
+          69.2944598197937,
+          73.76033565402031
+        ],
+        [
+          310.05246937274933,
+          72.11580440402031
+        ],
+        [
+          310.05246937274933,
+          102.4690819978714
+        ],
+        [
+          69.2944598197937,
+          104.1136132478714
+        ]
+      ]
+    },
+    {
+      "title": "Roles: reusable playbooks",
+      "heading_level": null,
+      "page_id": 27,
+      "polygon": [
+        [
+          67.79091343283653,
+          74.73148134350777
+        ],
+        [
+          407.2530212402344,
+          73.08695009350777
+        ],
+        [
+          407.2530212402344,
+          102.52343463897705
+        ],
+        [
+          67.79091343283653,
+          104.16796588897705
+        ]
+      ]
+    },
+    {
+      "title": "https://galaxy.ansible.com/",
+      "heading_level": null,
+      "page_id": 27,
+      "polygon": [
+        [
+          51.139497607946396,
+          117.67652940750122
+        ],
+        [
+          362.58401215076447,
+          116.03199815750122
+        ],
+        [
+          361.96673583984375,
+          142.24685913324356
+        ],
+        [
+          49.977388232946396,
+          143.89139038324356
+        ]
+      ]
+    },
+    {
+      "title": "https://github.com/bertvv/ansible-role-\nrh-base",
+      "heading_level": null,
+      "page_id": 27,
+      "polygon": [
+        [
+          95.10520055890083,
+          271.1357662677765
+        ],
+        [
+          521.4291280508041,
+          269.4912350177765
+        ],
+        [
+          521.4291280508041,
+          325.03642225265503
+        ],
+        [
+          95.10520055890083,
+          326.68095350265503
+        ]
+      ]
+    },
+    {
+      "title": "Initialising variables",
+      "heading_level": null,
+      "page_id": 28,
+      "polygon": [
+        [
+          69.17555533349514,
+          73.80166473984718
+        ],
+        [
+          332.2770080566406,
+          72.15713348984718
+        ],
+        [
+          332.2770080566406,
+          101.9926808476448
+        ],
+        [
+          68.01344595849514,
+          103.6372120976448
+        ]
+      ]
+    },
+    {
+      "title": "That's enough for now!",
+      "heading_level": null,
+      "page_id": 29,
+      "polygon": [
+        [
+          68.27057436108589,
+          75.66908322274685
+        ],
+        [
+          368.3970031738281,
+          75.66908322274685
+        ],
+        [
+          368.3970031738281,
+          102.61085431277752
+        ],
+        [
+          68.27057436108589,
+          102.61085431277752
+        ]
+      ]
+    },
+    {
+      "title": "Resources",
+      "heading_level": null,
+      "page_id": 30,
+      "polygon": [
+        [
+          69.89164210855961,
+          77.77178955078125
+        ],
+        [
+          207.0450897216797,
+          76.95940011739731
+        ],
+        [
+          207.0450897216797,
+          101.77178955078125
+        ],
+        [
+          68.72953273355961,
+          101.7981054186821
+        ]
+      ]
+    },
+    {
+      "title": "Time to get started!",
+      "heading_level": null,
+      "page_id": 31,
+      "polygon": [
+        [
+          69.5660401135683,
+          74.84671095013618
+        ],
+        [
+          327.42555767297745,
+          73.20217970013618
+        ],
+        [
+          326.26344829797745,
+          102.12459766864777
+        ],
+        [
+          68.4039307385683,
+          103.76912891864777
+        ]
+      ]
+    }
+  ],
+  "page_stats": [
+    {
+      "page_id": 0,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          51
+        ],
+        [
+          "Line",
+          8
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Text",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 1,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          21
+        ],
+        [
+          "Line",
+          3
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 2,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          69
+        ],
+        [
+          "Line",
+          12
+        ],
+        [
+          "ListItem",
+          7
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 3,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          41
+        ],
+        [
+          "Line",
+          8
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Code",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 4,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          37
+        ],
+        [
+          "Line",
+          8
+        ],
+        [
+          "Text",
+          3
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 5,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          45
+        ],
+        [
+          "Line",
+          7
+        ],
+        [
+          "ListItem",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 6,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          23
+        ],
+        [
+          "Line",
+          3
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 7,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          37
+        ],
+        [
+          "Line",
+          6
+        ],
+        [
+          "ListItem",
+          3
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 8,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          61
+        ],
+        [
+          "Line",
+          10
+        ],
+        [
+          "ListItem",
+          6
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 9,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          59
+        ],
+        [
+          "Line",
+          18
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Text",
+          1
+        ],
+        [
+          "Code",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 10,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          37
+        ],
+        [
+          "Line",
+          9
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Code",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 11,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          65
+        ],
+        [
+          "Line",
+          12
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Code",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 12,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          88
+        ],
+        [
+          "Line",
+          18
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Code",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 13,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          41
+        ],
+        [
+          "Line",
+          7
+        ],
+        [
+          "ListItem",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 14,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          45
+        ],
+        [
+          "Line",
+          9
+        ],
+        [
+          "ListItem",
+          6
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 15,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          57
+        ],
+        [
+          "Line",
+          8
+        ],
+        [
+          "ListItem",
+          3
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 16,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          21
+        ],
+        [
+          "Line",
+          3
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 17,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          33
+        ],
+        [
+          "Line",
+          5
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "Figure",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 18,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          33
+        ],
+        [
+          "Line",
+          5
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "Figure",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 19,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          29
+        ],
+        [
+          "Line",
+          7
+        ],
+        [
+          "ListItem",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 20,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          64
+        ],
+        [
+          "Line",
+          11
+        ],
+        [
+          "Text",
+          3
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListItem",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 21,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          58
+        ],
+        [
+          "Line",
+          14
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Code",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 22,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          33
+        ],
+        [
+          "Line",
+          6
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Text",
+          1
+        ],
+        [
+          "Code",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 23,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          65
+        ],
+        [
+          "Line",
+          13
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Code",
+          1
+        ],
+        [
+          "Text",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 24,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          55
+        ],
+        [
+          "Line",
+          20
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Code",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 25,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          73
+        ],
+        [
+          "Line",
+          14
+        ],
+        [
+          "Text",
+          3
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Code",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 26,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          67
+        ],
+        [
+          "Line",
+          18
+        ],
+        [
+          "Text",
+          3
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Code",
+          1
+        ],
+        [
+          "Figure",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 27,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          69
+        ],
+        [
+          "Line",
+          13
+        ],
+        [
+          "SectionHeader",
+          3
+        ],
+        [
+          "ListItem",
+          3
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "Text",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 28,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          50
+        ],
+        [
+          "Line",
+          13
+        ],
+        [
+          "ListItem",
+          5
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Code",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 29,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          25
+        ],
+        [
+          "Line",
+          3
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 30,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          54
+        ],
+        [
+          "Line",
+          17
+        ],
+        [
+          "ListItem",
+          5
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 31,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          35
+        ],
+        [
+          "Line",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListItem",
+          1
+        ],
+        [
+          "Text",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    }
+  ],
+  "debug_data_path": "debug_data\\2. Configuration Management with Ansible"
+}
