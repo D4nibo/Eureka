@@ -1,0 +1,273 @@
+1. Continuous Integration/
+Deployment with Jenkins
+Infrastructure Automation
+HOGENT applied computer science
+Bert Van Vreckem & Thomas Parmentier
+2024-2025
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+1/26
+Intro
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+2/26
+Traditional release
+Weeks/months apart
+Lots of changes!
+⇒ Lots of bugs…
+Wait for vN.1?
+Releases are painful, high-risk events
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+3/26
+How e.g. Facebook does it
+“If it hurts, do it more often”
+Dozens of releases per day!
+Small, incremental changes go into production
+⇒ Reduced risk
+Read more: Rapid release at massive scale
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+4/26
+Continuous Integration/Delivery
+CI vs CD. (
+)
+Redhat, 2020
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+5/26
+Typical tasks (1)
+Linting: code style checks
+Static analysis (e.g. shellcheck)
+Compilation
+Unit tests
+Code coverage analysis
+Packaging
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+6/26
+Typical tasks (2)
+Release to package repository
+Deploy in acceptance environment
+Integration/acceptance/load-tests…
+Deploy to production
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+7/26
+CI/CD tooling
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+8/26
+Overview
+Open source
+Commercial on-prem
+Concourse
+Jenkins
+Spinnaker
+Atlassian Bamboo
+Jetbrains TeamCity
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+9/26
+Commercial, hosted
+AWS CodePipeline
+Azure DevOps
+CircleCI
+Codeship
+Github Actions
+GitLab CI
+Travis CI
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+10/26
+Jenkins
+Open source
+Mature
+Most flexibility
+on-prem/private/public cloud
+rich feature set
+https://www.jenkins.io/
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+11/26
+Jenkins Example output
+(
+)
+Wikipedia
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+12/26
+A Github Actions case
+This slide deck was built on Github Actions &
+deployed to Github Pages!
+https://github.com/HoGentTIN/infra-slides
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+13/26
+Working with Github Actions
+Go to Actions, New workflow
+Or create .github/workflows/workflow-
+name.yml
+RTFM
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+14/26
+Example workflow
+https://github.com/HoGentTIN/infra-
+slides/blob/main/.github/workflows/compile.yml
+---
+name: compile
+on:
+  push:
+    branches:
+      - main
+jobs:
+  convert_via_pandoc:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Configure Git for Github
+        run: |
+          git config --global user.name 
+"${GITHUB_ACTOR}"
+          git config --global user.email 
+"${GITHUB_ACTOR}@users.noreply.github.com"
+      - uses: actions/checkout@v2
+      - uses: r-lib/actions/setup-pandoc@v1
+        with:
+          pandoc-version: '2.9'
+      - name: Publish Site
+        env:
+          REPOSITORY: "https://${{ 
+secrets.GITHUB_PAT }}@github.com/${{ 
+github.repository }}.git"
+        run: ./publish.sh
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+15/26
+
+
+|Example workflow https://github.com/HoGentTIN/infra&amp;#45; slides/blob/main/.github/workflows/compile.y &amp;#45;&amp;#45;&amp;#45; name: compile on: push: branches: &amp;#45; main jobs: convert_via_pandoc: runs&amp;#45;on: ubuntu&amp;#45;18.04 steps: &amp;#45; name: Configure Git for Github run: | git config &amp;#45;&amp;#45;global user.name &quot;${GITHUB_ACTOR}&quot; git config &amp;#45;&amp;#45;global user.email &quot;${GITHUB_ACTOR}@users.noreply.github.com&quot; &amp;#45; uses: actions/checkout@v2 &amp;#45; uses: r&amp;#45;lib/actions/setup&amp;#45;pandoc@v1 with: pandoc&amp;#45;version: &#x27;2.9&#x27; &amp;#45; name: Publish Site env: REPOSITORY: &quot;https://${{ secrets.GITHUB_PAT }}@github.com/${{ github.repository }}.git&quot; run: ./publish.sh|Col2|
+|---|---|
+|||
+Another case: testing Ansible roles
+Ansible role bertvv.bind
+Installs ISC BIND (a DNS server) on several
+Linux distros
+~40 contributors, dozens of PRs
+Contributed code may break the role!
+https://github.com/bertvv/ansible-role-
+bind/blob/master/.github/workflows/ci.yml
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+16/26
+Testing Ansible roles in Gitlab CI
+On each push/PR:
+Spin up Docker container for each
+supported distro
+Apply role, use (most) functionality
+Run acceptance tests (= DNS queries)
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+17/26
+Get started with the lab
+assignment!
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+18/26
+Jenkins lab assignment
+Follow the steps in the assignment
+Jenkins UI resides at
+$ cd dockerlab
+$ vagrant up
+$ vagrant ssh
+https://github.com/HoGentTIN/infra-
+labs/blob/main/assignment/2-cicd.md
+http://192.168.56.20:8080/
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+19/26
+Setup
+Jenkins runs in a Docker container
+Default installation, minimal configuration
+required
+Launch demo application in another Docker
+container
+Make change, rebuild & deploy!
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+20/26
+Reflection
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+21/26
+Lab setup vs reality
+Complete build server
+Physical system or “traditional” VM
+Worker nodes
+Central repo + build tools
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+22/26
+Change in discipline needed!
+code coverage ⟶ 100%
+feature flags
+canary deployment
+blue/green deployment
+trunk-based development
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+23/26
+Canary deployments
+Canary deployments (Sato, 2014)
+Canary deployments (
+)
+Sato, 2014
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+24/26
+Blue-Green Deployment
+Acceptance/Prod swap places
+(Fowler, 2010)
+Acceptance/Prod swap places
+(
+)
+Fowler, 2010
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+25/26
+Trunk-based development
+Branches considered harmful!
+(Fowler, 2020)
+Branches considered harmful!
+(
+)
+Fowler, 2020
+19/04/2025 17:10
+1. Continuous Integration/ Deployment with Jenkins
+https://hogenttin.github.io/infra-slides/01-ci-cd-jenkins.html#/title-slide
+26/26

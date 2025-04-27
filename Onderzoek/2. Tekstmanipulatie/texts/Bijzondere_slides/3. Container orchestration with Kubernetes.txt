@@ -1,0 +1,359 @@
+3. Container orchestration
+with Kubernetes
+Infrastructure Automation
+HOGENT applied computer science
+Bert Van Vreckem & Thomas Parmentier
+2024-2025
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+1/33
+Container orchestration:
+Kubernetes
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+2/33
+Learning goals
+Understanding the concept of container
+orchestration
+Understanding the basic architecture of
+Kubernetes
+Being able to operate a Kubernetes cluster
+Applying changes using manifest files
+Being able to manipulate Kubernetes
+resources
+Pods
+Controllers: ReplicaSets, Deployments,
+Services
+Organising applications: Labels, Selectors
+Deploying a multi-tier application on a
+Kubernetes cluster
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+3/33
+A little history
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+4/33
+Deployment (r)evolution
+Source:
+https://kubernetes.io/docs/concepts/overview/
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+5/33
+
+
+|Deployment (r)evolution Source: https://kubernetes.io/docs/concepts/overvie|w/|
+|---|---|
+|||
+Why are containers so popular?
+CI/CD: easy to switch to previous versions (=
+images)
+decouple application from infrastructure
+environmental consistency: runs the same on
+your pc as in the cloud
+resource isolation: predictable application
+performance
+resource utilization: high efficiency and
+density
+…
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+6/33
+Requirements for containers in
+production
+Scalability & availability
+Dependencies between containers
+Load balancer
+Database/persistent storage
+Multi-host container
+Rolling updates/rollbacks
+…
+It’s complicated!
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+7/33
+Container orchestration
+= tool that allows container management at
+scale
+Apache Mesos
+Docker Swarm
+Rancher
+Nomad
+Kubernetes - has become “market leader”
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+8/33
+Container orchestration:
+Kubernetes
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+9/33
+Kubernetes by Google
+Kubernetes (k8s) is an open source project
+that enables software teams of all sizes, from
+a small startup to a Fortune 100 company, to
+automate deploying, scaling, and managing
+applications on a group or cluster of server
+machines.
+These applications can include everything
+from internal-facing web applications like a
+content management system, to marquee
+web properties like Gmail, to big data
+processing.
+– Jo Beda (Google)
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+10/33
+Kubernetes architecture
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+11/33
+“Management node”
+Sysadmin interacts with Master Node
+through kubectl
+compare with ansible, ansible-playbook
+commands!
+Settings (host name, credentials, etc):
+kubeconfig
+compare with Ansible inventory file!
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+12/33
+Master Node
+API server
+Scheduler
+Controller Manager
+Node controller: responsible for worker
+states
+Replication controller: maintain correct
+number of pods for replicated controllers
+Endpoint controller: join services & pods
+Service account & token controller: access
+mgmt
+etcd: key/value store, e.g. scheduling info,
+node details
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+13/33
+Worker node
+kubelet: communicate with Master Node
+Run workloads
+Container Engine (e.g. Docker, Podman)
+Pods: smallest unit, tightly coupled
+containers
+Mount volumes
+Network routing (kube-proxy)
+…
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+14/33
+Basic building blocks
+Pods
+Controllers:
+Deployments, ReplicaSets, Services
+DaemonSets, Jobs
+Organise applications:
+Labels, Selectors, Namespaces
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+15/33
+Pods
+Smallest unit of deployment
+(Docker) App container(s)
+Storage resources
+Unique network IP
+Options that govern how container(s) should
+run
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+16/33
+Pods properties
+Ephemeral, disposable
+Never self-heal, not restarted by scheduler by
+itself
+Never create pods just by themselves
+Pro-tip: don’t use pods directly, but
+controllers like a deployment
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+17/33
+Pod states
+Pending - k8s accepted Pod but no
+containers created
+Running - node assigned, all containers are
+created and at least one is running
+Succeeded - all containers exited with status
+0
+Failed - all containers exited, at least one with
+exit status != 0
+CrashLoopBackOff - container fails to start,
+k8s tries over and over
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+18/33
+Controllers
+Running applications in controllers has some
+benefits:
+Application reliabilty
+Scaling
+Load balancing
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+19/33
+Controllers: ReplicaSets
+Ensure specified number of replicas for a pod
+are running
+Used within a Deployment
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+20/33
+Controllers: Deployments
+Declarative updates for pods & ReplicaSets
+Desired state in YAML file, k8s will bring pods
+to that state
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+21/33
+Controllers: Services
+Allow communication between sets of
+deployments
+Important: provides fixed ip, even if pod ip
+changes
+Kinds:
+Internal: IP only reachable within cluster
+External: endpoint available throug ip:port
+(called NodePort)
+Load Balancer: expose app to internet
+with LB
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+22/33
+Controllers: Jobs
+Supervisor process for pods carrying out
+batch jobs
+Individual processes that run once and
+complete successfully
+Compare with cron job
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+23/33
+Controllers: DaemonSets
+Ensure that all nodes run a copy of a specific
+pod
+E.g. when adding/removing nodes to the
+cluster
+E.g. run single logging/monitoring agent on
+each node
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+24/33
+Organising applications: labels
+key/value pairs, attached to objects (pods,
+services, deployments)
+e.g. "environment": "prod", "tier": 
+"backend", etc.
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+25/33
+Organising applications: Selectors
+identify set of objects, depending on label
+values
+kinds:
+equality-based: value = or !=
+set-based: value in, not in, specific set, or
+value exists
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+26/33
+Organising applications:
+namespaces
+isolate different groups of resources on the
+same hardware
+manage access control for different users
+default namespace is used when cluster is
+started
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+27/33
+Reflection
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+28/33
+Beware of the golden hammer
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+29/33
+Beware!
+Kubernetes is not a fit for every use case!
+Overkill for simple applications
+Running k8s on-prem is hard!
+Cloud providers offer k8s as a service
+Only microservices architecture!
+Not suitable for “monolithic” applications
+Team organisation
+DevOps!
+CI/CD!
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+30/33
+Kubernetes lab setup
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+31/33
+Get started with the lab
+assignment
+Install minikube on your physical system
+Use VirtualBox or Docker as the driver
+Install kubectl
+Start minikube
+Install metrics server and dashboard
+plugins
+Optionally, add one or two extra nodes
+Remark: Minikube is not a production-grade
+cluster!
+No way to expose services to the outside
+world
+Instead: minikube service <service-name>
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+32/33
+Follow instructions in the lab
+assignment
+Also keep a cheat sheet of important
+commands!
+19/04/2025 17:10
+3. Container orchestration with Kubernetes
+https://hogenttin.github.io/infra-slides/03-kubernetes.html#/title-slide
+33/33

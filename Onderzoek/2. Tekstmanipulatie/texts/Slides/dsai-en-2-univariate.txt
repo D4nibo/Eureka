@@ -1,0 +1,373 @@
+Module 2. Univariate statistics
+Data Science
+Sabine De Vreese
+Lieven Smits
+Pieter Van Der Helst
+Bert Van Vreckem
+2024–2025
+1/33
+Contents
+Central Tendency and Dispersion
+Measure of Central Tendency
+Measures of Dispersion
+Summary
+Data visualisation
+Simple Graphs
+Interpretation of Charts
+2/33
+Learning Goals
+●Descriptive statistics
+●Central tendency and dispersion for each measurement level
+●Know formulas, being able to calculate
+●Suitable visualization techniques for each measurement level
+3/33
+Central Tendency and
+Dispersion
+4/33
+How tall are my friends?
+Remember our superheroes:
+0
+20
+40
+60
+80
+100
+120
+140
+160
+180
+200
+141 cm
+198 cm
+143 cm
+201 cm
+184 cm
+5/33
+Measure of Central Tendency
+What value is representative of the entire group?
+6/33
+Mean or Average
+Arithmetic mean
+The arithmetic mean (notation: 𝑥) is the sum of all values divided by
+the number of values
+𝑥= 1
+𝑛
+𝑛
+∑
+𝑥=1
+𝑥𝑖
+𝑥1
+𝑥2
+𝑥3
+𝑥4
+𝑥5
+141
+198
+143
+201
+184
+7/33
+
+
+|𝑥 1|𝑥 2|𝑥 3|𝑥 4|𝑥 5|
+|---|---|---|---|---|
+Mean or Average
+Q1 What happens if Ant-Man shrinks to a size of 10 cm?
+Q2 The arithmetic mean of 15 numbers is 12. What number
+should be added to get a mean of 13?
+8/33
+Median
+Median
+To find the median, sort all values and pick the middle number
+●Odd number of values: no problem
+●Even number of values: average of the middle two
+𝑥1
+𝑥2
+𝑥3
+𝑥4
+𝑥5
+141
+198
+143
+201
+184
+9/33
+
+
+|𝑥 1|𝑥 2|𝑥 3|𝑥 4|𝑥 5|
+|---|---|---|---|---|
+|141|198|143|201|184|
+Median
+Q1 What happens if Ant-Man shrinks to a size of 10 cm?
+Q2 What is the median of the number of people saved by
+Batman during the last eight years?
+4
+7
+11
+16
+20
+22
+25
+26
+10/33
+
+
+|4|7|11|16|20|22|25|26|
+|---|---|---|---|---|---|---|---|
+Mode
+Mode
+The mode is the value that appears most often in a dataset.
+Number of people saved by Superman during the last 15 years:
+3
+7
+5
+13
+20
+23
+39
+23
+40
+23
+14
+12
+56
+23
+29
+Number of people saved by Batman during the last 8 years:
+4
+7
+11
+16
+20
+22
+25
+26
+11/33
+
+
+|3|7|5|13|20|23|39|23|40|23|14|12|56|23|29|
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+Measures of Dispersion
+How large are the differences within the group?
+12/33
+Range
+Range
+The range of a dataset is the absolute value of the difference
+between the highest and the lowest value.
+𝑥1
+𝑥2
+𝑥3
+𝑥4
+𝑥5
+141
+198
+143
+201
+184
+13/33
+
+
+|𝑥 1|𝑥 2|𝑥 3|𝑥 4|𝑥 5|
+|---|---|---|---|---|
+|141|198|143|201|184|
+Quartiles
+Quartiles
+The quartiles of a sorted set of numbers are the three values that
+divide the set into 4 equally large subsets. Notation: 𝑄1, 𝑄2, 𝑄3
+Number of people saved by Superman during the last 15 years:
+3
+7
+5
+13
+20
+23
+39
+23
+40
+23
+14
+12
+56
+23
+29
+14/33
+
+
+|3|7|5|13|20|23|39|23|40|23|14|12|56|23|29|
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+Calculating Quartiles
+●Different software programs have slightly different ways of
+calculating quartiles.
+●The following method is easy to perform by hand. Start by sorting
+the values.
+○When 𝑛is odd.
+– The median (𝑄2) is the middle value (as before).
+– Leave out the median. 𝑄1 is the median of the first half, 𝑄3 is the median
+of the second half.
+○When 𝑛is even.
+– The median (𝑄2) is the average of the two middle values.
+– 𝑄1 is the median of the first half, 𝑄3 is the median
+of the second half.
+15/33
+Interquartile Range (IQR)
+Interquartile Range
+The interquartile range is the difference between the third and first
+quartile |𝑄3 −𝑄1|.
+16/33
+Variance and Standard Deviation
+Variance
+The variance (𝑠2 or 𝜎2) is the mean squared difference between the
+values of a data set and the arithmetic mean.
+𝑠2 =
+1
+𝑛−1
+𝑛
+∑
+𝑖=1
+(𝑥𝑖−𝑥)2
+Standard deviation
+The standard deviation (𝑠or 𝜎) is the square root of the variance
+𝑥1
+𝑥2
+𝑥3
+𝑥4
+𝑥5
+141
+198
+143
+201
+184
+17/33
+
+
+|𝑥 1 141|𝑥 2 198|𝑥 3 143|𝑥 4 201|𝑥 5 184|
+|---|---|---|---|---|
+Properties of the Standard
+Deviation
+●Can the standard deviation be negative?
+18/33
+Properties of the Standard
+Deviation
+●Can the standard deviation be negative?
+●What is the smallest possible value? What does this imply?
+18/33
+Properties of the Standard
+Deviation
+●Can the standard deviation be negative?
+●What is the smallest possible value? What does this imply?
+●What effect do outliers have on the standard deviation?
+18/33
+Properties of the Standard
+Deviation
+●Can the standard deviation be negative?
+●What is the smallest possible value? What does this imply?
+●What effect do outliers have on the standard deviation?
+●What is the unit of the standard deviation (in relation to the unit of
+the variable)?
+18/33
+Properties of the Standard
+Deviation
+●Can the standard deviation be negative?
+●What is the smallest possible value? What does this imply?
+●What effect do outliers have on the standard deviation?
+●What is the unit of the standard deviation (in relation to the unit of
+the variable)?
+●How do you interpret the standard deviation combined with the
+average?
+18/33
+Properties of the Standard
+Deviation
+Why 𝑛−1 in the denominator and not 𝑛?
+You can prove the reason for the change mathematically, but we will
+investigate it empirically
+See Python example code in demo-analysis-1-var.ipynb
+19/33
+This news item reports on high prices for houses and flats. Do the
+numbers give a good idea of the situation?
+Remember!
+Providing only a center value is never sufficient!
+●What is the dispersion?
+●How is the data distributed? Normal distribution?
+●Is the group sufficiently homogeneous?
+21/33
+Central Tendency and Dispersion:
+Summary
+Measurement Level
+Center
+Spread Distribution
+Qualitative
+Mode
+—
+Quantitative
+Average/Mean
+Variance, Standard Deviation
+Median
+Range, Interquartile Range
+22/33
+Summary of Symbols
+Population
+Sample
+number of elements
+𝑁
+𝑛
+average or mean
+𝜇
+𝑥
+variance
+𝜎2 =
+∑(𝑥𝑖−𝜇)2
+𝑁
+𝑠2 =
+∑(𝑥𝑖−𝑥)2
+𝑛−1
+standard deviation
+𝜎
+𝑠
+23/33
+Data visualisation
+24/33
+Chart type overview
+Measurement level
+Chart type
+Qualitative
+Bar chart
+Quantitative
+Boxplot
+Histogram
+Density plot
+See Python-example code in demo-analysis-1-var.ipynb
+25/33
+Pie Chart
+Attention!
+Avoid using a pie chart!
+Disadvantages:
+●Comparing angles is harder than comparing length
+●Unusable for data with many categories
+26/33
+Pie Chart
+27/33
+Interpretation of Charts
+Tips:
+●Label the axes
+●Add a clear title
+●Name the unit (and, if
+necessary, order of magnitude)
+●Add a label that clarifies the
+chart
+28/33
+Data distortion
+= misrepresenting data so that invalid conclusions are drawn
+29/33
+Data distortion
+30/33
+Data distraction
+●Avoid bells and whistles
+●Minimize “ink to data” ratio
+31/33
+The importance of data
+visualization
+Anscombe’s Quartet are four completely different datasets with the
+same measurements of central tendency and dispersion.
+32/33
+“The Datasaurus Dozen” (Source:
+https://www.autodeskresearch.com/publications/samestats)

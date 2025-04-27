@@ -1,0 +1,375 @@
+Infrastructure Automation:
+inleiding
+HOGENT toegepaste informatica
+Bert Van Vreckem & Thomas Parmentier
+2024-2025
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+1/40
+Intro
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+2/40
+Woensdag 10 maart 2021, 01:31
+ on-call team merkt dat enkele VMs
+“weg” zijn.
+Inuits
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+3/40
+Dit zijn productiesystemen!
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+4/40
+Het lijkt er op dat ze niet
+terugkomen…
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+5/40
+Woensdag 10 maart 2021, 03:42
+We have a major incident on SBG2. The fire
+declared in the building. Firefighters were
+immediately on the scene but could not
+control the fire in SBG2. The whole site has
+been isolated which impacts all services in
+SGB1-4. We recommend to activate your
+Disaster Recovery Plan.
+— Octave Klaba (@olesovhcom) March 10,
+2021
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+6/40
+De situatie
+ is een cloudprovider
+32 datacenters over 4 continenten
+o.a. in Straatsburg (SBG)
+OVHcloud
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+7/40
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+8/40
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+9/40
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+10/40
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+11/40
+Je servers zijn dus weg. Wat nu?
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+12/40
+Wat was er gebeurd?
+Waarschijnlijk een defecte UPS
+(stroomvoorziening)
+3,6M websites, 464K domeinen weg
+Impact op bedrijven en overheden
+Geen disaster recovery plan? Vaarwel data!
+Vaarwel klanten! Vaarwel bedrijf!
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+13/40
+De situatie bij Inuits
+130 VMs over 12 servers zijn weg
+Meeste problemen opgelost door
+automatische failover naar andere
+datacenters
+Enkele “probleemgevallen”…
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+14/40
+Casus 1
+VIP klant, failover faalt
+Handmatige wijziging DNS record nodig
+voor de load balancer
+1u kwijt: klant had controle over DNS,
+moesten wijziging zelf doen
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+15/40
+Casus 2
+Klant verspreid over 2 DCs
+Volledige infrastructuur gereconstrueerd bij
+andere ISP vóór 9:00
+Zonder notificatie zou klant niets gemerkt
+hebben…
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+16/40
+Impact op Inuits
+Geen dataverlies!
+Meeste problemen opgelost voor aanvang
+kantooruren
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+17/40
+Wat is hun “geheim”?
+Infrastructure as Code
+Configuration Management
+Alles is een pipeline!
+Cloud native
+Geen eigen HW
+Multi-cloud, cloud-agnostic
+High Availability in het design
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+18/40
+Referenties
+Buytaert, K. (2021-06-17) 
+. StackConf 2021.
+Rosemain, M. & Satter, R. (2021-03-10) 
+. Reuters
+Witteman, E. (2021-03-15) 
+Help, my
+datacenter is on fire!
+https://youtu.be/zDfH0DpHT3s
+Millions
+of websites offline after fire at French
+cloud services firm
+OVH fire may be
+caused by faulty UPS
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+19/40
+Infrastructure Automation
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+20/40
+Infrastructure Automation
+Gerelateerde termen:
+Infrastructure as Code
+GitOps
+DevOps
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+21/40
+Levenscyclus van een server
+Wat zijn de verschillende fasen in het leven
+van een server(-VM)?
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+22/40
+Tooling (1/3)
+Tools voor server lifecycle management:
+Provisioning: lege machine → JEOS
+Vagrant, Packer, Docker,
+Terraform/OpenTofu, Pulumi, …
+Configuration Management: JEOS → klaar
+voor productie
+Ansible, Puppet, Chef, CFEngine, …
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+23/40
+Tooling (2/3)
+Software Delivery/Release engineering
+CI/CD: Jenkins, Travis CI, Circle CI, Gitlab CI,
+Github Actions, …
+Packaging: rpmbuild, dpkg-deb, fpm
+Package mgmt: RPM, deb, npm,
+RubyGems, pip, Helm, Chocolatey,
+WinGet, …
+Repository management: Pulp
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+24/40
+Tooling (3/3)
+Orchestration: systemen in productie
+beheren
+Ansible, SaltStack, Kubernetes, …
+Monitoring:
+Traditioneel: Icinga, Nagios, …
+Time Series DB: Prometheus, collectd,
+Cacti, …
+Logging: Grafana Loki, Elastic stack,
+Splunk, Fluentd, …
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+25/40
+Studiewijzer
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+26/40
+Studiewijzer
+Zie Chamilo-cursus voor gedetailleerde info!
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+27/40
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+28/40
+Leerdoelen en competenties
+Provisioning: Vagrant
+Configuration Management Systems:
+Ansible
+Software delivery: CI/CD met Jenkins
+Orchestration: Kubernetes
+Monitoring: Prometheus
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+29/40
+Cursusinhoud
+Intro, werkomgeving opzetten
+M1. Continuous Integration/Delivery
+M2. Configuration management
+M3. Container orchestration
+M4. Monitoring
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+30/40
+Leermaterialen
+Start met het overzicht in de Chamilo-cursus
+Github: 
+, 
+Leerpad met links naar
+Online handleidingen van gebruikte
+software
+(e-)Boeken
+Online cursussen
+Basiskennis Linux herhalen: 
+slides lessen labo-opdrachten
+linux-training-
+hogent
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+31/40
+Nodige software
+(Mac, Linux: zie studiegids op Chamilo)
+PS> winget install Git.Git
+PS> winget install Microsoft.VisualStudioCode
+PS> winget install Oracle.Virtualbox --version 
+7.0.20
+PS> winget install Hashicorp.Vagrant
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+32/40
+Software (vervolg)
+VSCode: installeer aangeraden plugins (zie
+studiegids)
+VirtualBox:
+Installeer niet 7.1!
+Extension Pack!
+Git client: ook Git Bash installeren!
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+33/40
+Werkvormen
+Klassikale instructie en demonstraties
+Labo-opdrachten
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+34/40
+Studiebegeleiding
+Individuele begeleiding voor labo-
+opdrachten
+Stel vragen tijdens de les
+Buiten de les: algemeen Teams-kanaal
+Enkel voor persoonlijke vragen: e-mail/Teams
+chat
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+35/40
+Evaluatie
+Beoordeling via rubrics
+Voor elke opdracht minstens “bekwaam”
+halen
+Portfolio:
+Github repo met broncode en
+laboverslagen
+Demo’s:
+Tijdens het semester:
+M1, M3 vóór de deadline!
+On-campus of via Panopto-opname
+M2, M4 optioneel voor W12 of via
+Panopto voor 18/12
+Examenperiode:
+M2, M4 via Teams
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+36/40
+Tweede examenkans
+Persoonlijke opdracht, geen begeleiding
+Niet afgewerkte labo-opdrachten
+Extra opdrachten (TBD), mogelijke topics:
+Packer, OpenTofu
+Cilium, Helm, Chaos Engineering
+Gitlab CI
+Grafana Loki
+Bijdrage open source project
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+37/40
+Semesterplanning
+1. intro, installatie software
+M1. Continuous Integration/Delivery with
+Jenkins
+2. (labos)
+3. M2. Configuration management with Ansible
+4. (labos)
+5. (labos) Deadline M1.
+6. (labos)
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+38/40
+Semester schedule
+7. M3. Container Orchestration with Kubernetes
+8. (labos)
+9. (labos)
+10. M4. Monitoring
+11. (labos)
+12. (labos) Deadline M3.
+13. Optioneel: inhaalsessie
+Wo 18 dec: Deadline Panopto-opnames
+(M2, M4)
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+39/40
+Vragen?
+Stel vragen tijdens de contactmomenten
+Gebruik het Teams-kanaal
+19/04/2025 17:09
+Infrastructure Automation: inleiding
+https://hogenttin.github.io/infra-slides/00-infra-intro.html#/title-slide
+40/40

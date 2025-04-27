@@ -1,0 +1,385 @@
+2. Configuration Management
+with Ansible
+Infrastructure Automation
+HOGENT applied computer science
+Bert Van Vreckem & Thomas Parmentier
+2024-2025
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+1/32
+Configuration management
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+2/32
+Learning goals
+Understanding the concept of cfg mgmt
+systems
+declarative, idempotent
+advantages over scripting
+Setting up network services with Ansible
+applying basic concepts: playbooks,
+variables, modules, roles
+writing playbooks
+using existing roles
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+3/32
+What’s wrong with scripting?
+dnf install -y httpd
+systemctl enable --now httpd
+firewall-cmd --add-service http --permanent
+firewall-cmd --add-service https --permanent
+firewall-cmd --reload
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+4/32
+Adding a user
+Run this script twice:
+adduser admin
+$ sudo ./setup-server.sh
+$ sudo ./setup-server.sh
+useradd: user 'admin' already exists
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+5/32
+What about…
+small changes between hosts?
+maintaining config files?
+maintaining a large Bash code base?
+configuration drift?
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+6/32
+Bash doesn’t scale!
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+7/32
+Enter configuration management
+1993: CFEngine by Mark Burgess
+Declarative
+Idempotent
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+8/32
+Declarative
+Describe the desired state of the system
+DSL, existing language
+Cfg mgmt system brings system to desired
+state
+independent of initial state
+in one pass
+abort on fail
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+9/32
+Example: CFEngine DSL
+Domain Specific Language (DSL)
+body common control {
+    bundlesequence => { "install_packages" };
+    inputs => { "libraries/cfengine_stdlib.cf" 
+};
+}
+bundle agent install_packages {
+    vars:
+        "desired_packages"
+            slist => { "httpd", "mod_ssl" };
+    packages:
+        "$(desired_packages)"
+            package_policy => "add",
+            package_method => generic;
+}
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+10/32
+Example: Puppet manifest (DSL)
+package { 'httpd':
+  ensure => installed,
+}
+service { 'httpd':
+  ensure => running,
+}
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+11/32
+Example: Chef recipe (Ruby)
+packages = ["httpd", "mod_ssl"]
+packages.each do |pkg|
+  package pkg do
+    action: install
+  end
+end
+service "httpd" do
+  action [:start, :enable]
+end
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+12/32
+Example: Ansible playbook (YAML)
+- hosts: srv001
+  vars:
+    packages:
+      - httpd
+      - mod_ssl
+  tasks:
+    - name: Ensure packages are installed
+      package:
+        name: "{{ packages }}"
+        state: installed
+    - name: Ensure the service is running
+      service:
+        name: httpd
+        state: started
+        enabled: true
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+13/32
+Idempotence
+Single pass
+End state is guaranteed
+or run aborted!
+Only necessary changes
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+14/32
+Advantages
+Easier to reuse
+Readable
+Scaleable
+Config file templates
+Manage configuration drift
+Cfg mgmt = disaster recovery plan!
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+15/32
+Recommendation
+Manage your entire infrastructure using a
+config management system
+Use revision control system!
+Never make manual changes to a production
+system!
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+16/32
+Ansible demo
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+17/32
+Ansible control/managed nodes
+Requirements for Ansible
+control/managed node
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+18/32
+Lab assignment setup
+Complete environment for the lab
+assignment
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+19/32
+vmlab environment
+> cd infra-labs-23-34-USERNAME/vmlab
+> vagrant up control
+> vagrant ssh control
+> cd /vagrant/ansible
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+20/32
+Add a new VM
+In vagrant-hosts.yml (before the control
+node!):
+and run vagrant up srv100
+- name: srv100
+  ip: 172.16.128.100
+  netmask: 255.255.0.0
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+21/32
+The inventory file
+# inventory.yml
+---
+servers:
+  vars:
+    ansible_user: vagrant
+    ansible_become: true
+  hosts:
+    srv100:
+      ansible_host: 172.16.128.100
+      ansible_ssh_private_key_file: 
+../.vagrant/machines/srv100/virtualbox/private_key
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+22/32
+Connecting to managed hosts
+Try this:
+> ansible -i inventory.yml srv100 -m ping
+> ansible -i inventory.yml srv100 -m setup
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+23/32
+Main playbook
+Let’s try out the example playbook!
+# ansible/site.yml
+---
+- name: Configure srv100
+  hosts: srv100
+  tasks:
+    - name: Ansible demo
+      ansible.builtin.debug:
+        msg: "Hello from host {{ ansible_fqdn 
+}}!"
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+24/32
+Running a playbook
+
+
+
+
+[vagrant@control ansible]$ ansible-playbook -i 
+inventory.yml site.yml 
+PLAY [Configure srv100] 
+************************************************
+TASK [Gathering Facts] 
+************************************************
+ok: [srv100]
+TASK [Ansible demo] 
+************************************************
+ok: [srv100] => {
+    "msg": "Hello from host srv100!"
+}
+PLAY RECAP 
+************************************************
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+25/32
+
+
+|Col1|Col2|Col3||
+|---|---|---|---|
+|||||
+|||||
+||**********************************************|** ||
+Installing a role
+Add a section roles: to site.yml:
+and run the playbook again.
+> ansible-galaxy install bertvv.rh-base
+# site.yml
+---
+- name: Configure srv100
+  hosts: srv100
+  roles:
+    - bertvv.rh-base
+  tasks:
+    # ...
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+26/32
+Play it again, Sam!
+After the first run:
+After the second one:
+Idempotency at work!
+
+
+PLAY RECAP 
+**************************************************
+srv100                     : ok=33   changed=13   
+unreachable=0    failed=0    skipped=19   
+rescued=0    ignored=0   
+
+
+PLAY RECAP 
+**************************************************
+srv100                     : ok=31   changed=0    
+unreachable=0    failed=0    skipped=19   
+rescued=0    ignored=0   
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+27/32
+
+
+||Col2||
+|---|---|---|
+
+
+||Col2||
+|---|---|---|
+Roles: reusable playbooks
+e.g., the rh-base role:
+Galaxy page:
+Github:
+Role behaviour can be changed by setting
+(role) variables. See the README!
+https://galaxy.ansible.com/
+https://galaxy.ansible.com/bertvv/rh-
+base
+https://github.com/bertvv/ansible-role-
+rh-base
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+28/32
+Initialising variables
+In the playbook
+host_vars/srv001.yml
+group_vars/servers.yml
+group_vars/all.yml
+…
+# ansible/group_vars/servers.yml
+---
+rhbase_install_packages:
+  - bind-utils
+  - tree
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+29/32
+That’s enough for now!
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+30/32
+Resources
+Recommended books:
+Geerling, J. (2020) 
+Sesto, V. (2021) 
+Ansible documentation
+Ansible directory layout
+Ansible for Devops
+Practical Ansible
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+31/32
+Time to get started!
+Continue with the lab assignment
+19/04/2025 17:10
+2. Configuration Management with Ansible
+https://hogenttin.github.io/infra-slides/02-config-mgmt.html#/title-slide
+32/32

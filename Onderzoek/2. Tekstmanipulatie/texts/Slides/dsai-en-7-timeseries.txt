@@ -1,0 +1,318 @@
+Module 7. Time series analysis
+Data Science
+Sabine De Vreese
+Lieven Smits
+Pieter Van Der Helst
+Bert Van Vreckem
+2024–2025
+1/39
+Contents
+Time series and predictions
+Time series models
+Mathematical model
+General
+Estimating the parameters
+Moving average
+Simple moving average
+Weighted moving average
+Double exponential smoothing
+Forecasting
+Triple exponential smoothing
+2/39
+Learning goals
+●Concepts, time series models
+●Moving average
+●Exponential smoothing
+Remark
+You should not memorize the formulas in this module, but you should
+understand them!
+3/39
+Time series and predictions
+4/39
+Time series and predictions
+Time series
+A time series is a sequence of observations of some variable over
+time.
+●Monthly demand for milk
+●Annual intake of students at HOGENT
+●Price of a share or bond on the stock exchange (hourly, daily, …)
+●Number of HTTP requests per second for a website
+●Evolution of disk usage on a backup server
+5/39
+Time series and predictions
+May decisions in business operations depend on a forecast of some
+quantity
+●General development of future plans (investments, capacity …)
+●Budget planning to avoid shortcomings (operating budget,
+marketing budget …)
+●Procurement planning (e.g. storage capacity)
+●Support for financial objectives
+●Avoid uncertainty
+6/39
+Time series and predictions
+Time series are a statistical problem: observations vary with time
+Figure: Number of heavily wounded in car accidents in Flanders.
+Time series components
+●Level
+●Trend
+●Seasonal fluctuations
+●Cyclic patterns
+●Random noise (residuals)
+8/39
+Time series decomposition
+9/39
+Time series models
+10/39
+Mathematical model time series
+The simplest model:
+𝑋𝑡= 𝑏+ 𝜀𝑡
+(1)
+●𝑋𝑡: estimate for time series, at time 𝑡
+●𝑏: the level (a constant), based on observations 𝑥𝑡
+●𝜀𝑡: random noise. We assume that 𝜀𝑡∼𝑁𝑜𝑟(𝜇= 0; 𝜎)
+11/39
+Mathematical model time series
+We could also assume that there is a linear relationship:
+𝑋𝑡= 𝑏0 + 𝑏1𝑡+ 𝜀𝑡
+(2)
+with level 𝑏0 and trend 𝑏1.
+Equation 1 and 2 are special cases of the polynomial case:
+𝑋𝑡= 𝑏0 + 𝑏1𝑡+ 𝑏2𝑡2 + ⋯+ 𝑏𝑛𝑡𝑛+ 𝜀𝑡
+(3)
+12/39
+General expression time series
+𝑋𝑡= 𝑓(𝑏0, 𝑏1, 𝑏2, … , 𝑏𝑛, 𝑡) + 𝜀𝑡
+(4)
+We make these assumptions:
+●We consider two components of variability:
+○the mean of the predictions changes with time
+○the variations to this mean vary randomly
+●The residuals of the model (𝑋𝑡−𝑥𝑡) have a constant variance in time
+(homoscedastic)
+13/39
+Estimating the parameters
+Make predictions based on the time series model:
+1. select the most suitable model
+2. estimation for parameters 𝑏𝑖(𝑖∶1, … , 𝑛) based on observations
+The estimations
+̂𝑏𝑖are selected so that they approximate the observed
+values as close as possible.
+14/39
+Example
+Number of heavily wounded in car accidents in Flanders
+15/39
+Example: parameter estimation
+●We select the constant model of Equation 1
+●You choose which observations you use to determine ̂𝑏, e.g.
+○First 70 observations: ̂𝑏=
+1
+70 ∑70
+𝑡=1 𝑥𝑡= 346.4
+○Last 50 observations: ̂𝑏=
+1
+50 ∑96
+𝑡=47 𝑥𝑡= 290.68
+16/39
+Example: parameter estimation
+If we want to model the observations with a linear function
+𝑋𝑡= 𝑏0 + 𝑏1𝑡+ 𝜀𝑡, then we can use linear regression!
+17/39
+Moving average
+18/39
+Moving average
+Moving Average
+The moving average is a series of averages (means) of the last 𝑚
+observations
+●Notation: SMA
+●Hide short-term fluctuations and show long-term trends
+●Parameter 𝑚is the time window
+𝑆𝑀𝐴(𝑡) =
+𝑡
+∑
+𝑖=𝑘
+𝑥𝑖
+𝑚
+(5)
+with 𝑘= 𝑡−𝑚+ 1.
+19/39
+Example
+20/39
+Example: “Golden cross”
+Moving averages are used in the technical analysis of stock prices to
+discover trends:
+Weighted moving average
+●For 𝑆𝑀𝐴, the weights of the observations are equal
+●For a weighted moving average (𝑊𝑀𝐴), more recent observations
+gain relatively more weight
+●A specific form of this is single exponential smoothing or the
+exponential moving average (EMA):
+𝑋𝑡= 𝛼𝑥𝑡−1 + (1 −𝛼)𝑋𝑡−1
+(6)
+with 𝛼the smoothing constant (0 < 𝛼< 1), and 𝑡≥3
+22/39
+Exponential smoothing
+Equation 6 is only valid from 𝑡= 3. Hence, we need to choose a suitable
+value for 𝑋2 ourselves. There are several options:
+●𝑋2 = 𝑥1
+●𝑋2 = 1
+𝑚∑𝑚
+𝑖=1 𝑥𝑖(so the mean of the first 𝑚observations)
+●make 𝑋2 equal to a specific objective
+●…
+23/39
+Exponential Smoothing
+Example of calculation (𝛼= 0.1)
+𝑡
+1
+2
+3
+4
+…
+𝑥𝑡
+8
+10
+11
+13
+…
+𝑋𝑡
+—
+8
+8.2
+8.68
+…
+𝑋1
+=
+undefined
+𝑋2
+=
+𝑥1
+𝑋3
+=
+0.1 × 10 + 0.9 × 8 = 8.2
+𝑋4
+=
+0.1 × 13 + 0.9 × 8.2 = 8.68
+24/39
+Why “exponential”?
+𝑋𝑡= 𝛼𝑥𝑡−1 + (1 −𝛼)𝑋𝑡−1
+= 𝛼𝑥𝑡−1 + (1 −𝛼) [𝛼𝑥𝑡−2 + (1 −𝛼)𝑋𝑡−2]
+= 𝛼𝑥𝑡−1 + 𝛼(1 −𝛼)𝑥𝑡−2 + (1 −𝛼)2𝑋𝑡−2
+or in general:
+= 𝛼
+𝑡−2
+∑
+𝑖=1
+(1 −𝛼)𝑖−1𝑥𝑡−𝑖+ (1 −𝛼)𝑡−𝑖𝑋𝑡−𝑖, 𝑡≥2
+In other words: older observations have an exponentially
+smaller weight.
+25/39
+Exponential smoothing
+𝛼
+(1 −𝛼)
+(1 −𝛼)2
+(1 −𝛼)3
+(1 −𝛼)4
+0.9
+0.1
+0.01
+0.001
+0.0001
+0.5
+0.5
+0.25
+0.125
+0.062
+0.1
+0.9
+0.81
+0.729
+0.6561
+Table: Values for 𝛼and (1 −𝛼)𝑛
+The speed at which the old observations are “forgotten” depends on the
+value of 𝛼. For a value of 𝛼close to 1, old observations are quickly
+forgotten, whereas for 𝛼close to 0, this goes less fast.
+26/39
+Example
+Figure: Single exponential smoothing with 𝛼= 0.1, 0.5
+27/39
+Forecasting
+As a forecast for time 𝑡+ 𝑚(𝑚time units in the “future”), we always take
+the last estimate of the level:
+𝐹(𝑡+ 𝑚) = 𝑋𝑡
+28/39
+Double exponential smoothing
+Basic exponential smoothing does not work well if there is a trend in the
+data
+Figure: Exponential smoothing with a trend: the errors keep getting bigger
+Double exponential smoothing
+We add an additional term to model the trend. We use 𝑏𝑡for the
+estimation of the trend at time 𝑡> 1:
+𝑋𝑡= 𝛼𝑥𝑡+ (1 −𝛼)(𝑋𝑡−1 + 𝑏𝑡−1)
+𝑏𝑡= 𝛽(𝑋𝑡−𝑋𝑡−1) + (1 −𝛽)𝑏𝑡−1
+with 0 < 𝛼< 1 and 0 < 𝛽< 1
+●𝑏𝑡is an estimate for the slope of the trend line
+●Added to the first equation to ensure that the trend is followed
+●𝑋𝑡−𝑋𝑡−1 is positive or negative, this corresponds to an
+increasing/decreasing trend
+30/39
+Double exponential smoothing
+Again, there are different options for selecting the initial values:
+𝑋1 = 𝑥1
+𝑏1 = 𝑥2 −𝑥1
+𝑏1 = 1
+3 [(𝑥2 −𝑥1) + (𝑥1 −𝑥2) + (𝑥4 −𝑥3)]
+𝑏1 =
+𝑥𝑛−𝑥1
+𝑛−1
+31/39
+Predicting (forecasting)
+To make a prediction (forecast) 𝐹(𝑡+ 1) for time 𝑡+ 1 we use:
+𝐹(𝑡+ 1) = 𝑋𝑡+ 𝑏𝑡
+or in general for time 𝑡+ 𝑚:
+𝐹(𝑡+ 𝑚) = 𝑋𝑡+ 𝑚𝑏𝑡
+32/39
+Example
+Comparison of Single/Double Exponential Smoothing forecasts
+33/39
+Triple exponential smoothing
+Some time series have recurring (seasonal) patterns, e.g.
+34/39
+Triple exponential smoothing
+Or Holt-Winter’s Method
+Notation:
+●𝐿: length of the seasonal cycle (number of time units)
+●𝑐𝑡: term that models the seasonal variations
+●𝛾(gamma): smoothing factor for the seasonal variation
+𝑋𝑡= 𝛼
+𝑥𝑡
+𝑐𝑡−𝐿
++ (1 −𝛼)(𝑋𝑡−1 + 𝑏𝑡−1)
+Smoothing
+𝑏𝑡= 𝛽(𝑋𝑡−𝑋𝑡−1) + (1 −𝛽)𝑏𝑡−1
+Trend smoothing
+𝑐𝑡= 𝛾
+𝑥𝑡
+𝑋𝑡
++ (1 −𝛾)𝑐𝑡−𝐿
+Seasonal smoothing
+35/39
+Triple exponential smoothing
+Prediction at time 𝑡+ 𝑚:
+𝐹𝑡+𝑚= (𝑋𝑡+ 𝑚𝑏𝑡)𝑐𝑡−𝐿+𝑚
+36/39
+Example
+37/39
+Quality of a time series model
+38/39
+Quality of a time series model
+Compare forecast results with actual observations, when they become
+available:
+●Mean absolute error: 𝑀𝐴𝐸= 1
+𝑚∑𝑡+𝑚
+𝑖=𝑡+1 |𝑥𝑖−𝐹𝑖|
+●Mean squared error 𝑀𝑆𝐸= 1
+𝑚∑𝑡+𝑚
+𝑖=𝑡+1(𝑥𝑖−𝐹𝑖)2
+If square root of MSE is well below standard deviation over all
+observations, you have a good model!
+39/39
