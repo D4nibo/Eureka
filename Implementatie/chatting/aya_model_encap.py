@@ -28,6 +28,7 @@ class AyaModelEncap():
             '<|END_OF_TURN_TOKEN|>'
         )
 
+        
         prompt = (
             '<|BOS_TOKEN|>\n'
             f'{system_directives}'
@@ -35,10 +36,12 @@ class AyaModelEncap():
             '<|START_OF_TURN_TOKEN|><|CHATBOT_TOKEN|>'
         )
 
+        print(prompt)
+        
         return self.__chat_model.invoke(prompt)
     
     def __load_chat_model(self):
         path = hf_hub_download(repo_id = self.__huggingface_repo_id, filename = self.__hugging_face_filename)
-        self.__chat_model = GPT4All(model=path, device = 'cpu', n_threads = 10)
+        self.__chat_model = GPT4All(model=path, device = 'cpu', n_threads = 10, allow_download = False, verbose=True)
 
     

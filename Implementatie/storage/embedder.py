@@ -7,11 +7,10 @@ class Embedder:
     __datastore = None
     __DB_PATH = './storage/db'
 
-    def __init__(self):
-        self.__init_datastore()
+    def __init__(self, collection):
+        self.__init_datastore(collection)
         
     def embed(self, chunks, course, filename):
-        print(chunks)
         for c in chunks:
             c.metadata['course'] = course 
             c.metadata['filename'] = filename
@@ -22,14 +21,14 @@ class Embedder:
     def query(self, question, course):
         return self.__datastore.similarity_search_with_score(
             question, 
-            k = 3,
+            k = 2,
             filter = {'course': course}
         )
 
-    def __init_datastore(self):
+    def __init_datastore(self, collection):
         self.__embedding_model = HuggingFaceEmbeddings(model_name='BAAI/bge-m3')
         self.__datastore = Chroma(
-            collection_name='vakken',
+            collection_name=collection,
             persist_directory = self.__DB_PATH,
             embedding_function=self.__embedding_model
         )
