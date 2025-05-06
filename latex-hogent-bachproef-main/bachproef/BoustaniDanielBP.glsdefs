@@ -147,8 +147,8 @@ first={Aanbevelingssysteem},%
 firstplural={Aanbevelingssysteems},%
 text={Aanbevelingssysteem},%
 plural={Aanbevelingssysteems},%
-description={Een algoritme/software die bepaalde items aan gebruikers zal aanbevelen op basis van hun voorkeuren en gedrag. Dergelijke systemen zorgen voor een gepersonaliseerde ervaringen.},%
-descriptionplural={Een algoritme/software die bepaalde items aan gebruikers zal aanbevelen op basis van hun voorkeuren en gedrag. Dergelijke systemen zorgen voor een gepersonaliseerde ervaringen.},%
+description={Een algoritme/software die bepaalde items aan gebruikers zal aanbevelen op basis van hun voorkeuren en gedrag. Dergelijke systemen zorgen voor een gepersonaliseerde ervaringen},%
+descriptionplural={Een algoritme/software die bepaalde items aan gebruikers zal aanbevelen op basis van hun voorkeuren en gedrag. Dergelijke systemen zorgen voor een gepersonaliseerde ervaringen},%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -166,17 +166,17 @@ parent={},%
 %
 }%
 
-\glsdefs@newdocentry{ChatGPT}%
+\glsdefs@newdocentry{GPT-modellen}%
 {%
-name={ChatGPT},%
-sort={ChatGPT},%
+name={GPT-modellen},%
+sort={GPT-modellen},%
 type={main},%
-first={ChatGPT},%
-firstplural={ChatGPTs},%
-text={ChatGPT},%
-plural={ChatGPTs},%
-description={Een model ontwikkeld door het bedrijf OpenAI dat in staat is om mensachtige interacties te voeren. Met andere woorden, het kan tekst begrijpen en genereren. Dit model kreeg wereldwijd aandacht eind 2022.},%
-descriptionplural={Een model ontwikkeld door het bedrijf OpenAI dat in staat is om mensachtige interacties te voeren. Met andere woorden, het kan tekst begrijpen en genereren. Dit model kreeg wereldwijd aandacht eind 2022.},%
+first={GPT-modellen},%
+firstplural={GPT-modellens},%
+text={GPT-modellen},%
+plural={GPT-modellens},%
+description={Reeks van taalmodellen ontwikkeld door het bedrijf OpenAI dat in staat zijn om mensachtige interacties te voeren. Met andere woorden, het kan tekst begrijpen en genereren. Deze modellen kregen wereldwijd aandacht eind 2022 dankzij GPT-3.5},%
+descriptionplural={Reeks van taalmodellen ontwikkeld door het bedrijf OpenAI dat in staat zijn om mensachtige interacties te voeren. Met andere woorden, het kan tekst begrijpen en genereren. Deze modellen kregen wereldwijd aandacht eind 2022 dankzij GPT-3.5},%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -203,8 +203,8 @@ first={Gelabelde data},%
 firstplural={Gelabelde datas},%
 text={Gelabelde data},%
 plural={Gelabelde datas},%
-description={Trainingsdata waarbij elk gegeven voorzien is van een bijbehorende annotatie. Dit annotatie helpt een model patronen te herkennen en correcte voorspellingen te maken. Voorbeeld: indien we een model willen trainen om katten op foto's te herkennen, worden afbeeldingen van katten gelabeld als "kat". Hierdoor leert het model onderscheid te maken tussen katten en andere objecten.},%
-descriptionplural={Trainingsdata waarbij elk gegeven voorzien is van een bijbehorende annotatie. Dit annotatie helpt een model patronen te herkennen en correcte voorspellingen te maken. Voorbeeld: indien we een model willen trainen om katten op foto's te herkennen, worden afbeeldingen van katten gelabeld als "kat". Hierdoor leert het model onderscheid te maken tussen katten en andere objecten.},%
+description={Trainingsdata waarbij elk gegeven voorzien is van een bijbehorende annotatie. Dit annotatie helpt een model patronen te herkennen en correcte voorspellingen te maken. Voorbeeld: indien we een model willen trainen om katten op foto's te herkennen, worden afbeeldingen van katten gelabeld als ``kat''. Hierdoor leert het model onderscheid te maken tussen katten en andere objecten},%
+descriptionplural={Trainingsdata waarbij elk gegeven voorzien is van een bijbehorende annotatie. Dit annotatie helpt een model patronen te herkennen en correcte voorspellingen te maken. Voorbeeld: indien we een model willen trainen om katten op foto's te herkennen, worden afbeeldingen van katten gelabeld als ``kat''. Hierdoor leert het model onderscheid te maken tussen katten en andere objecten},%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%

@@ -46,6 +46,11 @@
 }
 
 % Other packages not already included can be imported here
+\usepackage{booktabs}
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ul}{}
+\usepackage{rotating}  
+\usepackage{array}          
 \usepackage[toc,acronym]{glossaries}
 \makeglossaries{}
 
@@ -134,10 +139,10 @@
     description={Een algoritme/software die bepaalde items aan gebruikers zal aanbevelen op basis van hun voorkeuren en gedrag. Dergelijke systemen zorgen voor een gepersonaliseerde ervaringen}
 }
 
-\newglossaryentry{ChatGPT}
+\newglossaryentry{GPT-modellen}
 {
-    name=ChatGPT,
-    description={Een model ontwikkeld door het bedrijf OpenAI dat in staat is om mensachtige interacties te voeren. Met andere woorden, het kan tekst begrijpen en genereren. Dit model kreeg wereldwijd aandacht eind 2022}
+    name=GPT-modellen,
+    description={Reeks van taalmodellen ontwikkeld door het bedrijf OpenAI dat in staat zijn om mensachtige interacties te voeren. Met andere woorden, het kan tekst begrijpen en genereren. Deze modellen kregen wereldwijd aandacht eind 2022 dankzij GPT-3.5}
 }
 
 \newglossaryentry{label}
@@ -170,7 +175,7 @@
 %\input{...}
 %\input{...}
 %...
-
+\input{proof-of-concept}
 \input{conclusie}
 
 %---------- Bijlagen -----------------------------------------------------------

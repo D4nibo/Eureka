@@ -1,25 +1,6 @@
 \chapter{\IfLanguageName{dutch}{Literatuurstudie}{Literature review}}%
 \label{ch:literatuurstudie}
 
-\section{\IfLanguageName{dutch}{Stand van zaken}{State of the art}}%
-\label{sec:state-of-the-art}
-
-Om informatie te verkrijgen, onderscheiden veel studenten twee belangrijke informatiebronnen: bronnen afkomstig van de hogeschool en informatie uitgewisseld door studenten zelf.
-
-Vanuit de hogeschool worden verschillende informatiebronnen aangeboden waarop studenten en docenten antwoorden kunnen vinden op hun vragen. Ten eerste zijn er de inleidende slides van het vak. Hierin is informatie te vinden over eventueel aan te schaffen materialen, mogelijke softwarevereisten, deadlines en de organisatie van het vak. Naast de inleidende slides zijn er de gewone slides, die de vakinhoud bevatten. Verder zijn er de studiefiches, waarin algemene informatie staat zoals de studielast, de leerresultaten en de evaluatievorm. Bij sommige vakken worden ook aanvullende bestanden verstrekt die studenten begeleiden bij bepaalde onderwerpen en vaak voorkomende problemen of vragen behandelen. Tot slot is bij sommige vakken ook een forum beschikbaar. Dit forum dient als centrale plaats om vragen te stellen, waarbij de antwoorden zichtbaar zijn voor alle studenten.
-
-Daarnaast maken veel mensen gebruik van sociale media om informatie over specifieke onderwerpen uit te wisselen, en studenten vormen hierop geen uitzondering. Sociale media wordt ingezet om met andere studenten over de vakinhoud te communiceren en zo nieuwe kennis op te doen. Deze veronderstelling is ook bevestigd in andere onderzoeken. \textcite{M.Talaue2018} en \textcite{Bal2017} interviewden verschillende studenten over hun gebruik van sociale media, waaruit blijkt dat een groot deel van hen sociale media gebruikt om vakken hun inhoud te bespreken. Aan de HOGENT is dit eveneens het geval. Naast hun persoonlijke profielen op andere media, komen studenten samen op een \emph{Discord}-server. Deze server is onderverdeeld in verschillende kanalen, waarbij elk kanaal een specifiek vak vertegenwoordigt. Studenten bespreken in deze kanalen alles wat met het desbetreffende vak te maken heeft en stellen er hun vragen. Aangezien deze server door studenten wordt beheerd en docenten er geen toegang toe hebben, omdat het \emph{geen officieel kanaal van HOGENT} is, bestaat het risico dat er foutieve informatie wordt uitgewisseld. Een voorbeeld van een dergelijk scenario is te zien in Figuur~\ref{fig:misinformatie_discord}. Hier vindt een uitwisseling plaats tussen twee studenten over het vak \emph{The IT Professional \& Career Orientation}. De tweede student deelt foutieve informatie met de eerste, zoals blijkt uit de aankondiging op Chamilo, die wél de juiste informatie bevat.
-
-\begin{figure}
-  \centering
-  \includegraphics[width=0.9\textwidth]{misinformatie_discord.png}
-  \caption[Misinformatie op Discord-server]{\label{fig:misinformatie_discord}Vraag dat gesteld werd op de Discord-server en die een foutieve antwoord kreeg van een medestudent. De correcte informatie werd gecommuniceerd in een aankondiging op Chamilo.}
-\end{figure}
-
-Zoals blijkt, is informatie verspreid over een verscheidenheid aan media. Informatie vinden kan daarom enige moeite kosten, en de kans op onduidelijkheden of tegenstrijdige informatie is aanzienlijk. In het geval van problemen is het laatste redmiddel voor studenten om contact op te nemen met de docent. De positie van docenten stelt hen in staat om onduidelijkheden te verhelderen, maar zij hebben hier niet altijd de tijd voor, waardoor studenten mogelijk hun antwoord niet op tijd ontvangen. Bovendien kan het herhaaldelijk beantwoorden van dezelfde vragen frustrerend zijn.
-
-We concluderen daarom dat er behoefte is aan een middel dat het zoekproces intuïtiever maakt en de belasting voor alle betrokken partijen verlicht. De ideale tool is volgens ons altijd beschikbaar, zodat vragen te allen tijde beantwoord kunnen worden en studenten continu begeleiding kunnen krijgen. Daarnaast moet de tool een interactieve ervaring bieden, waardoor studenten op een dynamische en natuurlijke manier hun vragen kunnen stellen. Wij denken dat een chatbot in de vorm van een virtuele assistent hiervoor een geschikte oplossing vormt, en we zullen dit verder onderzoeken.
-
 \section{\IfLanguageName{dutch}{Evolutie van chatbots}{Evolution of chatbots}}%
 \label{sec:evolutie-chatbots}
 
@@ -31,21 +12,22 @@ Dankzij de toenemende rekenkracht van de afgelopen jaren en de groeiende interes
 
 \begin{itemize} 
     \item Tijdens een experiment werden werknemers van een consultancybedrijf gevraagd om een \acrshort{LLM} te gebruiken bij het oplossen van een reeks opdrachten die vergelijkbaar zijn met hun werkzaamheden in het werkveld. De samenwerking met de LLM leidde tot een hogere productiviteit en een verbeterde kwaliteit van het werk \autocite{Dell’Acqua2023}.
-    \item \emph{PharmaLLM} is een chatbot die in staat is om gezondheidsgerelateerde vragen van gebruikers te beantwoorden. Het kan vragen over medicijnen beantwoorden en aanwijzingen geven aan gebruikers \autocite{Azam2024}.
-    \item \emph{Jill Watson} is een virtuele assistent die vakgerelateerde vragen van studenten aan het Georgia Institute of Technology (Verenigde Staten) kan beantwoorden. Deze chatbot maakt gebruik van \gls{ChatGPT} als achterliggende \acrshort{LLM} \autocite{Taneja2024}.
+    \item \emph{PharmaLLM} is een chatbot die in staat is om gezondheidsgerelateerde vragen van gebruikers te beantwoorden. Het kan vragen over medicijnen beantwoorden en aanwijzingen geven aan gebruikers. Hoewel het systeem niet perfect is, illustreert PharmaLLM hoe grote taalmodellen een positieve meerwaarde kunnen bieden binnen een complex domein zoals de geneeskunde. 
+    \item \emph{Jill Watson} is een virtuele assistent die vakgerelateerde vragen van studenten aan het Georgia Institute of Technology (Verenigde Staten) kan beantwoorden. Deze chatbot maakt gebruik van \gls{ChatGPT} als achterliggende \acrshort{LLM} \autocite{Taneja2024}. Studenten die gebruikmaakten van Jill Watson, merkten een positieve impact op hun punten \autocite{DIL}.
 \end{itemize}
 
-Aangezien we een tool willen creëren die in lijn is met de nieuwste technologische ontwikkelingen en eerdere onderzoeken/experimenten de effectiviteit van dergelijke chatbots hebben aangetoond, zal Eureka ook gebaseerd zijn op een \acrshort{LLM}. We bespreken dit verder.
+
+Zoals blijkt uit eerdere onderzoeken en experimenten, hebben deze nieuwe generatie chatbots hun effectiviteit reeds aangetoond. De resultaten van \textcite{Taneja2024}, afkomstig uit een gelijkaardige context als de onze (onderwijs), versterken ons vertrouwen in de toepasbaarheid van \acrshort{LLM}'s op ons probleem. Om die redenen zal ook Eureka gebaseerd zijn op een \acrshort{LLM}. Dit lichten we verder toe in wat volgt.
 
 \section{\IfLanguageName{dutch}{Van taalbegrip tot generatie: Natural Language Processing, Large Language Models en de GPT-Revolutie}{From language understanding to generation: Natural Language Processing, Large Language Models and the GPT-Revolution}}%
 \label{sec:nlp-llms}
 
-Sinds eind 2022 heeft vrijwel iedereen minstens één keer gehoord van \emph{\gls{ChatGPT}}. Een analyse van de populariteit van deze term via \emph{Google Trends} laat zien dat de interesse in \gls{ChatGPT} voortdurend toeneemt (zie figuur~\ref{fig:chatgpt_google_trends}).
+Sinds eind 2022 heeft vrijwel iedereen minstens één keer gehoord van \emph{ChatGPT}. Een analyse van de populariteit van deze term via \emph{Google Trends} laat zien dat de interesse in ChatGPT voortdurend toeneemt (zie figuur~\ref{fig:chatgpt_google_trends}).
 
 \begin{figure}
     \centering
     \includegraphics[width=0.9\textwidth]{chatgpt_google_trends.png}
-    \caption[Populariteit van de zoekterm ``chatGPT'']{\label{fig:chatgpt_google_trends}Populatireit van de zoekterm ``chatGPT'' op Goole Trends. De interesse blijft maar stijgen naargelang de tijd vordert.}
+    \caption[Populariteit van de zoekterm ``chatGPT'']{\label{fig:chatgpt_google_trends}Populariteit van de zoekterm ``chatGPT'' op Google Trends. De interesse blijft maar stijgen naargelang de tijd vordert. Link: \url{https://trends.google.com/trends/explore?date=2022-11-27\%202025-05-01\&q=ChatGPT\&hl=en-GB}}
 \end{figure}
 
 Deze doorbraak in \acrlong{AI} heeft \acrfull{LLM} en, in bredere zin, \acrfull{NLP} in de schijnwerpers gezet. \acrshort{NLP} kan worden gedefinieerd als ``de tak van \acrlong{AI} die computers helpt menselijke taal te begrijpen, interpreteren en manipuleren'' \autocite{Zohuri2022}. Het omvat een reeks technieken die het mogelijk maken voor computers om op een natuurlijke manier te communiceren met mensen. \acrshort{LLM}'s daarentegen zijn intelligente systemen die, door gebruik te maken van \acrshort{NLP}-technieken, in staat zijn om tekst te verwerken en te genereren met samenhangende communicatie. 
@@ -56,7 +38,7 @@ In 2018 publiceerde het bedrijf OpenAI het paper \emph{Improving Language Unders
 
 \textcite{Radford2018} realiseerden zich het grote potentieel van het benutten van ongelabelde data om de bovengenoemde tekortkomingen aan te pakken, wetende dat de omvang van ongelabelde data groter is dan die van gelabelde data. Ze boden hiervoor een oplossing die gebruikmaakte van unsupervised pre-training op de niet-gelabelde data en supervised fine-tuning op de gelabelde data. Deze techniek noemden ze \emph{\textbf{G}enerative \textbf{P}re-\textbf{T}raining}.
 
-Deze paper zette de nieuwe norm voor de volgende generaties \acrshort{LLM}'s en startte de GPT-revolutie.
+Dit paper zette de nieuwe norm voor de volgende generaties \acrshort{LLM}'s en startte de GPT-revolutie.
  
 Zodat de lezer een idee kan krijgen van wat er allemaal verbogen staat achter moderne \acrshort{LLM}'s, geven we hier een bondig samenvatting dat gebaseerd is op \textcite{Naveed2023}.
 
@@ -75,17 +57,19 @@ De training van moderne \acrshort{LLM}'s gebeurt in drie fases \autocite{Bach202
     \item \textbf{Reinforcement learning} (is een nieuwe innovatie sinds \textcite{Radford2018}): In deze stap worden de gewenste gedragen aan het model aangeleerd. Dit gebeurt door gewenst gedrag te belonen en ongewenst gedrag te bestraffen.
 \end{enumerate}
 
-De indrukwekkende prestaties van \acrshort{LLM}'s in een reeks van taken \autocite{Naveed2023} zijn te danken aan de hedendaagse rekenkracht, de enorme hoeveelheid beschikbare data (voortgebracht door sociale media en het \emph{Internet of Things}), en de groeiende interesse in dit domein \autocite{Zohuri2022, Naveed2023}. Hierdoor zijn \acrshort{LLM}'s uitermate geschikt als basis voor de ontwikkeling van Eureka. 
+De indrukwekkende prestaties van \acrshort{LLM}'s in een reeks van taken \autocite{Naveed2023} zijn te danken aan de hedendaagse rekenkracht, de enorme hoeveelheid beschikbare data (voortgebracht door sociale media en het \emph{Internet of Things}), en de groeiende interesse in dit domein \autocite{Zohuri2022, Naveed2023}.
 
 \section{\IfLanguageName{dutch}{Ontwerp}{Design}}%
 \label{sec:ontwerp}
 
+Bij het integreren van een \acrshort{LLM} in een toepassing komt heel wat kijken. Bovendien vormen \acrshort{LLM}'s een complex onderwerp. Dit impliceert dat we niet zomaar een \acrshort{LLM} kunnen ontwikkelen of inzetten zonder eerst het ontwerp van een dergelijk systeem grondig te analyseren. Elk aspect moet zorgvuldig overwogen en verantwoord worden. In dit onderdeel bekijken we de literatuur van naderbij met betrekking tot de meest voor de hand liggende opties om onze oplossing te realiseren.
+
 \subsection{\IfLanguageName{dutch}{Specialiseren van LLM's}{Specializing LLM's}}%
 \label{subsec:specialiseren_llm}
 
-In 2021 definieerden \textcite{Bommasani2021} het concept van een \emph{foundation model} als ``eender welk model dat is getraind op brede datasets (meestal met grootschalige self-supervision) en dat kan worden aangepast (bijvoorbeeld via fine-tuning) voor een breed scala aan taken''. Met andere woorden, een foundation model is een \acrshort{LLM} dat op een enorme hoeveelheid data is getraind en zo klaargeleverd wordt voor gebruik. Foundationmodellen worden dus kant-en-klaar geleverd met de kennis die ze tijdens hun training hebben verworven.
+In 2021 definieerden \textcite{Bommasani2021} het concept van een \emph{foundation model} als ``eender welk model dat is getraind op brede datasets (meestal met grootschalige self-supervision) en dat kan worden aangepast (bijvoorbeeld via fine-tuning) voor een breed scala aan taken''. Met andere woorden, een foundation model is een \acrshort{LLM} dat op een enorme hoeveelheid data is getraind en zo klaargeleverd wordt voor gebruik. Foundation models worden dus kant-en-klaar geleverd met de kennis die ze tijdens hun training hebben verworven.
 
-Gebaseerd op bovenstaande definitie is iedere \acrshort{LLM} die vandaag publiek beschikbaar is, een foundation model. Het probleem hierbij is dat wij een chatbot willen ontwikkelen, gebaseerd op een foundation model, die vragen over vakken \emph{gegeven aan HOGENT} kan beantwoorden. Dit betekent dat onze model extra gespecialiseerde kennis moet bezitten bovenop de reeds verworven kennis tijdens de training.
+Gebaseerd op bovenstaande definitie is iedere \acrshort{LLM} die vandaag publiek beschikbaar is, een foundation model. Het probleem hierbij is dat wij een chatbot willen ontwikkelen, gebaseerd op een foundation model, die vragen over vakken \emph{gegeven aan HOGENT} kan beantwoorden. Dit betekent dat onze model extra gespecialiseerde kennis moet bezitten bovenop de reeds verworven kennis tijdens training.
 
 Om een foundation model te specialiseren, zijn er drie benaderingen mogelijk: werken met het volledige foundation model, een deel van een bestaand model fine-tunen, of de kennis van het model uitbreiden met behulp van \emph{context-injectie}.
 
@@ -122,15 +106,17 @@ De laatste benadering is de meest veelbelovende met betrekking tot onze onderzoe
 \subsection{Retrieval-augmented-generation}%
 \label{subsec:rag}
 
-In 2020 maakten \textcite{Lewis2020} de volgende vaststelling: LLM's zijn zeer geschikt om diepe inzichten te verkrijgen uit de data waarop ze getraind zijn. Hierdoor hebben ze geen externe \emph{knowledge bases} nodig om vragen te beantwoorden; hun vergaarde kennis fungeert als een impliciete knowledge base. Echter brengt dit enkele uitdagingen met zich mee. Ten eerste is het moeilijk om bestaande kennis te actualiseren zonder het leerproces volledig opnieuw te starten. Dit vormt een tijdrovend proces wanneer frequente updates noodzakelijk zijn. Daarnaast hebben LLM's moeite om vragen te beantwoorden over gebeurtenissen die zich hebben voorgedaan na hun laatste trainingssessie, aangezien ze deze kennis niet bezitten. Dit kan leiden tot hallucinaties \autocite{Gao2023}.
+Zoals vermeld in~\ref{sec:evolutie-chatbots}, waren de eerste chatbots voornamelijk pattern-matching-algoritmen die vooraf gedefinieerde regels toepasten op hun invoer. Deze regels werden opgeslagen in daarvoor geschikte opslagstructuren. In het vakjargon wordt de plaats waar de kennis van een intelligente agent zich bevindt een \emph{knowledge base} genoemd. Grosso modo bestonden de vroegere chatbots uit een knowledge base en een pattern-matching-algoritme.
 
-Om deze beperkingen aan te pakken, introduceerden de auteurs een nieuwe techniek genaamd Retrieval-Augmented Generation (RAG). Bij deze techniek wordt een vraag beantwoord door aanvullende kennis op te halen uit externe bronnen en deze te gebruiken om een antwoord te genereren. Zoals \textcite{Lewis2020} het omschrijven: ``De invoersequentie $x$ wordt gebruikt om tekstdocumenten $z$ op te halen, die vervolgens dienen als aanvullende context bij het genereren van de doelsequentie $y$''.
+De evolutie van chatbots naar \acrshort{LLM}'s bracht verandering aan de bestaande architectuur. In 2020 maakten \textcite{Lewis2020} de volgende vaststelling: LLM's zijn zeer geschikt om diepe inzichten te verkrijgen uit de data waarop ze getraind zijn. Hierdoor hebben ze geen externe \emph{knowledge bases} nodig om vragen te beantwoorden; hun vergaarde kennis fungeert als een impliciete knowledge base. Echter brengt dit enkele uitdagingen met zich mee. Ten eerste is het moeilijk om bestaande kennis te actualiseren zonder het leerproces volledig opnieuw te starten. Dit vormt een tijdrovend proces wanneer frequente updates noodzakelijk zijn. Daarnaast hebben LLM's moeite om vragen te beantwoorden over gebeurtenissen die zich hebben voorgedaan na hun laatste trainingssessie, aangezien ze deze kennis niet bezitten. Dit kan leiden tot hallucinaties \autocite{Gao2023}.
+
+Om deze beperkingen aan te pakken, stelden de auteurs een nieuwe techniek die knowledge bases terug introduceerden, maar zonder de voordelen van \acrshort{LLM}'s teniet te doen. Deze techniek noemden ze \emph{Retrieval-Augmented-generation} (RAG). Bij RAG wordt een vraag beantwoord door aanvullende kennis op te halen uit externe bronnen en deze te gebruiken om een antwoord te genereren. Zoals \textcite{Lewis2020} het omschrijven: ``De invoersequentie $x$ wordt gebruikt om tekstdocumenten $z$ op te halen, die vervolgens dienen als aanvullende context bij het genereren van de doelsequentie $y$''.
 
 Alle RAG-systemen bestaan uit drie belangrijke stappen \autocite{Gao2023}:  
 
 \begin{enumerate} 
-    \item \textbf{Indexing}: Hier wordt ruwe data uit verschillende formaten (bijvoorbeeld PDF, HTML, DOCX) opgehaald. Vervolgens wordt deze data geconverteerd naar tekst en opgeschoond. Belangrijk hierbij is dat de tekst wordt opgedeeld in brokken. De reden hiervoor is dat het contextvenster van LLM's een beperkte grootte heeft, waardoor het beter is om alleen de relevante brok door te geven in plaats van het gehele document, waarbij het risico bestaat dat niet alles past. Bovendien is uit onderzoek gebleken dat LLM's meer aandacht besteden aan het begin en einde van het contextvenster en minder aan het midden. Dit fenomeen staat bekend als het \emph{lost in the middle}-fenomeen \autocite{Databricks}. Daarom is het beter om kleinere contexten door te geven dan grote, zodat de aandacht van de LLM behouden blijft. Uiteindelijk, worden de brokken opgeslaan in een databank; de ruwe data wordt zo geïndexeerd. 
-    \item \textbf{Retrieval}: In deze fase wordt de gebruikersinvoer omgezet naar hetzelfde indexformaat als in de vorige stap. Zodra de invoer in hetzelfde formaat is, kunnen we de relevante brokken ophalen waarmee we het contextvenster verrijken.   
+    \item \textbf{Indexing}: Hier wordt ruwe data uit verschillende formaten (bijvoorbeeld PDF, HTML, DOCX) opgehaald. Vervolgens wordt deze data geconverteerd naar tekst en opgeschoond. Belangrijk hierbij is dat de tekst wordt opgedeeld in \emph{chunks} (= brokken). De reden hiervoor is dat het contextvenster van LLM's een beperkte grootte heeft, waardoor het beter is om alleen de relevante chunk door te geven in plaats van het gehele document, waarbij het risico bestaat dat niet alles past. Bovendien is uit onderzoek gebleken dat LLM's meer aandacht besteden aan het begin en einde van het contextvenster en minder aan het midden. Dit fenomeen staat bekend als het \emph{lost in the middle}-fenomeen \autocite{Databricks}. Daarom is het beter om kleinere contexten door te geven dan grote, zodat de aandacht van de LLM behouden blijft. Uiteindelijk, worden de chunks opgeslaan in een databank; de ruwe data wordt zo geïndexeerd. 
+    \item \textbf{Retrieval}: In deze fase wordt de gebruikersinvoer omgezet naar hetzelfde indexformaat als in de vorige stap. Zodra de invoer in hetzelfde formaat is, kunnen we de relevante chunks ophalen waarmee we het contextvenster verrijken.   
     \item \textbf{Generation}: Tot slot wordt het finale antwoord gegenereerd. Merk op dat de \acrshort{LLM} voornamelijk wordt gebruikt voor haar taalcapaciteiten bij het formuleren van het antwoord. Het grootste deel van het werk wordt echter uitgevoerd in de twee voorgaande fases.
 \end{enumerate}
 
@@ -143,47 +129,47 @@ De indexing stap kan onderverdeelt worden in drie fases.
 
 De eerste fase bestaat uit het ophalen van ruwe data uit bestanden van verschillende formaten, zoals PDF, HTML of DOCX. Dit betekent dat alle overbodige metadata die bij deze formaten horen, worden verwijderd, zodat alleen de ruwe tekst overblijft. Daarnaast kan worden bepaald in hoeverre de tekst ruw moet zijn. Er kunnen extra stappen worden uitgevoerd om de structuur van de lay-out te behouden, bijvoorbeeld door aan te geven waar titels stonden, welke delen tot een tabel behoorden, enz.
 
-De tweede fase bestaat uit het verdelen van de ruwe data in brokken. Zoals eerder aangegeven, is het contextvenster van een \acrshort{LLM} beperkt. Aangezien de prompt die aan de \acrshort{LLM} wordt gevoerd extra context zal bevatten (contextinjectie), mag deze context niet te lang zijn. Anders bestaat het risico dat niet alles in het contextvenster past, waardoor de \acrshort{LLM} niet correct of volledig op vragen kan antwoorden. Daarom is deze fase essentieel en van uitermate groot belang.
+De tweede fase bestaat uit het verdelen van de ruwe data in chunks. Zoals eerder aangegeven, is het contextvenster van een \acrshort{LLM} beperkt. Aangezien de prompt die aan de \acrshort{LLM} wordt gevoerd extra context zal bevatten (contextinjectie), mag deze context niet te lang zijn. Anders bestaat het risico dat niet alles in het contextvenster past, waardoor de \acrshort{LLM} niet correct of volledig op vragen kan antwoorden. Daarom is deze fase essentieel en van uitermate groot belang.
 
-De manier waarop brokken worden aangemaakt, hangt af van de toepassing; er bestaat geen universele techniek om dit correct te doen. Toch bestaan er verschillende technieken, die \textcite{Kshirsagar2024} heeft verzameld en die wij hier zullen opsommen:
+De manier waarop chunks worden aangemaakt, hangt af van de toepassing; er bestaat geen universele techniek om dit correct te doen. Toch bestaan er verschillende technieken, die \textcite{Kshirsagar2024} heeft verzameld en die wij hier zullen opsommen:
 
 \begin{enumerate} 
-    \item \textbf{Vaste lengte brokken}: deze techniek is het eenvoudigste: de documenten worden onderverdeelt in brokken van vaste lengte $n$. Deze techniek is ook het minst vragende sinds er geen aandacht moet besteed worden aan de semantiek. 
+    \item \textbf{Fixed-length chunks}: deze techniek is het eenvoudigste: de documenten worden onderverdeelt in chunks van vaste lengte $n$. Deze techniek is ook het minst vragende sinds er geen aandacht moet besteed worden aan de semantiek. 
     
-    Er wordt aangeraden om vaste lengte brokken te gebruiken wanneer de brok grootte belangrijker is dan de semantiek.
-    \item \textbf{Content-Aware Chunking}: deze familie van technieken zijn complexer dan de vorige techniek. Hier, wordt aandacht besteed aan het behouden van de semantische samenhang binnen iedere brok.
+    Er wordt aangeraden om chunks van vaste lengte te gebruiken wanneer de chunk-grootte belangrijker is dan de semantiek.
+    \item \textbf{Content-Aware Chunking}: deze familie van technieken zijn complexer dan de vorige techniek. Hier, wordt aandacht besteed aan het behouden van de semantische samenhang binnen iedere chunk.
     
         \begin{itemize}
-            \item \textbf{Recursive chunking}: Hier wordt getracht brokken te creëren die niet groter zijn dan $n$. Dit gebeurt door de tekst op te splitsen volgens een voorkeursvolgorde. Er wordt enkel naar het volgende niveau gegaan als de brok nog steeds groter is dan $n$: eerst op paragraafniveau, daarna op zinsniveau, vervolgens op spaties, en uiteindelijk op individuele tekens.
+            \item \textbf{Recursive chunking}: Hier wordt getracht chunks te creëren die niet groter zijn dan $n$. Dit gebeurt door de tekst op te splitsen volgens een voorkeursvolgorde. Er wordt enkel naar het volgende niveau gegaan als de chunk nog steeds groter is dan $n$: eerst op paragraafniveau, daarna op zinsniveau, vervolgens op spaties, en uiteindelijk op individuele tekens.
             
-            De resulterende brokken hebben niet noodzakelijk exact dezelfde grootte, maar hun omvang blijft vergelijkbaar,
-            \item \textbf{Sentence-Aware Chunking}: Bij deze techniek wordt ervoor gezorgd dat er niet midden in een zin wordt gesneden. Een brok bevat dus altijd volledige zinnen. Daarnaast wordt erop gelet dat een brok niet langer wordt dan $n$
+            De resulterende chunks hebben niet noodzakelijk exact dezelfde grootte, maar hun omvang blijft vergelijkbaar,
+            \item \textbf{Sentence-Aware Chunking}: Bij deze techniek wordt ervoor gezorgd dat er niet midden in een zin wordt gesneden. Een chunk bevat dus altijd volledige zinnen. Daarnaast wordt erop gelet dat een chunk niet langer wordt dan $n$
             \item \textbf{Semantic chunking}: Deze techniek is de meest geavanceerde, omdat deze de interventie van een LLM met embedding-capaciteiten vereist. Daarnaast richt deze techniek zich puur op semantiek, in tegenstelling tot de twee voorgaande technieken, die dit slechts indirect proberen te benaderen door zich te baseren op zinssamenhang. 
             
-            Hierbij wordt het document eerst verdeeld in zinnen. Elke zin wordt vervolgens voorgesteld als een vector met behulp van de LLM-embedding. Aan de hand van wiskundige berekeningen (zie~\ref{subsubsec:retrieval}) worden zinnen met dezelfde semantische betekenis gegroepeerd. Deze groepen vormen uiteindelijk de brokken.
+            Hierbij wordt het document eerst verdeeld in zinnen. Elke zin wordt vervolgens voorgesteld als een vector met behulp van de LLM-embedding. Aan de hand van wiskundige berekeningen (zie~\ref{subsubsec:retrieval}) worden zinnen met dezelfde semantische betekenis gegroepeerd. Deze groepen vormen uiteindelijk de chunks.
         \end{itemize}
 \end{enumerate}
 
-Ten slotte, is de laatste fase het indexeren, oftewel het opslaan van de brokken in de databank. De manier waarop dit gebeurt, hangt af van de volgende stap, met andere woorden, van de \emph{retrieval-strategie}. 
+Ten slotte, is de laatste fase het indexeren, oftewel het opslaan van de chunks in de databank. De manier waarop dit gebeurt, hangt af van de volgende stap, met andere woorden, van de \emph{retrieval-strategie}. 
 
 \subsubsection{Retrieval}%
 \label{subsubsec:retrieval}
-In deze stap wordt de relevante informatie (brokken) uit de databank opgehaald en doorgevoerd naar de \acrshort{LLM}. De manier waarop de brokken worden opgehaald in relatie tot de invoerquery van de gebruiker, hangt af van de onderliggende retrieval-strategie, en dus van de gebruikte databanktechnologie.
+In deze stap wordt de relevante informatie (chunks) uit de databank opgehaald en doorgevoerd naar de \acrshort{LLM}. De manier waarop de chunks worden opgehaald in relatie tot de invoerquery van de gebruiker, hangt af van de onderliggende retrieval-strategie, en dus van de gebruikte databanktechnologie.
 
-De eerste strategie is keyword-search \autocite{Bansal2023}. Hierbij worden brokken opgehaald op basis van exacte keyword matches. Als er bijvoorbeeld gevraagd wordt ``Wanner is het examen van DSAI'', dan wordt er gezocht precies gezocht op de keywords ``examen van DSAI''. Indien er zuiver voor deze strategie wordt gekozen, kan de databank een gewone databank zijn; de brokken worden dus als plain text opgeslaan. De gebruikte algoritme hier is \emph{BM25} \autocite{Bansal2023}.
+De eerste strategie is keyword-search \autocite{Bansal2023}. Hierbij worden chunks opgehaald op basis van exacte keyword matches. Als er bijvoorbeeld gevraagd wordt ``Wanner is het examen van DSAI'', dan wordt er gezocht precies gezocht op de keywords ``examen van DSAI''. Indien er zuiver voor deze strategie wordt gekozen, kan de databank een gewone databank zijn; de chunks worden dus als plain text opgeslaan. De gebruikte algoritme hier is \emph{BM25} \autocite{Bansal2023}.
 
 Deze strategie is bijzonder effectief wanneer er zeer gespecialiseerde woorden of niche-termen worden gebruikt die onwaarschijnlijk voorkomen in de datasets waarmee \acrshort{LLM}'s zijn getraind.
 
-De tweede strategie is Vector Search \autocite{Bansal2023}. Hierbij worden de brokken opgeslagen in een vectorvoorstelling. Om deze vectorvoorstelling te verkrijgen, worden embeddingmodellen gebruikt die zijn getraind om zinnen zo optimaal mogelijk om te zetten in een vector, rekening houdend met de gebruikte taal. Met andere woorden, er zit een bepaalde semantische logica achter de vectoren.
+De tweede strategie is Vector Search \autocite{Bansal2023}. Hierbij worden de chunks opgeslagen in een vectorvoorstelling. Om deze vectorvoorstelling te verkrijgen, worden embeddingmodellen gebruikt die zijn getraind om zinnen zo optimaal mogelijk om te zetten in een vector, rekening houdend met de gebruikte taal. Met andere woorden, er zit een bepaalde semantische logica achter de vectoren.
 
-Brokken worden opgehaald op basis van hun verband met de invoer. Hiervoor wordt de invoer van de gebruiker eerst omgezet naar een vectorvoorstelling, gebruikmakend van hetzelfde embeddingmodel als bij het indexeren van de brokken. Vervolgens wordt de inputvector vergeleken met de geïndexeerde brokken aan de hand van een afstandsmetric. Deze metric is meestal de cosinusgelijkenis. De brokken die worden opgehaald, zijn die waarvan de afstand het kleinst is ten opzichte van de inputvector.
+chunks worden opgehaald op basis van hun verband met de invoer. Hiervoor wordt de invoer van de gebruiker eerst omgezet naar een vectorvoorstelling, gebruikmakend van hetzelfde embeddingmodel als bij het indexeren van de chunks. Vervolgens wordt de inputvector vergeleken met de geïndexeerde chunks aan de hand van een afstandsmetric. Deze metric is meestal de cosinusgelijkenis. De chunks die worden opgehaald, zijn die waarvan de afstand het kleinst is ten opzichte van de inputvector.
 
-Figuur~\ref{fig:vector_search} toont een vereenvoudigde illustratie van vector search in het cartesisch coördinatenstelsel. Hierbij zien we de ge-embedde invoer van de gebruiker, voorgesteld als een cirkel. Daarnaast zien we de ge-embedde brokken, voorgesteld als documenten. Aan de hand van de afstandsmetric wordt bepaald welke brokken waarschijnlijk het meest relevant zijn voor de invoer. In dit geval zijn er twee brokken die zich het dichtst bij de invoer bevinden. Omdat deze brokken de kleinste afstand tot de input hebben, worden ze geretourneerd als relevante context.
+Figuur~\ref{fig:vector_search} toont een vereenvoudigde illustratie van vector search in het cartesisch coördinatenstelsel. Hierbij zien we de ge-embedde invoer van de gebruiker, voorgesteld als een cirkel. Daarnaast zien we de ge-embedde chunks, voorgesteld als documenten. Aan de hand van de afstandsmetric wordt bepaald welke chunks waarschijnlijk het meest relevant zijn voor de invoer. In dit geval zijn er twee chunks die zich het dichtst bij de invoer bevinden. Omdat deze chunks de kleinste afstand tot de input hebben, worden ze geretourneerd als relevante context.
 
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{vector_search.png}
-    \caption[Vulgarisatie van Embbe Search in het cartesisch coördinatenstelsel]{\label{fig:vector_search}Een vereenvoudigde illustratie van Vector Search. De cirkel stelt de gebruikersinput en de documenten stellen de verschillende brokken voor \autocite{Vespa2023}.}
+    \caption[Vulgarisatie van Vector Search in het cartesisch coördinatenstelsel]{\label{fig:vector_search}De gebruikersvraag $Q$ (voorgesteld door de cirkel) en de chunks $A$, $B$, $C$, $E$, en $F$ (voorgesteld door de vierkanten) worden voorgesteld als punten in een vereenvoudigde tweedimensionale vectorruimte. In werkelijkheid, bevinden deze zich in een $n$-dimensionale ruimte. De relevantie van een chunk ten opzichte van de vraag wordt bepaald door de afstandsfunctie $d$. Aangezien $d(Q, A)$ en $d(Q, C)$ het kleinste zijn, worden deze als meest relevante stukken informatie teruggeven aan het LLM \autocite{Vespa2023}.}
 \end{figure}
         
 Deze tweede strategie is bijzonder effectief in het begrijpen van de betekenis achter queries, zelfs wanneer de gebruikte woorden niet exact overeenkomen. Met andere woorden, vector search is zeer geschikt voor het vinden van semantisch gerelateerde woorden.
@@ -234,7 +220,7 @@ Het gebruik van de API is gratis.
 
 Uit de literatuurstudie blijkt dat een chatbot een geschikte oplossing biedt om een centrale plaats te creëren waar studenten en docenten op een interactieve manier hun vragen kunnen stellen en on-demand een antwoord kunnen ontvangen.
 
-Chatbots zijn een technologie die al geruime tijd bestaat en oorspronkelijk voornamelijk gebaseerd was op patroonherkenning. Met de vooruitgang in \acrshort{NLP} en, meer specifiek, in \acrshort{LLM}'s, kunnen we nu flexibelere chatbots ontwikkelen die niet langer afhankelijk zijn van strikt gedefinieerde regels. Het zelf ontwikkelen van een \acrshort{LLM}, of fine-tunen ervan, valt echter buiten de scope van dit onderzoek en overschrijdt de beschikbare middelen. Daarom is besloten om een bestaande \acrshort{LLM} te gebruiken.
+Chatbots zijn een technologie die al geruime tijd bestaan en oorspronkelijk voornamelijk gebaseerd waren op patroonherkenning. Met de vooruitgang in \acrshort{NLP} en, meer specifiek, in \acrshort{LLM}'s, kunnen we nu flexibelere chatbots ontwikkelen die niet langer afhankelijk zijn van strikt gedefinieerde regels. Het zelf ontwikkelen van een \acrshort{LLM}, of fine-tunen ervan, valt echter buiten de scope van dit onderzoek en overschrijdt de beschikbare middelen. Daarom is besloten om een bestaande \acrshort{LLM} te gebruiken.
 
 Aangezien bestaande \acrshort{LLM}'s vaak worden geleverd met vooraf vergaarde kennis, maar wij gespecialiseerde kennis nodig hebben, is het noodzakelijk om de kennis van de \acrshort{LLM} uit te breiden met externe bronnen.
 
