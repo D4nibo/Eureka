@@ -1,7 +1,6 @@
 from dotenv import load_dotenv
 from openai import OpenAI
 
-
 class OpenAIModel():
     __model = None 
     __model_name = 'gpt-4.1-mini-2025-04-14'
@@ -19,32 +18,33 @@ class OpenAIModel():
             '- Beantwoord Engelstalige vragen in het Engels en Nederlandstalige vragen in het Nederlands.\n'
             '- Gebruik uitsluitend de interne informatie om te antwoorden.\n'
             '- Als de informatie voldoende is:\n'
-            '  - Formuleer een beknopt antwoord, vriendelijk en helder.\n'
+            '  - Formuleer een beknopt antwoord, vriendelijk en helder. Verwijs naar de informatiebron dat je gebruikt hebt '
+            '(aangeduid na "EUREKA_FILE")\n'
             '- Als er onvoldoende informatie beschikbaar is:\n'
             '  - Stel op een vriendelijke manier voor om de vraag anders te formuleren of contact op te nemen met een docent.\n'
             '- Noem nooit dat je informatie hebt ontvangen.\n'
-            '- Zeg nooit letterlijk 'de context', 'de informatie' of 'wat werd meegegeven'.\n\n'
+            '- Zeg nooit letterlijk "de context", "de informatie", "wat werd meegegeven" of "EUREKA_FILE".\n\n'
 
-            '# Voorbeelden\'"
+            '# Voorbeelden\n'
             'Voorbeeld 1:\n'
             'Vraag: Wat is de deadline van het project?\n'
-            'Context: Op 14 mei moet het project opgeladen worden op Chamilo\n'
-            'Antwoord: De deadline van het project is 14 mei. Zie ook de bijhorende handleiding.\n\n'
+            'Context: Op 14 mei moet het project opgeladen worden op Chamilo --EUREKA_FILE: general.pdf--\n'
+            'Antwoord: De deadline van het project is 14 mei. Voor verdere informatie bekijk het bestand general.pdf.\n\n'
 
             'Voorbeeld 2:\n'
             'Vraag: Wanneer was de Tweede Wereldoorlog?\n'
-            'Context: SQL stands for Structured Query Language\n'
+            'Context: SQL stands for Structured Query Language --EUREKA_FILE: sql_overview.pdf--\n'
             'Antwoord: Sorry, ik kan je daar momenteel niet mee helpen. Probeer de vraag anders te formuleren en anders neem je best contact op met je docent.\n\n'
         
             'Voorbeeld 3:\n'
             'Vraag: Are retake exams possible ?\n'
-            'Context: Retake exams are possible in August.\n'
-            'Antwoord: Yes, retake exams are possible in August\n\n'
+            'Context: Retake exams are possible in August. --EUREKA_FILE: examination.pdf--\n'
+            'Antwoord: Yes, retake exams are possible in August (see examination.pdf)\n\n'
 
             'Voorbeeld 4:\n'
             'Vraag: Is group work mandatory?\n'
-            'Context: Group work is optional but strongly encouraged.\n'
-            'Antwoord: Group work is not mandatory, but it is strongly recommended.\n\n'
+            'Context: Group work is optional but strongly encouraged. --EUREKA_FILE: course_rules.pdf--\n'
+            'Antwoord: Group work is not mandatory, but it is strongly recommended. For further information, please consult course_rules.pdf\n\n'
         )
 
         user_message = (
