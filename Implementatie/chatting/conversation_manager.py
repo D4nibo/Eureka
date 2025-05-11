@@ -1,16 +1,23 @@
 from openai import OpenAI
 from dotenv import load_dotenv
-from .aya_model_encap import AyaModel
-from .openai_model_encap import OpenAIModel
+
+from rag_enum import Models
+
+from .aya_model import AyaModel
+from .openai_model import OpenAIModel
 
 class ConversationManager():
+    __available_models = {
+        Models.OPENAI: OpenAIModel, 
+        Models.AYA: AyaModel
+    }
     __moderation_model_name = None
     __moderator_client = None 
-    __chat_model_encap = None
+    __model = None
 
-    def __init__(self, chat_model_encap = OpenAIModel()):
+    def __init__(self, model_name):
         self.__load_moderator()
-        self.__chat_model_encap = chat_model_encap
+        self.__model = self.__available_models.get(model_name)()
 
     def moderation(self, question):
         def get_flag(moderation_response):
@@ -30,7 +37,7 @@ class ConversationManager():
         
         print(ctx)
         
-        return self.__chat_model_encap.generate_answer(question, ctx)
+        return self.__model.generate_answer(question, ctx)
 
     def __load_moderator(self):
         load_dotenv()

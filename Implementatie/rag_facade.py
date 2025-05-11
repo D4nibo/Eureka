@@ -5,14 +5,14 @@ from dotenv import load_dotenv
 from chatting import ConversationManager
 from text_processing import TextProcessor
 from storage import Embedder
-from rag_enum import Extractors, Chunkers
+from rag_enum import Extractors, Chunkers, Models
 
 class RagFacade:
     __text_processor = None 
     __embedder = None
     __conversation_manager = None 
 
-    def __init__(self, extractor = Extractors.MARKDOWN, chunker = Chunkers.MARKDOWN, collection = 'vakken'):
+    def __init__(self, extractor = Extractors.TEXT, chunker = Chunkers.RECURSIVE_TEXT, model = Models.AYA, collection = 'vakken'):
         logging.basicConfig(
             level=logging.DEBUG,
             format='%(asctime)s - %(levelname)s: %(message)s',
@@ -22,7 +22,7 @@ class RagFacade:
         load_dotenv() 
         self.__init_text_processor(extractor, chunker)
         self.__init_embedder(collection)
-        self.__init_conversation_manager()
+        self.__init_conversation_manager(model)
 
     def insert_files(self):    
         drop_zone_path = './drop_zone'
@@ -64,7 +64,7 @@ class RagFacade:
         print('Initializing embedder...')
         self.__embedder = Embedder(collection)
 
-    def __init_conversation_manager(self):
+    def __init_conversation_manager(self, model):
         print('Initializing conversation manager...')
-        self.__conversation_manager = ConversationManager()
+        self.__conversation_manager = ConversationManager(model)
     

@@ -6,10 +6,10 @@ class AyaModel():
     __huggingface_repo_id = 'QuantFactory/aya-23-8B-GGUF'
     __hugging_face_filename = 'aya-23-8B.Q4_0.gguf'
     __original_model_name = 'CohereLabs/aya-23-8B'
-    __chat_model = None
+    __model = None
 
     def __init__(self):
-        self.__load_chat_model()
+        self.__load_model()
 
     def generate_answer(self, question, ctx=''):
         tokenizer = AutoTokenizer.from_pretrained(self.__original_model_name)
@@ -35,14 +35,12 @@ class AyaModel():
         ]
 
         prompt = f'{tokenizer.apply_chat_template(messages, tokenize=False, return_tensors="pt")}<|START_OF_TURN_TOKEN|><|CHATBOT_TOKEN|>'
-        
-        print(f'MODEL MESSAGE: PROMPT IS - {prompt}')
 
-        return self.__chat_model.invoke(prompt)
+        return self.__model.invoke(prompt)
     
-    def __load_chat_model(self):
+    def __load_model(self):
         path = hf_hub_download(repo_id = self.__huggingface_repo_id, filename = self.__hugging_face_filename)
-        self.__chat_model = GPT4All(
+        self.__model = GPT4All(
             model=path, 
             device = 'cpu', 
             n_threads = 10, 
