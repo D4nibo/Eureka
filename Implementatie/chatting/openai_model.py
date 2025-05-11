@@ -18,12 +18,12 @@ class OpenAIModel():
             '- Beantwoord Engelstalige vragen in het Engels en Nederlandstalige vragen in het Nederlands.\n'
             '- Gebruik uitsluitend de interne informatie om te antwoorden.\n'
             '- Als de informatie voldoende is:\n'
-            '  - Formuleer een beknopt antwoord, vriendelijk en helder. Verwijs naar de informatiebron dat je gebruikt hebt '
-            '(aangeduid na "EUREKA_FILE")\n'
+            '  - Formuleer een beknopt (max. 150 woorden) antwoord, vriendelijk en helder. Verwijs naar de informatiebron dat je gebruikt hebt '
+            '(bestandsnaam na "EUREKA_FILE")\n'
             '- Als er onvoldoende informatie beschikbaar is:\n'
             '  - Stel op een vriendelijke manier voor om de vraag anders te formuleren of contact op te nemen met een docent.\n'
             '- Noem nooit dat je informatie hebt ontvangen.\n'
-            '- Zeg nooit letterlijk "de context", "de informatie", "wat werd meegegeven" of "EUREKA_FILE".\n\n'
+            '- Zeg NOOIT letterlijk "de context", "de informatie", "wat werd meegegeven" of "EUREKA_FILE".\n\n'
 
             '# Voorbeelden\n'
             'Voorbeeld 1:\n'
@@ -39,7 +39,7 @@ class OpenAIModel():
             'Voorbeeld 3:\n'
             'Vraag: Are retake exams possible ?\n'
             'Context: Retake exams are possible in August. --EUREKA_FILE: examination.pdf--\n'
-            'Antwoord: Yes, retake exams are possible in August (see examination.pdf)\n\n'
+            'Antwoord: Yes, retake exams are possible in August. Please , refer to the file examination.pdf)\n\n'
 
             'Voorbeeld 4:\n'
             'Vraag: Is group work mandatory?\n'
@@ -57,12 +57,11 @@ class OpenAIModel():
         return self.__model.create(
             model = self.__model_name,
             temperature = 0.8,
-            store = True,
+            store = False,
             instructions = system_directive,
             input = user_message
         ).output_text
 
     def __init_model(self):
-        load_dotenv() 
         client = OpenAI()
         self.__model = client.responses
