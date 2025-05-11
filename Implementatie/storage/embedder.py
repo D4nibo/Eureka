@@ -1,6 +1,7 @@
 from langchain_chroma import Chroma 
 from langchain_huggingface import HuggingFaceEmbeddings
 from uuid import uuid4 
+from pathlib import Path
 
 class Embedder:
     __embedding_model = None
@@ -8,6 +9,7 @@ class Embedder:
     __DB_PATH = './storage/db'
 
     def __init__(self, collection):
+        Path(self.__DB_PATH).mkdir(parents=True, exist_ok=True)
         self.__init_datastore(collection)
         
     def embed(self, chunks, course, filename):

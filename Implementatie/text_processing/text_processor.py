@@ -1,13 +1,14 @@
+import os
+from pathlib import Path
+
+from rag_enum import Extractors, Chunkers
+
 from .text_extractor import TextExtractor
 from .character_text_chunker import CharacterTextChunker
 from .recursive_text_chunker import RecursiveTextChunker
 
 from .markdown_extractor import MarkdownExtractor
 from .markdown_chunker import MarkdownChunker
-
-from rag_enum import Extractors, Chunkers
-
-import os
 
 class TextProcessor:
     __extraction_strategies = {
@@ -26,6 +27,7 @@ class TextProcessor:
     __temporary_file_path = './text_processing/temp'
 
     def __init__(self, extractor, chunker):
+        Path(self.__temporary_file_path).mkdir(parents=True, exist_ok=True)
         self.__extraction_strategy = self.__extraction_strategies.get(extractor)()
         self.__chunking_strategy = self.__chunking_strategies.get(chunker)()
 
