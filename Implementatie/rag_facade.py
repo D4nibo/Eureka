@@ -1,5 +1,6 @@
 import os
 import logging
+from dotenv import load_dotenv
 
 from chatting import ConversationManager
 from text_processing import TextProcessor
@@ -17,7 +18,8 @@ class RagFacade:
             format='%(asctime)s - %(levelname)s: %(message)s',
             datefmt='%Y-%m-%d %H:%M%S'
         )
-        
+
+        load_dotenv() 
         self.__init_text_processor(extractor, chunker)
         self.__init_embedder(collection)
         self.__init_conversation_manager()
