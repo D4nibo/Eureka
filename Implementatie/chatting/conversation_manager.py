@@ -31,11 +31,9 @@ class ConversationManager():
 
         if chunks:
             ctx = '\n\n'.join(
-                f'--------- CONTEXT {i + 1} ---------\n-- EUREKA_FILE: {chunk[0].metadata.get('filename')} --\n{chunk[0].page_content}'
+                f'--------- CONTEXT {i + 1} ---------\n-- EUREKA_FILE: {chunk.metadata.get('filename')} --\n{chunk.page_content}'
                 for i, chunk in enumerate(chunks)
             )
-        
-        print(ctx)
         
         return self.__model.generate_answer(question, ctx)
 

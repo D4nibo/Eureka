@@ -21,11 +21,13 @@ class Embedder:
         self.__datastore.add_documents(chunks)
 
     def query(self, question, course):
-        return self.__datastore.similarity_search_with_score(
+        chunks = self.__datastore.similarity_search_with_score(
             question, 
             k = 2,
             filter = {'course': course}
         )
+
+        return map(lambda c: c[0], chunks)
 
     def __init_datastore(self, collection):
         self.__embedding_model = HuggingFaceEmbeddings(model_name='BAAI/bge-m3')
