@@ -1,5 +1,510 @@
 \chapter{Proof-of-concept}%
 \label{ch:proof-of-concept}
 
-\lipsum
+\section{\IfLanguageName{dutch}{PoC-structuur}{PoC-structure}}%
+\label{sec:poc-structure}
 
+In dit gedeelte wordt een high-level overzicht gegeven van de proof-of-concept. Dit stelt de lezer in staat om een algemeen beeld te krijgen van de werking van de PoC, voordat er dieper in de code wordt gedoken.
+
+Zoals te zien is op afbeelding~\ref{fig:package-diagram}, bestaat de PoC, naast de \textit{main}-package, uit vier andere packages, namelijk \textit{text\_processing}, \textit{storage}, \textit{chatting} en \textit{rag\_enum}:
+
+\begin{itemize}
+    \item \textbf{text\_processing}: Deze package bevat het nodige om tekst te extraheren en in chunks om te zetten.
+    \item \textbf{storage}: Hier zit de vectordatabank verschuilt.
+    \item \textbf{chatting}: Deze package bevat de brein van de RAG-pijplijn, namelijk de \acrshort{LLM}. 
+    \item \textbf{rag\_enum}: Hier worden een aantal \emph{enumeraties} gedefinieerd om de pijplijn op een protocollaire manier te kunnen instellen.
+\end{itemize} 
+
+\begin{sidewaysfigure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{package_diagram.jpg}
+    \caption[Package-structuur]{\label{fig:package-diagram}Package-structuur van de proof-of-concept. De \textit{main}-package vormt het startpunt van de applicatie en importeert alle componenten die zich in de overige packages bevinden}
+\end{sidewaysfigure}
+
+In de main-package zit de klasse \texttt{RagFacade} gedefinieerd. Deze klasse is de ingangspunt van de RAG-pijplijn en controleert de orde van de operaties. 
+
+\subsection{Text\_processing package}%
+\label{subsec:pckg-text_processing}
+
+De text\_processing package bevat alle klasses nodig om aan tekstextractie en chunking te doen, zoals te zien is op figuur~\ref{fig:textprocessing-diagram}. 
+
+\begin{sidewaysfigure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{text_processing.png}
+    \caption[Klassediagram - text\_processing]{\label{fig:textprocessing-diagram}Klassediagram van de text\_processing package}
+\end{sidewaysfigure}
+
+De hoofdklasse van dit package is de \texttt{TextProcessor}, die in objectgeoriënteerde termen fungeert als de façade van het package. Deze klasse definieert slechts één enkele methode, namelijk \texttt{extract\_from}, die, gegeven een pad, alle PDF-bestanden in die map zal extraheren en chunken.
+
+Extractie en chunking worden echter niet door de \texttt{TextProcessor} zelf uitgevoerd, maar gedelegeerd aan een \emph{Extractor} en een \emph{Chunker}. Beide klassen fungeren als interfaces die worden geïmplementeerd door concrete extractors en chunkers. Deze structuur maakt het in de toekomst eenvoudig om nieuwe extractors en chunkers toe te voegen; men hoeft enkel de bijbehorende interface te implementeren.
+
+Aandachtige lezers herkennen hierin misschien het gebruik van een \emph{design pattern}, namelijk het \emph{Strategy pattern}. Dat klopt: dit patroon maakt het mogelijk om op een eenvoudige manier nieuwe extractors en chunkers toe te voegen. Wel moet aangeduid worden dat Python geen expliciet abstracte klasse beschikbaar stelt; wat een essentieel aanname is van deze design pattern. Echter, kan dit bereikt worden door te vertrouwen op~\emph{Duck Typing}. 
+
+
+%https://peps.python.org/pep-0544/
+
+\subsection{Storage-package}%
+\label{subsec:pckg-storage}
+
+In de storage-package bevindt zich de klasse \texttt{Embedder}. Deze klasse abstraheert het toevoegen en ophalen van chunks in de vector-databank. Zoals te zien is op figuur~\ref{fig:storage-diagram}, stelt ze twee publieke methoden ter beschikking: \texttt{embed} en \texttt{query}. \texttt{Embed} slaat chunks op, samen met de naam van het vak en de bestandsnaam als metadata. \texttt{query} haalt relevante chunks op, gegeven een vraag en de naam van het vak waarop de vraag betrekking heeft. Deze klasse fungeert dan ook als de façade van deze package. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{embedder.png}
+    \caption[Klassediagram - storage-package]{\label{fig:storage-diagram}Klassediagram van de storage-package}
+\end{figure}
+
+\subsection{Chatting-package}%
+\label{subsec:pckg-chattings}
+
+De chatting-package bevat de abstracties voor de \acrshort{LLM}. Zoals te zien is in figuur~\ref{fig:chatting-diagram}, heeft de \textit{chatting}-package een gelijkaardige structuur als de text\_processing-package (zie figuur~\ref{fig:storage-diagram}). Ook hier wordt het \emph{Strategy pattern} toegepast. Hierdoor kan eenvoudig een nieuw model worden toegevoegd door een klasse aan te maken die de \emph{Model}-interface implementeert. De façade van dit package is de klasse \texttt{ConversationManager}.
+
+\begin{sidewaysfigure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{chatting.png}
+    \caption[Klassediagram - chatting-package]{\label{fig:chatting-diagram}Klassediagram van de chatting-package}
+\end{sidewaysfigure}
+
+Merk op dat de \texttt{ConversationManager} een methode genaamd \texttt{moderation} definieert. Met deze methode kan een vraag gescanned worden op problematisch inhoud.
+
+\begin{sidewaysfigure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{class_diagram.jpg}
+    \caption[Klassediagram - PoC]{\label{fig:poc-diagram}Klassediagram van de gehele pijplijn}
+\end{sidewaysfigure}
+
+
+\section{Code}%
+\label{sec:code}
+
+\subsection{Rag enumerations}%
+\label{subsec:ragenums}
+
+Er wordt hier kort de inhoud van de rag\_enum package besproken. Zoals aangehaald in sectie~\ref{sec:poc-structure}, bevat deze package enumeraties om de pijplijn op een protocollaire manier te kunnen instellen.
+
+Hiermee wordt het volgende bedoeld: de RAG-pijplijn kan worden geconfigureerd met verschillende extractors, chunkers en modellen door de juiste parameters door te geven aan de constructor van de \texttt{RagFacade} (zie~\ref{subsec:ragfacade}). Om te voorkomen dat foutieve parameters worden doorgegeven, en om een overzicht te bieden van de beschikbare opties, worden de mogelijke parameters geencapsuleerd en doorgegeven via enumeraties.
+
+De beschikbare enumeraties zijn:
+
+\begin{itemize}
+    \item \textbf{\emph{Extractors}}: Definieert de beschikbare extractors.
+    \item \textbf{\emph{Chunkers}}: Definieert de beschikbare chunkers.
+    \item \textbf{\emph{Models}}: Definieert de beschikbare modellen.
+    \item \textbf{\emph{Courses}}: Definieert de vakken waarvoor vragen kunnen gesteld worden.
+\end{itemize}
+
+De onderstaande Chunkers enumeratie dient ter illustratie, zodat de lezer een duidelijk beeld krijgt van de structuur van dergelijke enumeraties.
+
+\begin{minted}{python}
+    from enum import Enum
+    
+    class Chunkers(Enum):
+        CHARACTER_TEXT = 'character_text_chunker'
+        RECURSIVE_TEXT = 'recursive_text_chunker'
+        MARKDOWN = 'markdown_chunker'
+\end{minted}
+
+\subsection{RagFacade}%
+\label{subsec:ragfacade}
+
+De \texttt{RagFacade} is het aanspreekpunt van de RAG-pijplijn. Ze heeft twee belangrijke verantwoordelijkheden:
+
+\begin{enumerate}
+    \item Ze laat gebruikers toe om bestanden in te voeren en vragen te stellen via de publieke methodes \texttt{insert\_files} en \texttt{ask}.
+    \item Ze controleert de flow van acties tussen de verschillende componenten.
+\end{enumerate}
+
+In onderstaand codefragment wordt aangetoond dat de verschillende componenten van de pijplijn - via de respectievelijke facades - als attributen van de \texttt{RagFacade} worden bijgehouden. Op die manier kan de \texttt{RagFacade} de stroom van gebeurtenissen correct aansturen. In de constructor is te zien hoe de verschillende extractors, chunkers en modellen worden ingesteld: de configuratieparameter wordt doorgegeven aan de bijbehorende component, die zichzelf vervolgens intern configureert. De parameter collection verwijst naar de vectordatabank en wordt toegelicht in sectie~\ref{}.
+    
+\begin{minted}{python}
+    from chatting import ConversationManager
+    from text_processing import TextProcessor
+    from storage import Embedder
+    from rag_enum import Extractors, Chunkers, Models
+    
+    class RagFacade:
+        __text_processor = None 
+        __embedder = None
+        __conversation_manager = None 
+    
+        def __init__(self, extractor = Extractors.TEXT, chunker = Chunkers.RECURSIVE_TEXT, model = Models.AYA, collection = 'vakken'):
+
+            load_dotenv() 
+            self.__init_text_processor(extractor, chunker)
+            self.__init_embedder(collection)
+            self.__init_conversation_manager(model)
+       
+       ## Remainder of class...
+\end{minted}
+
+De methode \texttt{insert\_files} wordt hieronder afgebeeld. Opvallend is dat de methode iteratief door mappen loopt binnen een zogenaamde map \emph{./drop\_zone}. Deze aanpak werd ontworpen om bestanden op een eenvoudige manier in de pijplijn op te slaan, zonder dat er specifieke voorkennis vereist is. De structuur van de drop\_zone-map zit voor onze toepassing als volgt uit:
+
+\begin{verbatim}
+    dropzone/
+    ├── Data_Science_&_AI/
+    ├── Infrastructure_Automation/
+    └── Linux_for_Data_Scientists/
+\end{verbatim}
+
+Om de eigenlijke extractie en chunking uit te voeren, roept de \texttt{RagFacade} de bijbehorende componenten aan.
+
+\begin{minted}{python}
+    def insert_files(self):    
+        drop_zone_path = './drop_zone'
+        
+        for dir in os.scandir(drop_zone_path):
+            course_name = dir.name.replace('_', ' ')
+
+            for file in os.scandir(dir.path):
+                chunks = self.__text_processor.extract_from(file.path) # Text extraction
+                self.__embedder.embed(chunks, course_name, file.name) # Chunks embedding
+\end{minted}
+
+De methode ask, zoals eerder aangehaald, wordt gebruikt om vragen te stellen over een bepaald vak. Ook hier is te zien hoe de \texttt{RagFacade} de verschillende componenten aanroept om de bijbehorende processen uit te voeren. De volgorde van deze processen is als volgt:
+
+\begin{enumerate}
+    \item De vraag wordt gescand op problematische inhoud (lijn 3).
+    \item Als de vraag veilig wordt bevonden, worden de relevante chunks opgehaald (lijn 7).
+    \item Tot slot wordt het antwoord gegenereerd en teruggegeven naar de gebruiker (lijnen 8 en 10).
+\end{enumerate} 
+
+\begin{minted}{python}
+    def ask(self, question, course):
+        answ = None 
+        flag_raised = self.__conversation_manager.moderation(question) # Scanning question for inadequate content
+
+        if flag_raised: answ = 'Helaas, kan ik je daarmee niet helpen.'
+        else:
+            chunks = self.__embedder.query(question, course.value) # Retrieving relevant chunks
+            answ = self.__conversation_manager.generate_answer(question, chunks) # Generate answer
+
+        return answ
+\end{minted}
+
+Op figuren~\ref{fig:insert-flow} en~\ref{fig:ask-flow} worden de activiteitendiagrammen getoond van \texttt{insert\_files} en \texttt{ask} methodes.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.4\textwidth]{file_insertion_diagram.jpg}
+    \caption[Flow van insert\_files methode]{\label{fig:insert-flow}Activiteitendiagram van de \texttt{insert\_files} methode}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{question_answering_diagram.jpg}
+    \caption[Flow van ask methode]{\label{fig:ask-flow}Activiteitendiagram van de \texttt{ask} methode}
+\end{figure}
+
+\subsection{TextProcessor}%
+\label{subsec:TextProcessor}
+
+Deze klasse controleert en geeft toegang tot tekstextractie en chunking. Zoals werd verwezen in sectie~\ref{subsec:ragfacade}, is het in dit klasse dat de interne instelling gebeurt betreffende extractors en chunks.
+
+Hiervoor werd inspiratie gehaald uit het \emph{Factory design pattern}. De klasse beschikt namelijk over twee dictionaries die respectievelijk de beschikbare extractors en chunkers bevatten. De meegegeven parameters aan de \texttt{RagFacade} worden hier in de constructor als sleutesl gebruikt om de gewenste extractor en chunker te initialiseren.
+
+\begin{minted}{python}
+    class TextProcessor:
+        __extraction_strategies = {
+            Extractors.TEXT: TextExtractor,
+            Extractors.MARKDOWN: MarkdownExtractor
+        }
+    
+        __chunking_strategies = {
+            Chunkers.CHARACTER_TEXT: CharacterTextChunker,
+            Chunkers.RECURSIVE_TEXT: RecursiveTextChunker,
+            Chunkers.MARKDOWN: MarkdownChunker
+        }
+    
+        ## Remainder of class...
+    
+        def __init__(self, extractor, chunker):
+            Path(self.__temporary_file_path).mkdir(parents=True, exist_ok=True)
+            self.__extraction_strategy = self.__extraction_strategies.get(extractor)() # Initializing extractor
+            self.__chunking_strategy =  self.__chunking_strategies.get(chunker)() Initializing chunker
+        
+        ## Remainder of class...
+\end{minted}
+
+De eigenlijke extractie en chunking worden aangestuurd in de methode \texttt{extract\_from}. Deze methode komt erop neer dat de extractie en chunking worden gedelegeerd aan respectievelijk de extractor en de chunker die ingesteld werden.
+
+\begin{minted}{python}
+    def extract_from(self, path):
+        path_to_temp = self.__extraction_strategy.extract(path) # Extraction
+        chunks = self.__chunking_strategy.chunk(path_to_temp) # Chunking
+        
+        ## Remainder of method
+\end{minted}
+
+Ter volledigheid illustreren de volgende twee codefragmenten hoe een extractor en een chunker opgebouwd kunnen zijn. Elke extractor moet een \texttt{extract}-methode definiëren, en elke chunker een \texttt{chunk}-methode.
+
+\begin{minted}{python}
+    from langchain_community.document_loaders import PyMuPDFLoader
+    import os
+    
+    class TextExtractor:
+        __TXT_LOCATION = './text_processing/temp' # Location of temporary folder 
+        __TXT_NAME = 'conversion_res_temp' # Name of temporary file
+    
+        def extract(self, path):
+            loader = PyMuPDFLoader(
+                path,
+                mode='single'
+                extract_tables="markdown",
+            ) # Text extraction object  
+    
+            doc_obj = loader.load() # Start extraction
+            text = doc_obj[0].page_content # Retrieving extracted content
+    
+            temp_path = f'{os.path.join(self.__TXT_LOCATION, self.__TXT_NAME)}.txt'
+            with open(temp_path, "w", encoding="utf-8") as f:
+                f.write(text) # Write extracted file in temporary file for chunking
+    
+            return temp_path
+\end{minted}
+
+\begin{minted}{python}
+    from langchain_text_splitters import CharacterTextSplitter
+    
+    class CharacterTextChunker:
+        __splitter = None 
+        __chunk_size = 2000
+        __chunk_overlap = 0
+        __length_function = len
+    
+        def __init__(self):
+            self.__splitter = CharacterTextSplitter(
+                separator="",
+                chunk_size = self.__chunk_size,
+                chunk_overlap = self.__chunk_overlap,
+                length_function = self.__length_function,
+                is_separator_regex = True
+            )
+    
+        def chunk(self, path_to_text):
+            with open(path_to_text, 'r', encoding='utf-8') as file:
+                txt_file = file.read() # Open temporary where extract text is
+    
+            chunks = self.__splitter.split_text(txt_file) # Chunk file
+            return self.__splitter.create_documents(chunks) # Return chunks
+\end{minted}
+
+\subsection{Embedder}%
+\label{subsec:Embedder}
+
+De abstractielaag boven de vectordatabank (Chroma) wordt gevormd door de klasse \texttt{Embedder}. De belangrijkste methoden van deze klasse zijn \texttt{embed} en \texttt{query}.
+
+De \texttt{embed}-methode wordt gebruikt om chunks op te slaan in de databank. De naam van het vak en de bestandsnaam waartoe de chunks behoren, worden eveneens opgeslagen als metadata. Dit gebeurt om twee redenen. Enerzijds kan op basis van de vaknaam de vectorruimte worden verkleind, zodat enkel de vectoren die betrekking hebben op een specifiek vak worden beschouwd. Anderzijds wordt de bestandsnaam bij de antwoordgeneratie doorgegeven aan de \acrshort{LLM}, zodat het model kan verwijzen naar de gebruikte informatiebron.
+
+\begin{minted}{python}
+    def embed(self, chunks, course, filename):
+        for c in chunks:
+            c.metadata['course'] = course 
+            c.metadata['filename'] = filename
+            c.id = str(uuid4()) # Create unnique primary key
+    
+        self.__datastore.add_documents(chunks) # Add chunks to database
+\end{minted}
+
+De \texttt{query}-methode wordt gebruikt om chunks op te halen die verband houden met de gegeven vraag en een specifiek vak. De verkleining van de vectorruimte gebeurt via de parameter \texttt{filter}. 
+
+\begin{minted}{python}
+    def query(self, question, course):
+        chunks = self.__datastore.similarity_search_with_score(
+            question, 
+            k = 2, # Return only the top 2 most relevant chunks
+            filter = {'course': course} # Constraining vector space
+        )
+    
+        return map(lambda c: c[0], chunks) # Return just relevant chunks, without the associated relevancy score
+\end{minted}
+
+We bespreken kort de private methode \texttt{init\_datastore} van deze klasse, die verantwoordelijk is voor het grootste deel van de constructie.
+
+In sectie~\ref{subsec:onderzoek-indexing} werd aangegeven dat \texttt{BAAI/bge-m3} het gekozen embeddingmodel is dat wordt gebruikt om chunks en vragen als vectoren te embedden. In onderstaand codefragment wordt getoond hoe dit model wordt geïnitialiseerd en doorgegeven aan de Chroma-databank.
+
+\begin{minted}{python}
+    def __init_datastore(self, collection):
+        self.__embedding_model = HuggingFaceEmbeddings(model_name='BAAI/bge-m3') # Retrieving embeddingmoddel
+        self.__datastore = Chroma(
+            collection_name=collection,
+            persist_directory = self.__DB_PATH, # Specifies where the vector store is persistently saved
+            embedding_function=self.__embedding_model # Passing emedding model to vector store
+        )
+\end{minted}
+
+
+\subsection{ConversationManager}%
+\label{subsec:ConversationManager}
+
+De \texttt{ConversationManager} beheert het conversationele aspect van de pijplijn. Het is namelijk in deze klasse dat een antwoord wordt gegenereerd met behulp van een \acrshort{LLM}.
+
+Net zoals bij de \texttt{TextProcessor} (zie~\ref{subsec:TextProcessor}), is ook in deze klasse inspiratie gehaald uit het Factory Design Pattern om het model op te zetten dat door de gebruiker werd ingesteld via de \texttt{RagFacade}.
+
+\begin{minted}{python}
+    ## Remainder of class...
+    
+    from rag_enum import Models
+    
+    from .aya_model import AyaModel
+    from .openai_model import OpenAIModel
+    
+    class ConversationManager():
+        __available_models = { # Model factory
+            Models.OPENAI: OpenAIModel, 
+            Models.AYA: AyaModel
+        }
+        
+        ## Remainder of class... 
+        
+        __model = None
+    
+        def __init__(self, model_name):
+            ### Remainder of class...
+            self.__model = self.__available_models.get(model_name)() # Retrieving of model
+            
+        ### Remainder of class...
+\end{minted}
+
+De belangrijkste methoden van deze klasse zijn \texttt{moderation} en \texttt{generate\_answer}.
+
+De methode \texttt{moderation} wordt gebruikt om een gegeven vraag te scannen op problematische inhoud. Binnen deze methode wordt in feite een oproep gedaan naar de Moderation API.
+
+\begin{minted}{python}
+    def moderation(self, question):
+        def get_flag(moderation_response): # Function to only retrieve flag
+            return moderation_response.results[0].flagged
+    
+        moderation_response = self.__moderator_client.moderations.create(model=self.__moderation_model_name, input=question) # Call to Moderation API
+        return get_flag(moderation_response)
+\end{minted} 
+
+De methode \texttt{generate\_answer} wordt gebruikt om, op basis van chunks en een vraag, een antwoord te laten genereren door de ingestelde \acrshort{LLM}. Hiervoor worden de chunks eerst omgezet naar hun tekstuele representatie, aangezien het model enkel met tekstuele input kan werken en de chunks in feite \texttt{Document}-objecten van Langchain zijn. Nadien worden de vraag en de tekstuele representatie van de chunks doorgegeven aan de model om een antwoord te genereren.
+
+Let hierbij op hoe de informatiebron — met andere woorden, de bestandsnaam — wordt toegevoegd aan elke chunk. Deze wordt geïdentificeerd via de \emph{EUREKA\_FILE}-markering.
+
+\begin{minted}{python}
+    def generate_answer(self, question, chunks=''):
+        ctx = ''
+    
+        if chunks:
+            ctx = '\n\n'.join(
+                f'--------- CONTEXT {i + 1} ---------\n-- EUREKA_FILE: {chunk.metadata.get('filename')} --\n{chunk.page_content}'
+                for i, chunk in enumerate(chunks)
+            )
+    
+        return self.__model.generate_answer(question, ctx) # Generating answer
+\end{minted}
+
+De eigenlijke modellen moeten worden geïncapsuleerd door modelklassen die de methode \texttt{generate\_answer} implementeren. Ter illustratie wordt hieronder getoond hoe de abstractie voor het \texttt{gpt-4.1-mini}-model is opgebouwd.
+
+\begin{minted}{python}
+    from openai import OpenAI
+    
+    class OpenAIModel():
+        __model = None 
+        __model_name = 'gpt-4.1-mini-2025-04-14'
+    
+        def __init__(self):
+            self.__init_model()
+    
+        def generate_answer(self, question, ctx=''):
+            system_directive = (
+                '# Rol en Doelstelling\n'
+                'Je bent Eureka, de vriendelijke virtuele assistent van HOGENT. '
+                'Je helpt studenten door vragen te beantwoorden op basis van informatie die je intern tot je beschikking hebt.\n\n'
+                
+                '# Instructies\n'
+                '- Beantwoord Engelstalige vragen in het Engels en Nederlandstalige vragen in het Nederlands.\n'
+                '- Gebruik uitsluitend de interne informatie om te antwoorden.\n'
+                '- Als de informatie voldoende is:\n'
+                '  - Formuleer een beknopt (max. 150 woorden) antwoord, vriendelijk en helder. Verwijs naar de informatiebron dat je gebruikt hebt '
+                '(bestandsnaam na "EUREKA_FILE")\n'
+                '- Als er onvoldoende informatie beschikbaar is:\n'
+                '  - Stel op een vriendelijke manier voor om de vraag anders te formuleren of contact op te nemen met een docent.\n'
+                '- Noem nooit dat je informatie hebt ontvangen.\n'
+                '- Zeg NOOIT letterlijk "de context", "de informatie", "wat werd meegegeven" of "EUREKA_FILE".\n\n'
+                
+                '# Voorbeelden\n'
+                'Voorbeeld 1:\n'
+                'Vraag: Wat is de deadline van het project?\n'
+                'Context: Op 14 mei moet het project opgeladen worden op Chamilo --EUREKA_FILE: general.pdf--\n'
+                'Antwoord: De deadline van het project is 14 mei. Voor verdere informatie bekijk het bestand general.pdf.\n\n'
+                
+                'Voorbeeld 2:\n'
+                'Vraag: Wanneer was de Tweede Wereldoorlog?\n'
+                'Context: SQL stands for Structured Query Language --EUREKA_FILE: sql_overview.pdf--\n'
+                'Antwoord: Sorry, ik kan je daar momenteel niet mee helpen. Probeer de vraag anders te formuleren en anders neem je best contact op met je docent.\n\n'
+                
+                'Voorbeeld 3:\n'
+                'Vraag: Are retake exams possible ?\n'
+                'Context: Retake exams are possible in August. --EUREKA_FILE: examination.pdf--\n'
+                'Antwoord: Yes, retake exams are possible in August. Please , refer to the file examination.pdf)\n\n'
+                
+                'Voorbeeld 4:\n'
+                'Vraag: Is group work mandatory?\n'
+                'Context: Group work is optional but strongly encouraged. --EUREKA_FILE: course_rules.pdf--\n'
+                'Antwoord: Group work is not mandatory, but it is strongly recommended. For further information, please consult course_rules.pdf\n\n'
+            )
+            
+            user_message = (
+                '# Context\n'
+                f'{ctx.strip()}\n\n'
+                '# Vraag\n'
+                f'{question.strip()}\n\n'
+            )
+            
+            return self.__model.create(
+                model = self.__model_name,
+                temperature = 0.8,
+                store = False,
+                instructions = system_directive,
+                input = user_message
+            ).output_text
+    
+        def __init_model(self):
+            client = OpenAI()
+            self.__model = client.responses
+\end{minted}
+
+\subsection{\IfLanguageName{dutch}{Gebruik}{Usage}}%
+\label{subsec:usage}
+
+\subsubsection{\IfLanguageName{dutch}{Toevoegen van bestanden}{File insertion}}%
+\label{subsubsec:insertion}
+
+In deze sectie wordt kort toegelicht hoe bestanden in de pijplijn moeten worden ingevoerd.
+
+Zoals uitgelegd in sectie~\ref{subsec:ragfacade}, moeten bestanden die in de pijplijn worden ingevoerd, geplaatst worden in de overeenkomstige submap binnen de map drop\_zone. Figuur~\ref{fig:drop-zone} toont de mapsamenstelling van de map en de inhoud van de submap \emph{Data\_Science\_\&\_AI}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{drop_zone.png}
+    \caption[Mapsamenstelling drop\_zone]{\label{fig:drop-zone}Mapstructuur van de drop\_zone. De pijl toont de inhoud van de \emph{Data\_Science\_\&\_AI} folder}
+\end{figure}
+
+Het toevoegen van bestanden gebeurt vervolgens in slechts enkele lijnen code. Eerst moet de pijplijn worden geïnitialiseerd met de gewenste chunker en extractor. Deze componenten kunnen eenvoudig correct worden ingesteld via de daarvoor voorziene enumeraties (zie~\ref{subsec:ragenums}). Indien er geen instellingen worden meegegeven, worden de standaardwaarden gebruikt (zie de constructor in sectie~\ref{subsec:ragfacade}). Tot slot hoeft enkel de methode \texttt{insert\_files} van de \texttt{RagFacade} te worden aangeroepen.
+
+\begin{minted}{python}
+    if __name__ == "__main__":
+        from rag_facade import RagFacade
+        from rag_enum import Chunkers, Extractors
+        
+        rag = RagFacade(extractor=Extractors.TEXT, chunker=Chunkers.CHARACTER_TEXT, collection='vakken') # Instantiation RAG-pipeline 
+        rag.insert_files() # Starting insertion
+\end{minted}
+
+\subsubsection{\IfLanguageName{dutch}{Vragen stellen}{Asking question}}%
+\label{subsubsec:asking}
+
+In deze sectie wordt kort toegelicht hoe vragen kunnen worden gesteld.
+
+De eerste stap verloopt gelijkaardig als bij het invoeren van bestanden: de pijplijn moet worden ingesteld samen met het gewenste model. Indien geen model wordt opgegeven, wordt het standaardmodel gebruikt. Vervolgens wordt de \texttt{ask}-methode aangeroepen, met als parameters de vraag en het vak waarop de vraag betrekking heeft.
+
+\begin{minted}{python}
+    if __name__ == "__main__":
+        from rag_enum import Courses, Models
+        from rag_facade import RagFacade
+    
+        rag = RagFacade(model=Models.OPENAI, collection='vakken') # Instantiation RAG-pipeline 
+        print(rag.ask('Wat is de examenregeling?', Courses.DATA_SCIENCE_AI)) # Asking question
+\end{minted}

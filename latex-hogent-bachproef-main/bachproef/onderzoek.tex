@@ -1,0 +1,294 @@
+\chapter{\IfLanguageName{dutch}{Onderzoek}{Research}}%
+\label{ch:onderzoek}
+
+In dit onderdeel worden de requirementsanalyse en het technische onderzoek besproken die voorafgingen aan de toepassing van de PoC.
+
+\section{\IfLanguageName{dutch}{Requirementsanalyse}{Requirement-analysis}}%
+\label{sec:requirement-analyse}
+
+Het uiteindelijke resultaat van deze bachelorproef is een proof-of-concept die aantoont of een chatbot, gebouwd op een \acrshort{LLM}, een geschikte en haalbare oplossing biedt voor het voorliggende probleem. Om tot een gefundeerd besluit te komen, moest eerst worden vastgesteld aan welke criteria Eureka zou worden getoetst. Daartoe werd een requirementsanalyse uitgevoerd. Deze analyse is van cruciaal belang, aangezien ze resulteert in een maatstaf waartegen de proof-of-concept kan worden geëvalueerd. 
+
+De requirements waaraan Eureka moet voldoen zijn gebaseerd op de uiteindelijke verwachtingen van de stakeholders; zij zijn het die baat hebben bij deze bachelorproef. Hieruit volgt dat de stakeholders eerst moesten geïdentificeerd worden. Voor elke stakeholder werd een persona opgesteld. Een persona kan worden beschouwd als een schets van de geïdentificeerde stakeholder; het beschrijft wie de stakeholder is. De persona’s zijn terug te vinden in tabel~\ref{tab:personas}.
+
+
+\begin{table}[ht]
+    \small 
+    \centering
+    \begin{tabular}{p{5cm} p{5cm} p{5cm}}
+        \multicolumn{3}{c}{\uline{\textbf{Persona's}}} \\
+        \addlinespace[0.5ex]
+        \textbf{Student} & \textbf{Docent} & \textbf{HOGENT}\\
+        \midrule
+        Is ingeschreven voor een of meerdere van de volgende vakken: \textit{Data Science \& AI}, \textit{Infrastructure Automation} en \textit{Linux for Data Scientists} &
+        Geeft les in een of meerdere van de volgende vakken: \textit{Data Science \& AI}, \textit{Infrastructure Automation} en \textit{Linux for Data Scientists} & 
+        Is de instelling waarin studenten zijn ingeschreven en waarin docenten lesgeven \\
+        Kan op elk moment tijdens het verwerken van het studiemateriaal een vraag hebben &
+        Kan buiten de lesuren verschillende vragen ontvangen, maar is niet altijd in staat om deze op dat moment zelf te beantwoorden & \\
+        Heeft niet de mogelijkheid om te lang met zijn vragen te blijven zitten. Dit kan leiden tot stressvolle situaties of een negatieve invloed hebben op zijn vooruitgang &
+        Verwacht dat studenten eerst gebruikmaken van de informatie in het beschikbare materiaal voordat ze met hun vragen aankloppen & \\
+        \bottomrule
+    \end{tabular}
+    \caption{Persona's}
+    \label{tab:personas}
+\end{table}
+
+Het schetsen van de stakeholders maakte het mogelijk om een concreet beeld te krijgen van wie ze zijn en met welke uitdagingen ze te maken kunnen hebben. Op basis van deze persona’s werden vervolgens hun vereisten — de requirements — afgeleid. In tabel~\ref{tab:requirements} worden deze vereisten weergegeven. Het succes van de proof-of-concept werd geëvalueerd (zie~\ref{}) aan de hand van deze vereisten.
+
+
+\begin{table}[ht]
+    \small 
+    \centering
+    \begin{tabular}{p{5cm} p{5cm} p{5cm}}
+        \multicolumn{3}{c}{\uline{\textbf{Vereisten}}} \\
+        \addlinespace[0.5ex]
+        \textbf{Student} & \textbf{Docent} & \textbf{HOGENT}\\
+        \midrule
+        Als student wil ik dat de gegenereerde antwoorden inhoudelijk aansluiten bij de gestelde vragen. &
+        Als docent wil ik dat de gegenereerde antwoorden correcte informatie bevatten voor de studenten. &
+        Als instelling wil ik een oplossing die weinig tot geen financiële middelen vereist. \\
+        Als student wil ik dat de antwoorden correcte informatie bevatten. &
+        Als docent wil ik dat Eureka naar hulpzame bronnen verwijst zodat studenten mogelijke verdere vragen zelf kunnen beantwoorden. &\\
+        Als student wil ik dat, indien het antwoord niet gekend is, er verwezen wordt naar mogelijke pistes om een antwoord te bekomen. Echter wil ik geen valse informatie ondervinden. &
+        Als docent wil ik gemakkelijk mijn bronnen kunnen wijzigen indien er aanpassingen zijn. &\\
+        & Als docent wil ik dat de gegenereerde antwoorden passend en professioneel zijn, zonder ongepaste inhoud. &\\
+        \bottomrule
+    \end{tabular}
+    \caption{Requirements voor studenten en docenten}
+    \label{tab:requirements}
+\end{table}
+
+\section{\IfLanguageName{dutch}{Technische onderzoek}{Technical research}}%
+\label{sec:technische-onderzoek}
+
+Zoals besproken in sectie~\ref{subsec:rag}, is RAG geen eendelige oplossing. Het is daarentegen een samenstelling van verschillende complexe componenten die samen een pijplijn vormen. Elk van deze componenten heeft zijn eigen eigenschappen en uitdagingen. Daarom werd geoordeeld dat het verstandiger was om elk component afzonderlijk te verkennen, in plaats van meteen te beginnen met het bouwen van de PoC.
+
+De verkenning van deze componenten vond plaats in afzonderlijke Jupyter Notebooks. Op die manier wilden we technische inzichten verwerven om de proof-of-concept beter onderbouwd en efficiënter te kunnen implementeren.
+
+In de volgende gedeelten beschrijven we de uitgevoerde experimenten en de inzichten die daaruit zijn voortgekomen.
+
+
+\subsection{\IfLanguageName{dutch}{Ontdekken van de geschikte LLM}{Identifying the appropriate LLM}}%
+\label{subsec:LLM-ontdekking}
+
+De \acrshort{LLM} die binnen een RAG-pijplijn wordt gebruikt, levert een belangrijke bijdrage aan de ervaring die de stakeholders zullen beleven. Zoals uitgelegd in sectie~\ref{subsec:rag}, wordt er gebruikgemaakt van de taal- en redeneercapaciteiten van de \acrshort{LLM} om een antwoord te formuleren op basis van de geïnjecteerde chunks in het contextvenster. Er kan gezegd worden dat de brein van de RAG-pijplijn de \acrshort{LLM} is.
+
+Hierdoor was het belangrijk om voldoende tijd te besteden aan het zoeken naar een \emph{geschikte} \acrshort{LLM}. Onder een geschikte \acrshort{LLM} verstaan we een model dat voldoet aan:
+
+\begin{itemize}
+    \item \textbf{Taalkundige capaciteiten}: De overgrote meerderheid van de \acrlong{LLM} is voornamelijk bekwaam in het Engels. Dat is niet verwonderlijk: de voertaal van de informatica — en bij uitbreiding van de wereld — is nu eenmaal het Engels. Wij bevinden ons echter in een Nederlandstalige context, wat betekent dat de meeste studenten Nederlands als eerste taal gebruiken. Het onderwijsmateriaal waarvoor we Eureka ontwikkelen, en bij uitbreiding ook dat van andere vakken, bestaat echter uit een mix van Nederlands en Engels. Daarom gingen we op zoek naar een model dat beide talen voldoende beheerst.
+    \item \textbf{Financiële beperkingen}: Zoals aangekaart in de requirementsanalyse (zie~\ref{tab:requirements}) is het beschikbare financiële kapitaal beperkt. Daarom gingen we op zoek naar modellen die weinig tot geen middelen vereisen.
+    \item \textbf{Redeneercapaciteiten}: De opgehaalde chunks worden rechtstreeks doorgestuurd naar de \acrshort{LLM}. We verwachten dat het model in staat is om een samenhangend antwoord te genereren, zelfs wanneer de aangeleverde chunks niet perfect zijn. Hiervoor is een model met sterke redeneercapaciteiten vereist, zodat het een betekenisvol en samenhangend antwoord kan construeren.
+\end{itemize}
+
+De financiële beperkingen vormden al een belangrijke eliminerende factor. Onze aandacht ging daardoor meteen uit naar het gebruik van lokale modellen. Toch wilden we onze horizon in dit onderzoek niet beperken tot enkel lokale oplossingen en onderzochten we ook een extern model dat financieel haalbaar is. Dit is belangrijk om te kunnen afwegen in welke mate een extern model voordeliger is ten opzichte van lokale modellen.
+
+Om het geschikte model te vinden, gingen we in twee stappen te werk: een preselectie en een selectie. Tijdens de preselectie werden eenvoudige interacties uitgevoerd met het model om een eerste indruk te krijgen. Indien het model positief werd geëvalueerd, ging het door naar de selectiefase.
+
+In de selectie stap werden vragen aan het model gesteld die tot een van de vier volgende categorieën behoren:
+
+\begin{enumerate} 
+    \item \textbf{Vragen van algemene aard}: Deze vragen dienen om na te gaan of het LLM algemene, wereldwijd bekende feiten kent. Als een bepaald model dergelijke vragen niet correct kan beantwoorden, zegt dat veel over de kwaliteit van de dataset waarop het getraind werd. Het correct beantwoorden van deze vragen vormt dan ook een absoluut minimumvereiste. 
+    \item \textbf{Onverwachte interacties}: Deze vragen en opmerkingen dienen om na te gaan hoe het model omgaat met onverwachte interacties. Deze interacties kunnen betrekking hebben op illegale verzoeken, beledigende of seksueel getinte opmerkingen.
+    \item \textbf{Poging tot hallucinatie}: Hallucinatie is een fenomeen dat we zoveel mogelijk willen vermijden. Deze reeks vragen onderzoekt in welke mate de LLM geneigd is om foutieve of verzonnen informatie te genereren.
+    \item \textbf{Vragen met gegeven context}: Hier willen we nagaan hoe de LLM antwoorden genereert op een specifieke vraag wanneer er context wordt meegegeven. Dit simuleert het principe achter RAG.
+\end{enumerate}
+
+De lijst van vragen kan op sectie~\ref{ch:question-list} gevonden worden.
+
+Voor de preselectie en selectie van de lokaal model, werd  gebruikgemaakt van \emph{GPT4All} -- via de gebruikersinterface voor de preslectie en via de Langchain integratie voor de selectie --. GPT4All is een tool waarmee \acrlong{LLM} \textbf{lokaal} kunnen worden gebruikt op een gewone computer. Hierdoor is het niet langer noodzakelijk om gebruik te maken van cloudinfrastructuren of gespecialiseerde hardware om met \acrshort{LLM}'s te werken \autocite{NST2024}. Op het platform \emph{Hugging Face}, dat kan worden beschouwd als een soort GitHub voor \acrlong{LLM}, zijn modellen beschikbaar die met GPT4All kunnen worden ingeladen.
+
+Uit de preselectie werden de modellen \emph{QuantFactory/aya-23-8B-GGUF} en \emph{QuantFactory/suzume-llama-3-8B-multilingual-GGUF} behouden voor de selectie.
+
+Op basis van de selectie werd besloten om verder te gaan met het model QuantFactory/aya-23-8B-GGUF. Naast een goede beheersing van het Nederlands bleek dit model ook in staat om antwoorden te genereren binnen een aanvaardbare tijdslimiet. Ter vergelijking: QuantFactory/suzume-llama-3-8B-multilingual-GGUF had alleen al voor de algemene vragen een totale verwerkingstijd van 3 uur en 34 minuten nodig, tegenover slechts 20 minuten voor QuantFactory/aya-23-8B-GGUF. Rekening houdend met deze verwerkingstijd, werd dan ook besloten dat het niet zinvol was om QuantFactory/suzume-llama-3-8B-multilingual-GGUF verder af te toesten op de overige vragen.
+
+Wat opviel tijdens de selectie van QuantFactory/aya-23-8B-GGUF, was de onvolledigheid van sommige antwoorden. Soms leek het alsof het model halverwege stopte met genereren. Wij vermoeden dat dit te wijten is aan de beperkte contextgrootte. We zullen hier tijdens de proof-of-concept dus slimmer mee moeten omgaan.
+
+In sectie~\ref{ch:onderzoek_aya} kan de lezer de antwoorden van QuantFactory/aya-23-8B-GGUF terugvinden. Voor de volledigheid zijn de antwoorden van QuantFactory/suzume-llama-3-8B-multilingual-GGUF opgenomen in sectie~\ref{ch:onderzoek_suzume}.
+
+Wat het externe model betreft, ging de focus uit naar \emph{GPT-4.1-mini} van OpenAI. De kostprijs voor dit model bedraagt \$0,40 per miljoen inputtokens en \$1,60 per miljoen outputtokens. Met andere woorden: aangezien één token gemiddeld overeenkomt met vier tokens en een Nederlands woord gemiddeld uit vijf tekens bestaat, kunnen er ongeveer 800.000 woorden als input aan dit model worden gegeven voor \$0,40. Voor \$1,60 kan het model ongeveer 800.000 woorden genereren.
+
+Ter vergelijking: 800.000 woorden komen overeen met ongeveer 80 minimale bachelorproeven. Met andere woorden, er kan relatief veel gegenereerd worden aan een redelijke prijs.
+
+Het grote voordeel dat uit de selectie is gebleken, is de razendsnelle werking van GPT-4.1-mini. Daarnaast lijkt GPT-4.1-mini over betere redeneercapaciteiten te beschikken dan de hierboven vermelde modellen. De lezer kan de antwoorden van dit model terugvinden in sectie~\ref{ch:onderzoek_openai}.
+
+\subsection{\IfLanguageName{dutch}{Onderzoek naar moderatie}{Investigation into moderation}}%
+\label{subsec:onderzoek-moderatie}
+
+Zoals besproken in~\ref{subsec:valkuilen}, kan het voorkomen dat gebruikers op onverwachte manieren interageren met een \acrshort{LLM}. Daarom is \textbf{moderatie} nodig. Onder moderatie verstaan we het proces waarbij ongepaste uitwisselingen worden gefilterd en zo voorkomen.
+
+Aanvankelijk werd overwogen om de verantwoordelijkheid voor moderatie aan de \acrshort{LLM} over te laten. We beschikken immers over een intelligente agent die goed met taal kan omgaan. Hoewel dit in de praktijk een goede oplossing lijkt, voegt het extra redeneringslast toe aan het model, wat kan leiden tot bijkomende computationele last. Dit kan ertoe leiden dat antwoorden nog trager worden gegenereerd dan oorspronkelijk het geval was, vooral bij lokale modellen, zoals bleek uit de experimenten in~\ref{subsec:LLM-ontdekking}. Het is dan ook jammer om computationele middelen te verspillen aan interacties die uiteindelijk toch niet behandeld mogen worden omdat ze ongepast zijn. Daarom is het wenselijk om de moderatie uit te besteden aan een externe tool.
+
+Tijdens onze zoektocht naar een geschikte tool zijn we de \emph{Moderation API} van OpenAI tegengekomen. OpenAI stelt dat deze API in staat is om potentieel schadelijke inhoud in tekst te detecteren. Om dit te testen, hebben we onze lijst met onverwachte interacties (zie~\ref{ch:question-list}) afgetoetst aan de API.
+
+Op het moment van testen stelde de Moderation API twee modellen als backend ter beschikking: \emph{text-moderation-latest} en \emph{omni-moderation-latest}.
+
+Het text-moderation-latest model identificeerde 3 van de 10 berichten als schadelijk. De berichten die niet correct geïdentificeerd werden, zijn berichten met een flirterige toon of berichten die op een indirecte manier naar illegale zaken vragen. De drie berichten die correct geïdentificeerd werden, zijn berichten met een duidelijk agressieve toon.
+
+Daareetegen, identificeerde het omni-moderation-latest model 7 van de 10 berichten als schadelijk. De berichten die niet correct geïdentificeerd werden, zijn berichten met een flirterige toon.  In tegenstelling tot het andere model, is dit model wél in staat om berichten te identificeren die onrechtstreeks naar illegale zaken verwijzen.
+
+Vermoedelijk beschouwt de API deze interacties als ``lief'' en dus onschadelijk.
+
+We besloten dat het gebruiken van de Moderation API, ingesteld met het omni-moderation-latest model, wel degelijk een meerwaarde kan bieden als onderdeel van Eureka. Hoewel het model niet in staat is om alle ongeschikte berichten correct te identificeren, werd het merendeel wel juist gedetecteerd en laat het zich niet misleiden door indirecte formuleringen. De Moderation API vormt dus een waardevol eerste filter om ongepaste berichten tegen te houden, waardoor onnodig gebruik van computationele middelen door Eureka vermeden kan worden.
+
+De lezer kan de exacte classificatie van de interacties terugvinden in sectie~\ref{ch:onderzoek-moderation}.
+
+\subsection{\IfLanguageName{dutch}{Onderzoek naar tekstextractie}{Investigation into text extraction}}%
+\label{subsec:onderzoek-tekstextractie}
+
+Het merendeel van het vakmateriaal waarover we beschikken is in PDF-formaat, of kan eenvoudig naar PDF worden omgezet. Aangezien een RAG-pijplijn werkt met tekst en niet met bestanden, is het belangrijk dat we de inhoud van deze documenten kunnen extraheren. In dit onderdeel van het technische onderzoek hebben we daarom tools verkend die precies dat mogelijk maken. We waren daarbij vooral geïnteresseerd in de gebruiksvriendelijkheid, de snelheid van de omzetting en de kwaliteit van de gegenereerde tekst.
+
+De verschillende tools werden uitgetest op drie soorten bestanden:
+
+\begin{enumerate} 
+    \item \textbf{Studiewijzers}: Deze zijn beschikbaar via Chamilo en maken dus deel uit van een webpagina. Chamilo biedt de mogelijkheid om studiewijzers te exporteren naar PDF-formaat.
+    \item \textbf{Slides}: Dit zijn PDF-bestanden die rechtstreeks door docenten worden aangeleverd en de leerstof van een vak bevatten. Er is hierbij geen verdere verwerking nodig.
+    \item \textbf{datalinux.pdf}: Dit is de syllabus van het vak Linux for Data Scientists. Het is een omvangrijk document van ongeveer 300 pagina’s. Het doel hier is om de tools tot het uiterste te testen en te observeren hoeveel tijd ze nodig hebben om een dergelijk groot bestand te verwerken.
+\end{enumerate}
+
+Het eerste type tool zijn degene die de inhoud van PDF-bestanden als platte tekst extraheren. Een van de bekendste tools hiervoor is \emph{PyMuPDF}. 
+
+Het opzetten en gebruiken van PyMuPDF was zeer eenvoudig. Bovendien, zoals te zien is in tabel~\ref{tab:pymupdf-omzettingstijden} waren de omzettingstijden erg snel. De gegenereerde tekst was van goede kwaliteit; op basis van onze waarnemingen leek het dat de gehele inhoud van de PDF-bestanden succesvol werd geëxtraheerd. Dit pluspunt is echter ook een minpunt: PyMuPDF extraheert alles, inclusief ruis in de data (zoals paginanummering op slides).
+
+\begin{table}
+    \centering
+    \begin{tabular}{p{7cm} p{5cm}}
+        \multicolumn{2}{c}{\uline{\textbf{Gemiddelde omzettingstijd per bestandstype - PyMuPDF (s)}}} \\
+        \addlinespace[0.5ex]
+        \textbf{Soort bestand} & \textbf{Gemiddelde omzettingstijd (s)} \\
+        \midrule
+        Studiewijzer & 7 \\
+        Slide        & 0,5 \\
+        Syllabus     & 19 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Gemiddelde omzettingstijd per soort bestand met PyMuPDF. Uitgedrukt in seconden (s).}
+    \label{tab:pymupdf-omzettingstijden}
+\end{table}
+
+In~\ref{subsubsec:indexing} gaven we aan dat er tijdens de tekstextractie extra stappen kunnen worden uitgevoerd om de bestandsstructuur te behouden, bijvoorbeeld door aan te duiden waar titels staan, welke delen tot een tabel behoren, enzovoort. De tweede type tools zijn tools die exact dit doen.
+
+We gaven de voorkeur aan tools die tekst omzetten naar Markdown. In dat kader hebben we \emph{PyMuPDF4LLM}, \emph{Docling} en \emph{Marker} van dichterbij onderzocht. Hoewel Marker niet de snelste tool was (zie tabel~\ref{tab:markdown-omzettingstijden}), bleek het wel de tool te zijn die de meest kwaliteitsvolle Markdown genereerde en er als enige in slaagde om de volledige inhoud van het bestand correct te extraheren.
+
+\begin{table}
+    \centering
+    \begin{tabular}{p{4.5cm} r r r}
+        \multicolumn{4}{c}{\uline{\textbf{Gemiddelde omzettingstijd per tool (s)}}} \\
+        \addlinespace[0.5ex]
+        \textbf{Soort bestand} & \textbf{PyMuPDF4LLM} & \textbf{Docling} & \textbf{Marker} \\
+        \midrule
+        Studiewijzer        & 5    & 63   & 79    \\
+        Slide               & 0,8  & 76   & 143   \\
+        Syllabus            & 17   & 837  & 1457  \\
+        Bijzondere slides   & 0,6  & 89   & 153   \\
+        \bottomrule
+    \end{tabular}
+    \caption{Vergelijking van de gemiddelde omzettingstijd per soort bestand en tool}
+    \label{tab:markdown-omzettingstijden}
+\end{table}
+
+Beide extractietechnieken hebben hun voor- en nadelen. Aan de ene kant is platte-tekstextractie aanzienlijk sneller dan extractie naar Markdown. Aan de andere kant behoudt Markdown de structuur van de tekst, waardoor ook de semantiek beter behouden blijft. We zijn ervan overtuigd dat tekstuele structuur vaak ook semantische betekenis draagt.
+
+Een keuze maken tussen beide technieken is op dit punt nog niet mogelijk. Tekstextractie en chunking gaan hand in hand en bepalen samen de kwaliteit van de gegenereerde antwoorden. De beste combinatie zal dan ook pas bij na evaluatie worden bepaald (zie~\ref{}).
+
+\subsection{\IfLanguageName{dutch}{Onderzoek naar chunkingstrategiën}{Investigation into chunking strategies}}%
+\label{subsec:onderzoek-chunking}
+
+In sectie~\ref{subsec:rag} werd het belang van chunking toegelicht. Chunking is cruciaal vanwege de beperkte grootte van het contextvenster van \acrshort{LLM}'s, maar ook om het lost-in-the-middle-fenomeen te vermijden. Daarnaast werd een overzicht gegeven van de verschillende chunkingstrategieën.
+
+Langchain biedt zogenaamde \emph{text splitters} aan, die tekst opdelen in chunks volgens specifieke strategieën. In dit onderdeel van het onderzoek werden de verschillende beschikbare text splitters getest, zowel op platte tekst als op Markdown:
+
+\begin{itemize}
+    \item \textbf{Platte tekst}: \begin{itemize}
+        \item \textbf{\emph{CharacterTextSplitter}}: Deze splitter verdeelt de tekst in chunks op basis van een vooraf bepaalde chunkgrootte, zonder rekening te houden met de inhoud of structuur van de tekst. Deze splitter is een toepassing van de fixed-length chunking techniek besproken in sectie~\ref{subsec:rag}
+        \item \textbf{\emph{RecursiveCharacterTextSplitter}}: Deze splitter hanteert een hiërarchische aanpak waarbij tekst wordt gesplitst volgens een voorkeursvolgorde van scheidingstekens. Er wordt pas naar het volgende niveau overgegaan als de chunk nog steeds groter is dan de opgegeven limiet. De splitter een is toepassing van de recursive chunking techniek besproken in sectie~\ref{subsec:rag}
+        \item \textbf{\emph{SemanticChunker}}: Hier wordt gebruik van een embeddingmodel. Elke individuele zin wordt ge-embed als een vector. Zinnen die inhoudelijk sterk op elkaar lijken -- met andere woorden waarvan de vectorrepresentaties dicht bij elkaar liggen -- worden gegroepeerd. Deze groepen vormen de uiteindelijke chunks. Deze splitter is een toepassing van de semantic chunking techniek besproken in sectie~\ref{subsec:rag}
+    \end{itemize}
+    \item \textbf{Markdown}: \begin{itemize}
+        \item \textbf{\emph{MarkdownHeaderTextSplitter}}: De tekst wordt door deze splitter opgedeeld in chunks op basis van de hiërarchie van Markdown headers (zoals \#, \#\#, \#\#\#). Hierdoor blijft de inhoud logisch gegroepeerd volgens de structuur van het document.
+    \end{itemize}
+\end{itemize}
+
+Om de werking van de splitters op platte tekst te verstaan, werd gebruik gemaakt van volgende tekst samengesteld uit twee paragrafen, 78 woorden en 564 characters:
+
+\begin{quote}
+    \emph{Cloud computing maakt het mogelijk om rekenkracht en opslag via het internet te gebruiken zonder dat gebruikers lokale servers hoeven te beheren. Dit biedt schaalbaarheid, flexibiliteit en kostenbesparing, vooral voor bedrijven die snel willen groeien of wereldwijd actief zijn.} 
+    
+    \emph{Virtualisatie stelt een enkele fysieke computer in staat om meerdere virtuele machines tegelijk te draaien. Elke virtuele machine functioneert als een aparte computer met zijn eigen besturingssysteem. Dit verhoogt de efficiëntie en maakt een betere benutting van hardware mogelijk}
+\end{quote}
+
+Voor elke splitter werd de chunkgrootte vastgelegd op 300 characters (dus $n = 300$):
+
+\begin{itemize}
+    \item \textbf{\emph{CharacterTextSplitter}}: \begin{quote}
+        \emph{Cloud computing maakt het mogelijk om rekenkracht en opslag via het internet te gebruiken zonder dat gebruikers lokale servers hoeven te beheren. Dit biedt schaalbaarheid, flexibiliteit en kostenbesparing, vooral voor bedrijven die snel willen groeien of wereldwijd actief zijn.}
+        
+        \emph{Virtualisatie stelt}
+    \end{quote}
+    \item \textbf{\emph{RecursiveCharacterTextSplitter}}: \begin{quote}
+        \emph{Cloud computing maakt het mogelijk om rekenkracht en opslag via het internet te gebruiken zonder dat gebruikers lokale servers hoeven te beheren. Dit biedt schaalbaarheid, flexibiliteit en kostenbesparing, vooral voor bedrijven die snel willen groeien of wereldwijd actief zijn.}
+    \end{quote}
+    \item \textbf{\emph{SemanticChunker}}:  \begin{quote}
+        \emph{Cloud computing maakt het mogelijk om rekenkracht en opslag via het internet te gebruiken zonder dat gebruikers lokale servers hoeven te beheren.}
+    \end{quote}
+\end{itemize}
+
+Merk op hoe de CharacterTextSplitter en de RecursiveCharacterTextSplitter zich gedragen zoals beschreven in de literatuurstudie: de eerste splitst letterlijk midden in zinnen zolang $n$ wordt gerespecteerd, terwijl de tweede $n$ als een bovengrens beschouwt en tracht zoveel mogelijk de structuur te behouden zolang dit binnen de $n$ past.
+
+De SemanticChunker heeft enkel de eerste zin als aparte chunk beschouwd. Dit is te wijten aan de manier waarop chunks worden opgebouwd. Zoals uitgelegd in sectie~\ref{subsec:rag}, worden gelijkaardige zinnen samengevoegd tot één chunk. In dit geval werd geoordeeld dat de zinnen na de eerste te verschillend waren, waardoor de eerste zin een aparte chunk vormt.
+
+De SemanticChunker genereert te kleine chunks, waardoor er veel context verloren gaat. Om die reden werd deze splitter niet verder in overweging genomen. Wat betreft de andere splitters voor platte tekst, kwamen we voorlopig tot dezelfde conclusie als bij de chunkingstrategieën: op dit moment is het niet mogelijk om een definitieve keuze te maken. De uiteindelijke keuze zal pas gebeuren na evaluatie, en in combinatie met een geschikte chunkingstrategie.
+
+De werking van MarkdownHeaderTextSplitter is heel makkelijk te verstaan met een voorbeeld. Stel volgende tekst:
+
+\begin{quote}
+    \emph{\# Netwerken}
+    
+    \emph{Netwerken vormen de ruggengraat van de moderne IT-infrastructuur. Ze maken communicatie tussen computers, servers en andere apparaten mogelijk.}
+    
+    \emph{\#\# IP-adressen}
+    
+    \emph{Een IP-adres is een uniek nummer dat aan een apparaat op een netwerk wordt toegekend. Het zorgt ervoor dat gegevens correct worden afgeleverd.}
+    
+    \emph{\#\# Routers}
+    
+    \emph{Routers zijn netwerkapparaten die datapakketten tussen verschillende netwerken doorsturen. Ze bepalen op basis van routingtabellen waar een pakket naartoe moet.}
+    
+    \emph{\#\# DNS}
+    
+    \emph{DNS, of Domain Name System, vertaalt domeinnamen naar IP-adressen. Zonder DNS zouden gebruikers websites moeten bezoeken door IP-adressen in te voeren.}
+\end{quote}
+
+De splitter genereert dan vier chunks op basis van de Markdown headers, wat ervoor zorgt dat de structuur behouden worden:
+
+\begin{itemize}
+    \item \textbf{Chunk 1}: \emph{Netwerken vormen de ruggengraat van de moderne IT-infrastructuur. Ze maken communicatie tussen computers, servers en andere apparaten mogelijk.}
+    \item \textbf{Chunk 2}:\emph{Een IP-adres is een uniek nummer dat aan een apparaat op een netwerk wordt toegekend. Het zorgt ervoor dat gegevens correct worden afgeleverd.}
+    \item \textbf{Chunk 3}: \emph{Routers zijn netwerkapparaten die datapakketten tussen verschillende netwerken doorsturen. Ze bepalen op basis van routingtabellen waar een pakket naartoe moet.}
+    \item \textbf{Chunk 4}: \emph{DNS, of Domain Name System, vertaalt domeinnamen naar IP-adressen. Zonder DNS zouden gebruikers websites moeten bezoeken door IP-adressen in te voeren.}
+\end{itemize}
+
+Het gebruik van een specifiek formaat -- in dit geval Markdown--— biedt het voordeel dat de tekststructuur behouden blijft en dat gespecialiseerde splitters kunnen worden ingezet om coherente chunks te genereren. Achter structuur schuilt semantische betekenis, en door gebruik te maken van specifieke formaten kan daarvan benut worden.
+
+\subsection{\IfLanguageName{dutch}{Onderzoek naar indexing}{Investigation into indexing}}%
+\label{subsec:onderzoek-indexing}
+
+In dit onderdeel hebben we Chroma onderzocht, een vectordatabank waarmee we aan vector search kunnen doen (zie~\ref{subsubsec:retrieval}). We waren vooral geïnteresseerd in de gebruiksvriendelijkheid van de tool en in de manier waarop chunks moesten worden opgehaald.
+
+Om te kunnen functioneren, heeft Chroma een embeddingmodel nodig. Uit onze experimenten is \emph{BAAI/bge-m3} naar voren gekomen als een goede keuze. Dit model kan vlot met beide talen overweg. Zo lukt het bijvoorbeeld om relevante chunks op te halen wanneer een vraag in het Nederlands wordt gesteld en de informatiebron in het Engels is. Dat is een belangrijk sterk punt.
+
+Chroma is een zeer gebruiksvriendelijke vector-databank dankzij de Langchain integratie. Het opzetten ervan verloopt in slechts enkele regels code, zowel als het opslaan en ophalen van chunks is bijzonder eenvoudig.
+
+\section{\IfLanguageName{dutch}{Besluit}{Conclusion}}%
+\label{onderzoek-besluit}
+
+Aan de hand van de requirementsanalyse konden we nauwkeurig in kaart brengen wat de verwachtingen zijn van de stakeholders. De informatie die uit deze analyse werd afgeleid, zal worden gebruikt om een passend evaluatieraamwerk op te stellen voor de beoordeling van Eureka (zie \ref{}).
+
+QuantFactory/Aya-23-8B-GGUF en GPT-4.1-mini bleken geschikte modellen te zijn op het vlak van taalkundige en redeneercapaciteiten, alsook in termen van financiële haalbaarheid. Beide modellen zijn vloeiend in zowel het Nederlands als het Engels. QuantFactory/Aya-23-8B-GGUF vereist geen financiële middelen, en de kostprijs van GPT-4.1-mini is redelijk. Deze modellen zullen dan ook worden gebruikt als mogelijke instellingen binnen de RAG-pijplijn.
+
+De Moderation API van OpenAI vormt een waardevolle toevoeging aan Eureka. Ze zal ervoor zorgen dat een groot deel van ongeschikte interacties wordt uitgefilterd, waardoor wordt vermeden dat onnodige computationele middelen verspild worden.
+
+De juiste combinatie van extractie- en chunkingstrategieën kan op dit moment nog niet met zekerheid worden bepaald. Deze keuze zal duidelijker worden na de evaluatie van de proof-of-concept, waarbij verschillende strategieën als mogelijke instellingen worden getest. Wel werd beslist om de SemanticChunker niet verder te gebruiken, aangezien deze de neiging heeft om zeer kleine chunks te genereren, wat ertoe kan leiden dat er onvoldoende informatie beschikbaar is voor de \acrshort{LLM} om een degelijk antwoord te formuleren.
+
+Chroma, in combinatie met het embeddingmodel BAAI/bge-m3, zal worden gebruikt als vectordatabank om vector search mogelijk te maken. Deze vectordatabank is gebruiksvriendelijk.
+
+

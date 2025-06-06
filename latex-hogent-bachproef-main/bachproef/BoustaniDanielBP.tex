@@ -175,7 +175,9 @@
 %\input{...}
 %\input{...}
 %...
+\input{onderzoek}
 \input{proof-of-concept}
+\input{evaluatie}
 \input{conclusie}
 
 %---------- Bijlagen -----------------------------------------------------------
@@ -197,7 +199,35 @@ Het onderwerp van deze bachelorproef is gebaseerd op een onderzoeksvoorstel dat 
 %%---------- Andere bijlagen --------------------------------------------------
 % TODO: Voeg hier eventuele andere bijlagen toe. Bv. als je deze BP voor de
 % tweede keer indient, een overzicht van de verbeteringen t.o.v. het origineel.
-%\input{...}
+
+
+\chapter{\IfLanguageName{dutch}{Ontdekken van de geschikte LLM - vragenlijst}{Identifying the appropriate LLM - question list}}%
+\label{ch:question-list}
+\input{bijlagen/vragenlijst.tex}
+
+\chapter{\IfLanguageName{dutch}{Ontdekken van de geschikte LLM - Antwoorden van QuantFactory/Aya-23-8B-GGUF}{Answers from QuantFactory/Aya-23-8B-GGUF}}%
+\label{ch:onderzoek_aya}
+\input{bijlagen/vragenlijst_aya.tex}
+
+\chapter{\IfLanguageName{dutch}{Ontdekken van de geschikte LLM - Antwoorden van QuantFactory/suzume-llama-3-8B-multilingual-GGUF}{Identifying the appropriate LLM - Answers from QuantFactory/suzume-llama-3-8B-multilingual-GGUF}}%
+\label{ch:onderzoek_suzume}
+\input{bijlagen/vragenlijst_suzume.tex}
+
+\chapter{\IfLanguageName{dutch}{Ontdekken van de geschikte LLM - Antwoorden van GPT-4.1-mini}{Identifying the appropriate LLM - answers from GPT-4.1-mini}}%
+\label{ch:onderzoek_openai}
+\input{bijlagen/vragenlijst_openai.tex}
+
+\chapter{\IfLanguageName{dutch}{Moderation API: classificatie van onverwachte interacties door backend modellen}{Moderation API: classifications of unexpected interactions by models in the background}}%
+\label{ch:onderzoek-moderation}
+\input{bijlagen/onderzoek_moderation.tex}
+
+\chapter{\IfLanguageName{dutch}{Antwoorden door onderliggend Aya-23-8B model}{Answers by underlying Aya-23-8B model}}%
+\label{ch:antwoorden-aya}
+\input{bijlagen/antwoorden_aya.tex}
+
+\chapter{\IfLanguageName{dutch}{Antwoorden door onderliggend OpenAI model}{Answers by underlying OpenAI model}}%
+\label{ch:antwoorden-openai}
+\input{bijlagen/antwoorden_openai.tex}
 
 %%---------- Backmatter, referentielijst ---------------------------------------
 

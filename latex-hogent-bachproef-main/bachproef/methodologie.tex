@@ -25,169 +25,39 @@
 %%
 %% Maak voor elke fase (behalve het literatuuronderzoek) een NIEUW HOOFDSTUK aan
 %% en geef het een gepaste titel.
+ 
+\section{\IfLanguageName{dutch}{Requirementsanalyse}{Requirement-analysis}}%
+\label{sec:requirement-analyse-meth}
 
+De eerste stap die werd gezet, was het uitvoeren van een requirementsanalyse. Het doel van deze analyse was het in kaart brengen van de verschillende stakeholders en hun behoeften. Dit was een cruciale stap, aangezien het de stakeholders zijn die uiteindelijk baat hebben bij deze bachelorproef. De bachelorproef moet dan ook aansluiten bij hun behoeften om als succesvol te worden beschouwd. Het resultaat van de requirementsanalyse diende als maatstaf om het project Eureka aan af te toetsen.
 
-\subsection{\IfLanguageName{dutch}{Requirement-analyse}{Requirement-analysis}}%
-\label{subsec:requirement-analyse}
+De requirementsanalyse werd in twee fasen uitgevoerd: het opstellen van persona’s en het formuleren van de vereisten zelf. Persona’s maakten het mogelijk om een beeld te krijgen van de stakeholders en wat zij belangrijk vonden. Op basis van deze persona’s werden vervolgens de requirements opgesteld.
 
-Het uiteindelijke resultaat van deze bachelorproef is een proof-of-concept (PoC) die aantoont of een chatbot gebaseerd op een \acrshort{LLM} een geschikte en haalbare oplossing vormt voor het voorliggende probleem. Om tot een gefundeerd besluit te komen, moet worden vastgesteld aan welke criteria Eureka zal worden getoetst. Daartoe werd eerst een requirement-analyse uitgevoerd. Deze analyse is van cruciaal belang, aangezien ze resulteert in een maatstaf waartegen de proof-of-concept kan worden geëvalueerd.
+\section{\IfLanguageName{dutch}{Verkenning van de onderdelen van de RAG-pijplijn}{Exploration of the components of the RAG pipeline}}%
+\label{sec:verkenning-onderdelen}
 
-We zijn gestart met het identificeren van de stakeholders, met andere woorden: de groepen die belang hebben bij dit project. In dit geval onderscheiden we twee stakeholders, namelijk studenten en docenten van HOGENT. Om hun vereisten te achterhalen, hebben we in tabel~\ref{tab:personas} hun persona’s opgesteld.
+Zoals besproken in sectie~\ref{subsec:rag}, bestaat de RAG-pijplijn uit verschillende componenten, elk met hun eigen eigenschappen en uitdagingen. Om deze beter te begrijpen, werd elk onderdeel afzonderlijk onderzocht aan de hand van kleinschalige experimenten. Met andere woorden, de experimenten hadden tot doel technische inzichten te verwerven die later benut konden worden bij het opstellen van de PoC. Deze experimenten werden opgezet in Jupyter Notebooks. 
 
-\begin{table}[ht]
-    \small 
-    \centering
-    \begin{tabular}{p{7cm} p{7cm}}
-        \multicolumn{2}{c}{\uline{\textbf{Persona's}}} \\
-        \addlinespace[0.5ex]
-        \textbf{Student} & \textbf{Docent} \\
-        \midrule
-        Is ingeschreven voor een of meerdere van de volgende vakken: \textit{Data Science \& AI}, \textit{Infrastructure Automation} en \textit{Linux for Data Scientists} &
-        Geeft les in een of meerdere van de volgende vakken: \textit{Data Science \& AI}, \textit{Infrastructure Automation} en \textit{Linux for Data Scientists} \\
-        Kan op elk moment tijdens het verwerken van het studiemateriaal een vraag hebben &
-        Kan buiten de lesuren verschillende vragen ontvangen, maar is niet altijd in staat om deze op dat moment zelf te beantwoorden \\
-        Heeft niet de mogelijkheid om te lang met zijn vragen te blijven zitten. Dit kan leiden tot stressvolle situaties of een negatieve invloed hebben op zijn vooruitgang &
-        Verwacht dat studenten eerst gebruikmaken van de informatie in het beschikbare materiaal voordat ze met hun vragen aankloppen \\
-        \bottomrule
-    \end{tabular}
-    \caption{Persona's}
-    \label{tab:personas}
-\end{table}
+De structuur van de experimenten was als volgt:
 
-De oefening met persona’s laat toe om een concreet beeld te krijgen van de stakeholders. Dit betekent dat we inzicht verkrijgen in wie ze zijn en welke uitdagingen ze mogelijk ervaren. Op basis hiervan kunnen de vereisten worden opgesteld. In Tabel~\ref{tab:requirements} worden deze vereisten weergegeven. De proof-of-concept wordt als succesvol beschouwd wanneer aan deze vereisten is voldaan.
-
-\begin{table}[ht]
-    \small 
-    \centering
-    \begin{tabular}{p{7.5cm} p{7.5cm}}
-        \multicolumn{2}{c}{\uline{\textbf{Vereisten}}} \\
-        \addlinespace[0.5ex]
-        \textbf{Student} & \textbf{Docent} \\
-        \midrule
-        Als student wil ik dat de gegenereerde antwoorden inhoudelijk aansluiten bij de gestelde vragen. &
-        Als docent wil ik dat de gegenereerde antwoorden correcte informatie bevatten voor de studenten. \\
-        Als student wil ik dat de antwoorden correcte informatie bevatten. &
-        Als docent wil ik dat Eureka naar hulpzame bronnen verwijst zodat studenten mogelijke verdere vragen zelf kunnen beantwoorden. \\
-        Als student wil ik dat, indien het antwoord niet gekend is, er verwezen wordt naar mogelijke pistes om een antwoord te bekomen. Echter wil ik geen valse informatie ondervinden. &
-        Als docent wil ik gemakkelijk mijn bronnen kunnen wijzigen indien er aanpassingen zijn. \\
-        & Als docent wil ik dat de gegenereerde antwoorden passend en professioneel zijn, zonder ongepaste inhoud. \\
-        \bottomrule
-    \end{tabular}
-    \caption{Requirements voor studenten en docenten}
-    \label{tab:requirements}
-\end{table}
-
-\subsection{\IfLanguageName{dutch}{Verkenning van de onderdelen van de RAG-pijplijn}{Exploration of the components of the RAG pipeline}}%
-\label{subsec:verkenning-onderdelen}
-
-Zoals besproken in sectie~\ref{subsec:rag}, bestaat de RAG-pijplijn uit verschillende componenten. Elk van deze componenten heeft zijn eigen eigenschappen en uitdagingen. Daarom vonden we het belangrijk om elk onderdeel afzonderlijk te verkennen alvorens de volledige pijplijn op te stellen.
-
-Hiervoor hebben we per component een Jupyter Notebook opgesteld waarin we kleinschalige experimenten hebben uitgevoerd. In dit onderdeel geven we een overzicht van de doelstellingen van deze Notebooks, samen met de conclusies die hieruit voortvloeien.
-
-\subsubsection{\IfLanguageName{dutch}{Ontdekken van de geschikte LLM}{Identifying the appropriate LLM}}%
-\label{subsubsec:LLM-ontdekking}
-
-De overgrote meerderheid van de \acrshort{LLM}'s is vooral bekwaam in het Engels. Dat is niet verwonderlijk: de voertaal van de informatica — en bij uitbreiding van de wereld — is nu eenmaal het Engels. Wij bevinden ons echter in een Nederlandstalige context. Dit betekent dat de meeste studenten Nederlands als eerste taal gebruiken, en dat ook het meerderheid van het onderwijsmateriaal in het Nederlands wordt aangeboden. Daarom waren we op zoek naar een model dat zowel het Nederlands als het Engels voldoende beheerst (met het oog op internationale studenten).
-
-Dit onderzoek werd uitgevoerd in twee stappen: eerst een selectie op basis van eenvoudige interacties, gevolgd door een diepgaander onderzoek met complexere interacties. Voor beide stappen werd gebruikgemaakt van \emph{GPT4All}. GPT4All is een tool die het mogelijk maakt om \acrshort{LLM}'s lokaal te gebruiken op een dagelijkse computer. Hierdoor is het niet langer nodig om gebruik te maken van cloudinfrastructuren of gespecialiseerde hardware om met \acrshort{LLM}'s te werken \autocite{NST2024}. De beschikbare \acrshort{LLM}'s zijn te vinden op het platform \emph{Hugging Face}. 
-
-Uit de eerste selectie(via de GPT4All UI) werden de modellen \emph{QuantFactory-Aya-23-8B-GGUF} en \emph{QuantFactory-suzume-llama-3-8B-multilingual-GGUF} geselecteerd voor verder onderzoek. 
-
-In de diepgaander ondezoek (via de GPT4All Langchain integratie), hebben wij de modellen afgetoest op vier soorten vragen en telkens werd de uitvoeringstijd gemeten. De vier soorten vragen zijn:
-
-\begin{enumerate} 
-    \item \textbf{Vragen van algemene aard}: Deze vragen dienen om na te gaan of het LLM algemene, wereldwijd bekende feiten kent. Als een bepaald model dergelijke vragen niet correct kan beantwoorden, zegt dat veel over de kwaliteit van de dataset waarop het getraind werd. Het correct beantwoorden van deze vragen vormt dan ook een absoluut minimumvereiste. 
-    \item \textbf{Onverwachte interacties}: Deze vragen en opmerkingen dienen om na te gaan hoe het model omgaat met onverwachte interacties. Deze interacties kunnen betrekking hebben op illegale verzoeken, beledigende of seksueel getinte opmerkingen.
-    \item \textbf{Poging tot hallucinatie}: Hallucinatie is een fenomeen dat we zoveel mogelijk willen vermijden. Deze reeks vragen onderzoekt in welke mate de LLM geneigd is om foutieve of verzonnen informatie te genereren.
-    \item \textbf{Vragen met gegeven context}: Hier willen we nagaan hoe de LLM antwoorden genereert op een specifieke vraag wanneer er context wordt meegegeven. Dit simuleert het principe achter RAG.
+\begin{enumerate}
+    \item \textbf{Ontdekking van modellen}: twee soorten modellen werden onderzocht, namelijk het \acrshort{LLM} dat de interacties genereert en het model, dat via de \emph{Moderation API} van OpenAI beschikbaar wordt gesteld, dat ongepaste interacties moet uitfilteren.
+    \item \textbf{Tekstmanipulatie}: in deze experimenten werd onderzocht hoe PDF-bestanden konden worden omgezet en hoe verschillende chunkingstrategieën konden worden toegepast.
+    \item \textbf{Vectorisatie}: hier werd kennisgemaakt met een vectordatabank -- Chroma -- en het opslaan van chunks in deze databank.
 \end{enumerate}
 
-Uit dit onderzoek werd besloten om verder te gaan met \emph{QuantFactory-Aya-23-8B-GGUF}. Naast het beheersen van het Nederlands, was dit model ook in staat om antwoorden te genereren binnen een aanvaardbare tijdslimiet, in tegenstelling tot QuantFactory-suzume-llama-3-8B-multilingual-GGUF. Dit model is wel vatbaar voor hallucinatie. 
+\section{\IfLanguageName{dutch}{Opzetten van de PoC}{PoC setup}}%
+\label{sec:poc-opzetting}
 
-\subsubsection{\IfLanguageName{dutch}{Onderzoek naar moderatie}{Investigation into moderation}}%
-\label{subsubsec:onderzoek-moderatie}
+Met de verworven inzichten uit de technische experimenten werd de PoC opgezet. Deze werd geïmplementeerd in de programmeertaal Python, met gebruik van \emph{Langchain} waar van toepassing. Langchain is een framework dat de integratie van \acrfull{LLM} in applicaties vergemakkelijkt.
 
-In wat volgt wordt onder het begrip moderatie het proces verstaan waarbij ongepaste uitwisselingen worden gefilterd en zo vermeden.
+Er werd gebruikgemaakt van het \emph{Strategy design pattern}. Dit patroon maakt het mogelijk om de strategie van verschillende componenten eenvoudig te wijzigen en de pijplijn op een flexibele manier uit te breiden met nieuwe strategieën.
 
-Aanvankelijk werd overwogen om de verantwoordelijkheid voor moderatie aan de \acrshort{LLM} over te laten. We beschikken immers over een intelligente agent die goed met taal kan omgaan. Hoewel dit in de praktijk een goede oplossing lijkt, is uit de experimenten in~\ref{subsubsec:LLM-ontdekking} gebleken dat het genereren van een antwoord behoorlijk wat tijd in beslag neemt. Hoe meer instructies aan het model worden meegegeven, hoe langer het duurt om een antwoord te formuleren. Het is dan ook jammer om computationele middelen te belasten voor een interactie die uiteindelijk niet behandeld moet worden omdat ze ongepast is. Het zou beter zijn als moderatie door een externe tool wordt behandeld.
+\section{\IfLanguageName{dutch}{Evaluatie van de PoC}{PoC evaluation}}%
+\label{sec:poc-opzetting}
 
-Tijdens onze zoektocht naar een geschikte tool zijn we de \emph{Moderation API} van OpenAI tegengekomen. OpenAI stelt dat deze API in staat is om potentieel schadelijke inhoud in tekst te detecteren. Om dit te testen, hebben we onze lijst met onverwachte interacties (zie~\ref{subsubsec:LLM-ontdekking}) afgetoetst aan de API. Van de tien interacties werden er zeven correct geïdentificeerd. De berichten die niet correct werden herkend, hadden een flirterige toon. Vermoedelijk beschouwt de API deze interacties als ``lief'' en dus onschadelijk.
+In deze stap werd de PoC geëvalueerd op zijn geschiktheid voor de stakeholders. Hiervoor werd een door ons ontwikkeld evaluatieraamwerk toegepast.
 
-We besloten dat het gebruiken van de Moderation API wel degelijk een meerwaarde kan bieden als onderdeel van Eureka. Hoewel het model niet in staat is om alle ongeschikte berichten correct te identificeren, werd het merendeel wel juist gedetecteerd en laat het zich niet misleiden door indirecte formuleringen. De Moderation API vormt dus een waardevol eerste filter om ongepaste berichten tegen te houden, waardoor onnodig gebruik van computationele middelen door Eureka vermeden kan worden.
+Voor elke instelling waarin Eureka werd getest, werd per vak een reeks vragen opgesteld. Deze vragen konden betrekking hebben op de modaliteiten (zoals deadlines, doelstellingen, organisatie, enzovoort), op de inhoud van het vak, of geen directe relatie hebben met de vakinhoud.
 
-\subsubsection{\IfLanguageName{dutch}{Onderzoek naar tekstextractie}{Investigation into text extraction}}%
-\label{subsubsec:onderzoek-tekstextractie}
-
-Het merendeel van het materiaal waarover we beschikken is in PDF-formaat, of kan eenvoudig naar PDF worden omgezet. Aangezien een RAG-pijplijn met tekst werkt en niet met bestanden, is het belangrijk dat we de inhoud van deze documenten kunnen extraheren. In dit onderdeel hebben we tools onderzocht die precies dat doen. We waren daarbij vooral geïnteresseerd in de gebruiksvriendelijkheid, de duur van de omzetting en de kwaliteit van de gegenereerde tekst.
-
-De verschillende tools werden uitgetest op drie soorten bestanden:
-
-\begin{enumerate} 
-    \item \textbf{Studiewijzers}: Deze zijn beschikbaar via Chamilo en maken dus deel uit van een webpagina. Chamilo biedt de mogelijkheid om studiewijzers te exporteren naar PDF-formaat.
-    \item \textbf{Slides}: Dit zijn PDF-bestanden die rechtstreeks door docenten worden aangeleverd en de leerstof van een vak bevatten. Er is hierbij geen verdere verwerking nodig.
-    \item \textbf{datalinux.pdf}: Dit is de syllabus van het vak Linux for Data Scientists. Het is een omvangrijk document van ongeveer 300 pagina’s. Het doel hier is om de tools tot het uiterste te testen en te observeren hoeveel tijd ze nodig hebben om een dergelijk groot bestand te verwerken.
-\end{enumerate}
-
-Het eerste type tool zijn degene die de inhoud van PDF-bestanden als platte tekst extraheren. Een van de bekendste tools hiervoor is \emph{PyMuPDF}. 
-
-Het opzetten en gebruiken van PyMuPDF was zeer eenvoudig. Bovendien, zoals te zien in~\ref{tab:pymupdf-omzettingstijden} waren de omzettingstijden erg snel. De gegenereerde tekst was van goede kwaliteit; op basis van onze waarnemingen leek het dat de gehele inhoud van de PDF-bestanden succesvol werd geëxtraheerd. Dit pluspunt is echter ook een minpunt, omdat PyMuPDF alles extraheert, inclusief ruis in de data (zoals paginanummering op slides).
-
-\begin{table}
-    \centering
-    \begin{tabular}{p{7cm} p{5cm}}
-        \multicolumn{2}{c}{\uline{\textbf{Gemiddelde omzettingstijd per bestandstype - PyMuPDF (s)}}} \\
-        \addlinespace[0.5ex]
-        \textbf{Soort bestand} & \textbf{Gemiddelde omzettingstijd (s)} \\
-        \midrule
-        Studiewijzer & 7 \\
-        Slide        & 0,5 \\
-        Syllabus     & 19 \\
-        \bottomrule
-    \end{tabular}
-    \caption{Gemiddelde omzettingstijd per soort bestand met PyMuPDF}
-    \label{tab:pymupdf-omzettingstijden}
-\end{table}
-
-In~\ref{subsubsec:indexing} gaven we aan dat er tijdens de tekstextractie extra stappen kunnen worden uitgevoerd om de lay-outstructuur te behouden, bijvoorbeeld door aan te duiden waar titels staan, welke delen tot een tabel behoren, enzovoort. De tweede type tools zijn tools die exact dit doen.
-
-We gaven de voorkeur aan tools die tekst omzetten naar Markdown. In dat kader hebben we \emph{PyMuPDF4LLM}, \emph{Docling} en \emph{Marker} van dichterbij onderzocht. Hoewel Marker niet de snelste tool was (zie Tabel~\ref{tab:markdown-omzettingstijden}), bleek het wel de tool te zijn die de meest kwaliteitsvolle Markdown genereerde en er als enige in slaagde om de volledige inhoud van het bestand correct te extraheren.
-
-\begin{table}
-    \centering
-    \begin{tabular}{p{4.5cm} r r r}
-        \multicolumn{4}{c}{\uline{\textbf{Gemiddelde omzettingstijd per tool (s)}}} \\
-        \addlinespace[0.5ex]
-        \textbf{Soort bestand} & \textbf{PyMuPDF4LLM} & \textbf{Docling} & \textbf{Marker} \\
-        \midrule
-        Studiewijzer        & 5    & 63   & 79    \\
-        Slide               & 0,8  & 76   & 143   \\
-        Syllabus            & 17   & 837  & 1457  \\
-        Bijzondere slides   & 0,6  & 89   & 153   \\
-        \bottomrule
-    \end{tabular}
-    \caption{Vergelijking van de gemiddelde omzettingstijd per soort bestand en tool}
-    \label{tab:markdown-omzettingstijden}
-\end{table}
-
-Beide extractietechnieken hebben hun voor- en nadelen. Aan de ene kant is platte-tekstextractie aanzienlijk sneller dan extractie naar Markdown. Aan de andere kant behoudt Markdown de structuur van de tekst, waardoor ook de semantiek beter behouden blijft. We zijn ervan overtuigd dat tekstuele structuur vaak ook semantische betekenis draagt.
-
-Een keuze maken tussen beide technieken was op dit punt nog niet mogelijk. Tekstextractie en chunking gaan hand in hand en bepalen samen de kwaliteit van de gegenereerde antwoorden. De beste combinatie zal dan ook pas bij de evaluatie worden bepaald (zie~\ref{}).
-
-\subsubsection{\IfLanguageName{dutch}{Onderzoek naar chunkingstrategiën}{Investigation into chunking strategies}}%
-\label{subsubsec:onderzoek-chunking}
-
-\subsubsection{\IfLanguageName{dutch}{Onderzoek naar indexing}{Investigation into indexing}}%
-\label{subsubsec:onderzoek-indexing}
-
-In dit onderdeel hebben we Chroma onderzocht, een vectordatabank waarmee we aan vector search kunnen doen (zie~\ref{subsubsec:retrieval}). We waren vooral geïnteresseerd in de gebruiksvriendelijkheid van de tool en in de manier waarop chunks moesten worden opgehaald.
-
-Om te kunnen functioneren, heeft Chroma een embeddingmodel nodig. Uit onze experimenten is \emph{BAAI/bge-m3} naar voren gekomen als een goede keuze. Dit model kan vlot met beide talen overweg. Zo lukt het bijvoorbeeld om relevante chunks op te halen wanneer een vraag in het Nederlands wordt gesteld en de informatiebron in het Engels is. Dat is een belangrijk sterk punt.
-
-Chroma is een zeer gebruiksvriendelijke vector-databank. Het opzetten ervan verloopt in slechts enkele regels code, zowel als het opslaan en ophalen van chunks is bijzonder eenvoudig.
-
-\subsection{\IfLanguageName{dutch}{PoC opzetting en evaluatie}{PoC setup and evaluation}}%
-\label{subsec:poc-opzetting}
-
-Met alle vergaarde technische inzichten werd de proof-of-concept opgezet. Deze werd geïmplementeerd met behulp van Python en het LangChain-framework, waar van toepassing. Er werden verschillende configuraties aangemaakt, die van elkaar verschilden in de combinatie van tekstextractie en chunking.
-
-Op deze verschillende configuraties werd vervolgens een reeks vragen losgelaten, waarvan de gegenereerde antwoorden werden getoetst aan de vereisten van studenten en docenten (zie~\ref{subsec:requirement-analyse}). De meest overtuigende configuratie is degene die het best presteerde ten opzichte van deze vereisten.
+De gegenereerde antwoorden werden vervolgens beoordeeld aan de hand van specifieke criteria. Voor elk criterium werd een score toegekend op een schaal van 1 tot 5, waarbij 1 staat voor \emph{zeer onvoldoende} en 5 voor \emph{uitstekend}.

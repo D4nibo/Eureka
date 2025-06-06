@@ -1,8 +1,7 @@
 %%=============================================================================
 %% Conclusie
 %%=============================================================================
-
-\chapter{Conclusie}%
+\chapter{\IfLanguageName{dutch}{Conclusie}{Conclusion}}%
 \label{ch:conclusie}
 
 % TODO: Trek een duidelijke conclusie, in de vorm van een antwoord op de
@@ -14,5 +13,20 @@
 % Heeft het onderzoek geleid tot nieuwe vragen die uitnodigen tot verder 
 %onderzoek?
 
-\lipsum[76-80]
+\section{\IfLanguageName{dutch}{Bespreking van de resultaten}{Discussion of the results}}%
+\label{sec:bespreking-resultaten}
 
+\subsection{\IfLanguageName{dutch}{Vergelijking van de modellen}{Comparison of the models}}%
+\label{sec:vergelijking-modellen}
+
+Een goede antwoordkwaliteit hangt enerzijds af van de aangeleverde chunks, maar vooral van het vermogen van het onderliggende model om betekenis uit die chunks te halen. Daarom vergelijken we hier eerst de twee gebruikte modellen met elkaar.
+
+Wat taalgebruik betreft, beheersen beide modellen het Nederlands voldoende, maar het \texttt{OpenAI}-model presteert duidelijk beter. Zinnen die door \texttt{Aya-23-8B-GGUF} worden gegenereerd zijn soms grammaticaal onjuist.
+
+Beide modellen kunnen antwoorden formuleren op basis van de aangeleverde chunks. Wel valt op dat \texttt{Aya-23-8B-GGUF} geregeld extra informatie toevoegt die niet in de chunks voorkomt -- vermoedelijk haalt het model dit uit zijn eigen knowledge base. Dat hoeft niet per se negatief te zijn: omdat het contextvenster van modellen beperkt is, kan zo’n mechanisme hiaten in de chunks opvullen, vooral bij vragen over de vakinhoud -- dus niet over de modaliteiten. Het nadeel is een verlies aan controle: het model kan informatie inbrengen die buiten de scope valt of niet relevant is voor het betreffende vak. Het \texttt{OpenAI}-model doet dit bijna nooit. Dit introduceert het volgende punt, namelijk de controleerbaarheid van de modellen.
+
+Om het gewenste gedrag te krijgen, kregen beide modellen duidelijke instructies volgens een vast patroon. Dit staat bekend onder de naam \texttt{prompt engineering}. Het \texttt{OpenAI}-model volgt die instructies voorbeeldig: het houdt zich aan de lengte­beperking, verwijst correct naar de bestandsnamen, verraadt nergens dat er extra context is geïnjecteerd en antwoordt in dezelfde taal als de vraag.
+
+\texttt{Aya-23-8B-GGUF} daarentegen negeert verschillende richtlijnen: het verwijst niet naar bestandsnamen, spreekt expliciet over ``de context'', overschrijdt geregeld de maximale lengte en antwoordt steevast in het Nederlands, ongeacht de taal van de vraag. Dit maakt het model moeilijk te sturen en belemmert de gebruikerservaring. 
+
+De cognitieve capaciteiten van de modellen zijn ook verschillend. Van de twee chunks die aan de modellen gevoerd worden, is niet altijd alles relevant. De chunks zijn maar een voorstelling gebaseerd op een mathematematische bewerking uitgevoerd door de vectordatabank  
